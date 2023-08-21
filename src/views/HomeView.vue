@@ -1,8 +1,8 @@
 <template>
     <div id="Home" class="flex flex-col h-screen">
         <div class="m-3 mb-auto">
-            <div class="my-20">
-                <img width="150" src="img/uber/uber2.svg" />
+            <div class="my-10">
+                <img width="200" class="m-auto" src="img/smoove/smoove.svg" />
             </div>
 
             <div class="grid grid-cols-2 gap-3 my-3">
