@@ -16,7 +16,7 @@
                 <div class="mt-3 mr-1">
                     <img
                         :width="imageWidth"
-                        :src="'img/uber/' + image + '.png'"
+                        :src="'img/smoove/' + image + '.png'"
                         alt=""
                     />
                 </div>

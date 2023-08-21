@@ -4,7 +4,7 @@
             <div
                 class="absolute top-1/3 left-1/3 transform -translate-x-1/4 -translate-y-1/4 mt-0.5"
             >
-                <img :width="55" :src="'img/uber/' + image + '.png'" alt="" />
+                <img :width="55" :src="'img/smoove/' + image + '.png'" alt="" />
             </div>
         </div>
         <div class="text-xs text-center mt-2 text-gray-900">
