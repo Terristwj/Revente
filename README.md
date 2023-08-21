@@ -2,6 +2,11 @@
 
 An Uber clone for SMU. PWA using Vue, TailwindCSS, NodeJS, Google Maps
 
+## References (By John-Weeks-Dev)
+
+1. [YouTube - Uber Clone PWA](https://www.youtube.com/watch?v=zXpr8zaK2eA)
+2. [GitHub - uber-clone](https://github.com/John-Weeks-Dev/uber-clone)
+
 ## Tech Stack
 
 -   frontend npm libraries
