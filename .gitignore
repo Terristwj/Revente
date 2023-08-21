@@ -39,6 +39,7 @@ bower_components
 build/Release
 
 # Dependency directories
+.DS_Store
 node_modules/
 jspm_packages/
 
@@ -78,6 +79,7 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+.env.*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -90,6 +92,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+/dist
 
 # Gatsby files
 .cache/
@@ -118,6 +121,15 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # yarn v2
 .yarn/cache
