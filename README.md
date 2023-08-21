@@ -2,6 +2,15 @@
 
 An Uber clone for SMU. PWA using Vue, TailwindCSS, NodeJS, Google Maps
 
+## Tech Stack
+- npm libraries 
+    - axios 
+    - lodash pinia
+    - pinia-plugin-persistedstate 
+    - vue-material-design-icons 
+    - vue-pwa-asset-generator
+
+<hr />
 ## Project setup
 
 ```
