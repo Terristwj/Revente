@@ -1,6 +1,26 @@
 # SMOOVE
 
-An Uber clone for SMU. PWA using Vue, TailwindCSS, NodeJS, Google Maps
+An Uber clone for SMU. PWA using Vue, TailwindCSS, NodeJS, Google Maps.
+
+This is a placeholder idea, and we can still pivot!
+
+## Setup Guide for team
+
+1. (Frontend) In this main directory
+    ```Bash
+    //Only need to call once, after cloning
+    //To create node_modules
+    npm install
+    ```
+2. (Backend) In `server` directory
+    ```bash
+    WIP
+    ```
+
+-   To run the project
+    ```Bash
+    npm run server
+    ```
 
 ## References (By John-Weeks-Dev)
 
