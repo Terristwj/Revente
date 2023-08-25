@@ -19,7 +19,7 @@ This is a placeholder idea, and we can still pivot!
 
 -   To run the project
     ```Bash
-    npm run server
+    npm run serve
     ```
 
 ## References (By John-Weeks-Dev)
