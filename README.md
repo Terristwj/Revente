@@ -1,8 +1,6 @@
 # SMOOVE
 
-An Uber clone for SMU. PWA using Vue, TailwindCSS, NodeJS, Google Maps.
-
-This is a placeholder idea, and we can still pivot!
+A [Carousell](https://www.carousell.sg/) clone.
 
 ## Setup Guide for team
 
@@ -22,27 +20,13 @@ This is a placeholder idea, and we can still pivot!
     npm run serve
     ```
 
-## References (By John-Weeks-Dev)
-
-1. [YouTube - Uber Clone PWA](https://www.youtube.com/watch?v=zXpr8zaK2eA)
-2. [GitHub - uber-clone](https://github.com/John-Weeks-Dev/uber-clone)
-
 ## Tech Stack
 
 -   frontend npm libraries
     -   axios
-    -   lodash
-    -   pinia
-    -   pinia-plugin-persistedstate
     -   [vue-material-design-icons](https://pictogrammers.com/library/mdi/)
-    -   vue-pwa-asset-generator
 -   backend npm libraries
     -   axios
-    -   body-parser
-    -   cors
-    -   dotenv
-    -   express
-    -   nodemon
 
 <hr />
 ## Project setup
