@@ -22,11 +22,24 @@ A [Carousell](https://www.carousell.sg/) clone.
 
 ## Tech Stack
 
--   frontend npm libraries
-    -   axios
-    -   [vue-material-design-icons](https://pictogrammers.com/library/mdi/)
--   backend npm libraries
-    -   axios
+-   Frontend
+    -   Axios
+    -   PrimeVue (BTL)
+    -   Vue Router (BTL)
+    -   Vuex (BTL)
+
+<br/>
+
+-   Backend
+    -   Axios
+
+<br/>
+
+-   Beyond The Lab (BTL)
+    -   PrimeVue (Component Library)
+    -   Vuetify 3 (Component Library) (WIP)
+    -   Vue Router
+    -   Vuex
 
 <hr />
 ## Project setup
