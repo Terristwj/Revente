@@ -1,4 +1,6 @@
-# Can uBuy
+# uBuyiBuy
+
+> Can uBuy
 
 A [Carousell](https://www.carousell.sg/) inspired platform.
 
@@ -23,10 +25,11 @@ A [Carousell](https://www.carousell.sg/) inspired platform.
 ## Tech Stack
 
 -   Frontend
+    -   Bootstrap
     -   Axios
     -   PrimeVue (BTL)
     -   Vue Router (BTL)
-    -   Vuex (BTL)
+    -   Pinia (Like Vuex) (BTL)
 
 <br/>
 
@@ -39,7 +42,7 @@ A [Carousell](https://www.carousell.sg/) inspired platform.
     -   PrimeVue (Component Library)
     -   Vuetify 3 (Component Library) (WIP)
     -   Vue Router
-    -   Vuex
+    -   Pinia
 
 <hr />
 ## Project setup
