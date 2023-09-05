@@ -1,6 +1,6 @@
-# SMOOVE
+# Can uBuy
 
-A [Carousell](https://www.carousell.sg/) clone.
+A [Carousell](https://www.carousell.sg/) inspired platform.
 
 ## Setup Guide for team
 
