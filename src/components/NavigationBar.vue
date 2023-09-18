@@ -1,23 +1,24 @@
 <script setup>
 import { ref } from "vue";
-import Sidebar from "primevue/sidebar";
-
 import { RouterLink } from "vue-router";
-const visibleRight = ref(false);
-
 import { routes } from "../router/index";
+import Sidebar from "primevue/sidebar";
+const mobileTabVisible = ref(false);
 </script>
+
+<!-- 
+    Modify navigation items in "../router/index" 
+    Using import { routes } from "../router/index"; 
+-->
 
 <template>
     <nav class="navbar navbar-expand-lg w-100 border-bottom shadow-sm p-2 mb-4">
         <div id="navigationBarContent" class="container-fluid">
             <!-- Logo START -->
-            <img
-                class="me-auto"
-                alt="Reventé"
-                src="@/assets/logo.svg"
-                width="125"
-            />
+            <RouterLink to="/"
+                ><img alt="Reventé logo" src="@/assets/logo.svg" width="125"
+            /></RouterLink>
+
             <!-- Logo END -->
 
             <!-- Mobile START -->
@@ -26,20 +27,37 @@ import { routes } from "../router/index";
                 text
                 icon="pi pi-bars"
                 severity="secondary"
-                @click="visibleRight = true"
+                @click="mobileTabVisible = true"
                 class="d-lg-none"
             />
             <!-- Mobile Tab Icon END -->
 
             <!-- Mobile Tab Items START -->
-            <Sidebar v-model:visible="visibleRight" position="right">
-                <h2>Right Sidebar</h2>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+            <Sidebar v-model:visible="mobileTabVisible" position="right">
+                <template #header>
+                    <div class="w-100 pe-5">
+                        <RouterLink to="/" @click="mobileTabVisible = false"
+                            ><img
+                                alt="Reventé logo"
+                                src="@/assets/logo.svg"
+                                width="125"
+                        /></RouterLink>
+                    </div>
+                </template>
+                <ul class="navbar-nav">
+                    <li
+                        v-for="route in routes"
+                        :key="route.name"
+                        class="nav-item"
+                    >
+                        <RouterLink
+                            class="nav-link"
+                            :to="route.path"
+                            @click="mobileTabVisible = false"
+                            >{{ route.name }}</RouterLink
+                        >
+                    </li>
+                </ul>
             </Sidebar>
             <!-- Mobile Tab Items END -->
             <!-- Mobile END -->
@@ -59,11 +77,6 @@ import { routes } from "../router/index";
                             route.name
                         }}</RouterLink>
                     </li>
-                    <li class="nav-item">
-                        <RouterLink class="nav-link" to="/about"
-                            >About</RouterLink
-                        >
-                    </li>
                 </ul>
             </div>
             <!-- Desktop Tab Items END -->
@@ -71,4 +84,13 @@ import { routes } from "../router/index";
     </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+.nav-item {
+    transition-duration: 0.5s;
+    box-shadow: 0px 0px grey;
+}
+
+.nav-item:hover {
+    box-shadow: 0px 5px grey;
+}
+</style>
