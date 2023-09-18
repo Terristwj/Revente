@@ -25,7 +25,7 @@
     <RouterView /> -->
 
     <div class="container border border-3 border-danger mt-3">
-        <span class="Indie-Flower display-6 fw-bold">uBuyiBuy</span>
+        <span class="Indie-Flower display-6 fw-bold">Reventé</span>
     </div>
 </template>
 

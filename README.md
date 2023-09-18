@@ -1,8 +1,10 @@
-# uBuyiBuy
+# Reventé
 
-> Can uBuy
+> Reventé
 
 A [Carousell](https://www.carousell.sg/) inspired platform.
+
+An online platform for people to purchase and sell their used clothes with confidence. We aim to distinguish our platform from Carousell with a unique selling point for our platform and business that revolves around high-quality pre-loved clothings. All used clothes listed on our online marketplace will undergo refurbishment and rigorous quality checks performed by our own people before it is put up for sale. This ensures that every item we put for sale on our platform is of exceptional quality and in excellent condition.
 
 ## Setup Guide for team
 
@@ -17,9 +19,9 @@ A [Carousell](https://www.carousell.sg/) inspired platform.
     WIP
     ```
 
--   To run the project
+-   To run the project (Refer at package.json)
     ```Bash
-    npm run serve
+    npm run dev
     ```
 
 ## Tech Stack
