@@ -1,10 +1,17 @@
-<script setup></script>
-
-<template>
-    <div>Login Page</div>
-    <h1>Hello world</h1>
+<template class="login-view">
+    <login-section />
 </template>
 
-<style scoped>
+<script lang="ts">
+import { defineComponent } from 'vue'
+// import SliderSection from '../components/SliderComponents/SliderSection.vue'
+import LoginSection from '../components/LoginComponents/LoginSection.vue'
 
-</style>
+export default defineComponent({
+    name: 'HomeView',
+    components: {
+        // SliderSection,
+        LoginSection,
+    },
+})
+</script>

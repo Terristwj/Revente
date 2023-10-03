@@ -85,6 +85,12 @@ const mobileTabVisible = ref(false);
 </template>
 
 <style scoped>
+nav {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
 .nav-item {
     transition-duration: 0.5s;
     box-shadow: 0px 0px grey;
