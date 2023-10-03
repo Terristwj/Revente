@@ -13,17 +13,15 @@
                 <form @submit.prevent="submitForm">
                     <div class="form-group" style="margin-left: 20%;">
                         <label for="email">Email:</label>
-                        <input type="email" id="email" v-model="email" required>
+                        <input type="email" id="email" class="Aoboshi-One" v-model="email" required>
                     </div>
                     <div class="form-group my-4" style="margin-left: 20%;">
                         <label for="password">Password:</label>
-                        <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+                        <input class="Aoboshi-One" type="password" name="password" autocomplete="current-password" required="" id="id_password">
                         <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;" @click="hidePassword"></i>
                     </div>
                     <button class="btn btn-primary" type="submit" style="margin-left: 45%;">Login</button>
                 </form>
-           
-       
     </div>
 
 </div>
@@ -101,6 +99,7 @@ input[type="text"] {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
+    
 }
 
 /* button[type="submit"] {
