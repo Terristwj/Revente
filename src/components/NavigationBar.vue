@@ -4,6 +4,11 @@ import { RouterLink } from "vue-router";
 import { routes } from "../router/index";
 import Sidebar from "primevue/sidebar";
 const mobileTabVisible = ref(false);
+    function filteredRoutes(routes) {
+        return routes.filter(route => route.path !== '/register');
+    }
+      
+
 </script>
 
 <!-- 
@@ -46,7 +51,7 @@ const mobileTabVisible = ref(false);
                 </template>
                 <ul class="navbar-nav">
                     <li
-                        v-for="route in routes"
+                        v-for="route in filteredRoutes(routes)"
                         :key="route.name"
                         class="nav-item"
                     >
@@ -69,7 +74,7 @@ const mobileTabVisible = ref(false);
             >
                 <ul class="navbar-nav">
                     <li
-                        v-for="route in routes"
+                        v-for="route in filteredRoutes(routes)"
                         :key="route.name"
                         class="nav-item"
                     >

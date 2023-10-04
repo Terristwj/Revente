@@ -20,18 +20,40 @@
                         <input class="Aoboshi-One" type="password" name="password" autocomplete="current-password" required="" id="id_password">
                         <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;" @click="hidePassword"></i>
                     </div>
-                    <button class="btn btn-primary" type="submit" style="margin-left: 45%;">Login</button>
+                    <div class="text-center mt-3">
+                        <a href="#" class="Aoboshi-One">Forgot Password?</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                    <!-- <span>
+                        <input type="checkbox" name="remember mx-3" id="remember">
+                        <label for="remember" class="Aoboshi-One d-inline mx-2">Remember Me</label>
+                    </span> -->
+                    <button class="btn btn-primary mt-3 w-50" type="submit" >Login</button>
+                </div>
                 </form>
+                
+                <p class="text-center mt-5 p-3 Aoboshi-One" style="border-top: 2px solid rgba(52, 51, 51, 0.5)">
+                    Need an account?
+                </p>
+                <div class="d-flex justify-content-center">
+                    <router-link to="/register" class="btn btn-primary mt-3 w-50">Register</router-link>
+
+                </div>
+               
+
+              
+               
     </div>
 
 </div>
-
-
-
 </template>
 
 <script>
+
+
+
 export default {
+    
     data() {
         return {
             email: '',
@@ -85,6 +107,7 @@ export default {
 
 .form-group {
     margin-bottom: 1rem;
+    
 }
 
 label {
