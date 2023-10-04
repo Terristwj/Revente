@@ -97,11 +97,12 @@ export default {
 
 .login-form-container {
     opacity: 0.9;
-    width: 50%;
+    width: 75%;
     padding: 2rem;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+ 
 @media (max-width: 576px) {
     .login-form-container {
         font-size: small;
@@ -112,7 +113,7 @@ export default {
 @media (max-width: 768px) {
     .login-form-container {
         font-size: 12px;
-        width: 60%; 
+        width: 100%; 
     }
 }
 
