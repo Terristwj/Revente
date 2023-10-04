@@ -7,9 +7,7 @@
     
             <div class="login-form-container w-50">
                 <h1 class="text-center Aoboshi-One">Login</h1>
-                <p class="text-center Aoboshi-One my-3">
-                    Enter your account details
-                </p>
+                <p class="text-center Aoboshi-One my-3">Enter your account details</p>
                 <form @submit.prevent="submitForm">
                     <div class="form-group" style="margin-left: 20%;">
                         <label for="email">Email:</label>
@@ -36,7 +34,7 @@
                     Need an account?
                 </p>
                 <div class="d-flex justify-content-center">
-                    <router-link to="/register" class="btn btn-primary mt-3 w-50">Register</router-link>
+                    <router-link to="/register" class="btn btn-primary mt-2 w-50">Register</router-link>
                 </div>
                
 

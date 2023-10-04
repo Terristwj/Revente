@@ -1,86 +1,188 @@
 
+
+
 <template>
-   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    
+
     <div class="login-container container-fluid">
-    
-            <div class="login-form-container w-50">
-                <h1 class="text-center Aoboshi-One">Registration</h1>
-                <p class="text-center Aoboshi-One my-3">
-                    Enter your account details
-                </p>
-                <form @submit.prevent="submitForm">
-                    <div class="form-group" style="margin-left: 20%;">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" class="Aoboshi-One" v-model="email" required>
+
+        <div class="login-form-container mx-auto" style="max-width: 600px;">
+            
+            <h1 class="text-center Aoboshi-One">Registration</h1>
+            <p class="text-center Aoboshi-One my-3">
+                Enter your account details
+            </p>
+            <form @submit.prevent="submitForm">
+
+                <div class="d-flex mb-2">
+                    <div class="form-group  w-50">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" class="Aoboshi-One " v-model="firstName" required>
+                         <span v-if="firstNameError" class="error">{{ firstNameError }}</span>  
                     </div>
-                    <div class="form-group my-4" style="margin-left: 20%;">
-                        <label for="password">Password:</label>
-                        <input class="Aoboshi-One" type="password" name="password" autocomplete="current-password" required="" id="id_password">
-                        <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;" @click="hidePassword"></i>
+                    <div class="form-group w-50 mx-2">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" class="Aoboshi-One " v-model="lastName" required>
+                        <span v-if="lastNameError" class="error">{{ lastNameError }}</span>
                     </div>
-                    <div class="text-center mt-3">
-                        <a href="#" class="Aoboshi-One">Forgot Password?</a>
-                    </div>
-                    <div class="d-flex justify-content-center">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" class="Aoboshi-One" v-model="email" required>
+                     <span v-if="emailError" class="error">{{ emailError }}</span>
+                </div>
+                <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" class="Aoboshi-One" v-model="password" required>
+          <span v-if="passwordError" class="error">{{ passwordError }}</span>
+        </div>
+  
+        <div class="form-group">
+          <label for="cfmPassword">Confirm Password:</label>
+          <input type="password" id="cfmPassword" class="Aoboshi-One" v-model="cfmPassword" required>
+          <span v-if="cfmPasswordError" class="error">{{ cfmPasswordError }}</span>
+        </div>
+  
+        <div class="form-group">
+          <label for="phone">Phone:</label>
+          <input type="text" id="phone" class="Aoboshi-One" v-model="phone" required>
+          <span v-if="phoneError" class="error"> {{ phoneError }}</span>
+        </div>
+  
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input type="text" id="address" class="Aoboshi-One" v-model="address" required>
+          <span v-if="addressError" class="error">{{ addressError }}</span>
+        </div>
+  
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input type="text" id="city" class="Aoboshi-One" v-model="city" required>
+          <span v-if="cityError" class="error">{{ cityError }}</span>
+        </div>
+
+                <div class="form-group">
+                    <label for="region">Region:</label>
+                    <input type="text" id="region" class="Aoboshi-One" v-model="region" required>
+                    <span v-if="regionError" class="error">{{ regionError }}</span>
+                </div>
+
+
+                <div class="d-flex justify-content-center">
                     <!-- <span>
                         <input type="checkbox" name="remember mx-3" id="remember">
                         <label for="remember" class="Aoboshi-One d-inline mx-2">Remember Me</label>
                     </span> -->
-                    <button class="btn btn-primary mt-3 w-50" type="submit" >Login</button>
+                    <button class="btn btn-primary mt-3 w-50" type="submit">Register</button>
+                    <router-link to="/login" class="btn btn-primary mt-3 mx-2 w-50">Cancel</router-link>
                 </div>
-                </form>
-                
-                <p class="text-center mt-5 p-3 Aoboshi-One" style="border-top: 2px solid rgba(52, 51, 51, 0.5)">
-                    Need an account?
-                </p>
-                <div class="d-flex justify-content-center">
-                    <router-link to="/register" class="btn btn-primary mt-3 w-50">Register</router-link>
-                </div>
-               
+            </form>
 
-              
-               
+        </div>
+
     </div>
-
-</div>
 </template>
-
 <script>
-
-
-
-export default {
-    
+  export default {
     data() {
-        return {
-            email: '',
-            password: ''
-        }
+      return {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        cfmPassword: '',
+        phone: '+65 ',
+        address: '',
+        city: '',
+        region: '',
+        firstNameError: '',
+        lastNameError: '',
+        emailError: '',
+        passwordError: '',
+        cfmPasswordError: '',
+        phoneError: '',
+        addressError: '',
+        cityError: '',
+        regionError: ''
+      }
     },
     methods: {
-        submitForm() {
-            // Handle login logic here
-            console.log('Email:', this.email)
-            console.log('Password:', this.password)
-        },
-        hidePassword() {
-            var x = document.getElementById("id_password");
-            if (x.type === "password") {
-                x.type = "text";
-                document.getElementById("togglePassword").classList.remove("fa-eye");
-                document.getElementById("togglePassword").classList.add("fa-eye-slash");
-            } else {
-                x.type = "password";
-                document.getElementById("togglePassword").classList.remove("fa-eye-slash");
-                document.getElementById("togglePassword").classList.add("fa-eye");
-            }
-
+      submitForm() {
+        // Reset error messages
+        this.firstNameError = ''
+        this.lastNameError = ''
+        this.emailError = ''
+        this.passwordError = ''
+        this.cfmPasswordError = ''
+        this.phoneError = ''
+        this.addressError = ''
+        this.cityError = ''
+        this.regionError = ''
+  
+        // Validate form fields
+        if (!this.firstName) {
+          this.firstNameError = 'Please enter your first name.'
         }
+        if (!this.lastName) {
+          this.lastNameError = 'Please enter your last name.'
+        }
+        if (!this.email) {
+          this.emailError = 'Please enter your email address.'
+        } else if (!this.isValidEmail(this.email)) {
+          this.emailError = 'Please enter a valid email address.'
+        }
+        if (!this.password) {
+          this.passwordError = 'Please enter a password.'
+        } else if (this.password.length < 8) {
+          this.passwordError = 'Password must be at least 8 characters long.'
+        }
+        if (!this.cfmPassword) {
+          this.cfmPasswordError = 'Please confirm your password.'
+        } else if (this.password !== this.cfmPassword) {
+          this.cfmPasswordError = 'Passwords do not match.'
+        }
+        if (!this.phone) {
+          this.phoneError = 'Please enter your phone number.'
+        } else if (!this.isValidPhone(this.phone)) {
+          this.phoneError = 'Please enter a valid phone number.'
+        }
+        if (!this.address) {
+          this.addressError = 'Please enter your address.'
+        }
+        if (!this.city) {
+          this.cityError = 'Please enter your city.'
+        }
+        if (!this.region) {
+          this.regionError = 'Please enter your region.'
+        }
+  
+        // If there are no errors, submit the form
+        if (!this.firstNameError && !this.lastNameError && !this.emailError && !this.passwordError && !this.cfmPasswordError && !this.phoneError && !this.addressError && !this.cityError && !this.regionError) {
+          console.log('Form submitted successfully.')
+        }
+      },
+      isValidEmail(email) {
+      // Email validation logic
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      return emailRegex.test(email)
+    },
+    isValidPhone(phone) {
+      // Phone validation logic
+    let test1 = false;
+    let first = phone.substring(0, 4);
+    if (first == "+65 ") {
+        test1 = true;}
+    phone = phone.substring(4, phone.length);
+  
+      const phoneRegex = /^\d{8}$/
+      let test2 = phoneRegex.test(phone)
+    
+        return test1 && test2
+    },
     }
-}
-</script>
+  }
+  </script>
 
 <style scoped>
 @import "../assets/base.css";
@@ -88,6 +190,7 @@ export default {
 
 .login-container {
     background-image: url('../assets/bg.jpeg');
+    
     background-size: cover;
     background-position: center;
     display: flex;
@@ -97,16 +200,49 @@ export default {
 }
 
 .login-form-container {
+    font-size: small;
     opacity: 0.9;
-    width: 50%;
+    width: auto;
+    height : 98%;
     padding: 2rem;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
 }
+
+  /* Medium devices (tablets, 768px and up) */
+  @media (min-width: 768px) {
+    .login-form-container {
+        font-size: x-small;
+    opacity: 0.9;
+    width: auto;
+    height : 98%;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        
+    };};
+     @media (min-width: 576px) {
+    .login-form-container {
+    font-size: 1px;
+    opacity: 0.9;
+    width: 80%;
+    height : 100%;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        
+    };};
+
+
+  
 
 .form-group {
     margin-bottom: 1rem;
-    
+
+
 }
 
 label {
@@ -117,11 +253,11 @@ label {
 input[type="email"],
 input[type="password"],
 input[type="text"] {
-    width: 80%;
+    width: 100%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
-    
+
 }
 
 /* button[type="submit"] {
@@ -146,7 +282,8 @@ img {
     max-width: 100%;
     height: auto;
 }
-#content{
+
+#content {
     background-color: black;
 }
 </style>

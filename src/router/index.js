@@ -12,11 +12,7 @@ export const routes = [
         name: "Register",
         component: () => import("../views/RegisterView.vue"),
     },
-    {
-        path: "/login",
-        name: "Login",
-        component: () => import("../views/LoginView.vue"),
-    },
+   
     {
         path: "/about",
         name: "About",
@@ -34,6 +30,11 @@ export const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import("../views/FAQView.vue"),
     },
+     {
+        path: "/login",
+        name: "Login",
+        component: () => import("../views/LoginView.vue"),
+    }
 ];
 
 const router = createRouter({
