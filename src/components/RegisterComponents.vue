@@ -6,7 +6,7 @@
     <div class="login-container container-fluid">
     
             <div class="login-form-container w-50">
-                <h1 class="text-center Aoboshi-One">Login</h1>
+                <h1 class="text-center Aoboshi-One">Registration</h1>
                 <p class="text-center Aoboshi-One my-3">
                     Enter your account details
                 </p>
@@ -83,11 +83,11 @@ export default {
 </script>
 
 <style scoped>
-@import "../../assets/base.css";
-@import "../../assets/responsive.css";
+@import "../assets/base.css";
+@import "../assets/responsive.css";
 
 .login-container {
-    background-image: url('../../assets/bg.jpeg');
+    background-image: url('../assets/bg.jpeg');
     background-size: cover;
     background-position: center;
     display: flex;

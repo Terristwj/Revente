@@ -1,7 +1,11 @@
-<script setup></script>
-
-<template>
-    <div>Registration Page</div>
+<template class="register-view">
+  
+    <register-section></register-section>
 </template>
 
-<style scoped></style>
+<script>
+export default {
+    data(){
+    }
+}
+</script>
