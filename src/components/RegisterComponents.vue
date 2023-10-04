@@ -64,7 +64,7 @@
 
                 <div class="form-group">
                     <label for="region">Region:</label>
-                    <input type="text" id="region" class="Aoboshi-One" v-model="region" required>
+                    <input type="text" id="region" class="Aoboshi-One my-0" v-model="region" required>
                     <span v-if="regionError" class="error">{{ regionError }}</span>
                 </div>
 
@@ -74,8 +74,8 @@
                         <input type="checkbox" name="remember mx-3" id="remember">
                         <label for="remember" class="Aoboshi-One d-inline mx-2">Remember Me</label>
                     </span> -->
-                    <button class="btn btn-primary mt-3 w-50" type="submit">Register</button>
-                    <router-link to="/login" class="btn btn-primary mt-3 mx-2 w-50">Cancel</router-link>
+                    <button class="btn btn-primary w-50" type="submit">Register</button>
+                    <router-link to="/login" class="btn btn-primary mx-2 w-50">Cancel</router-link>
                 </div>
             </form>
 
@@ -200,41 +200,30 @@
 }
 
 .login-form-container {
-    font-size: small;
     opacity: 0.9;
-    width: auto;
+    width: 75%;
     height : 98%;
     padding: 2rem;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
 }
-
-  /* Medium devices (tablets, 768px and up) */
-  @media (min-width: 768px) {
+ 
+@media (max-width: 576px) {
     .login-form-container {
-        font-size: x-small;
-    opacity: 0.9;
-    width: auto;
-    height : 98%;
-    padding: 2rem;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        font-size: small;
+        width: 100%; 
+    }
+}
 
-        
-    };};
-     @media (min-width: 576px) {
+@media (max-width: 768px) {
     .login-form-container {
-    font-size: 1px;
-    opacity: 0.9;
-    width: 80%;
-    height : 100%;
-    padding: 2rem;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
-        
-    };};
+        font-size: 12px;
+        width: 100%; 
+    }
+}
+ 
+ 
 
 
   
