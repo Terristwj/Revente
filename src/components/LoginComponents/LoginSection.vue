@@ -5,7 +5,7 @@
     
     <div class="login-container container-fluid">
     
-            <div class="login-form-container w-50">
+            <div class="login-form-container">
                 <h1 class="text-center Aoboshi-One">Login</h1>
                 <p class="text-center Aoboshi-One my-3">Enter your account details</p>
                 <form @submit.prevent="submitForm">
@@ -92,6 +92,7 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100%;
 }
 
 .login-form-container {
@@ -100,6 +101,19 @@ export default {
     padding: 2rem;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 576px) {
+    .login-form-container {
+        font-size: small;
+        width: 100%; 
+    }
+}
+
+@media (max-width: 768px) {
+    .login-form-container {
+        font-size: 12px;
+        width: 60%; 
+    }
 }
 
 .form-group {
