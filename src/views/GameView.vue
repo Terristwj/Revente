@@ -1,5 +1,5 @@
 <script>
-import GameCanvas from "../game/GameCanvas.vue";
+import GameCanvas from "../components/GameCanvas.vue";
 export default {
     components: {
         GameCanvas,
