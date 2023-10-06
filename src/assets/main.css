@@ -60,3 +60,7 @@ img {
 .pointing {
     cursor: pointer;
 }
+
+::selection {
+    background: #f3dfd7;
+}
