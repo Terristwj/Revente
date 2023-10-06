@@ -1,9 +1,14 @@
-<script setup>
-import { ref } from "vue";
-import { RouterLink } from "vue-router";
+<script>
+// import { ref } from "vue";
 import { routes } from "../router/index";
-import Sidebar from "primevue/sidebar";
-const mobileTabVisible = ref(false);
+export default {
+    data() {
+        return {
+            mobileTabVisible: false,
+            routes,
+        };
+    },
+};
 </script>
 
 <!-- 

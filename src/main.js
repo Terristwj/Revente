@@ -6,20 +6,14 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 
-import PrimeVue from "primevue/config";
-import Button from "primevue/button";
-
-import "primevue/resources/themes/lara-light-indigo/theme.css";
-import "primevue/resources/primevue.min.css";
-import "primeicons/primeicons.css";
+import connectPrimeVue from "./primevue";
 
 const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
 
-app.use(PrimeVue);
-// eslint-disable-next-line vue/multi-word-component-names, vue/no-reserved-component-names
-app.component("Button", Button);
+// Refer to primevue.js for the full list of components
+connectPrimeVue(app);
 
 app.mount("#app");

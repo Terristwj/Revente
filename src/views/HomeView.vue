@@ -1,4 +1,4 @@
-<script setup></script>
+<script></script>
 
 <template>
     <div>Homepage</div>
