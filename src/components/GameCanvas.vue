@@ -16,46 +16,51 @@ script2.setAttribute("referrerpolicy", "no-referrer");
 document.head.appendChild(script2);
 
 export default {
-    mounted() {
-        let movementSpeed = 9;
-
-        const audio = {
-            Map: new Howl({
-                src: "./audio/map.wav",
-                html5: true,
-                volume: 0.1,
-            }),
-            initBattle: new Howl({
-                src: "./audio/initBattle.wav",
-                html5: true,
-                volume: 0.1,
-            }),
-            battle: new Howl({
-                src: "./audio/battle.mp3",
-                html5: true,
-                volume: 0.1,
-            }),
-            tackleHit: new Howl({
-                src: "./audio/tackleHit.wav",
-                html5: true,
-                volume: 0.1,
-            }),
-            fireballHit: new Howl({
-                src: "./audio/fireballHit.wav",
-                html5: true,
-                volume: 0.1,
-            }),
-            initFireball: new Howl({
-                src: "./audio/initFireball.wav",
-                html5: true,
-                volume: 0.1,
-            }),
-            victory: new Howl({
-                src: "./audio/victory.wav",
-                html5: true,
-                volume: 0.1,
-            }),
+    data() {
+        return {
+            movementSpeed: 9,
+            audio: {
+                Map: new Howl({
+                    src: "./audio/map.wav",
+                    html5: true,
+                    volume: 0.1,
+                }),
+                initBattle: new Howl({
+                    src: "./audio/initBattle.wav",
+                    html5: true,
+                    volume: 0.1,
+                }),
+                battle: new Howl({
+                    src: "./audio/battle.mp3",
+                    html5: true,
+                    volume: 0.1,
+                }),
+                tackleHit: new Howl({
+                    src: "./audio/tackleHit.wav",
+                    html5: true,
+                    volume: 0.1,
+                }),
+                fireballHit: new Howl({
+                    src: "./audio/fireballHit.wav",
+                    html5: true,
+                    volume: 0.1,
+                }),
+                initFireball: new Howl({
+                    src: "./audio/initFireball.wav",
+                    html5: true,
+                    volume: 0.1,
+                }),
+                victory: new Howl({
+                    src: "./audio/victory.wav",
+                    html5: true,
+                    volume: 0.1,
+                }),
+            },
         };
+    },
+    mounted() {
+        let movementSpeed = this.movementSpeed;
+        const audio = this.audio;
 
         const battleZonesData = [
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
