@@ -138,11 +138,7 @@
     </div>
 </template>
 <script>
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    updateProfile,
-} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 // import axios from "axios";
 

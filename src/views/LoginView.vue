@@ -1,5 +1,78 @@
-<template class="login-view">
-    <div class="login-container container-fluid">
+<script>
+import router, { isAuthenticated } from "../router/router.js";
+
+// For Firebase Login
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+export default {
+    data() {
+        return {
+            email: "",
+            password: "",
+            errMsg: "",
+            isLoggedIn: isAuthenticated(),
+        };
+    },
+    methods: {
+        hidePassword() {
+            var x = document.getElementById("id_password");
+            if (x.type === "password") {
+                x.type = "text";
+                document
+                    .getElementById("togglePassword")
+                    .classList.remove("fa-eye");
+                document
+                    .getElementById("togglePassword")
+                    .classList.add("fa-eye-slash");
+            } else {
+                x.type = "password";
+                document
+                    .getElementById("togglePassword")
+                    .classList.remove("fa-eye-slash");
+                document
+                    .getElementById("togglePassword")
+                    .classList.add("fa-eye");
+            }
+        },
+        emailPasswordLogin() {
+            // Handle Firebase email logic here
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, this.email, this.password)
+                // eslint-disable-next-line no-unused-vars
+                .then((data) => {
+                    // Successfully login
+                    router.push("/");
+                })
+                .catch((error) => {
+                    console.log(error.code);
+                    switch (error.code) {
+                        case "auth/invalid-email":
+                            this.errMsg = "Invalid Email";
+                            break;
+                        case "auth/wrong-password":
+                            this.errMsg = "Incorrect Password";
+                            break;
+                        case "auth/user-not-found":
+                        case "auth/user-disabled":
+                            this.errMsg = "Email or password was incorrect";
+                            break;
+
+                        // toast.success(`Welcome back ${auth.currentUser.displayName}!`, {
+                        //     autoClose: 1000,
+                        //     // ToastOptions
+                        // });
+                    }
+                });
+        },
+        googleLogin() {
+            // Handle Firebase Google logic here
+        },
+    },
+};
+</script>
+
+<template>
+    <div class="login-container">
         <div class="login-form-container">
             <h1 class="text-center Aoboshi-One">Login</h1>
             <p class="text-center Aoboshi-One my-3">
@@ -69,87 +142,6 @@
         </div>
     </div>
 </template>
-
-<script>
-import router, { isAuthenticated } from "../router/index";
-
-// For Firebase Login
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
-export default {
-    data() {
-        return {
-            email: "",
-            password: "",
-            errMsg: "",
-            isLoggedIn: isAuthenticated(),
-        };
-    },
-    methods: {
-        hidePassword() {
-            var x = document.getElementById("id_password");
-            if (x.type === "password") {
-                x.type = "text";
-                document
-                    .getElementById("togglePassword")
-                    .classList.remove("fa-eye");
-                document
-                    .getElementById("togglePassword")
-                    .classList.add("fa-eye-slash");
-            } else {
-                x.type = "password";
-                document
-                    .getElementById("togglePassword")
-                    .classList.remove("fa-eye-slash");
-                document
-                    .getElementById("togglePassword")
-                    .classList.add("fa-eye");
-            }
-        },
-        emailPasswordLogin() {
-            // Handle Firebase email logic here
-            console.log("Email:", this.email);
-            console.log("Password:", this.password);
-
-            console.log(isAuthenticated());
-
-            const auth = getAuth();
-            signInWithEmailAndPassword(auth, this.email, this.password)
-                .then((data) => {
-                    console.log(data);
-                    console.log("succesful signed in");
-                    console.log(auth);
-                    this.currentUserStore.toggleLoggedIn();
-
-                    router.push("/");
-                })
-                .catch((error) => {
-                    console.log(error.code);
-                    switch (error.code) {
-                        case "auth/invalid-email":
-                            this.errMsg = "Invalid Email";
-                            break;
-                        case "auth/wrong-password":
-                            this.errMsg = "Incorrect Password";
-                            break;
-                        case "auth/user-not-found":
-                        case "auth/user-disabled":
-                            this.errMsg = "Email or password was incorrect";
-                            break;
-
-                        // toast.success(`Welcome back ${auth.currentUser.displayName}!`, {
-                        //     autoClose: 1000,
-                        //     // ToastOptions
-                        // });
-                    }
-                });
-        },
-        googleLogin() {
-            // Handle Firebase Google logic here
-        },
-    },
-};
-</script>
 
 <style scoped>
 .login-container {

@@ -1,39 +1,46 @@
-<script>
-import router, { routes, isAuthenticated } from "../router/index";
+<script setup>
+import { onMounted, ref } from "vue";
+import router, { routes } from "../router/router.js";
 
 // For Firebase Signout
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
-export default {
-    data() {
-        return {
-            mobileTabVisible: false,
-            routes,
-            isLoggedIn: isAuthenticated(),
-            auth: getAuth(),
-        };
-    },
-    watch: {
-        isLoggedIn() {
-            console.log(this.isLoggedIn);
-        },
-    },
-    methods: {
-        logout() {
-            console.log(1);
-            console.log(isAuthenticated());
-            signOut(this.auth)
-                .then(() => {
-                    // Sign-out successful.
-                    console.log(this.currentUserStore.isLoggedIn);
-                    router.push("/login");
-                })
-                .catch((error) => {
-                    // An error happened.
-                    console.log(error);
-                });
-        },
-    },
+// For Mobile Tab
+var mobileTabVisible = ref(false);
+
+// For Firebase Login
+const isLoggedIn = ref(false);
+let auth;
+
+// For Navigation Bar
+const routesExcludedLoggedIn = ["Register", "Login"];
+const routesExcludedLoggedOut = ["Register", "Game"];
+let navRoutes = routes.filter(
+    (route) => !routesExcludedLoggedOut.includes(route.name)
+);
+
+// Checks for user authentication to
+// display the correct navigation items
+onMounted(() => {
+    auth = getAuth();
+    // When Login or Logout
+    onAuthStateChanged(auth, (user) => {
+        isLoggedIn.value = user ? true : false;
+        navRoutes = isLoggedIn.value
+            ? routes.filter(
+                  (route) => !routesExcludedLoggedIn.includes(route.name)
+              )
+            : routes.filter(
+                  (route) => !routesExcludedLoggedOut.includes(route.name)
+              );
+    });
+});
+
+// When logout is clicked
+const handleLogout = () => {
+    signOut(auth).then(() => {
+        router.push("/login");
+    });
 };
 </script>
 
@@ -43,7 +50,7 @@ export default {
 -->
 
 <template>
-    <nav class="navbar navbar-expand-lg w-100 border-bottom shadow-sm p-2 mb-4">
+    <nav class="navbar navbar-expand-lg w-100 border-bottom shadow-sm p-2">
         <div id="navigationBarContent" class="container-fluid">
             <!-- Logo START -->
             <RouterLink to="/"
@@ -77,7 +84,7 @@ export default {
                 </template>
                 <ul class="navbar-nav">
                     <li
-                        v-for="route in routes"
+                        v-for="route in navRoutes"
                         :key="route.name"
                         class="nav-item"
                     >
@@ -100,7 +107,7 @@ export default {
             >
                 <ul class="navbar-nav">
                     <li
-                        v-for="route in routes"
+                        v-for="route in navRoutes"
                         :key="route.name"
                         class="nav-item"
                     >
@@ -108,11 +115,14 @@ export default {
                             route.name
                         }}</RouterLink>
                     </li>
+                    <li v-if="isLoggedIn" class="nav-item">
+                        <button class="nav-link" @click="handleLogout">
+                            Sign out
+                        </button>
+                    </li>
                 </ul>
             </div>
             <!-- Desktop Tab Items END -->
-            <button v-if="!isLoggedIn" @click="logout">Sign out</button>
-            {{ auth }}
         </div>
     </nav>
 </template>
