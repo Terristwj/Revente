@@ -6,16 +6,21 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 
-import connectPrimeVue from "./primevue";
+// Component library
+import connectPrimeVue from "./service/primevue";
 
-import LogIn from "./components/LoginComponents/LoginSection.vue";
-import RegisterPage from "./components/RegisterComponents.vue";
+// Firebase Database
+import connectFirebase from "./service/Firebase";
+
 const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
 
-// Refer to primevue.js for the full list of components
+// Refer to PrimeVue.js for the full list of components
 connectPrimeVue(app);
+
+// Refer to Firebase.js for the full list of components
+connectFirebase();
 
 app.mount("#app");

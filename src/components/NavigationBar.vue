@@ -51,7 +51,7 @@ export default {
                 </template>
                 <ul class="navbar-nav">
                     <li
-                        v-for="route in filteredRoutes(routes)"
+                        v-for="route in routes"
                         :key="route.name"
                         class="nav-item"
                     >
@@ -74,7 +74,7 @@ export default {
             >
                 <ul class="navbar-nav">
                     <li
-                        v-for="route in filteredRoutes(routes)"
+                        v-for="route in routes"
                         :key="route.name"
                         class="nav-item"
                     >

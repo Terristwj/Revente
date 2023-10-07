@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "firebase": "^10.4.0",
     "gsap": "^3.12.2",
     "howler": "^2.2.4",
     "pinia": "^2.1.6",
