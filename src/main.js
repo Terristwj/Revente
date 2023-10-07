@@ -8,6 +8,8 @@ import router from "./router";
 
 import connectPrimeVue from "./primevue";
 
+import LogIn from "./components/LoginComponents/LoginSection.vue";
+import RegisterPage from "./components/RegisterComponents.vue";
 const app = createApp(App);
 
 app.use(createPinia());

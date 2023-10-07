@@ -8,6 +8,12 @@ export const routes = [
         component: () => import("../views/HomeView.vue"),
     },
     {
+        path: "/register",
+        name: "Register",
+        component: () => import("../views/RegisterView.vue"),
+    },
+   
+    {
         path: "/about",
         name: "About",
         // route level code-splitting
@@ -15,6 +21,7 @@ export const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import("../views/AboutView.vue"),
     },
+   
     {
         path: "/faq",
         name: "FAQ",
@@ -23,6 +30,12 @@ export const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import("../views/FAQView.vue"),
     },
+    
+    {
+        path: "/login",
+        name: "Login",
+        component: () => import("../views/LoginView.vue"),
+    }
     {
         path: "/game",
         name: "Game",

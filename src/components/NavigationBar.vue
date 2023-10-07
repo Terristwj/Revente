@@ -51,7 +51,7 @@ export default {
                 </template>
                 <ul class="navbar-nav">
                     <li
-                        v-for="route in routes"
+                        v-for="route in filteredRoutes(routes)"
                         :key="route.name"
                         class="nav-item"
                     >
@@ -74,7 +74,7 @@ export default {
             >
                 <ul class="navbar-nav">
                     <li
-                        v-for="route in routes"
+                        v-for="route in filteredRoutes(routes)"
                         :key="route.name"
                         class="nav-item"
                     >
@@ -90,6 +90,12 @@ export default {
 </template>
 
 <style scoped>
+nav {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
 .nav-item {
     transition-duration: 0.5s;
     box-shadow: 0px 0px grey;
