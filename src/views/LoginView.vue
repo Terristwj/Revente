@@ -1,35 +1,29 @@
 <template class="login-view">
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-    />
-
     <div class="login-container container-fluid">
         <div class="login-form-container">
             <h1 class="text-center Aoboshi-One">Login</h1>
             <p class="text-center Aoboshi-One my-3">
                 Enter your account details
             </p>
-            <form @submit.prevent="submitForm">
-                <div class="form-group" style="margin-left: 20%">
+            <div class="w-75 mx-auto" style="max-width: 400px">
+                <div class="form-group">
                     <label for="email">Email:</label>
                     <input
-                        type="email"
+                        type="text"
                         id="email"
                         class="Aoboshi-One"
                         v-model="email"
-                        required
                     />
                 </div>
-                <div class="form-group my-4" style="margin-left: 20%">
+                <div class="form-group my-4">
                     <label for="password">Password:</label>
                     <input
                         class="Aoboshi-One"
                         type="password"
                         name="password"
                         autocomplete="current-password"
-                        required=""
-                        id="id_password"
+                        id="password"
+                        v-model="password"
                     />
                     <i
                         class="far fa-eye"
@@ -38,28 +32,37 @@
                         @click="hidePassword"
                     ></i>
                 </div>
-                <div class="text-center mt-3">
-                    <a href="#" class="Aoboshi-One">Forgot Password?</a>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <!-- <span>
-                        <input type="checkbox" name="remember mx-3" id="remember">
-                        <label for="remember" class="Aoboshi-One d-inline mx-2">Remember Me</label>
-                    </span> -->
-                    <button class="btn btn-primary mt-3 w-50" type="submit">
+                <div
+                    class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto"
+                >
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                        @click="emailPasswordLogin"
+                    >
                         Login
                     </button>
+                    <label class="text-center Aoboshi-One">OR</label>
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                        @click="googleLogin"
+                    >
+                        Google Login
+                    </button>
                 </div>
-            </form>
+            </div>
 
-            <p
-                class="text-center mt-5 p-3 Aoboshi-One"
-                style="border-top: 2px solid rgba(52, 51, 51, 0.5)"
+            <label
+                class="text-center mt-4 p-3 Aoboshi-One border-top border-black"
             >
                 Need an account?
-            </p>
-            <div class="d-flex justify-content-center">
-                <router-link to="/register" class="btn btn-primary mt-2 w-50"
+            </label>
+            <div
+                class="d-flex justify-content-center w-75 mx-auto"
+                style="max-width: 400px"
+            >
+                <router-link to="/register" class="btn btn-primary w-75"
                     >Register</router-link
                 >
             </div>
@@ -68,19 +71,21 @@
 </template>
 
 <script>
+import router, { isAuthenticated } from "../router/index";
+
+// For Firebase Login
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 export default {
     data() {
         return {
             email: "",
             password: "",
+            errMsg: "",
+            isLoggedIn: isAuthenticated(),
         };
     },
     methods: {
-        submitForm() {
-            // Handle login logic here
-            console.log("Email:", this.email);
-            console.log("Password:", this.password);
-        },
         hidePassword() {
             var x = document.getElementById("id_password");
             if (x.type === "password") {
@@ -101,16 +106,54 @@ export default {
                     .classList.add("fa-eye");
             }
         },
+        emailPasswordLogin() {
+            // Handle Firebase email logic here
+            console.log("Email:", this.email);
+            console.log("Password:", this.password);
+
+            console.log(isAuthenticated());
+
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, this.email, this.password)
+                .then((data) => {
+                    console.log(data);
+                    console.log("succesful signed in");
+                    console.log(auth);
+                    this.currentUserStore.toggleLoggedIn();
+
+                    router.push("/");
+                })
+                .catch((error) => {
+                    console.log(error.code);
+                    switch (error.code) {
+                        case "auth/invalid-email":
+                            this.errMsg = "Invalid Email";
+                            break;
+                        case "auth/wrong-password":
+                            this.errMsg = "Incorrect Password";
+                            break;
+                        case "auth/user-not-found":
+                        case "auth/user-disabled":
+                            this.errMsg = "Email or password was incorrect";
+                            break;
+
+                        // toast.success(`Welcome back ${auth.currentUser.displayName}!`, {
+                        //     autoClose: 1000,
+                        //     // ToastOptions
+                        // });
+                    }
+                });
+        },
+        googleLogin() {
+            // Handle Firebase Google logic here
+        },
     },
 };
 </script>
 
 <style scoped>
-@import "../../assets/base.css";
-@import "../../assets/responsive.css";
-
 .login-container {
-    background-image: url("../../assets/bg.jpeg");
+    background-image: url("img/ecommerce/login-bg.jpeg");
     background-size: cover;
     background-position: center;
     display: flex;
@@ -142,47 +185,13 @@ export default {
     }
 }
 
-.form-group {
-    margin-bottom: 1rem;
-}
-
 label {
     display: block;
-    margin-bottom: 0.5rem;
 }
 
 input[type="email"],
 input[type="password"],
 input[type="text"] {
-    width: 80%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-}
-
-/* button[type="submit"] {
-    display: block;
-    margin-top: 1rem;
-    padding: 0.5rem;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-} */
-
-.login-image-container {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-#content {
-    background-color: black;
+    width: 100%;
 }
 </style>

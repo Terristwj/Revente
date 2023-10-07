@@ -18,7 +18,7 @@ document.head.appendChild(script2);
 export default {
     data() {
         return {
-            movementSpeed: 9,
+            movementSpeed: 5,
             audio: {
                 Map: new Howl({
                     src: "./audio/map.wav",
@@ -344,7 +344,7 @@ export default {
                     y: 325,
                 },
                 image: {
-                    src: "./img/embySprite.png",
+                    src: "./img/2d_game/embySprite.png",
                 },
                 frames: {
                     max: 4,
@@ -360,7 +360,7 @@ export default {
                     y: 100,
                 },
                 image: {
-                    src: "./img/draggleSprite.png",
+                    src: "./img/2d_game/draggleSprite.png",
                 },
                 frames: {
                     max: 4,
@@ -692,7 +692,7 @@ export default {
                     case "Fireball": {
                         audio.initFireball.play();
                         const fireballImage = new Image();
-                        fireballImage.src = "./img/fireball.png";
+                        fireballImage.src = "./img/2d_game/fireball.png";
                         const fireball = new Sprite({
                             position: {
                                 x: this.position.x,
@@ -889,10 +889,10 @@ export default {
 
         const characters = [];
         const villagerImg = new Image();
-        villagerImg.src = "./img/villager/Idle.png";
+        villagerImg.src = "./img/2d_game/villager/Idle.png";
 
         const oldManImg = new Image();
-        oldManImg.src = "./img/oldMan/Idle.png";
+        oldManImg.src = "./img/2d_game/oldMan/Idle.png";
 
         charactersMap.forEach((row, i) => {
             row.forEach((symbol, j) => {
@@ -953,22 +953,22 @@ export default {
         });
 
         const image = new Image();
-        image.src = "./img/Pellet Town.png";
+        image.src = "./img/2d_game/Pellet Town.png";
 
         const foregroundImage = new Image();
-        foregroundImage.src = "./img/foregroundObjects.png";
+        foregroundImage.src = "./img/2d_game/foregroundObjects.png";
 
         const playerDownImage = new Image();
-        playerDownImage.src = "./img/playerDown.png";
+        playerDownImage.src = "./img/2d_game/playerDown.png";
 
         const playerUpImage = new Image();
-        playerUpImage.src = "./img/playerUp.png";
+        playerUpImage.src = "./img/2d_game/playerUp.png";
 
         const playerLeftImage = new Image();
-        playerLeftImage.src = "./img/playerLeft.png";
+        playerLeftImage.src = "./img/2d_game/playerLeft.png";
 
         const playerRightImage = new Image();
-        playerRightImage.src = "./img/playerRight.png";
+        playerRightImage.src = "./img/2d_game/playerRight.png";
 
         const player = new Sprite({
             position: {
@@ -1346,7 +1346,7 @@ export default {
         });
 
         const battleBackgroundImage = new Image();
-        battleBackgroundImage.src = "./img/battleBackground.png";
+        battleBackgroundImage.src = "./img/2d_game/battleBackground.png";
         const battleBackground = new Sprite({
             position: {
                 x: 0,

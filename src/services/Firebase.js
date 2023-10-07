@@ -17,4 +17,6 @@ export default function connectFirebase() {
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     getAnalytics(app);
+
+    return app;
 }

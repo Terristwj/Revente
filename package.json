@@ -10,14 +10,17 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "axios": "^1.5.1",
     "firebase": "^10.4.0",
+    "firebaseui": "^6.1.0",
     "gsap": "^3.12.2",
     "howler": "^2.2.4",
     "pinia": "^2.1.6",
     "primeicons": "^6.0.1",
     "primevue": "^3.33.0",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.4",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.1",

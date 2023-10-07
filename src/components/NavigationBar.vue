@@ -1,12 +1,38 @@
 <script>
-// import { ref } from "vue";
-import { routes } from "../router/index";
+import router, { routes, isAuthenticated } from "../router/index";
+
+// For Firebase Signout
+import { getAuth, signOut } from "firebase/auth";
+
 export default {
     data() {
         return {
             mobileTabVisible: false,
             routes,
+            isLoggedIn: isAuthenticated(),
+            auth: getAuth(),
         };
+    },
+    watch: {
+        isLoggedIn() {
+            console.log(this.isLoggedIn);
+        },
+    },
+    methods: {
+        logout() {
+            console.log(1);
+            console.log(isAuthenticated());
+            signOut(this.auth)
+                .then(() => {
+                    // Sign-out successful.
+                    console.log(this.currentUserStore.isLoggedIn);
+                    router.push("/login");
+                })
+                .catch((error) => {
+                    // An error happened.
+                    console.log(error);
+                });
+        },
     },
 };
 </script>
@@ -85,6 +111,8 @@ export default {
                 </ul>
             </div>
             <!-- Desktop Tab Items END -->
+            <button v-if="!isLoggedIn" @click="logout">Sign out</button>
+            {{ auth }}
         </div>
     </nav>
 </template>

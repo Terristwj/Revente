@@ -1,5 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+import { GoogleAuthProvider, getAuth, onAuthStateChanged } from "firebase/auth";
+
+// const provider = new GoogleAuthProvider();
+// provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+
+// provider.setCustomParameters({
+//     login_hint: "user@example.com",
+// });
+
+export const isAuthenticated = () => {
+    let auth = getAuth();
+    let user = auth.currentUser;
+    return !!user;
+};
+
 // Add routes here
 export const routes = [
     {
@@ -40,12 +55,23 @@ export const routes = [
         // this generates a separate chunk (About.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import("../views/GameView.vue"),
+        meta: {
+            requiresAuth: true,
+        },
     },
 ];
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: routes,
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth && !isAuthenticated()) {
+        next("/login");
+    } else {
+        next();
+    }
 });
 
 export default router;

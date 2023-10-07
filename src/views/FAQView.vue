@@ -1,9 +1,9 @@
 <script>
-export default {
-    data() {},
-    mounted() {},
-    methods: {},
-};
+// export default {
+//     data() {},
+//     mounted() {},
+//     methods: {},
+// };
 </script>
 
 <template>
