@@ -48,6 +48,11 @@ a,
     font-family: "Indie Flower";
 }
 
+.pointing {
+    cursor: pointer;
+}
+
+/* Image Settings */
 img {
     user-drag: none;
     -webkit-user-drag: none;
@@ -57,10 +62,33 @@ img {
     -ms-user-select: none;
 }
 
-.pointing {
-    cursor: pointer;
-}
-
+/* User Highlight */
 ::selection {
     background: #f3dfd7;
 }
+
+/* Transition Effect */
+* {
+    transition-duration: 0.2s;
+}
+
+/* Custom Scrollbar START*/
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #888;
+    border-left: 1px solid grey;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #f3dfd7;
+    border-left: 1px solid grey;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #cbaca0;
+}
+/* Custom Scrollbar END*/

@@ -28,6 +28,15 @@ export default {
                 router.push("/login");
             });
         },
+        // Display toast when login or logout
+        showToast(severity, summary, detail) {
+            this.$toast.add({
+                severity,
+                summary,
+                detail,
+                life: 3000,
+            });
+        },
     },
     // Checks for user authentication to
     // display the correct navigation items
@@ -35,15 +44,26 @@ export default {
         // When Login or Logout
         onAuthStateChanged(this.auth, (user) => {
             this.isLoggedIn = user ? true : false;
-            this.navRoutes = this.isLoggedIn
-                ? routes.filter(
-                      (route) =>
-                          !this.routesExcludedLoggedIn.includes(route.name)
-                  )
-                : routes.filter(
-                      (route) =>
-                          !this.routesExcludedLoggedOut.includes(route.name)
-                  );
+            if (this.isLoggedIn) {
+                this.navRoutes = routes.filter(
+                    (route) => !this.routesExcludedLoggedIn.includes(route.name)
+                );
+                this.showToast(
+                    "success",
+                    "Currently logged in",
+                    "Welcome to Reventé!"
+                );
+            } else {
+                this.navRoutes = routes.filter(
+                    (route) =>
+                        !this.routesExcludedLoggedOut.includes(route.name)
+                );
+                this.showToast(
+                    "warn",
+                    "Not logged in",
+                    "Login to use our website"
+                );
+            }
         });
     },
 };
@@ -100,6 +120,11 @@ export default {
                             >{{ route.name }}</RouterLink
                         >
                     </li>
+                    <li v-if="isLoggedIn" class="nav-item">
+                        <a class="nav-link pointing" @click="handleLogout">
+                            Sign out
+                        </a>
+                    </li>
                 </ul>
             </Sidebar>
             <!-- Mobile Tab Items END -->
@@ -120,16 +145,15 @@ export default {
                             route.name
                         }}</RouterLink>
                     </li>
-                    <li v-if="isLoggedIn" class="nav-item">
-                        <button class="nav-link" @click="handleLogout">
-                            Sign out
-                        </button>
+                    <li v-if="isLoggedIn" class="nav-item pointing">
+                        <a class="nav-link" @click="handleLogout"> Sign out </a>
                     </li>
                 </ul>
             </div>
             <!-- Desktop Tab Items END -->
         </div>
     </nav>
+    <Toast />
 </template>
 
 <style scoped>
@@ -140,7 +164,6 @@ nav {
     z-index: 1;
 }
 .nav-item {
-    transition-duration: 0.5s;
     box-shadow: 0px 0px grey;
 }
 

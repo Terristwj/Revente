@@ -1,16 +1,25 @@
 <script>
-import router, { isAuthenticated } from "../router/router.js";
+import router from "../router/router.js";
 
 // For Firebase Login
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from "firebase/auth";
 
 export default {
     data() {
         return {
+            // Login Form
             email: "",
             password: "",
             errMsg: "",
-            isLoggedIn: isAuthenticated(),
+
+            // Login Logic
+            auth: getAuth(),
+            afterLogin: "/",
         };
     },
     methods: {
@@ -36,48 +45,64 @@ export default {
         },
         emailPasswordLogin() {
             // Handle Firebase email logic here
-            const auth = getAuth();
-            signInWithEmailAndPassword(auth, this.email, this.password)
+            signInWithEmailAndPassword(this.auth, this.email, this.password)
                 // eslint-disable-next-line no-unused-vars
                 .then((data) => {
                     // Successfully login
-                    router.push("/");
+                    router.push(this.afterLogin);
                 })
                 .catch((error) => {
-                    console.log(error.code);
+                    // console.log(error.code);
                     switch (error.code) {
                         case "auth/invalid-email":
-                            this.errMsg = "Invalid Email";
+                            this.errMsg = "This email is not signed up";
                             break;
-                        case "auth/wrong-password":
-                            this.errMsg = "Incorrect Password";
+                        case "auth/missing-password":
+                            this.errMsg = "Please enter your password";
                             break;
-                        case "auth/user-not-found":
+                        case "auth/invalid-login-credentials":
+                            this.errMsg = "Wrong password";
+                            break;
                         case "auth/user-disabled":
-                            this.errMsg = "Email or password was incorrect";
+                            this.errMsg = "Account is currently disabled";
                             break;
-
-                        // toast.success(`Welcome back ${auth.currentUser.displayName}!`, {
-                        //     autoClose: 1000,
-                        //     // ToastOptions
-                        // });
+                        default:
+                            this.errMsg = error.code;
                     }
+                    this.showToast("error", this.errMsg);
                 });
         },
         googleLogin() {
             // Handle Firebase Google logic here
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(this.auth, provider)
+                // eslint-disable-next-line no-unused-vars
+                .then((result) => {
+                    // console.log(result);
+                    router.push(this.afterLogin);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        toRegistration() {
+            router.push("/register");
+        },
+        showToast(severity, summary) {
+            this.$toast.add({
+                severity,
+                summary,
+                life: 3000,
+            });
         },
     },
 };
 </script>
 
 <template>
-    <div class="login-container">
-        <div class="login-form-container">
+    <div class="background-container">
+        <div class="login-container">
             <h1 class="text-center Aoboshi-One">Login</h1>
-            <p class="text-center Aoboshi-One my-3">
-                Enter your account details
-            </p>
             <div class="w-75 mx-auto" style="max-width: 400px">
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -88,13 +113,12 @@ export default {
                         v-model="email"
                     />
                 </div>
-                <div class="form-group my-4">
+                <div class="form-group mt-2">
                     <label for="password">Password:</label>
                     <input
                         class="Aoboshi-One"
                         type="password"
                         name="password"
-                        autocomplete="current-password"
                         id="password"
                         v-model="password"
                     />
@@ -106,7 +130,7 @@ export default {
                     ></i>
                 </div>
                 <div
-                    class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto"
+                    class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto mt-4"
                 >
                     <button
                         class="btn btn-primary"
@@ -117,17 +141,19 @@ export default {
                     </button>
                     <label class="text-center Aoboshi-One">OR</label>
                     <button
-                        class="btn btn-primary"
+                        id="GoogleSignIn"
+                        class="d-flex justify-content-center align-items-center pointing"
                         type="submit"
                         @click="googleLogin"
                     >
-                        Google Login
+                        <img src="/img/ecommerce/Google.png" />
+                        <label class="pointing"> Login with Google </label>
                     </button>
                 </div>
             </div>
 
             <label
-                class="text-center mt-4 p-3 Aoboshi-One border-top border-black"
+                class="text-center mt-4 pt-3 pb-2 Aoboshi-One border-top border-black"
             >
                 Need an account?
             </label>
@@ -135,55 +161,104 @@ export default {
                 class="d-flex justify-content-center w-75 mx-auto"
                 style="max-width: 400px"
             >
-                <router-link to="/register" class="btn btn-primary w-75"
-                    >Register</router-link
+                <button
+                    class="btn btn-primary w-75 mx-auto"
+                    type="submit"
+                    @click="toRegistration()"
                 >
+                    Register
+                </button>
             </div>
         </div>
     </div>
+    <Toast />
 </template>
 
 <style scoped>
-.login-container {
+.background-container {
     background-image: url("img/ecommerce/login-bg.jpeg");
     background-size: cover;
     background-position: center;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+
+    height: 92vh;
     width: 100%;
 }
 
-.login-form-container {
-    opacity: 0.9;
-    width: 75%;
+/* Small devices (landscape phones, 576px and up) */
+.login-container {
+    width: 100%;
     padding: 2rem;
-    background-color: #fff;
+
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
 
-@media (max-width: 576px) {
-    .login-form-container {
-        font-size: small;
-        width: 100%;
-    }
+    max-width: 800px;
 }
-
-@media (max-width: 768px) {
-    .login-form-container {
-        font-size: 12px;
-        width: 100%;
-    }
+.login-container:hover {
+    background-color: rgba(255, 255, 255, 0.95);
 }
-
-label {
+.login-container > h1 {
+    font-size: 32px;
+}
+.login-container > label {
+    font-size: 20px;
     display: block;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"] {
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .login-container {
+        width: 75%;
+    }
+    .login-container > h1 {
+        font-size: 28px;
+    }
+    .login-container > label {
+        font-size: 16px;
+    }
+}
+
+input {
     width: 100%;
+    padding: 0.5rem 10px;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+input,
+button {
+    border-radius: 0%;
+    box-shadow: 0px 10px 0px -5px #ccc;
+}
+input:hover,
+button:hover {
+    box-shadow: 0px 0px 0px 3px #ccc;
+}
+input:focus {
+    box-shadow: none;
+}
+
+button {
+    padding: 10px;
+}
+
+#GoogleSignIn {
+    border: none;
+    background-color: white;
+    border: 1px solid black;
+}
+#GoogleSignIn:hover {
+    background-color: #edfdff;
+}
+#GoogleSignIn > img {
+    height: 25px;
+    margin-right: 10px;
+    padding: 2px;
+}
+#GoogleSignIn > label {
+    font-weight: 600;
 }
 </style>

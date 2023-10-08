@@ -1,146 +1,6 @@
-<template>
-    <div class="login-container container-fluid">
-        <div class="login-form-container mx-auto" style="max-width: 600px">
-            <h1 class="text-center Aoboshi-One">Registration</h1>
-            <p class="text-center Aoboshi-One my-3">
-                Enter your account details
-            </p>
-            <form @submit.prevent="submitForm">
-                <div class="d-flex mb-2">
-                    <div class="form-group w-50">
-                        <label for="firstName">First Name:</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            class="Aoboshi-One"
-                            v-model="firstName"
-                        />
-                        <span v-if="firstNameError" class="error">{{
-                            firstNameError
-                        }}</span>
-                    </div>
-                    <div class="form-group w-50 mx-2">
-                        <label for="lastName">Last Name:</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            class="Aoboshi-One"
-                            v-model="lastName"
-                        />
-                        <span v-if="lastNameError" class="error">{{
-                            lastNameError
-                        }}</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        class="Aoboshi-One"
-                        v-model="email"
-                    />
-                    <span v-if="emailError" class="error">{{
-                        emailError
-                    }}</span>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        class="Aoboshi-One"
-                        v-model="password"
-                    />
-                    <span v-if="passwordError" class="error">{{
-                        passwordError
-                    }}</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="cfmPassword">Confirm Password:</label>
-                    <input
-                        type="password"
-                        id="cfmPassword"
-                        class="Aoboshi-One"
-                        v-model="cfmPassword"
-                    />
-                    <span v-if="cfmPasswordError" class="error">{{
-                        cfmPasswordError
-                    }}</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone:</label>
-                    <input
-                        type="text"
-                        id="phone"
-                        class="Aoboshi-One"
-                        v-model="phone"
-                    />
-                    <span v-if="phoneError" class="error">
-                        {{ phoneError }}</span
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="address">Address:</label>
-                    <input
-                        type="text"
-                        id="address"
-                        class="Aoboshi-One"
-                        v-model="address"
-                    />
-                    <span v-if="addressError" class="error">{{
-                        addressError
-                    }}</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="city">City:</label>
-                    <input
-                        type="text"
-                        id="city"
-                        class="Aoboshi-One"
-                        v-model="city"
-                    />
-                    <span v-if="cityError" class="error">{{ cityError }}</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="region">Region:</label>
-                    <input
-                        type="text"
-                        id="region"
-                        class="Aoboshi-One my-0"
-                        v-model="region"
-                    />
-                    <span v-if="regionError" class="error">{{
-                        regionError
-                    }}</span>
-                </div>
-
-                <div class="d-flex justify-content-center">
-                    <!-- <span>
-                        <input type="checkbox" name="remember mx-3" id="remember">
-                        <label for="remember" class="Aoboshi-One d-inline mx-2">Remember Me</label>
-                    </span> -->
-                    <button class="btn btn-primary w-50" type="submit">
-                        Register
-                    </button>
-                    <router-link to="/login" class="btn btn-primary mx-2 w-50"
-                        >Cancel</router-link
-                    >
-                </div>
-            </form>
-        </div>
-    </div>
-</template>
 <script>
+import router from "../router/router.js";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-// import axios from "axios";
 
 export default {
     data() {
@@ -170,14 +30,17 @@ export default {
             addressError: "",
             cityError: "",
             regionError: "",
+
+            firebaseErrorMsg: "",
         };
     },
     methods: {
         submitForm() {
             // If there are no errors, submit the form
             if (this.isEverythingValid()) {
-                console.log("Form submitted successfully.");
                 this.firebaseRegister();
+            } else {
+                this.showToastError("Please check your inputs.");
             }
         },
         isEverythingValid() {
@@ -196,8 +59,6 @@ export default {
 
             this.passwordError = !this.password
                 ? "Please enter a password."
-                : this.password.length < 8
-                ? "Password must be at least 8 characters long."
                 : "";
 
             this.cfmPasswordError = !this.cfmPassword
@@ -236,13 +97,7 @@ export default {
             // Phone validation logic
             phone = phone.replaceAll(" ", "");
 
-            let countryCode = phone.substring(0, 3);
-            let phoneNumber = phone.substring(3, phone.length);
-
-            return (
-                (countryCode == "+65" ? true : false) &&
-                /^\d{8}$/.test(phoneNumber)
-            );
+            return /^\d{8}$/.test(phone);
         },
         async firebaseRegister() {
             const auth = getAuth();
@@ -267,87 +122,265 @@ export default {
                     // });
                 })
                 .catch((error) => {
-                    console.log(error.code);
-                    if (error.code == "auth/invalid-email") {
-                        this.emailError = "Invalid Email";
+                    // console.log(error.code);
+                    switch (error.code) {
+                        case "auth/invalid-email":
+                            this.emailError = "Not a valid email address.";
+                            this.firebaseErrorMsg = this.emailError;
+                            break;
+                        case "auth/email-already-in-use":
+                            this.emailError = "Email is already registered.";
+                            this.firebaseErrorMsg = this.emailError;
+                            break;
+                        case "auth/weak-password":
+                            this.passwordError =
+                                "Password must be at least 6 characters.";
+                            this.firebaseErrorMsg = this.passwordError;
+                            break;
+                        default:
+                            this.firebaseErrorMsg = error.code;
                     }
-                    // alert(error.message);
+                    this.showToastError(this.firebaseErrorMsg);
                 });
+        },
+        toCancel() {
+            router.push("/login");
+        },
+        showToastError(detail) {
+            this.$toast.add({
+                severity: "error",
+                summary: "Registration Failed",
+                detail,
+                life: 3000,
+            });
         },
     },
 };
 </script>
 
-<style scoped>
-.login-container {
-    background-image: url("img/ecommerce/login-bg.jpeg");
+<template>
+    <div class="background-container">
+        <div class="register-container mx-auto">
+            <h1 class="text-center Aoboshi-One">Registration</h1>
+            <div>
+                <div class="d-flex gap-3">
+                    <div class="form-group w-50">
+                        <label for="firstName">First Name:</label>
+                        <input
+                            type="text"
+                            id="firstName"
+                            class="Aoboshi-One"
+                            v-model="firstName"
+                        />
+                        <span v-show="firstNameError" class="error">{{
+                            firstNameError
+                        }}</span>
+                    </div>
+                    <div class="form-group w-50">
+                        <label for="lastName">Last Name:</label>
+                        <input
+                            type="text"
+                            id="lastName"
+                            class="Aoboshi-One"
+                            v-model="lastName"
+                        />
+                        <span v-show="lastNameError" class="error">{{
+                            lastNameError
+                        }}</span>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input
+                        type="text"
+                        id="email"
+                        class="Aoboshi-One"
+                        v-model="email"
+                    />
+                    <span v-show="emailError" class="error">{{
+                        emailError
+                    }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        class="Aoboshi-One"
+                        v-model="password"
+                    />
+                    <span v-show="passwordError" class="error">{{
+                        passwordError
+                    }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="cfmPassword">Confirm Password:</label>
+                    <input
+                        type="password"
+                        id="cfmPassword"
+                        class="Aoboshi-One"
+                        v-model="cfmPassword"
+                    />
+                    <span v-show="cfmPasswordError" class="error">{{
+                        cfmPasswordError
+                    }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <div class="p-inputgroup flex-1">
+                        <span class="p-inputgroup-addon">
+                            <label>+65</label>
+                        </span>
+                        <InputMask
+                            id="phone"
+                            class="Aoboshi-One"
+                            v-model="phone"
+                            date="phone"
+                            mask="9999 9999"
+                        />
+                    </div>
+                    <span v-show="phoneError" class="error">
+                        {{ phoneError }}</span
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input
+                        type="text"
+                        id="address"
+                        class="Aoboshi-One"
+                        v-model="address"
+                    />
+                    <span v-show="addressError" class="error">{{
+                        addressError
+                    }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input
+                        type="text"
+                        id="city"
+                        class="Aoboshi-One"
+                        v-model="city"
+                    />
+                    <span v-show="cityError" class="error">{{
+                        cityError
+                    }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="region">Region:</label>
+                    <input
+                        type="text"
+                        id="region"
+                        class="Aoboshi-One my-0"
+                        v-model="region"
+                    />
+                    <span v-show="regionError" class="error">{{
+                        regionError
+                    }}</span>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                    <button class="btn btn-primary w-50" @click="submitForm()">
+                        Register
+                    </button>
+                    <button
+                        class="btn btn-primary w-50"
+                        type="submit"
+                        @click="toCancel()"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <Toast />
+</template>
+
+<style scoped>
+.background-container {
+    background-image: url("img/ecommerce/login-bg.jpeg");
     background-size: cover;
     background-position: center;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+
+    height: 92vh;
+    width: 100%;
 }
 
-.login-form-container {
-    opacity: 0.9;
-    width: 75%;
-    height: 98%;
+/* Small devices (landscape phones, 576px and up) */
+.register-container {
+    width: 100%;
+    max-height: 90%;
     padding: 2rem;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    background-color: rgba(255, 255, 255, 0.9);
+    max-width: 800px;
+
+    overflow-y: scroll;
+}
+.register-container:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+.register-container > h1 {
+    font-size: 32px;
+}
+.register-container > label {
+    font-size: 20px;
+    display: block;
 }
 
-@media (max-width: 576px) {
-    .login-form-container {
-        font-size: small;
-        width: 100%;
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .register-container {
+        width: 75%;
     }
-}
-
-@media (max-width: 768px) {
-    .login-form-container {
-        font-size: 12px;
-        width: 100%;
+    .register-container > h1 {
+        font-size: 28px;
+    }
+    .register-container > label {
+        font-size: 16px;
     }
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 label {
     display: block;
-    margin-bottom: 0.5rem;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"] {
+input {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.5rem 10px;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
+}
+input,
+button {
+    border-radius: 0%;
+    box-shadow: 0px 10px 0px -5px #ccc;
+}
+input:hover,
+button:hover {
+    box-shadow: 0px 0px 0px 3px #c7d2fe;
+}
+input:focus {
+    box-shadow: none;
 }
 
 .error {
     color: red;
-}
-
-.login-image-container {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-#content {
-    background-color: black;
 }
 </style>

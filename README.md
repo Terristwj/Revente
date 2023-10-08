@@ -47,30 +47,9 @@ An online platform for people to purchase and sell their used clothes with confi
     -   Pinia
 
 <hr />
-## Project setup
 
-```
-npm install
-```
+### References
 
-### Compiles and hot-reloads for development
+1. [Vue 3 + Firebase Authentication](https://www.youtube.com/watch?v=xceR7mrrXsA&t=21s)
 
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+2. [JavaScript Game Tutorial](https://www.youtube.com/watch?v=yP5DKzriqXA)
