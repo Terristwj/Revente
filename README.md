@@ -20,8 +20,21 @@ An online platform for people to purchase and sell their used clothes with confi
     ```
 
 -   To run the project (Refer at package.json)
+
+    -   Have `.env` and `.firebaserc` added into project
+
     ```Bash
     npm run dev
+    ```
+
+-   To deploy on the cloud
+
+    -   Ensure you have `npm install -g firebase-tools` installed
+    -   Ensure you've typed `firebase login`
+
+    ```Bash
+    npm run build
+    firebase deploy
     ```
 
 ## Tech Stack
@@ -37,6 +50,10 @@ An online platform for people to purchase and sell their used clothes with confi
 
 -   Backend
     -   Axios
+    -   Firebase
+        -   Firebase Authentication
+        -   Firestore Database
+        -   Firebase Hosting
 
 <br/>
 
@@ -45,6 +62,7 @@ An online platform for people to purchase and sell their used clothes with confi
     -   Vuetify 3 (Component Library) (WIP)
     -   Vue Router
     -   Pinia
+    -   JavaScript game with Canvas
 
 <hr />
 
@@ -53,3 +71,5 @@ An online platform for people to purchase and sell their used clothes with confi
 1. [Vue 3 + Firebase Authentication](https://www.youtube.com/watch?v=xceR7mrrXsA&t=21s)
 
 2. [JavaScript Game Tutorial](https://www.youtube.com/watch?v=yP5DKzriqXA)
+
+3. [How to deploy with Firebase Hosting](https://medium.com/@rachidsakara/how-to-deploy-vue-js-applications-with-firebase-hosting-40cfa7f724e4)

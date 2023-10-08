@@ -169,7 +169,7 @@ export default {
 
 <style scoped>
 .background-container {
-    background-image: url("img/ecommerce/login-bg.jpeg");
+    background-image: url("@/assets/img/ecommerce/login-bg.jpeg");
     background-size: cover;
     background-position: center;
 
