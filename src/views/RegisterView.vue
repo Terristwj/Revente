@@ -1,6 +1,8 @@
 <script>
 import router from "../router/router.js";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+// For Firebase Register
+import FBInstanceAuth from "../services/Firebase/FirebaseAuthentication";
 
 export default {
     data() {
@@ -32,6 +34,9 @@ export default {
             regionError: "",
 
             firebaseErrorMsg: "",
+
+            // Register Logic
+            auth: FBInstanceAuth.getAuth(),
         };
     },
     methods: {
@@ -100,48 +105,32 @@ export default {
             return /^\d{8}$/.test(phone);
         },
         async firebaseRegister() {
-            const auth = getAuth();
-
             // Firebase Create User
-            await createUserWithEmailAndPassword(
-                auth,
+            const errorCode = await FBInstanceAuth.register(
+                this.auth,
                 this.email,
                 this.password
-            )
-                .then(async (userCredential) => {
-                    console.log(userCredential);
-                    // const user = userCredential.user;
-                    // await updateProfile(user, {
-                    //     firstName: this.firstName,
-                    //     lastName: this.lastName,
-
-                    //     phone: this.phone,
-                    //     address: this.address,
-                    //     city: this.city,
-                    //     region: this.region,
-                    // });
-                })
-                .catch((error) => {
-                    // console.log(error.code);
-                    switch (error.code) {
-                        case "auth/invalid-email":
-                            this.emailError = "Not a valid email address.";
-                            this.firebaseErrorMsg = this.emailError;
-                            break;
-                        case "auth/email-already-in-use":
-                            this.emailError = "Email is already registered.";
-                            this.firebaseErrorMsg = this.emailError;
-                            break;
-                        case "auth/weak-password":
-                            this.passwordError =
-                                "Password must be at least 6 characters.";
-                            this.firebaseErrorMsg = this.passwordError;
-                            break;
-                        default:
-                            this.firebaseErrorMsg = error.code;
-                    }
-                    this.showToastError(this.firebaseErrorMsg);
-                });
+            );
+            // console.log(error.code);
+            switch (errorCode) {
+                case "auth/invalid-email":
+                    this.emailError = "Not a valid email address.";
+                    this.firebaseErrorMsg = this.emailError;
+                    break;
+                case "auth/email-already-in-use":
+                    this.emailError = "Email is already registered.";
+                    this.firebaseErrorMsg = this.emailError;
+                    break;
+                case "auth/weak-password":
+                    this.passwordError =
+                        "Password must be at least 6 characters.";
+                    this.firebaseErrorMsg = this.passwordError;
+                    break;
+                default:
+                    this.firebaseErrorMsg = errorCode;
+            }
+            if (this.firebaseErrorMsg)
+                this.showToastError(this.firebaseErrorMsg);
         },
         toCancel() {
             router.push("/login");

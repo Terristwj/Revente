@@ -4,13 +4,13 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 
 import App from "./App.vue";
-import router from "./router/router";
+import router from "./router/router.js";
 
 // Component library
-import connectPrimeVue from "./services/PrimeVue";
+import connectPrimeVue from "./services/PrimeVue.js";
 
 // Firebase Database
-import connectFirebase from "./services/Firebase";
+import connectFirebase from "./services/Firebase/FirebaseConfig";
 
 const app = createApp(App);
 
@@ -21,8 +21,6 @@ app.use(router);
 connectPrimeVue(app);
 
 // Refer to Firebase.js for configuration
-let firebaseApp = connectFirebase();
+connectFirebase();
 
 app.mount("#app");
-
-export default firebaseApp;

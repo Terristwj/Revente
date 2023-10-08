@@ -1,8 +1,9 @@
 <script>
-import router, { routes } from "../router/router.js";
+import { routes } from "../router/router.js";
 
 // For Firebase Signout
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import FBInstanceAuth from "../services/Firebase/FirebaseAuthentication";
 
 export default {
     data() {
@@ -12,7 +13,7 @@ export default {
 
             // For Firebase Login
             isLoggedIn: false,
-            auth: getAuth(),
+            auth: FBInstanceAuth.getAuth(),
 
             // For Navigation Bar
             routesExcludedLoggedIn: ["Register", "Login"],
@@ -23,10 +24,7 @@ export default {
     methods: {
         // When logout is clicked
         handleLogout() {
-            signOut(this.auth).then(() => {
-                this.auth = getAuth();
-                router.push("/login");
-            });
+            FBInstanceAuth.logout(this.auth);
         },
         // Display toast when login or logout
         showToast(severity, summary, detail) {
@@ -43,6 +41,7 @@ export default {
     mounted() {
         // When Login or Logout
         onAuthStateChanged(this.auth, (user) => {
+            // console.log(user);
             this.isLoggedIn = user ? true : false;
             if (this.isLoggedIn) {
                 this.navRoutes = routes.filter(

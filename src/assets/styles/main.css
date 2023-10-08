@@ -79,13 +79,14 @@ img {
 }
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #888;
-    border-left: 1px solid grey;
+    /* background: #888; */
+    /* border-left: 1px solid grey; */
+    background: transparent;
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #f3dfd7;
-    border-left: 1px solid grey;
+    border: 1px solid grey;
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {

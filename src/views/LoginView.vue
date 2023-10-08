@@ -2,12 +2,7 @@
 import router from "../router/router.js";
 
 // For Firebase Login
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    GoogleAuthProvider,
-    signInWithPopup,
-} from "firebase/auth";
+import FBInstanceAuth from "../services/Firebase/FirebaseAuthentication";
 
 export default {
     data() {
@@ -18,8 +13,7 @@ export default {
             errMsg: "",
 
             // Login Logic
-            auth: getAuth(),
-            afterLogin: "/",
+            auth: FBInstanceAuth.getAuth(),
         };
     },
     methods: {
@@ -43,47 +37,46 @@ export default {
                     .classList.add("fa-eye");
             }
         },
-        emailPasswordLogin() {
+        async emailPasswordLogin() {
             // Handle Firebase email logic here
-            signInWithEmailAndPassword(this.auth, this.email, this.password)
-                // eslint-disable-next-line no-unused-vars
-                .then((data) => {
-                    // Successfully login
-                    router.push(this.afterLogin);
-                })
-                .catch((error) => {
-                    // console.log(error.code);
-                    switch (error.code) {
-                        case "auth/invalid-email":
-                            this.errMsg = "This email is not signed up";
-                            break;
-                        case "auth/missing-password":
-                            this.errMsg = "Please enter your password";
-                            break;
-                        case "auth/invalid-login-credentials":
-                            this.errMsg = "Wrong password";
-                            break;
-                        case "auth/user-disabled":
-                            this.errMsg = "Account is currently disabled";
-                            break;
-                        default:
-                            this.errMsg = error.code;
-                    }
-                    this.showToast("error", this.errMsg);
-                });
+            const errorCode = await FBInstanceAuth.login(
+                this.auth,
+                this.email,
+                this.password
+            );
+            // console.log(errorCode);
+            switch (errorCode) {
+                case "auth/invalid-email":
+                    this.errMsg =
+                        this.email == ""
+                            ? "Please enter your email"
+                            : "This email is not signed up";
+                    break;
+                case "auth/missing-password":
+                    this.errMsg = "Please enter your password";
+                    break;
+                case "auth/invalid-login-credentials":
+                    this.errMsg = "Wrong password";
+                    break;
+                case "auth/user-disabled":
+                    this.errMsg = "Account is currently disabled";
+                    break;
+                default:
+                    this.errMsg = errorCode;
+            }
+            if (this.errMsg) this.showToast("error", this.errMsg);
         },
-        googleLogin() {
+        async googleLogin() {
             // Handle Firebase Google logic here
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(this.auth, provider)
-                // eslint-disable-next-line no-unused-vars
-                .then((result) => {
-                    // console.log(result);
-                    router.push(this.afterLogin);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            const errorCode = await FBInstanceAuth.GoogleLogin(this.auth);
+            switch (errorCode) {
+                case "auth/user-disabled":
+                    this.errMsg = "Account is currently disabled";
+                    break;
+                default:
+                    this.errMsg = errorCode;
+            }
+            if (this.errMsg) this.showToast("error", this.errMsg);
         },
         toRegistration() {
             router.push("/register");
@@ -191,12 +184,14 @@ export default {
 /* Small devices (landscape phones, 576px and up) */
 .login-container {
     width: 100%;
+    max-height: 90%;
     padding: 2rem;
 
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
     max-width: 800px;
+
+    overflow-y: scroll;
 }
 .login-container:hover {
     background-color: rgba(255, 255, 255, 0.95);
