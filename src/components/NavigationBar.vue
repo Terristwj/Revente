@@ -1,46 +1,51 @@
-<script setup>
-import { onMounted, ref } from "vue";
+<script>
 import router, { routes } from "../router/router.js";
 
 // For Firebase Signout
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
-// For Mobile Tab
-var mobileTabVisible = ref(false);
+export default {
+    data() {
+        return {
+            // For Mobile Tab
+            mobileTabVisible: false,
 
-// For Firebase Login
-const isLoggedIn = ref(false);
-let auth;
+            // For Firebase Login
+            isLoggedIn: false,
+            auth: getAuth(),
 
-// For Navigation Bar
-const routesExcludedLoggedIn = ["Register", "Login"];
-const routesExcludedLoggedOut = ["Register", "Game"];
-let navRoutes = routes.filter(
-    (route) => !routesExcludedLoggedOut.includes(route.name)
-);
-
-// Checks for user authentication to
-// display the correct navigation items
-onMounted(() => {
-    auth = getAuth();
-    // When Login or Logout
-    onAuthStateChanged(auth, (user) => {
-        isLoggedIn.value = user ? true : false;
-        navRoutes = isLoggedIn.value
-            ? routes.filter(
-                  (route) => !routesExcludedLoggedIn.includes(route.name)
-              )
-            : routes.filter(
-                  (route) => !routesExcludedLoggedOut.includes(route.name)
-              );
-    });
-});
-
-// When logout is clicked
-const handleLogout = () => {
-    signOut(auth).then(() => {
-        router.push("/login");
-    });
+            // For Navigation Bar
+            routesExcludedLoggedIn: ["Register", "Login"],
+            routesExcludedLoggedOut: ["Register", "Game"],
+            navRoutes: null,
+        };
+    },
+    methods: {
+        // When logout is clicked
+        handleLogout() {
+            signOut(this.auth).then(() => {
+                this.auth = getAuth();
+                router.push("/login");
+            });
+        },
+    },
+    // Checks for user authentication to
+    // display the correct navigation items
+    mounted() {
+        // When Login or Logout
+        onAuthStateChanged(this.auth, (user) => {
+            this.isLoggedIn = user ? true : false;
+            this.navRoutes = this.isLoggedIn
+                ? routes.filter(
+                      (route) =>
+                          !this.routesExcludedLoggedIn.includes(route.name)
+                  )
+                : routes.filter(
+                      (route) =>
+                          !this.routesExcludedLoggedOut.includes(route.name)
+                  );
+        });
+    },
 };
 </script>
 
