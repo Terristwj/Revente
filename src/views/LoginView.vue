@@ -139,7 +139,7 @@ export default {
                         type="submit"
                         @click="googleLogin"
                     >
-                        <img src="/img/ecommerce/Google.png" />
+                        <img src="../assets/img/ecommerce/Google.png" />
                         <label class="pointing"> Login with Google </label>
                     </button>
                 </div>
@@ -186,7 +186,6 @@ export default {
     width: 100%;
     max-height: 90%;
     padding: 2rem;
-
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     max-width: 800px;
@@ -226,7 +225,7 @@ input {
 input,
 button {
     border-radius: 0%;
-    box-shadow: 0px 10px 0px -5px #ccc;
+    /* box-shadow: 0px 10px 0px -5px #ccc; */
 }
 input:hover,
 button:hover {
@@ -243,7 +242,7 @@ button {
 #GoogleSignIn {
     border: none;
     background-color: white;
-    border: 1px solid black;
+    border: 0.5px solid black;
 }
 #GoogleSignIn:hover {
     background-color: #edfdff;
