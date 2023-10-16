@@ -93,112 +93,119 @@ export default {
 </script>
 
 <template>
+    <video playsinline autoplay muted loop poster="cake.jpg">
+        <source src="../assets/videos/login.webm" type="video/webm">
+    </video>
+
     <div class="background-container">
         <div class="login-container">
-            <h1 class="text-center Aoboshi-One">Login</h1>
+            <h1 class="text-center login-text fs-1">LOGIN</h1>
             <div class="w-75 mx-auto" style="max-width: 400px">
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input
-                        type="text"
-                        id="email"
-                        class="Aoboshi-One"
-                        v-model="email"
-                    />
+                    <input type="text" id="email" class="Aoboshi-One" v-model="email" />
                 </div>
                 <div class="form-group mt-2">
                     <label for="password">Password:</label>
-                    <input
-                        class="Aoboshi-One"
-                        type="password"
-                        name="password"
-                        id="password"
-                        v-model="password"
-                    />
-                    <i
-                        class="far fa-eye"
-                        id="togglePassword"
-                        style="margin-left: -30px; cursor: pointer"
-                        @click="hidePassword"
-                    ></i>
+                    <input class="Aoboshi-One" type="password" name="password" id="password" v-model="password" />
+                    <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer"
+                        @click="hidePassword"></i>
                 </div>
-                <div
-                    class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto mt-4"
-                >
-                    <button
-                        class="btn btn-primary"
-                        type="submit"
-                        @click="emailPasswordLogin"
-                    >
+                <div class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto mt-4">
+                    <button class="btn btn-primary" type="submit" @click="emailPasswordLogin">
                         Login
                     </button>
                     <label class="text-center Aoboshi-One">OR</label>
-                    <button
-                        id="GoogleSignIn"
-                        class="d-flex justify-content-center align-items-center pointing"
-                        type="submit"
-                        @click="googleLogin"
-                    >
+                    <button id="GoogleSignIn" class="d-flex justify-content-center align-items-center pointing"
+                        type="submit" @click="googleLogin">
                         <img src="../assets/img/ecommerce/Google.png" />
                         <label class="pointing"> Login with Google </label>
                     </button>
                 </div>
             </div>
 
-            <label
-                class="text-center mt-4 pt-3 pb-2 Aoboshi-One border-top border-black"
-            >
+            <label class="text-center mt-4 pt-3 pb-2 Aoboshi-One border-top border-black">
                 Need an account?
             </label>
-            <div
-                class="d-flex justify-content-center w-75 mx-auto"
-                style="max-width: 400px"
-            >
-                <button
-                    class="btn btn-primary w-75 mx-auto"
-                    type="submit"
-                    @click="toRegistration()"
-                >
+            <div class="d-flex justify-content-center w-75 mx-auto" style="max-width: 400px">
+                <button class="btn btn-primary w-75 mx-auto" type="submit" @click="toRegistration()">
                     Register
                 </button>
             </div>
         </div>
     </div>
+
     <Toast />
 </template>
 
 <style scoped>
-.background-container {
-    background-image: url("@/assets/img/ecommerce/login-bg.jpeg");
-    background-size: cover;
-    background-position: center;
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
 
+    100% {
+        opacity: 1;
+    }
+}
+
+
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background-container {
     display: flex;
     justify-content: center;
     align-items: center;
-
     height: 92vh;
-    width: 100%;
+    width: auto;
+    animation: fadeInAnimation ease 1.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.login-text {
+    color: black;
+    text-transform: uppercase;
+    /* font-size: 100px; */
+    font-family: 'Sigmar';
+    font-weight: bolder;
+    line-height: 1;
+    letter-spacing: 10px;
+}
+
+.login-text:hover {
+    letter-spacing: 10px;
 }
 
 /* Small devices (landscape phones, 576px and up) */
 .login-container {
-    width: 100%;
+    /* width: 80%; */
     max-height: 90%;
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     max-width: 800px;
-
+    border-radius: 30px;
     overflow-y: scroll;
+
 }
+
 .login-container:hover {
     background-color: rgba(255, 255, 255, 0.95);
 }
-.login-container > h1 {
+
+.login-container>h1 {
     font-size: 32px;
 }
-.login-container > label {
+
+.login-container>label {
     font-size: 20px;
     display: block;
 }
@@ -208,10 +215,12 @@ export default {
     .login-container {
         width: 75%;
     }
-    .login-container > h1 {
+
+    .login-container>h1 {
         font-size: 28px;
     }
-    .login-container > label {
+
+    .login-container>label {
         font-size: 16px;
     }
 }
@@ -222,15 +231,18 @@ input {
     border: 1px solid #ccc;
     border-radius: 0.25rem;
 }
+
 input,
 button {
     border-radius: 0%;
     /* box-shadow: 0px 10px 0px -5px #ccc; */
 }
+
 input:hover,
 button:hover {
     box-shadow: 0px 0px 0px 3px #ccc;
 }
+
 input:focus {
     box-shadow: none;
 }
@@ -244,15 +256,18 @@ button {
     background-color: white;
     border: 0.5px solid black;
 }
+
 #GoogleSignIn:hover {
     background-color: #edfdff;
 }
-#GoogleSignIn > img {
+
+#GoogleSignIn>img {
     height: 25px;
     margin-right: 10px;
     padding: 2px;
 }
-#GoogleSignIn > label {
+
+#GoogleSignIn>label {
     font-weight: 600;
 }
 </style>

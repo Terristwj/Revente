@@ -1,5 +1,8 @@
 <script>
 	import BigCarousel from '../components/BigCarousel.vue';
+	import ItemCard from "../components/ItemCard.vue";
+	import router from "../router/router.js";
+
 	export default {
 		data() {
 			return {
@@ -12,8 +15,19 @@
 		},
 		components: {
 			BigCarousel,
+			ItemCard,
 		},
+		methods:{
+			toRegistration() {
+            router.push("/register");
+        },
+		toLogin() {
+            router.push("/login");
+        },
+		}
+		
 	};
+	
 </script>
 
 <template>
@@ -34,7 +48,7 @@
 		</div>
 		<div class="description">
 			<p>
-				Propelling the Second-Hand Market: AI's Thrift Store AI holds
+				Propelling the Second-Hand Market: AI's Thrift Store. AI holds
 				immense potential to enhance the second-hand clothing market in
 				myriad ways. From reliable pricing and personalized user
 				experiences to expert styling services, AI-driven advancements
@@ -44,7 +58,7 @@
 			</p>
 			<p class="credit">
 				Find out more
-				<a href="#">here</a>
+				<router-link to="/about">here</router-link>
 			</p>
 		</div>
 	</header>
@@ -59,11 +73,13 @@
 				principles of the circular economy and thrifting. Discover the
 				latest trends, vintage finds, and timeless classics, all while
 				reducing your environmental footprint. Join us in redefining
-				fashion with style and conscience.
+				fashion with style and conscience. 
+				
 			</p>
+			<p style="font-style:italic;">REVENTÉ: where style meets sustainability.</p>
 			<div>
-				<button class="btn btn-outline-dark me-3 px-5">Register</button>
-				<button class="btn btn-dark ms-3 px-5">Sign In</button>
+				<button class="btn btn-outline-dark me-3 px-5" @click="toRegistration()">Register</button>
+				<button class="btn btn-dark ms-3 px-5" @click="toLogin()">Sign In</button>
 			</div>
 		</div>
 		<div class="p-4 my-5">
@@ -87,8 +103,10 @@
 							:interval="7000"
 						/>
 					</div>
+					
 				</div>
 			</div>
+			<ItemCard/>
 		</div>
 	</body>
 </template>
