@@ -1,4 +1,20 @@
-<script></script>
+<script>
+	import BigCarousel from '../components/BigCarousel.vue';
+	export default {
+		data() {
+			return {
+				imgurls: [
+					'/src/assets/img/ecommerce/Google.png',
+					'/src/assets/img/ecommerce/Google.png',
+					'/src/assets/img/ecommerce/Google.png',
+				],
+			};
+		},
+		components: {
+			BigCarousel,
+		},
+	};
+</script>
 
 <template>
 	<header class="video-header">
@@ -32,13 +48,65 @@
 			</p>
 		</div>
 	</header>
+	<div class="body-spacer"></div>
+	<body>
+		<div class="p-4">
+			<h1>Fashionably Green</h1>
+			<p>
+				With REVENTÉ, you are supporting sustainable fashion! Explore a
+				curated collection of fashionable clothing, made to enhance your
+				wardrobe. Here at REVENTÉ, we build our platform through the
+				principles of the circular economy and thrifting. Discover the
+				latest trends, vintage finds, and timeless classics, all while
+				reducing your environmental footprint. Join us in redefining
+				fashion with style and conscience.
+			</p>
+			<div>
+				<button class="btn btn-outline-dark me-3 px-5">Register</button>
+				<button class="btn btn-dark ms-3 px-5">Sign In</button>
+			</div>
+		</div>
+		<div class="p-4">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-6">
+						<h1>Sale</h1>
+						<BigCarousel
+							:imgurls="imgurls"
+							imgDesc="Example"
+							carouId="SaleCarousel"
+							:interval="5000"
+						/>
+					</div>
+					<div class="col-md-6">
+						<h1>New Drops</h1>
+						<BigCarousel
+							:imgurls="imgurls"
+							imgDesc="Example2"
+							carouId="DropCarousel"
+							:interval="7000"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </template>
 
 <style scoped>
+	.btn {
+		border-radius: 23px;
+	}
+
 	html,
 	body {
 		background-color: white;
 	}
+
+	.body-spacer {
+		margin-top: 100dvh;
+	}
+
 	video {
 		width: 100dvw;
 		min-height: 100dvh;
@@ -47,6 +115,7 @@
 		left: 0;
 		object-fit: cover;
 	}
+
 	.header-text {
 		position: absolute;
 		color: white;
