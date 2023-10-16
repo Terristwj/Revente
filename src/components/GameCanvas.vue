@@ -422,7 +422,7 @@ export default {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 2048, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -941,7 +941,7 @@ export default {
                                 "Hello there taking a break from shopping? Well here are some fun facts about sustainability!",
                                 "I am a Researcher Greenie the second! Hope you saw my twin",
                                 "Fun fact 1: The Average Person Only Wears 20% of Their Clothes 80% of the Time",
-                                "Did you know almost all clothes are 100% recyclable but.. our landfills are still filled with 60% textile waste",
+                                "Only 15% is recycled or donated, and the rest goes directly to the landfill or is incinerated",
                                 "Luckily we have revente where you can sell and buy old clothes.. one man's trash is another man treasure am i right :D",
                                 "Oops did i repeat what my twin said o wells! Enjoy shopping!",
                                 "Find the other researchers to learn more!",
@@ -963,7 +963,37 @@ export default {
                                 hold: 60,
                             },
                             scale: 3,
-                            dialogue: ["You wanna switch to biz instead?"],
+                            animate: true,
+                            dialogue: ["Hello there! I am a Researcher Hynki Pinkie.",
+                           " Over 80 billion new pieces of clothing are bought each year worldwide, which is 400% more than what we consumed just two decades ago.",
+                            "Did you know that the fashion industry is responsible for 10% of annual global carbon emissions, more than all international flights and maritime shipping combined. ",
+                            "Thats surprising right! Jeez",
+                            "Continue shopping and thanks for visitng me!"
+                        ],
+                        })
+                    );
+                }
+
+                else if (symbol === 2048) {
+                    characters.push(
+                        new Character({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y,
+                            },
+                            image: oldManImg,
+                            frames: {
+                                max: 4,
+                                hold: 60,
+                            },
+                            scale: 3,
+                            animate: true,
+                            dialogue: ["Hello there! I am a Researcher Hynki Pinkie.",
+                           " Over 80 billion new pieces of clothing are bought each year worldwide, which is 400% more than what we consumed just two decades ago.",
+                            "Did you know that the fashion industry is responsible for 10% of annual global carbon emissions, more than all international flights and maritime shipping combined. ",
+                            "Thats surprising right! Jeez",
+                            "Continue shopping and thanks for visitng me!"
+                        ],
                         })
                     );
                 }
