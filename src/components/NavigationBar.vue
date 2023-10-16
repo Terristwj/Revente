@@ -16,8 +16,8 @@ export default {
             auth: FBInstanceAuth.getAuth(),
 
             // For Navigation Bar
-            routesExcludedLoggedIn: ["Register", "Login"],
-            routesExcludedLoggedOut: ["Register", "Game"],
+            routesExcludedLoggedIn: ["Register", "Login", "NotFound"],
+            routesExcludedLoggedOut: ["Register", "Game", "NotFound"],
             navRoutes: null,
         };
     },
