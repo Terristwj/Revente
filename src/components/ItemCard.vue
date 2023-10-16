@@ -36,7 +36,6 @@
 </template>
 
 <style scoped>
-
 #card_img {
     width: 100%;
     height: 15rem;
@@ -45,6 +44,10 @@
 
 .card-text {
     margin: 0;
+}
+
+.btn {
+    border-radius: 23px;
 }
 
 .btn-clear {
@@ -61,7 +64,6 @@
     border: 1px solid black;
     color: black;
 }
-
 </style>
 
 
@@ -84,6 +86,7 @@ export default {
                 seller: "Seller Name",
                 price: "Price",
                 description: "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+                link: '',
             }
         };
     },
