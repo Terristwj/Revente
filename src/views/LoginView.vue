@@ -150,8 +150,6 @@ export default {
 }
 
 
-
-
 video {
     position: absolute;
     top: 0;
@@ -167,7 +165,7 @@ video {
     align-items: center;
     height: 92vh;
     width: auto;
-    animation: fadeInAnimation ease 1s;
+    animation: fadeInAnimation ease 1.5s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
