@@ -1,12 +1,15 @@
 <template>
     <div class="card flex align-items-center justify-content-center">
         <div class="card" style="width: 18rem;">
-            <img src="https://primefaces.org/cdn/primevue/images/usercard.png" class="card-img-top" alt="..." id="card_img">
+                <img src="https://primefaces.org/cdn/primevue/images/usercard.png" class="card-img-top" alt="..."
+                    id="card_img">
+
             <div class="card-body">
                 <h5 class="card-title">{{ i.name }}</h5>
                 <p class="card-text">{{ i.brand }}</p>
                 <p class="card-text">{{ i.seller }}</p>
                 <p class="card-text">$ {{ i.price }}</p>
+                
                 <button type="button" class="mt-3 btn btn-dark" @click="visible = true">Quick View</button>
             </div>
 
@@ -64,6 +67,8 @@
     border: 1px solid black;
     color: black;
 }
+
+
 </style>
 
 
