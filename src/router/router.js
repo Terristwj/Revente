@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router';
 
-import { getAuth } from "firebase/auth";
+import { getAuth } from 'firebase/auth';
 
 // const provider = new GoogleAuthProvider();
 // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
@@ -10,9 +10,9 @@ import { getAuth } from "firebase/auth";
 // });
 
 export const isAuthenticated = () => {
-    let auth = getAuth();
-    let user = auth.currentUser;
-    return !!user;
+	let auth = getAuth();
+	let user = auth.currentUser;
+	return !!user;
 };
 
 // Add routes here
@@ -60,19 +60,24 @@ export const routes = [
 			requiresAuth: true,
 		},
 	},
+	{
+		path: '/listing',
+		name: 'Listing',
+		component: () => import('../views/ListingView.vue'),
+	},
 ];
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes: routes,
+	history: createWebHistory(import.meta.env.BASE_URL),
+	routes: routes,
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth && !isAuthenticated()) {
-        next("/login");
-    } else {
-        next();
-    }
+	if (to.meta.requiresAuth && !isAuthenticated()) {
+		next('/login');
+	} else {
+		next();
+	}
 });
 
 export default router;

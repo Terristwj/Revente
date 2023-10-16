@@ -62,7 +62,6 @@ a,
 .btn-toggle:hover,
 .btn-toggle:focus {
 	color: rgba(var(--bs-emphasis-color-rgb), 0.85);
-	background-color: var(--bs-tertiary-bg);
 }
 
 .btn-toggle::before {
@@ -91,6 +90,10 @@ a,
 }
 .price-search {
 	font: 0.5em;
+	line-height: 0.5;
+}
+.dash {
+	line-height: 3;
 }
 
 /* User Highlight */

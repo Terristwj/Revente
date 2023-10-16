@@ -2,57 +2,90 @@
 	export default {
 		data() {
 			return {
-				searchInput: '',
+				// Gender section
+				genderPicked: '',
+				genders: ['MEN', 'WOMEN'],
+				// Brand section
+				brandsPicked: [],
+				brands: ['unbranded', 'nike', 'adidas', 'puma', 'gucci'],
+				brandSearchInput: '',
+				// Price section
+				priceRangeSelected: '',
+				priceRanges: [
+					'SG $0 ~ SG $50',
+					'SG $50 ~ SG $100',
+					'SG $100 ~ SG $150',
+					'SG $150 ~ SG $200',
+					'SG $200 ~ SG $250',
+					'SG $250 ~ SG $300',
+				],
+				minPriceInput: '',
+				maxPriceInput: '',
+				isPriceRangeWrong: false,
 			};
+		},
+		watch: {
+			genderPicked() {
+				console.log(this.genderPicked);
+			},
+			brandsPicked() {
+				console.log(this.brandsPicked);
+			},
+			priceRangeSelected() {
+				console.log(this.priceRangeSelected);
+			},
+		},
+		methods: {
+			searchPrice() {
+				if (this.minPriceInput > this.maxPriceInput) {
+					this.isPriceRangeWrong = true;
+					setTimeout(() => {
+						this.isPriceRangeWrong = false;
+					}, 2000);
+				}
+				console.log(this.minPriceInput);
+				console.log(this.maxPriceInput);
+			},
 		},
 	};
 </script>
 
 <template>
 	<div class="flex-shrink-0 p-3" style="width: 280px">
+		<!-- Gender (default open) -->
 		<ul class="list-unstyled ps-0">
 			<li class="mb-1">
-				Gender
-				<button
-					class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-					data-bs-toggle="collapse"
-					data-bs-target="#home-collapse"
-					aria-expanded="true"
-				></button>
-				<div class="collapse show" id="home-collapse">
-					<ul
-						class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4"
+				<div class="row">
+					<div
+						class="col-10"
+						data-bs-toggle="collapse"
+						data-bs-target="#gender-collapse"
+						aria-expanded="true"
 					>
-						<li>
+						Gender
+					</div>
+					<button
+						class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+						data-bs-toggle="collapse"
+						data-bs-target="#gender-collapse"
+						aria-expanded="true"
+					></button>
+				</div>
+				<div class="collapse show" id="gender-collapse">
+					<ul
+						class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3 ms-3"
+					>
+						<li v-for="(gender, index) in genders" :key="index">
 							<div class="form-check">
 								<input
+									v-model="genderPicked"
 									class="form-check-input"
 									type="radio"
-									name="flexRadioDefault"
-									id="flexRadioDefault1"
-									checked
+									:value="gender"
+									:id="gender"
 								/>
-								<label
-									class="form-check-label"
-									for="flexRadioDefault1"
-								>
-									WOMEN
-								</label>
-							</div>
-						</li>
-						<li>
-							<div class="form-check">
-								<input
-									class="form-check-input"
-									type="radio"
-									name="flexRadioDefault"
-									id="flexRadioDefault2"
-								/>
-								<label
-									class="form-check-label"
-									for="flexRadioDefault2"
-								>
-									MEN
+								<label class="form-check-label" :for="gender">
+									{{ gender }}
 								</label>
 							</div>
 						</li>
@@ -61,17 +94,27 @@
 			</li>
 
 			<li class="border-top my-3"></li>
+			<!-- Brand  -->
 			<li class="mb-1">
-				Brand
-				<button
-					class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-					data-bs-toggle="collapse"
-					data-bs-target="#dashboard-collapse"
-					aria-expanded="false"
-				></button>
-				<div class="collapse" id="dashboard-collapse">
+				<div class="row">
+					<div
+						class="col-10"
+						data-bs-toggle="collapse"
+						data-bs-target="#brand-collapse"
+						aria-expanded="true"
+					>
+						Brand
+					</div>
+					<button
+						class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+						data-bs-toggle="collapse"
+						data-bs-target="#brand-collapse"
+						aria-expanded="true"
+					></button>
+				</div>
+				<div class="collapse show" id="brand-collapse">
 					<ul
-						class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4"
+						class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3 ms-3"
 					>
 						<li>
 							<div class="input-group mb-3">
@@ -80,24 +123,21 @@
 									class="form-control"
 									placeholder="Search Brands"
 									aria-label="Search Brands"
-									aria-describedby="basic-addon1"
-									v-model="searchInput"
+									v-model="brandSearchInput"
 								/>
 							</div>
 						</li>
-						<li>
+						<li v-for="brand in brands" :key="brand">
 							<div class="form-check">
 								<input
 									class="form-check-input"
 									type="checkbox"
-									value=""
-									id="flexCheckDefault"
+									v-model="brandsPicked"
+									:value="brand"
+									:id="brand"
 								/>
-								<label
-									class="form-check-label"
-									for="flexCheckDefault"
-								>
-									Unbranded
+								<label class="form-check-label" :for="brand">
+									{{ brand }}
 								</label>
 							</div>
 						</li>
@@ -106,173 +146,84 @@
 			</li>
 
 			<li class="border-top my-3"></li>
+			<!-- Price -->
 			<li class="mb-1">
-				Price
-				<button
-					class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-					data-bs-toggle="collapse"
-					data-bs-target="#orders-collapse"
-					aria-expanded="false"
-				></button>
-				<div class="collapse" id="orders-collapse">
+				<div class="row">
 					<div
-						class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4"
+						class="col-10"
+						data-bs-toggle="collapse"
+						data-bs-target="#price-collapse"
+						aria-expanded="true"
 					>
-						<div class="form-check">
+						Price
+					</div>
+					<button
+						class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+						data-bs-toggle="collapse"
+						data-bs-target="#price-collapse"
+						aria-expanded="true"
+					></button>
+				</div>
+				<div class="collapse show" id="price-collapse">
+					<div
+						class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3"
+					>
+						<div
+							class="form-check"
+							v-for="priceRange in priceRanges"
+							:key="priceRange"
+						>
 							<input
+								v-model="priceRangeSelected"
 								class="form-check-input"
 								type="radio"
-								name="flexRadioDefault"
-								id="flexRadioDefault1"
+								:id="priceRange"
+								:value="priceRange"
 							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault1"
-							>
-								SG $0 ~ SG $50
+							<label class="form-check-label" :for="priceRange">
+								{{ priceRange }}
 							</label>
 						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="flexRadioDefault"
-								id="flexRadioDefault1"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault1"
-							>
-								SG $50 ~ SG $100
-							</label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="flexRadioDefault"
-								id="flexRadioDefault1"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault1"
-							>
-								SG $100 ~ SG $150
-							</label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="flexRadioDefault"
-								id="flexRadioDefault1"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault1"
-							>
-								SG $150 ~ SG $200
-							</label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="flexRadioDefault"
-								id="flexRadioDefault1"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault1"
-							>
-								SG $200 ~ SG $250
-							</label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="radio"
-								name="flexRadioDefault"
-								id="flexRadioDefault1"
-							/>
-							<label
-								class="form-check-label"
-								for="flexRadioDefault1"
-							>
-								SG $250 ~ SG $300
-							</label>
-						</div>
-						<div class="price-search">
-							<div class="row">
+						<div class="">
+							<div class="row price-search">
 								<div class="col-4">
 									<input
 										type="number"
 										class="form-control"
 										placeholder="0"
+										v-model="minPriceInput"
+										min="0"
 									/>
 								</div>
-								<div class="col-1">-</div>
+								<div class="dash col-1">-</div>
 								<div class="col-4">
 									<input
 										type="number"
 										class="form-control"
 										placeholder="0"
+										v-model="maxPriceInput"
+										min="0"
 									/>
 								</div>
-								<div class="col-3">
-									<button class="btn btn-outline-dark">
+								<div class="col-2">
+									<button
+										class="btn btn-outline-secondary"
+										@click="searchPrice"
+									>
 										Apply
 									</button>
+								</div>
+							</div>
+							<div v-if="isPriceRangeWrong">
+								<div class="text-danger mt-2" role="alert">
+									min price is greater than max price!
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li class="border-top my-3"></li>
-			<li class="mb-1">
-				Account
-				<button
-					class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-					data-bs-toggle="collapse"
-					data-bs-target="#account-collapse"
-					aria-expanded="false"
-				></button>
-				<div class="collapse" id="account-collapse">
-					<ul
-						class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4"
-					>
-						<li>
-							<a
-								href="#"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-								>New...</a
-							>
-						</li>
-						<li>
-							<a
-								href="#"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-								>Profile</a
-							>
-						</li>
-						<li>
-							<a
-								href="#"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-								>Settings</a
-							>
-						</li>
-						<li>
-							<a
-								href="#"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-								>Sign out</a
-							>
-						</li>
-					</ul>
-				</div>
-			</li>
+			<!-- Size -->
 		</ul>
 	</div>
 </template>
