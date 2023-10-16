@@ -93,9 +93,15 @@ export default {
 </script>
 
 <template>
-    <div class="background-container">
-        <div class="login-container">
-            <h1 class="text-center Aoboshi-One">Login</h1>
+
+   
+        <video playsinline autoplay muted loop poster="cake.jpg">
+            <source src="../assets/login.webm" type="video/webm">
+        </video>
+
+        <div class="background-container">
+        <div class="login-container" >
+            <h1 class="text-center login-text">LOGIN</h1>
             <div class="w-75 mx-auto" style="max-width: 400px">
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -164,33 +170,50 @@ export default {
             </div>
         </div>
     </div>
+
     <Toast />
 </template>
 
 <style scoped>
+
+
+
+video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
 .background-container {
-    background-image: url("@/assets/img/ecommerce/login-bg.jpeg");
-    background-size: cover;
-    background-position: center;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 92vh;
-    width: 100%;
+  display: flex;
+justify-content: center;
+align-items: center;
+height: 92vh;
+width: auto;
+}
+.login-text{
+    color:black;
+  text-transform:uppercase;
+  font-size: 100px;
+  font-family: 'Sigmar', cursive;
+  font-weight: bolder;
+  line-height:1;
 }
 
 /* Small devices (landscape phones, 576px and up) */
 .login-container {
-    width: 100%;
+    /* width: 80%; */
     max-height: 90%;
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     max-width: 800px;
-
+    border-radius: 30px;
     overflow-y: scroll;
+    
 }
 .login-container:hover {
     background-color: rgba(255, 255, 255, 0.95);
