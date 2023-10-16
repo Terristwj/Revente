@@ -1,17 +1,26 @@
-import "./assets/styles/main.css";
+import './assets/styles/main.css';
 
-import { createApp } from "vue";
-import { createPinia } from "pinia";
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import App from "./App.vue";
-import router from "./router/router.js";
+import App from './App.vue';
+import router from './router/router.js';
 
 // Component library
-import connectPrimeVue from "./services/PrimeVue.js";
+import connectPrimeVue from './services/PrimeVue.js';
 
 // Firebase Database
-import connectFirebase from "./services/Firebase/FirebaseConfig";
+import connectFirebase from './services/Firebase/FirebaseConfig';
 
+// Font-Awesome Icons
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {
+	faFacebookF,
+	faTwitter,
+	faInstagram,
+	faTiktok,
+} from '@fortawesome/free-brands-svg-icons';
 const app = createApp(App);
 
 app.use(createPinia());
@@ -23,4 +32,8 @@ connectPrimeVue(app);
 // Refer to Firebase.js for configuration
 connectFirebase();
 
-app.mount("#app");
+// Font-Awesome Icons
+library.add(faFacebookF, faTwitter, faInstagram, faTiktok);
+app.component('font-awesome-icon', FontAwesomeIcon);
+
+app.mount('#app');

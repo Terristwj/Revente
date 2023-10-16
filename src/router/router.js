@@ -60,11 +60,6 @@ export const routes = [
 			requiresAuth: true,
 		},
 	},
-	{
-		path: '/listing',
-		name: 'Listing',
-		component: () => import('../views/ListingView.vue'),
-	},
 ];
 
 const router = createRouter({
