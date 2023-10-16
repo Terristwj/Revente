@@ -17,49 +17,54 @@ export const isAuthenticated = () => {
 
 // Add routes here
 export const routes = [
-    {
-        path: "/",
-        name: "Home",
-        component: () => import("../views/HomeView.vue"),
-    },
-    {
-        path: "/about",
-        name: "About",
-        // route level code-splitting
-        // this generates a separate chunk (About.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import("../views/AboutView.vue"),
-    },
-    {
-        path: "/faq",
-        name: "FAQ",
-        // route level code-splitting
-        // this generates a separate chunk (About.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import("../views/FAQView.vue"),
-    },
-    {
-        path: "/login",
-        name: "Login",
-        component: () => import("../views/LoginView.vue"),
-        props: true,
-    },
-    {
-        path: "/register",
-        name: "Register",
-        component: () => import("../views/RegisterView.vue"),
-    },
-    {
-        path: "/game",
-        name: "Game",
-        // route level code-splitting
-        // this generates a separate chunk (About.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import("../views/GameView.vue"),
-        meta: {
-            requiresAuth: true,
-        },
-    },
+	{
+		path: '/',
+		name: 'Home',
+		component: () => import('../views/HomeView.vue'),
+	},
+	{
+		path: '/about',
+		name: 'About',
+		// route level code-splitting
+		// this generates a separate chunk (About.[hash].js) for this route
+		// which is lazy-loaded when the route is visited.
+		component: () => import('../views/AboutView.vue'),
+	},
+	{
+		path: '/faq',
+		name: 'FAQ',
+		// route level code-splitting
+		// this generates a separate chunk (About.[hash].js) for this route
+		// which is lazy-loaded when the route is visited.
+		component: () => import('../views/FAQView.vue'),
+	},
+	{
+		path: '/login',
+		name: 'Login',
+		component: () => import('../views/LoginView.vue'),
+		props: true,
+	},
+	{
+		path: '/register',
+		name: 'Register',
+		component: () => import('../views/RegisterView.vue'),
+	},
+	{
+		path: '/game',
+		name: 'Game',
+		// route level code-splitting
+		// this generates a separate chunk (About.[hash].js) for this route
+		// which is lazy-loaded when the route is visited.
+		component: () => import('../views/GameView.vue'),
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/listing',
+		name: 'Listing',
+		component: () => import('../views/ListingView.vue'),
+	},
 ];
 
 const router = createRouter({
