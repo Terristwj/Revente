@@ -61,6 +61,11 @@ export const routes = [
 		},
 	},
 	{
+		path: '/listing',
+		name: 'Listing',
+		component: () => import('../views/ListingView.vue'),
+  },
+  {
 		// path: *
 		path: '/:catchAll(.*)',
 		name: 'NotFound',
