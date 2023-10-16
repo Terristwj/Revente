@@ -1,9 +1,15 @@
 <script>
-// export default {
-//     data() {},
-//     mounted() {},
-//     methods: {},
-// };
+import router from "../router/router.js";
+export default {
+    data() {},
+    mounted() {},
+    methods: {
+        toRegistration() {
+            router.push("/register");
+        }
+    },
+};
+
 </script>
 
 <template>
@@ -22,7 +28,7 @@
                                         Yes, you will need to register for a
                                         Reventé account to start shopping with
                                         us. Please click
-                                        <a href="#">here</a> to sign up!
+                                        <a href="#" @click="toRegistration()">here</a> to sign up!
                                     </p>
                                 </AccordionTab>
                                 <AccordionTab

@@ -331,7 +331,7 @@ export default {
             },
             Fireball: {
                 name: "Fireball",
-                damage: 25,
+                damage: 100,
                 type: "Fire",
                 color: "red",
             },
@@ -912,10 +912,13 @@ export default {
                             scale: 3,
                             animate: true,
                             dialogue: [
-                                "Hello there! Are you lost?",
-                                "I am a Prof Z, a SMU Professor.",
-                                "Do you know there are 4 tracks for SMU IS?",
-                                "Find the other professors to learn more!",
+                                "Hello there! Here are some fun facts on sustainable fashion!",
+                                "I am Green Thumb, a sustainability Researcher.",
+                                "Do you know that it can take more than 700 gallons of water to make a single t-shirt?",
+                                "Thats an absurd amount of water",
+                                "Clothing and textiles are almost 100% recyclable but not many are doing so :(",
+                                "Thats why there is Revente! Where you can buy and sell your clothes to reduce wastage!",
+                                "Find the other researchers to learn more!",
                             ],
                         })
                     );

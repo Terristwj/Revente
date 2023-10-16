@@ -150,7 +150,7 @@ export default {
 <template>
     <div class="background-container">
         <div class="register-container mx-auto">
-            <h1 class="text-center Aoboshi-One">Registration</h1>
+            <h1 class="text-center Aoboshi-One" style="font-size:30px;">Registration</h1>
             <div>
                 <div class="d-flex gap-3">
                     <div class="form-group w-50">
@@ -309,13 +309,12 @@ export default {
 
 /* Small devices (landscape phones, 576px and up) */
 .register-container {
+    border-radius: 25px;
     width: 100%;
     max-height: 90%;
     padding: 2rem;
-
     background-color: rgba(255, 255, 255, 0.9);
     max-width: 800px;
-
     overflow-y: scroll;
 }
 .register-container:hover {
@@ -359,7 +358,7 @@ input {
 input,
 button {
     border-radius: 0%;
-    box-shadow: 0px 10px 0px -5px #ccc;
+    /* box-shadow: 0px 10px 0px -5px #ccc; */
 }
 input:hover,
 button:hover {
