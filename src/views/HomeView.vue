@@ -1,5 +1,6 @@
 <script>
 	import BigCarousel from '../components/BigCarousel.vue';
+	import ItemCard from "../components/ItemCard.vue";
 	export default {
 		data() {
 			return {
@@ -12,6 +13,7 @@
 		},
 		components: {
 			BigCarousel,
+			ItemCard,
 		},
 	};
 </script>
@@ -87,8 +89,10 @@
 							:interval="7000"
 						/>
 					</div>
+					
 				</div>
 			</div>
+			<ItemCard/>
 		</div>
 	</body>
 </template>

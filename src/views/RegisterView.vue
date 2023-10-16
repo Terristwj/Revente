@@ -149,7 +149,7 @@ export default {
 
 <template>
     <video playsinline autoplay muted loop poster="cake.jpg">
-        <source src="../assets/login.webm" type="video/webm">
+        <source src="../assets/videos/login.webm" type="video/webm">
     </video>
     <div class="background-container">
         <div class="register-container mx-auto">
