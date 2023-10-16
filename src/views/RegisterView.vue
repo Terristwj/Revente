@@ -69,14 +69,14 @@ export default {
             this.cfmPasswordError = !this.cfmPassword
                 ? "Please confirm your password."
                 : this.password !== this.cfmPassword
-                ? "Passwords do not match."
-                : "";
+                    ? "Passwords do not match."
+                    : "";
 
             this.phoneError = !this.phone
                 ? "Please enter your phone number."
                 : !this.isValidPhone(this.phone)
-                ? "Please enter a valid phone number."
-                : "";
+                    ? "Please enter a valid phone number."
+                    : "";
 
             this.addressError = !this.address
                 ? "Please enter your address."
@@ -148,31 +148,24 @@ export default {
 </script>
 
 <template>
+    <video playsinline autoplay muted loop poster="cake.jpg">
+        <source src="../assets/login.webm" type="video/webm">
+    </video>
     <div class="background-container">
         <div class="register-container mx-auto">
-            <h1 class="text-center Aoboshi-One" style="font-size:30px;">Registration</h1>
+            <h1 class="text-center login-text fs-1" style="font-size:30px;">Registration</h1>
             <div>
                 <div class="d-flex gap-3">
                     <div class="form-group w-50">
                         <label for="firstName">First Name:</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            class="Aoboshi-One"
-                            v-model="firstName"
-                        />
+                        <input type="text" id="firstName" class="Aoboshi-One" v-model="firstName" />
                         <span v-show="firstNameError" class="error">{{
                             firstNameError
                         }}</span>
                     </div>
                     <div class="form-group w-50">
                         <label for="lastName">Last Name:</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            class="Aoboshi-One"
-                            v-model="lastName"
-                        />
+                        <input type="text" id="lastName" class="Aoboshi-One" v-model="lastName" />
                         <span v-show="lastNameError" class="error">{{
                             lastNameError
                         }}</span>
@@ -181,24 +174,14 @@ export default {
 
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input
-                        type="text"
-                        id="email"
-                        class="Aoboshi-One"
-                        v-model="email"
-                    />
+                    <input type="text" id="email" class="Aoboshi-One" v-model="email" />
                     <span v-show="emailError" class="error">{{
                         emailError
                     }}</span>
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        class="Aoboshi-One"
-                        v-model="password"
-                    />
+                    <input type="password" id="password" class="Aoboshi-One" v-model="password" />
                     <span v-show="passwordError" class="error">{{
                         passwordError
                     }}</span>
@@ -206,12 +189,7 @@ export default {
 
                 <div class="form-group">
                     <label for="cfmPassword">Confirm Password:</label>
-                    <input
-                        type="password"
-                        id="cfmPassword"
-                        class="Aoboshi-One"
-                        v-model="cfmPassword"
-                    />
+                    <input type="password" id="cfmPassword" class="Aoboshi-One" v-model="cfmPassword" />
                     <span v-show="cfmPasswordError" class="error">{{
                         cfmPasswordError
                     }}</span>
@@ -223,27 +201,15 @@ export default {
                         <span class="p-inputgroup-addon">
                             <label>+65</label>
                         </span>
-                        <InputMask
-                            id="phone"
-                            class="Aoboshi-One"
-                            v-model="phone"
-                            date="phone"
-                            mask="9999 9999"
-                        />
+                        <InputMask id="phone" class="Aoboshi-One" v-model="phone" date="phone" mask="9999 9999" />
                     </div>
                     <span v-show="phoneError" class="error">
-                        {{ phoneError }}</span
-                    >
+                        {{ phoneError }}</span>
                 </div>
 
                 <div class="form-group">
                     <label for="address">Address:</label>
-                    <input
-                        type="text"
-                        id="address"
-                        class="Aoboshi-One"
-                        v-model="address"
-                    />
+                    <input type="text" id="address" class="Aoboshi-One" v-model="address" />
                     <span v-show="addressError" class="error">{{
                         addressError
                     }}</span>
@@ -251,12 +217,7 @@ export default {
 
                 <div class="form-group">
                     <label for="city">City:</label>
-                    <input
-                        type="text"
-                        id="city"
-                        class="Aoboshi-One"
-                        v-model="city"
-                    />
+                    <input type="text" id="city" class="Aoboshi-One" v-model="city" />
                     <span v-show="cityError" class="error">{{
                         cityError
                     }}</span>
@@ -264,12 +225,7 @@ export default {
 
                 <div class="form-group">
                     <label for="region">Region:</label>
-                    <input
-                        type="text"
-                        id="region"
-                        class="Aoboshi-One my-0"
-                        v-model="region"
-                    />
+                    <input type="text" id="region" class="Aoboshi-One my-0" v-model="region" />
                     <span v-show="regionError" class="error">{{
                         regionError
                     }}</span>
@@ -279,11 +235,7 @@ export default {
                     <button class="btn btn-primary w-50" @click="submitForm()">
                         Register
                     </button>
-                    <button
-                        class="btn btn-primary w-50"
-                        type="submit"
-                        @click="toCancel()"
-                    >
+                    <button class="btn btn-primary w-50" type="submit" @click="toCancel()">
                         Cancel
                     </button>
                 </div>
@@ -294,20 +246,48 @@ export default {
 </template>
 
 <style scoped>
-.background-container {
-    background-image: url("@/assets/img/ecommerce/login-bg.jpeg");
-    background-size: cover;
-    background-position: center;
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
 
+    100% {
+        opacity: 1;
+    }
+}
+
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background-container {
     display: flex;
     justify-content: center;
     align-items: center;
-
     height: 92vh;
-    width: 100%;
+    width: auto;
+    animation: fadeInAnimation ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
 /* Small devices (landscape phones, 576px and up) */
+
+.login-text {
+    color: black;
+    text-transform: uppercase;
+    /* font-size: 100px; */
+    font-family: 'Sigmar';
+    font-weight: bolder;
+    line-height: 1;
+    letter-spacing: 10px;
+}
+
 .register-container {
     border-radius: 25px;
     width: 100%;
@@ -317,13 +297,16 @@ export default {
     max-width: 800px;
     overflow-y: scroll;
 }
+
 .register-container:hover {
     background-color: rgba(255, 255, 255, 0.95);
 }
-.register-container > h1 {
+
+.register-container>h1 {
     font-size: 32px;
 }
-.register-container > label {
+
+.register-container>label {
     font-size: 20px;
     display: block;
 }
@@ -333,10 +316,12 @@ export default {
     .register-container {
         width: 75%;
     }
-    .register-container > h1 {
+
+    .register-container>h1 {
         font-size: 28px;
     }
-    .register-container > label {
+
+    .register-container>label {
         font-size: 16px;
     }
 }
@@ -355,15 +340,18 @@ input {
     border: 1px solid #ccc;
     border-radius: 0.25rem;
 }
+
 input,
 button {
     border-radius: 0%;
     /* box-shadow: 0px 10px 0px -5px #ccc; */
 }
+
 input:hover,
 button:hover {
     box-shadow: 0px 0px 0px 3px #c7d2fe;
 }
+
 input:focus {
     box-shadow: none;
 }

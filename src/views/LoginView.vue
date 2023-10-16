@@ -92,16 +92,14 @@ export default {
 };
 </script>
 
-<template>
-
-   
+<template>   
         <video playsinline autoplay muted loop poster="cake.jpg">
             <source src="../assets/login.webm" type="video/webm">
         </video>
 
         <div class="background-container">
         <div class="login-container" >
-            <h1 class="text-center login-text">LOGIN</h1>
+            <h1 class="text-center login-text fs-1">LOGIN</h1>
             <div class="w-75 mx-auto" style="max-width: 400px">
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -177,6 +175,17 @@ export default {
 <style scoped>
 
 
+      @keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+      
+
+
 
 video {
   position: absolute;
@@ -193,14 +202,22 @@ justify-content: center;
 align-items: center;
 height: 92vh;
 width: auto;
+animation: fadeInAnimation ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 .login-text{
     color:black;
   text-transform:uppercase;
-  font-size: 100px;
-  font-family: 'Sigmar', cursive;
+  /* font-size: 100px; */
+  font-family: 'Sigmar';
   font-weight: bolder;
   line-height:1;
+  letter-spacing: 10px;
+}
+
+.login-text:hover{
+    letter-spacing: 10px;
 }
 
 /* Small devices (landscape phones, 576px and up) */
