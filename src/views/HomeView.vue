@@ -50,7 +50,7 @@
 	</header>
 	<div class="body-spacer"></div>
 	<body>
-		<div class="p-4">
+		<div class="p-4 mb-5">
 			<h1>Fashionably Green</h1>
 			<p>
 				With REVENTÉ, you are supporting sustainable fashion! Explore a
@@ -66,7 +66,7 @@
 				<button class="btn btn-dark ms-3 px-5">Sign In</button>
 			</div>
 		</div>
-		<div class="p-4">
+		<div class="p-4 my-5">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-6">
@@ -104,7 +104,7 @@
 	}
 
 	.body-spacer {
-		margin-top: 100dvh;
+		margin-top: 120dvh;
 	}
 
 	video {
