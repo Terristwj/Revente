@@ -34,4 +34,5 @@ export default {
     <FooterComponent />
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

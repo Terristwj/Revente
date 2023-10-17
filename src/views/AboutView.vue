@@ -1,12 +1,12 @@
 <script>
+import ScrollSection from "../components/ScrollSection.vue";
+import GameCanvas from "../components/GameCanvas.vue";
 export default {
-    data() {
-        return {
-        };
+    name: "App",
+    components: {
+        ScrollSection: ScrollSection,
+        GameCanvas: GameCanvas,
     },
-    methods: {
-    }
-
 };
 
 </script>
@@ -27,12 +27,12 @@ export default {
     <div class="body-spacer"></div>
 
 
-    <div class="container-fluid content1 w-75 ">
+    <div class="container-fluid content1">
 
 
         <div class="content-1 row p-4">
             <div class="col-4 m-0 p-0">
-                <img src="../assets/img/ecommerce/about1.png" alt="" id="firstimg">
+                <img src="../assets/img/ecommerce/fraser.png" alt="" id="firstimg">
             </div>
             <div class="col-8">
                 <h1>Fashionably Green</h1>
@@ -49,56 +49,124 @@ export default {
                 <p style="font-style:italic;">REVENTÉ: where style meets sustainability.</p>
             </div>
 
-
-
         </div>
-        <div class="row content-2 p-4 ">
-            <h1>Our Mission</h1>
-            <p>
-                REVENTÉ is a platform that aims to promote sustainable fashion. We believe that fashion should be
-                accessible
-                to everyone, and that it should not come at the cost of the environment. We are committed to providing a
-                platform that is inclusive, sustainable, and affordable.
-            </p>
-        </div>
+        <div class="row">
+            <ScrollSection transition="zoomOut" class="content-2 card-bg">
+                <h1>Our Mission</h1>
+                <br>
+                <p>
+                    REVENTÉ is a platform that aims to promote sustainable fashion. We believe that fashion should be
+                    accessible
+                    to everyone, and that it should not come at the cost of the environment. We are committed to providing a
+                    platform that is inclusive, sustainable, and affordable
 
-
-
-        <div class="content-4 row p-4 ">
-            <h1>Our Commitment to Sustainability</h1>
-            <p>
-                At REVENTÉ, our commitment to sustainability goes beyond just words. We take concrete steps to minimize
-                our
-                environmental impact. We source our products responsibly, utilize eco-friendly packaging, and support
-                fair
-                labor
-                practices. By choosing REVENTÉ, you're not just making a fashion statement; you're supporting a greener,
-                more
-                ethical future.
-            </p>
+                </p>
+                <p style="font-style:italic;">~where style meets sustainability~</p>
+            </ScrollSection>
         </div>
 
-        <div class="content-3 row p-4 ">
-            <h1>Our Team</h1>
-            <p>
-                REVENTÉ was founded by a team of students from Singapore Management University. We are a group of
-                passionate
-                individuals who are committed to making a difference in the fashion industry.
-            </p>
+        <div class="content-4 row p-4">
+
+            <div class="col-8">
+                <h1>Our Commitment to Sustainability</h1>
+                <p>
+                    At REVENTÉ, our commitment to sustainability goes beyond just words. We take concrete steps to minimize
+                    our
+                    environmental impact. We source our products responsibly, utilize eco-friendly packaging, and support
+                    fair
+                    labor
+                    practices. By choosing REVENTÉ, you're not just making a fashion statement; you're supporting a greener,
+                    more
+                    ethical future.
+
+                </p>
+                <p style="font-style:italic;">REVENTÉ: where style meets sustainability.</p>
+            </div>
+
+            <div class="col-4 m-0 p-0">
+                <img src="../assets/img/ecommerce/fraser.png" alt="" id="firstimg">
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <ScrollSection transition="fade" class="content-4 card-bg">
+                <h1>Our Team</h1>
+                <br>
+                <p>
+                    REVENTÉ was founded by a team of students from Singapore Management University. We are a group of
+                    passionate
+                    individuals who are committed to making a sustainable difference in the fashion industry.
+                </p>
+            </ScrollSection>
+        </div>
+
+        <div class="row">
+            <ScrollSection transition="slideUp" class="content-5 game-bg">
+                <div class="text-center">
+                    <h1>Welcome to Our Sustainability Game!</h1>
+                    <br>
+
+                    <p>Test your knowledge and make a positive impact on the planet. Play now and learn about sustainability
+                        in an interactive and fun way!</p>
+
+
+                </div>
+
+            </ScrollSection>
+        </div>
+
+        <div class="row m-0">
+
+            <div class="game d-flex" style="justify-content:center; align-items:center;">
+                <GameCanvas />
+            </div>
+
         </div>
     </div>
 </template>
 
 <style scoped>
+*{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.game-bg {
+    background-image: url("../assets/img/ecommerce/pixelbg2.jpeg");
+    /* background-size:contain; */
+
+}
+
+.scrollSection {
+    display: grid;
+    height: 40vw;
+    place-items: center;
+    width: 100vw;
+
+}
+
+.card-bg {
+    background-image: url("../assets/img/ecommerce/about1.png");
+    background-size: cover;
+
+}
+
+
 #firstimg {
-    width: 100%;
+    width: 75%;
     height: auto;
+    margin-left: 50%;
+    transform: translateX(-50%);
+
 }
 
 .row {
-    border: 1px solid black;
-    border-radius: 30px;
     margin-bottom: 40px;
+
+}
+
+.content-2>h1 {
+    font-size: 3rem;
 }
 
 
@@ -162,39 +230,50 @@ export default {
 
 @media (max-width: 768px) {
     .header-text h1 {
-        font-weight: 900;
         font-size: 8vw;
-        text-transform: uppercase;
-        line-height: 1;
-    }
-}
-
-@media (max-width: 576px) {
-    .body-spacer {
-        margin-top: 30dvh;
     }
 
     .header-text {
-        position: absolute;
-        color: rgb(240, 237, 237);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        transform: translateY(-5rem);
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        -webkit-text-stroke: 0.5px rgb(114, 114, 114);
-        height: 60dvh;
+        height: 50dvh;
     }
 
+    .body-spacer {
+        margin-top: 40dvh;
+    }
+
+    #coverimg {
+        max-height: 40dvh;
+    }
+
+    .row {
+        margin-bottom: 10px;
+    }
+
+    .row h1 {
+        font-size: 20px;
+    }
+
+    .row p {
+        font-size: 12px;
+    }
+
+}
+
+@media (max-width: 576px) {
     .header-text h1 {
-        font-weight: 900;
         font-size: 8vw;
-        text-transform: uppercase;
-        line-height: 1;
+    }
+
+    .header-text {
+        height: 50dvh;
+    }
+
+    .body-spacer {
+        margin-top: 35dvh;
+    }
+
+    #coverimg {
+        max-height: 40dvh;
     }
 }
 
