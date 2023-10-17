@@ -2,11 +2,6 @@
 export default {
     data() {
         return {
-            imgurls: [
-                '/src/assets/img/ecommerce/Google.png',
-                '/src/assets/img/ecommerce/Google.png',
-                '/src/assets/img/ecommerce/Google.png',
-            ],
         };
     },
     methods: {
@@ -18,19 +13,21 @@ export default {
 
 <template>
     <header class="video-header">
-        <video src="../assets/videos/exampleVid.mp4" autoplay loop playsinline muted>
-        </video>
+        <!-- <video src="../assets/videos/exampleVid.mp4" autoplay loop playsinline muted>
+        </video> -->
+        <img src="../assets/img/ecommerce/about.svg" alt="">
         <div class="header-text">
-            <h1 class="flicker">
+            <h1 class="">
                 About Us
             </h1>
-
         </div>
+       
+        
     </header>
     <div class="body-spacer"></div>
 
 
-        <div class="container-fluid content1 w-100 bg-warning ">
+        <div class="container-fluid content1 w-100 ">
 
 
             <div class="content-1 row p-4">
@@ -125,8 +122,8 @@ export default {
     margin-top: 60dvh;
 }
 
-video {
-    width: 100dvw;
+img {
+    width: 100%;
     max-height: 60dvh;
     position: absolute;
     top: 0;
@@ -146,10 +143,14 @@ video {
     bottom: 0;
     left: 0;
     right: 0;
-    -webkit-text-stroke: 0.5px rgb(114, 114, 114);
+    -webkit-text-stroke: 1px rgb(27, 27, 27);
     height: 60dvh;
 }
 
+.header-text:hover{
+    color: rgb(50, 50, 50);
+    -webkit-text-stroke: 1px rgb(255, 255, 255);
+}
 .header-text h1 {
     font-weight: 900;
     font-size: 8vw;
