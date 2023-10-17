@@ -1,7 +1,7 @@
 <script>
 	import BigCarousel from '../components/BigCarousel.vue';
-	import ItemCard from "../components/ItemCard.vue";
-	import router from "../router/router.js";
+	import ItemCard from '../components/ItemCard.vue';
+	import router from '../router/router.js';
 
 	export default {
 		data() {
@@ -17,23 +17,21 @@
 			BigCarousel,
 			ItemCard,
 		},
-		methods:{
+		methods: {
 			toRegistration() {
-            router.push("/register");
-        },
-		toLogin() {
-            router.push("/login");
-        },
-		}
-		
+				router.push('/register');
+			},
+			toLogin() {
+				router.push('/login');
+			},
+		},
 	};
-	
 </script>
 
 <template>
 	<header class="video-header">
 		<video
-			src="../assets/videos/exampleVid.mp4"
+			src="../assets/videos/revente.mp4"
 			autoplay
 			loop
 			playsinline
@@ -73,13 +71,21 @@
 				principles of the circular economy and thrifting. Discover the
 				latest trends, vintage finds, and timeless classics, all while
 				reducing your environmental footprint. Join us in redefining
-				fashion with style and conscience. 
-				
+				fashion with style and conscience.
 			</p>
-			<p style="font-style:italic;">REVENTÉ: where style meets sustainability.</p>
+			<p style="font-style: italic">
+				REVENTÉ: where style meets sustainability.
+			</p>
 			<div>
-				<button class="btn btn-outline-dark me-3 px-5" @click="toRegistration()">Register</button>
-				<button class="btn btn-dark ms-3 px-5" @click="toLogin()">Sign In</button>
+				<button
+					class="btn btn-outline-dark me-3 px-5"
+					@click="toRegistration()"
+				>
+					Register
+				</button>
+				<button class="btn btn-dark ms-3 px-5" @click="toLogin()">
+					Sign In
+				</button>
 			</div>
 		</div>
 		<div class="p-4 my-5">
@@ -103,10 +109,9 @@
 							:interval="7000"
 						/>
 					</div>
-					
 				</div>
 			</div>
-			<ItemCard/>
+			<ItemCard />
 		</div>
 	</body>
 </template>
@@ -177,7 +182,7 @@
 		font-size: 0.75rem;
 	}
 	.credit a {
-		color: rgb(151, 151, 151);
+		color: rgb(84, 84, 84);
 		text-underline-offset: 2px;
 	}
 	@media (max-width: 768px) {
