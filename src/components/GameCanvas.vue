@@ -1733,8 +1733,8 @@ export default {
     justify-content: center;
     overflow: hidden;
     margin: auto;
-    background-color: black;
-    border: 5px solid black;
+    background-color: rgb(255, 255, 255);
+    /* border: 5px solid black; */
     margin: 0px 0px;
 }
 

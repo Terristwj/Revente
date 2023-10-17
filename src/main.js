@@ -21,6 +21,9 @@ import {
 	faInstagram,
 	faTiktok,
 } from '@fortawesome/free-brands-svg-icons';
+
+
+
 const app = createApp(App);
 
 app.use(createPinia());
