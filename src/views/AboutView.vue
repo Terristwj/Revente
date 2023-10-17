@@ -29,8 +29,8 @@ export default {
     </header>
     <div class="body-spacer"></div>
 
-    <body>
-        <div class="container-fluid content ">
+
+        <div class="container-fluid content1 w-100 bg-warning ">
 
 
             <div class="content-1 row p-4">
@@ -82,7 +82,7 @@ export default {
                 </p>
             </div>
         </div>
-    </body>
+  
 </template>
 
 <style scoped>
@@ -92,8 +92,11 @@ export default {
     margin-bottom: 40px;
 }
 
-.content {
+.content1 {
     width: 75%;
+}
+#content{
+    margin: 0!important;
 }
 
 .flicker {
