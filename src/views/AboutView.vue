@@ -127,6 +127,10 @@ export default {
 </template>
 
 <style scoped>
+*{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
 .game-bg {
     background-image: url("../assets/img/ecommerce/pixelbg2.jpeg");
     /* background-size:contain; */
