@@ -44,7 +44,7 @@
 <style scoped>
 #card_img {
     width: 100%;
-    height: 15rem;
+    height: 18rem;
     object-fit: fill;
 }
 
