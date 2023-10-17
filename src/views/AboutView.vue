@@ -30,13 +30,14 @@ export default {
     <div class="container-fluid content1">
 
 
-        <div class="content-1 row p-4">
+        <div class="content-1 row pt-4">
             <div class="col-4 m-0 p-0">
-                <img src="../assets/img/ecommerce/fraser.png" alt="" id="firstimg">
+                <img src="../assets/img/ecommerce/about-content.png" alt="" id="firstimg" class="img-fluid" >
             </div>
-            <div class="col-8">
+            <div class="col-8 my-auto">
+
                 <h1>Fashionably Green</h1>
-                <p>
+                <p style="text-align:justify;">
                     With REVENTÉ, you are supporting sustainable fashion! Explore a
                     curated collection of fashionable clothing, made to enhance your
                     wardrobe. Here at REVENTÉ, we build our platform through the
@@ -54,22 +55,23 @@ export default {
             <ScrollSection transition="zoomOut" class="content-2 card-bg">
                 <h1>Our Mission</h1>
                 <br>
-                <p>
+                <p style="text-align:justify;">
                     REVENTÉ is a platform that aims to promote sustainable fashion. We believe that fashion should be
                     accessible
                     to everyone, and that it should not come at the cost of the environment. We are committed to providing a
                     platform that is inclusive, sustainable, and affordable
 
                 </p>
-                <p style="font-style:italic;">~where style meets sustainability~</p>
+                <p style="font-style:italic;">~Wear the Change, Be the Change~</p>
             </ScrollSection>
         </div>
 
         <div class="content-4 row p-4">
 
-            <div class="col-8">
+            <div class="col-8 my-auto">
                 <h1>Our Commitment to Sustainability</h1>
-                <p>
+                <br>
+                <p style="text-align:justify;">
                     At REVENTÉ, our commitment to sustainability goes beyond just words. We take concrete steps to minimize
                     our
                     environmental impact. We source our products responsibly, utilize eco-friendly packaging, and support
@@ -80,11 +82,10 @@ export default {
                     ethical future.
 
                 </p>
-                <p style="font-style:italic;">REVENTÉ: where style meets sustainability.</p>
             </div>
 
             <div class="col-4 m-0 p-0">
-                <img src="../assets/img/ecommerce/fraser.png" alt="" id="firstimg">
+                <img src="../assets/img/ecommerce/sustainable_fash.png" alt="" id="firstimg">
             </div>
 
         </div>
@@ -93,7 +94,7 @@ export default {
             <ScrollSection transition="fade" class="content-4 card-bg">
                 <h1>Our Team</h1>
                 <br>
-                <p>
+                <p style="text-align:justify;">
                     REVENTÉ was founded by a team of students from Singapore Management University. We are a group of
                     passionate
                     individuals who are committed to making a sustainable difference in the fashion industry.
@@ -107,7 +108,7 @@ export default {
                     <h1>Welcome to Our Sustainability Game!</h1>
                     <br>
 
-                    <p>Test your knowledge and make a positive impact on the planet. Play now and learn about sustainability
+                    <p style="text-align:justify;">Test your knowledge and make a positive impact on the planet. Play now and learn about sustainability
                         in an interactive and fun way!</p>
 
 
@@ -304,4 +305,6 @@ export default {
         text-transform: uppercase;
         line-height: 1;
     }
+
+   
 }</style>
