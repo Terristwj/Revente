@@ -110,8 +110,25 @@ export default {
     padding: 60px 60px;
     width: 75%;
 }
+@media(min-width:320px){
+    .card{
+        margin: 3%;
+        height: 15dvh; 
+        padding: 2%;
+    }
+    .card p {
+        font-size: 7px!important;
+        /* padding-top:0 !important; */
+        margin-top: 0!important;
+    }
+    .card h1{
+        font-size: 10px!important;
+        /* margin-top: 15px!important; */
+    }
+}
 
-@media (max-width: 576px) {
+
+@media(min-width: 425px) and (max-width: 576px) {
     .card{
         margin: 3%;
         height: 20dvh; 
@@ -119,15 +136,13 @@ export default {
     }
     .card p {
         font-size: 10px!important;
-        padding-top:0 !important;
-        margin-top: 0!important;
+        /* padding-top:0 !important;
+        margin-top: 0!important; */
     }
     .card h1{
         font-size: 13px!important;
-        margin-top: 15px!important;
+        /* margin-top: 15px!important; */
     }
-
-
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
@@ -156,10 +171,10 @@ export default {
         padding: 2%;
     }
     .card p {
-        font-size: 15px;
+        font-size: 15px !important;
     }
     .card h1{
-        font-size: 25px;
+        font-size: 25px!important;
         margin:0!important;
     }
 
@@ -172,10 +187,10 @@ export default {
         padding: 60px 60px;
     }
     .card p {
-        font-size: 20px;
+        font-size: 20px!important;
     }
     .card h1{
-        font-size: 30px;
+        font-size: 30px!important;
         margin:0!important;
     }
 
