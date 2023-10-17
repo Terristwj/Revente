@@ -15,22 +15,26 @@ export default {
     <header class="video-header">
         <!-- <video src="../assets/videos/exampleVid.mp4" autoplay loop playsinline muted>
         </video> -->
-        <img src="../assets/img/ecommerce/about.svg" alt="">
+        <img src="../assets/img/ecommerce/about.svg" alt="" id="coverimg">
         <div class="header-text">
-            <h1 class="">
+            <h1 class="flicker">
                 About Us
             </h1>
         </div>
-       
-        
+
+
     </header>
     <div class="body-spacer"></div>
 
 
-        <div class="container-fluid content1 w-100 ">
+    <div class="container-fluid content1 w-75 ">
 
 
-            <div class="content-1 row p-4">
+        <div class="content-1 row p-4">
+            <div class="col-4 m-0 p-0">
+                <img src="../assets/img/ecommerce/about1.png" alt="" id="firstimg">
+            </div>
+            <div class="col-8">
                 <h1>Fashionably Green</h1>
                 <p>
                     With REVENTÉ, you are supporting sustainable fashion! Explore a
@@ -44,60 +48,62 @@ export default {
                 </p>
                 <p style="font-style:italic;">REVENTÉ: where style meets sustainability.</p>
             </div>
-            <div class="row content-2 p-4 ">
-                <h1>Our Mission</h1>
-                <p>
-                    REVENTÉ is a platform that aims to promote sustainable fashion. We believe that fashion should be
-                    accessible
-                    to everyone, and that it should not come at the cost of the environment. We are committed to providing a
-                    platform that is inclusive, sustainable, and affordable.
-                </p>
-            </div>
 
 
 
-            <div class="content-4 row p-4 ">
-                <h1>Our Commitment to Sustainability</h1>
-                <p>
-                    At REVENTÉ, our commitment to sustainability goes beyond just words. We take concrete steps to minimize
-                    our
-                    environmental impact. We source our products responsibly, utilize eco-friendly packaging, and support
-                    fair
-                    labor
-                    practices. By choosing REVENTÉ, you're not just making a fashion statement; you're supporting a greener,
-                    more
-                    ethical future.
-                </p>
-            </div>
-
-            <div class="content-3 row p-4 ">
-                <h1>Our Team</h1>
-                <p>
-                    REVENTÉ was founded by a team of students from Singapore Management University. We are a group of
-                    passionate
-                    individuals who are committed to making a difference in the fashion industry.
-                </p>
-            </div>
         </div>
-  
+        <div class="row content-2 p-4 ">
+            <h1>Our Mission</h1>
+            <p>
+                REVENTÉ is a platform that aims to promote sustainable fashion. We believe that fashion should be
+                accessible
+                to everyone, and that it should not come at the cost of the environment. We are committed to providing a
+                platform that is inclusive, sustainable, and affordable.
+            </p>
+        </div>
+
+
+
+        <div class="content-4 row p-4 ">
+            <h1>Our Commitment to Sustainability</h1>
+            <p>
+                At REVENTÉ, our commitment to sustainability goes beyond just words. We take concrete steps to minimize
+                our
+                environmental impact. We source our products responsibly, utilize eco-friendly packaging, and support
+                fair
+                labor
+                practices. By choosing REVENTÉ, you're not just making a fashion statement; you're supporting a greener,
+                more
+                ethical future.
+            </p>
+        </div>
+
+        <div class="content-3 row p-4 ">
+            <h1>Our Team</h1>
+            <p>
+                REVENTÉ was founded by a team of students from Singapore Management University. We are a group of
+                passionate
+                individuals who are committed to making a difference in the fashion industry.
+            </p>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+#firstimg {
+    width: 100%;
+    height: auto;
+}
+
 .row {
     border: 1px solid black;
     border-radius: 30px;
     margin-bottom: 40px;
 }
 
-.content1 {
-    width: 75%;
-}
-#content{
-    margin: 0!important;
-}
+
 
 .flicker {
-    font-family: 'Merienda', sans-serif;
     margin: 1rem auto;
     color: #d1bcbc11;
     background: -webkit-gradient(linear, left top, right top, from(#ffffff), to(#d3d3d3), color-stop(0.8, #d0d0d0));
@@ -105,7 +111,7 @@ export default {
     background-size: 110px 100%;
     -webkit-background-clip: text;
     background-clip: text;
-    animation: flick 3s infinite;
+    animation: flick 3.5s infinite;
 }
 
 @keyframes flick {
@@ -122,7 +128,7 @@ export default {
     margin-top: 60dvh;
 }
 
-img {
+#coverimg {
     width: 100%;
     max-height: 60dvh;
     position: absolute;
@@ -147,10 +153,6 @@ img {
     height: 60dvh;
 }
 
-.header-text:hover{
-    color: rgb(50, 50, 50);
-    -webkit-text-stroke: 1px rgb(255, 255, 255);
-}
 .header-text h1 {
     font-weight: 900;
     font-size: 8vw;
@@ -161,64 +163,66 @@ img {
 @media (max-width: 768px) {
     .header-text h1 {
         font-weight: 900;
-    font-size: 8vw;
-    text-transform: uppercase;
-    line-height: 1;
+        font-size: 8vw;
+        text-transform: uppercase;
+        line-height: 1;
     }
 }
 
 @media (max-width: 576px) {
     .body-spacer {
-    margin-top: 30dvh;
-}
+        margin-top: 30dvh;
+    }
+
     .header-text {
-    position: absolute;
-    color: rgb(240, 237, 237);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    transform: translateY(-5rem);
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    -webkit-text-stroke: 0.5px rgb(114, 114, 114);
-    height: 60dvh;
-}
+        position: absolute;
+        color: rgb(240, 237, 237);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        transform: translateY(-5rem);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        -webkit-text-stroke: 0.5px rgb(114, 114, 114);
+        height: 60dvh;
+    }
+
     .header-text h1 {
-    font-weight: 900;
-    font-size: 8vw;
-    text-transform: uppercase;
-    line-height: 1;
+        font-weight: 900;
+        font-size: 8vw;
+        text-transform: uppercase;
+        line-height: 1;
     }
 }
 
 @media (max-width: 320px) {
     .body-spacer {
-    margin-top: 20dvh;
-}
-    .header-text {
-    position: absolute;
-    color: rgb(240, 237, 237);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    transform: translateY(-7rem);
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    -webkit-text-stroke: 0.5px rgb(114, 114, 114);
-    height: 60dvh;
-}
-    .header-text h1 {
-    font-weight: 900;
-    font-size: 8vw;
-    text-transform: uppercase;
-    line-height: 1;
+        margin-top: 20dvh;
     }
-}
 
-</style>
+    .header-text {
+        position: absolute;
+        color: rgb(240, 237, 237);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        transform: translateY(-7rem);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        -webkit-text-stroke: 0.5px rgb(114, 114, 114);
+        height: 60dvh;
+    }
+
+    .header-text h1 {
+        font-weight: 900;
+        font-size: 8vw;
+        text-transform: uppercase;
+        line-height: 1;
+    }
+}</style>
