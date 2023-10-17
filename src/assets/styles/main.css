@@ -127,25 +127,3 @@ a,
 * {
 	transition-duration: 0.2s;
 }
-
-/* Custom Scrollbar START*/
-/* width */
-::-webkit-scrollbar {
-	width: 5px;
-}
-/* Track */
-::-webkit-scrollbar-track {
-	/* background: #888; */
-	/* border-left: 1px solid grey; */
-	background: transparent;
-}
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: #f3dfd7;
-	border: 1px solid grey;
-}
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-	background: #cbaca0;
-}
-/* Custom Scrollbar END*/
