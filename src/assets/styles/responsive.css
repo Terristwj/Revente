@@ -11,8 +11,7 @@ Small devices (landscape phones, 576px and up) */
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    #navigationBarContent,
-    #content {
+    #navigationBarContent {
         margin: 0 5%;
     }
 }
