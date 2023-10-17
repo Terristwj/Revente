@@ -184,30 +184,30 @@
 								{{ priceRange }}
 							</label>
 						</div>
-						<div class="">
+						<div class="mt-4">
 							<div class="row price-search">
-								<div class="col-4">
+								<div class="col-4 pe-0">
 									<input
 										type="number"
-										class="form-control"
+										class="price-form"
 										placeholder="0"
 										v-model="minPriceInput"
 										min="0"
 									/>
 								</div>
-								<div class="dash col-1">-</div>
-								<div class="col-4">
+								<div class="dash col-1 py-0">-</div>
+								<div class="col-4 ps-0">
 									<input
 										type="number"
-										class="form-control"
+										class="price-form"
 										placeholder="0"
 										v-model="maxPriceInput"
 										min="0"
 									/>
 								</div>
-								<div class="col-2">
+								<div class="col-2 ps-0">
 									<button
-										class="btn btn-outline-secondary"
+										class="price-btn"
 										@click="searchPrice"
 									>
 										Apply
