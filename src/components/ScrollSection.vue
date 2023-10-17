@@ -110,64 +110,60 @@ export default {
     padding: 60px 60px;
     width: 75%;
 }
-@media(min-width:320px){
+
+@media (min-width: 375px){
     .card{
         margin: 3%;
         height: 15dvh; 
         padding: 2%;
     }
     .card p {
-        font-size: 7px!important;
-        /* padding-top:0 !important; */
-        margin-top: 0!important;
+        font-size: 7px !important;
     }
     .card h1{
-        font-size: 10px!important;
-        /* margin-top: 15px!important; */
+        font-size: 13px!important;
+        margin:0!important;
     }
+
 }
 
-
-@media(min-width: 425px) and (max-width: 576px) {
+@media (min-width: 425px){
     .card{
         margin: 3%;
         height: 20dvh; 
         padding: 2%;
     }
     .card p {
-        font-size: 10px!important;
-        /* padding-top:0 !important;
-        margin-top: 0!important; */
+        font-size: 9px !important;
     }
     .card h1{
-        font-size: 13px!important;
-        /* margin-top: 15px!important; */
+        font-size: 19px!important;
+        margin:0!important;
     }
+
 }
 
-@media (min-width: 576px) and (max-width: 768px) {
+@media (min-width: 600px){
     .card{
         margin: 3%;
-        height: 28dvh; 
+        height: 20dvh; 
         padding: 2%;
     }
     .card p {
-        font-size: 14px!important;
-        padding-top:0 !important;
-        margin-top: 0!important;
+        font-size: 11px !important;
     }
     .card h1{
-        font-size: 23px!important;
-        margin-top: 15px!important;
+        font-size: 20px!important;
+        margin:0!important;
     }
 
-
 }
+
 
 @media (min-width: 768px){
     .card{
         margin: 3%;
-        height: 30dvh; 
+        height: 27dvh; 
         padding: 2%;
     }
     .card p {
