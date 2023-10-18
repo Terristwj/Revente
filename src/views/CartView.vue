@@ -1,4 +1,5 @@
 <script>
+	import CartItem from '../components/CartItem.vue';
 	export default {
 		data() {
 			return {
@@ -9,6 +10,7 @@
 						size: 'M',
 						brand: 'Unbranded',
 						seller: 'John Doe',
+						imgUrl: '/src/assets/img/ecommerce/Google.png',
 					},
 				],
 				cartTotal: 0,
@@ -22,6 +24,9 @@
 					return this.cart.length;
 				}
 			},
+		},
+		components: {
+			CartItem,
 		},
 	};
 </script>
@@ -50,9 +55,20 @@
 				</button>
 			</div>
 		</div>
-		<div class="cart-section">
+		<div class="cart-section mt-5">
 			<div class="row">
-				<div class="col-md-7">cart items</div>
+				<div class="col-md-7">
+					<CartItem
+						v-for="(item, index) in cart"
+						:key="index"
+						:name="item.name"
+						:price="item.price"
+						:size="item.size"
+						:brand="item.brand"
+						:seller="item.seller"
+						:imgUrl="item.imgUrl"
+					/>
+				</div>
 				<div class="col-md-5">check out</div>
 			</div>
 		</div>
