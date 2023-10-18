@@ -2,13 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import { getAuth } from "firebase/auth";
 
-// const provider = new GoogleAuthProvider();
-// provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
-
-// provider.setCustomParameters({
-//     login_hint: "user@example.com",
-// });
-
 export const isAuthenticated = () => {
     let auth = getAuth();
     let user = auth.currentUser;
@@ -43,11 +36,17 @@ export const routes = [
         name: "Login",
         component: () => import("../views/LoginView.vue"),
         props: true,
+        meta: {
+            requiresNoAuth: true,
+        },
     },
     {
         path: "/register",
         name: "Register",
         component: () => import("../views/RegisterView.vue"),
+        meta: {
+            requiresNoAuth: true,
+        },
     },
     // {
     //     path: "/game",
@@ -66,11 +65,6 @@ export const routes = [
         component: () => import("../views/ListingView.vue"),
     },
     {
-        path: "/listing",
-        name: "Listing",
-        component: () => import("../views/ListingView.vue"),
-    },
-    {
         path: "/Cart",
         name: "Cart",
         component: () => import("../views/CartView.vue"),
@@ -80,9 +74,6 @@ export const routes = [
         path: "/:catchAll(.*)",
         name: "NotFound",
         component: () => import("../views/404View.vue"),
-        meta: {
-            requiresAuth: false,
-        },
     },
 ];
 

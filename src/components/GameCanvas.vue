@@ -655,8 +655,8 @@ export default {
 
             faint() {
                 let queryBox = document.querySelector("#dialogueBox");
-                console.log(this.name);
-                console.log(this.name == "Draggle");
+                // console.log(this.name);
+                // console.log(this.name == "Draggle");
                 if (this.name == "Draggle") {
                     queryBox.innerHTML =
                         this.name + " fainted! You won! But nothing happens...";
@@ -738,7 +738,7 @@ export default {
                         break;
                     }
                     case "Tackle": {
-                        console.log(2);
+                        // console.log(2);
                         const tl = gsap.timeline();
 
                         let movementDistance = 20;
@@ -849,7 +849,7 @@ export default {
         for (let i = 0; i < charactersMapData.length; i += 70) {
             charactersMap.push(charactersMapData.slice(i, 70 + i));
         }
-        console.log(charactersMap);
+        // console.log(charactersMap);
 
         const boundaries = [];
         const offset = {
@@ -1441,7 +1441,7 @@ export default {
             document.querySelectorAll("button").forEach((button) => {
                 button.addEventListener("click", (e) => {
                     const selectedAttack = attacks[e.currentTarget.innerHTML];
-                    console.log(selectedAttack);
+                    // console.log(selectedAttack);
                     emby.attack({
                         attack: selectedAttack,
                         recipient: draggle,
@@ -1530,7 +1530,7 @@ export default {
             battleAnimationId = window.requestAnimationFrame(animateBattle);
             battleBackground.draw();
 
-            console.log(battleAnimationId);
+            // console.log(battleAnimationId);
 
             renderedSprites.forEach((sprite) => {
                 sprite.draw();

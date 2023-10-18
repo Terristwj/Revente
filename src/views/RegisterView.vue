@@ -106,12 +106,20 @@ export default {
         },
         async firebaseRegister() {
             // Firebase Create User
-            const errorCode = await FBInstanceAuth.register(
+            let errorCode = await FBInstanceAuth.register(
                 this.auth,
                 this.email,
-                this.password
+                this.password,
+
+                this.firstName,
+                this.lastName,
+
+                this.phone,
+                this.address,
+                this.city,
+                this.region
             );
-            // console.log(error.code);
+            // console.log(errorCode);
             switch (errorCode) {
                 case "auth/invalid-email":
                     this.emailError = "Not a valid email address.";
@@ -144,11 +152,19 @@ export default {
             });
         },
     },
+    mounted() {
+        // When enter from About page - START
+        if (sessionStorage.getItem("toReload")) {
+            sessionStorage.removeItem("toReload");
+            location.reload();
+        }
+        // When enter from About page - END
+    },
 };
 </script>
 
 <template>
-    <video playsinline autoplay muted loop poster="cake.jpg">
+    <video playsinline autoplay muted loop>
         <source src="../assets/videos/login.webm" type="video/webm" />
     </video>
     <div class="background-container">

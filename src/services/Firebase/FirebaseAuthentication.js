@@ -7,6 +7,10 @@ import {
     signOut,
     createUserWithEmailAndPassword,
 } from "firebase/auth";
+import FBInstanceFirestore from "./FirestoreDatabase.js";
+
+// Track userID
+import { userStore } from "../../main.js";
 
 class FirebaseAuthentication {
     getAuth = function () {
@@ -36,20 +40,33 @@ class FirebaseAuthentication {
     // Returns error code if there is an error
     // Else navigate to loginPath
     GoogleLogin = async function (auth) {
+        // console.log(auth);
         const loginPath = "/";
-        let errorCode = null;
         const provider = new GoogleAuthProvider();
         await signInWithPopup(auth, provider)
             // eslint-disable-next-line no-unused-vars
-            .then((result) => {
+            .then(async (result) => {
                 // console.log(result);
+                // Refer to NavigationBar.vue
+                // - Store is created with onAuthStateChanged
+                const store = userStore;
+                const userID = store.getUserID();
+                const userDisplayName = result.user.displayName;
+                const userEmail = result.user.email;
+
+                await FBInstanceFirestore.GoogleLogin(
+                    userID,
+                    userDisplayName,
+                    userEmail
+                ).catch((error) => {
+                    console.log(error);
+                });
                 router.push(loginPath);
             })
             .catch((error) => {
                 // console.log(error);
-                errorCode = error.code;
+                return error.code;
             });
-        return errorCode;
     };
 
     // When logout is clicked
@@ -60,28 +77,49 @@ class FirebaseAuthentication {
     };
 
     // Firebase create authentication new user
-    register = async function (auth, email, password) {
+    register = async function (
+        auth,
+        email,
+        password,
+
+        firstName,
+        lastName,
+
+        phone,
+        address,
+        city,
+        region
+    ) {
         const loginPath = "/";
-        let errorCode = null;
+        let errorCode = "";
         await createUserWithEmailAndPassword(auth, email, password)
+            // eslint-disable-next-line no-unused-vars
             .then(async (userCredential) => {
-                console.log(userCredential);
-                // const user = userCredential.user;
-                // await updateProfile(user, {
-                //     firstName: this.firstName,
-                //     lastName: this.lastName,
-
-                //     phone: this.phone,
-                //     address: this.address,
-                //     city: this.city,
-                //     region: this.region,
-                // });
-
                 // Successfully login
+                // console.log(userCredential);
+                // Refer to NavigationBar.vue
+                // - Store is created with onAuthStateChanged
+                const store = userStore;
+                const userID = store.getUserID();
+
+                await FBInstanceFirestore.registerAccount(
+                    userID,
+                    email,
+
+                    firstName,
+                    lastName,
+
+                    phone,
+                    address,
+                    city,
+                    region
+                );
+
                 router.push(loginPath);
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
+                // console.log(error.code);
                 errorCode = error.code;
             });
         return errorCode;

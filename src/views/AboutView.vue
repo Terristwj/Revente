@@ -14,6 +14,10 @@ export default {
             content5.scrollIntoView({ behavior: "smooth" });
         },
     },
+    beforeRouteLeave(to, from, next) {
+        sessionStorage.setItem("toReload", true);
+        next();
+    },
 };
 </script>
 

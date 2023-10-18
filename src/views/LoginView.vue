@@ -16,6 +16,14 @@ export default {
             auth: FBInstanceAuth.getAuth(),
         };
     },
+    mounted() {
+        // When enter from About page - START
+        if (sessionStorage.getItem("toReload")) {
+            sessionStorage.removeItem("toReload");
+            location.reload();
+        }
+        // When enter from About page - END
+    },
     methods: {
         hidePassword() {
             var x = document.getElementById("id_password");
@@ -96,7 +104,7 @@ export default {
 </script>
 
 <template>
-    <video playsinline autoplay muted loop poster="cake.jpg">
+    <video playsinline autoplay muted loop>
         <source src="../assets/videos/login.webm" type="video/webm" />
     </video>
 
