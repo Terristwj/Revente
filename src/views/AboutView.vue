@@ -54,8 +54,7 @@ export default {
         <div class="row">
             <ScrollSection transition="zoomOut" class="content-2 card-bg">
                 <h1>Our Mission</h1>
-                <br>
-                <p style="text-align:justify;">
+                <p class="my-0" style="text-align:center;">
                     REVENTÉ is a platform that aims to promote sustainable fashion. We believe that fashion should be
                     accessible
                     to everyone, and that it should not come at the cost of the environment. We are committed to providing a
@@ -94,7 +93,7 @@ export default {
             <ScrollSection transition="fade" class="content-4 card-bg">
                 <h1>Our Team</h1>
                 <br>
-                <p style="text-align:justify;">
+                <p style="text-align:center;">
                     REVENTÉ was founded by a team of students from Singapore Management University. We are a group of
                     passionate
                     individuals who are committed to making a sustainable difference in the fashion industry.
@@ -108,7 +107,7 @@ export default {
                     <h1>Welcome to Our Sustainability Game!</h1>
                     <br>
 
-                    <p style="text-align:justify;">Test your knowledge and make a positive impact on the planet. Play now and learn about sustainability
+                    <p style="text-align:center;">Test your knowledge and make a positive impact on the planet. Play now and learn about sustainability
                         in an interactive and fun way!</p>
 
 
@@ -229,6 +228,44 @@ export default {
     line-height: 1;
 }
 
+@media (max-width: 320px) {
+    .body-spacer {
+        margin-top: 20dvh;
+    }
+
+    .header-text {
+      
+        /* transform: translateY(-7rem); */
+        height: 60dvh;
+    }
+
+    .header-text h1 {
+        font-size: 8vw;
+    }
+
+   
+}
+
+@media (max-width: 576px) {
+    .header-text h1 {
+        font-size: 8vw;
+    }
+
+    .header-text {
+        height: 50dvh;
+    }
+
+    .body-spacer {
+        margin-top: 35dvh;
+    }
+
+    #coverimg {
+        max-height: 40dvh;
+    }
+}
+
+
+
 @media (max-width: 768px) {
     .header-text h1 {
         font-size: 8vw;
@@ -260,51 +297,5 @@ export default {
 
 }
 
-@media (max-width: 576px) {
-    .header-text h1 {
-        font-size: 8vw;
-    }
 
-    .header-text {
-        height: 50dvh;
-    }
-
-    .body-spacer {
-        margin-top: 35dvh;
-    }
-
-    #coverimg {
-        max-height: 40dvh;
-    }
-}
-
-@media (max-width: 320px) {
-    .body-spacer {
-        margin-top: 20dvh;
-    }
-
-    .header-text {
-        position: absolute;
-        color: rgb(240, 237, 237);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        transform: translateY(-7rem);
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        -webkit-text-stroke: 0.5px rgb(114, 114, 114);
-        height: 60dvh;
-    }
-
-    .header-text h1 {
-        font-weight: 900;
-        font-size: 8vw;
-        text-transform: uppercase;
-        line-height: 1;
-    }
-
-   
-}</style>
+</style>

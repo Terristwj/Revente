@@ -46,13 +46,18 @@
 		</div>
 		<div class="description">
 			<p>
-				Propelling the Second-Hand Market: AI's Thrift Store. AI holds
-				immense potential to enhance the second-hand clothing market in
-				myriad ways. From reliable pricing and personalized user
-				experiences to expert styling services, AI-driven advancements
-				breathe new life into pre-loved fashion. And let's not forget
-				the boon of precise sizing, eliminating guesswork and enabling
-				customers to find their perfect match effortlessly.
+				Propelling the Second-Hand Market:
+				<span class="large-view"
+					>AI's Thrift Store. AI holds immense potential to enhance
+					the second-hand clothing market in myriad ways. From
+					reliable pricing and personalized user experiences to expert
+					styling services<span class="small-view"
+						>, AI-driven advancements breathe new life into
+						pre-loved fashion. And let's not forget the boon of
+						precise sizing</span
+					>, </span
+				>eliminating guesswork and enabling customers to find their
+				perfect match effortlessly.
 			</p>
 			<p class="credit">
 				Find out more
@@ -197,6 +202,9 @@
 			font-weight: 900;
 			font-size: 4.8rem;
 		}
+		.small-view {
+			display: none;
+		}
 	}
 	@media (max-width: 576px) {
 		.header-text h1 {
@@ -209,6 +217,9 @@
 			display: block;
 			font-weight: 900;
 			font-size: 3.85rem;
+		}
+		.large-view {
+			display: none;
 		}
 	}
 </style>
