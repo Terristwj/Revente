@@ -152,14 +152,6 @@ export default {
             });
         },
     },
-    mounted() {
-        // When enter from About page - START
-        if (sessionStorage.getItem("toReload")) {
-            sessionStorage.removeItem("toReload");
-            location.reload();
-        }
-        // When enter from About page - END
-    },
 };
 </script>
 

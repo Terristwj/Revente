@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { userStore } from "../main.js";
 
 import { getAuth } from "firebase/auth";
 
@@ -32,21 +33,26 @@ export const routes = [
         component: () => import("../views/FAQView.vue"),
     },
     {
+        path: "/profile",
+        name: "Profile",
+        // route level code-splitting
+        // this generates a separate chunk (About.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import("../views/UserProfile.vue"),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
         path: "/login",
         name: "Login",
         component: () => import("../views/LoginView.vue"),
         props: true,
-        meta: {
-            requiresNoAuth: true,
-        },
     },
     {
         path: "/register",
         name: "Register",
         component: () => import("../views/RegisterView.vue"),
-        meta: {
-            requiresNoAuth: true,
-        },
     },
     // {
     //     path: "/game",
@@ -84,7 +90,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && !isAuthenticated()) {
-        next("/login");
+        setTimeout(function () {
+            if (userStore.getUserID()) {
+                console.log(userStore.getUserID());
+            } else {
+                router.push("/login");
+            }
+        }, 1000);
     } else {
         next();
     }

@@ -28,7 +28,7 @@ export const useCurrentUserStore = defineStore("currentUser", () => {
  *  3|   export default {
  *  4|      mounted() {
  *  5|          setTimeout(function () {
- *   6|              console.log(userStore.getUserID());
+ *  6|              console.log(userStore.getUserID());
  *  7|          }, 2000);
  *  8|      },
  *  9|   }
