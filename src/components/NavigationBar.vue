@@ -20,7 +20,12 @@ export default {
 
             // For Navigation Bar
             routesExcludedLoggedIn: ["Register", "Login", "NotFound"],
-            routesExcludedLoggedOut: ["Register", "Game", "NotFound"],
+            routesExcludedLoggedOut: [
+                "Register",
+                "Game",
+                "NotFound",
+                "Profile",
+            ],
             navRoutes: null,
         };
     },

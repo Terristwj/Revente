@@ -14,9 +14,8 @@ export default {
             content5.scrollIntoView({ behavior: "smooth" });
         },
     },
-    beforeRouteLeave(to, from, next) {
-        sessionStorage.setItem("toReload", true);
-        next();
+    beforeUnmount() {
+        location.reload();
     },
 };
 </script>
@@ -43,7 +42,7 @@ export default {
                 />
             </div>
             <div class="col-8 my-auto">
-                <h1 class="mb-3">Fashionably Green</h1>
+                <h1>Fashionably Green</h1>
                 <p style="text-align: justify">
                     With REVENTÉ, you are supporting sustainable fashion!
                     Explore a curated collection of fashionable clothing, made
@@ -54,7 +53,7 @@ export default {
                     footprint. Join us in redefining fashion with style and
                     conscience.
                 </p>
-                <p style="font-style: italic; font-family: 'inter-light';">
+                <p style="font-style: italic">
                     REVENTÉ: where style meets sustainability.
                 </p>
             </div>
@@ -113,11 +112,7 @@ export default {
         </div>
 
         <div class="row justify-content-center text-center py-5">
-            <button
-                class="button button-pulse"
-                style="width: 15%"
-                @click="scrollToContent5"
-            >
+            <button class="button button-pulse" @click="scrollToContent5">
                 L E A R N &nbsp; M O R E
             </button>
         </div>
@@ -178,6 +173,7 @@ export default {
     box-shadow: 0 2px 5px 0 rgba(3, 6, 26, 0.15);
     transition: 0.5s all ease-in-out;
     font-weight: 500;
+    width: 30%;
 }
 .button:hover {
     cursor: pointer;
@@ -271,7 +267,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    -webkit-text-stroke: 1px rgb(27, 27, 27);
+    /* -webkit-text-stroke: 1px rgb(27, 27, 27); */
     height: 60dvh;
 }
 
@@ -296,6 +292,19 @@ export default {
         font-size: 8vw;
     }
 }
+@media (min-width: 320px) {
+    .button-pulse {
+        font-size: 10px !important;
+        width: 50% !important;
+    }
+}
+
+@media (min-width: 425px) {
+    .button-pulse {
+        font-size: 15px !important;
+        width: 50% !important;
+    }
+}
 
 @media (max-width: 576px) {
     .header-text h1 {
@@ -316,6 +325,9 @@ export default {
 }
 
 @media (max-width: 768px) {
+    .button-pulse {
+        font-size: 15px;
+    }
     .header-text h1 {
         font-size: 8vw;
     }
@@ -342,6 +354,12 @@ export default {
 
     .row p {
         font-size: 12px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .button-pulse {
+        font-size: 20px;
     }
 }
 </style>
