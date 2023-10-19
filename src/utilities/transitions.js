@@ -175,6 +175,19 @@ const transitions = {
         scaleY: [1, 2]
       }
     },
+
+    customzoomOut: {
+      in: {
+        opacity: [0, 1],
+        scaleX: [3, 1],
+        scaleY: [3, 1]
+      },
+      out: {
+        opacity: [1, 0],
+        scaleX: [1, 3],
+        scaleY: [1, 3]
+      }
+    },
   
     flipX: {
       in: {

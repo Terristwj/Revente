@@ -414,15 +414,16 @@ export default {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 1026, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1992,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 1026, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1992, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1031, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 1031, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 2048, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 2048, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -494,8 +495,7 @@ export default {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ];
 
         function rectangularCollision({ rectangle1, rectangle2 }) {
@@ -655,8 +655,8 @@ export default {
 
             faint() {
                 let queryBox = document.querySelector("#dialogueBox");
-                console.log(this.name);
-                console.log(this.name == "Draggle");
+                // console.log(this.name);
+                // console.log(this.name == "Draggle");
                 if (this.name == "Draggle") {
                     queryBox.innerHTML =
                         this.name + " fainted! You won! But nothing happens...";
@@ -738,7 +738,7 @@ export default {
                         break;
                     }
                     case "Tackle": {
-                        console.log(2);
+                        // console.log(2);
                         const tl = gsap.timeline();
 
                         let movementDistance = 20;
@@ -849,7 +849,7 @@ export default {
         for (let i = 0; i < charactersMapData.length; i += 70) {
             charactersMap.push(charactersMapData.slice(i, 70 + i));
         }
-        console.log(charactersMap);
+        // console.log(charactersMap);
 
         const boundaries = [];
         const offset = {
@@ -922,8 +922,7 @@ export default {
                             ],
                         })
                     );
-                }
-                else if (symbol === 1992) {
+                } else if (symbol === 1992) {
                     characters.push(
                         new Character({
                             position: {
@@ -964,17 +963,16 @@ export default {
                             },
                             scale: 3,
                             animate: true,
-                            dialogue: ["Hello there! I am a Researcher Hynki Pinkie.",
-                           " Over 80 billion new pieces of clothing are bought each year worldwide, which is 400% more than what we consumed just two decades ago.",
-                            "Did you know that the fashion industry is responsible for 10% of annual global carbon emissions, more than all international flights and maritime shipping combined. ",
-                            "Thats surprising right! Jeez",
-                            "Continue shopping and thanks for visitng me!"
-                        ],
+                            dialogue: [
+                                "Hello there! I am a Researcher Hynki Pinkie.",
+                                " Over 80 billion new pieces of clothing are bought each year worldwide, which is 400% more than what we consumed just two decades ago.",
+                                "Did you know that the fashion industry is responsible for 10% of annual global carbon emissions, more than all international flights and maritime shipping combined. ",
+                                "Thats surprising right! Jeez",
+                                "Continue shopping and thanks for visitng me!",
+                            ],
                         })
                     );
-                }
-
-                else if (symbol === 2048) {
+                } else if (symbol === 2048) {
                     characters.push(
                         new Character({
                             position: {
@@ -988,12 +986,13 @@ export default {
                             },
                             scale: 3,
                             animate: true,
-                            dialogue: ["Hello there! I am a Researcher Hynki Pinkie.",
-                           " Over 80 billion new pieces of clothing are bought each year worldwide, which is 400% more than what we consumed just two decades ago.",
-                            "Did you know that the fashion industry is responsible for 10% of annual global carbon emissions, more than all international flights and maritime shipping combined. ",
-                            "Thats surprising right! Jeez",
-                            "Continue shopping and thanks for visitng me!"
-                        ],
+                            dialogue: [
+                                "Hello there! I am a Researcher Hynki Pinkie.",
+                                " Over 80 billion new pieces of clothing are bought each year worldwide, which is 400% more than what we consumed just two decades ago.",
+                                "Did you know that the fashion industry is responsible for 10% of annual global carbon emissions, more than all international flights and maritime shipping combined. ",
+                                "Thats surprising right! Jeez",
+                                "Continue shopping and thanks for visitng me!",
+                            ],
                         })
                     );
                 }
@@ -1442,7 +1441,7 @@ export default {
             document.querySelectorAll("button").forEach((button) => {
                 button.addEventListener("click", (e) => {
                     const selectedAttack = attacks[e.currentTarget.innerHTML];
-                    console.log(selectedAttack);
+                    // console.log(selectedAttack);
                     emby.attack({
                         attack: selectedAttack,
                         recipient: draggle,
@@ -1531,7 +1530,7 @@ export default {
             battleAnimationId = window.requestAnimationFrame(animateBattle);
             battleBackground.draw();
 
-            console.log(battleAnimationId);
+            // console.log(battleAnimationId);
 
             renderedSprites.forEach((sprite) => {
                 sprite.draw();
@@ -1580,7 +1579,8 @@ export default {
                 "
             ></div>
 
-            <canvas></canvas>
+            <canvas class="border border-2 border-dark"></canvas>
+
             <div
                 id="characterDialogueBox"
                 style="
@@ -1590,6 +1590,7 @@ export default {
                     bottom: 0;
                     left: 0;
                     right: 0;
+                    border: 2px black solid;
                     border-top: 4px black solid;
                     display: none;
                     padding: 12px;
@@ -1675,6 +1676,7 @@ export default {
                         bottom: 0;
                         left: 0;
                         right: 0;
+                        border: 2px black solid;
                         border-top: 4px black solid;
                         display: flex;
                     "

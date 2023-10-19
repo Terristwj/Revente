@@ -35,7 +35,7 @@ export default {
             // init our Observer instance
             _.observer = onIntersect(root.value, onEnter, {
                 outCallback: onExit,
-                once: false,
+                once: true,
                 options: {
                     threshold: 0.1,
                 },

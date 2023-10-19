@@ -16,6 +16,14 @@ export default {
             auth: FBInstanceAuth.getAuth(),
         };
     },
+    mounted() {
+        // When enter from About page - START
+        if (sessionStorage.getItem("toReload")) {
+            sessionStorage.removeItem("toReload");
+            location.reload();
+        }
+        // When enter from About page - END
+    },
     methods: {
         hidePassword() {
             var x = document.getElementById("id_password");
@@ -73,6 +81,9 @@ export default {
                 case "auth/user-disabled":
                     this.errMsg = "Account is currently disabled";
                     break;
+                case "auth/cancelled-popup-request":
+                case "auth/popup-closed-by-user":
+                    break;
                 default:
                     this.errMsg = errorCode;
             }
@@ -93,8 +104,8 @@ export default {
 </script>
 
 <template>
-    <video playsinline autoplay muted loop poster="cake.jpg">
-        <source src="../assets/videos/login.webm" type="video/webm">
+    <video playsinline autoplay muted loop>
+        <source src="../assets/videos/login.webm" type="video/webm" />
     </video>
 
     <div class="background-container">
@@ -103,38 +114,73 @@ export default {
             <div class="w-75 mx-auto" style="max-width: 400px">
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="text" id="email" class="Aoboshi-One" v-model="email" />
+                    <input
+                        type="text"
+                        id="email"
+                        class="Aoboshi-One"
+                        v-model="email"
+                    />
                 </div>
                 <div class="form-group mt-2">
                     <label for="password">Password:</label>
-                    <input class="Aoboshi-One" type="password" name="password" id="password" v-model="password" />
-                    <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer"
-                        @click="hidePassword"></i>
+                    <input
+                        class="Aoboshi-One"
+                        type="password"
+                        name="password"
+                        id="password"
+                        v-model="password"
+                    />
+                    <i
+                        class="far fa-eye"
+                        id="togglePassword"
+                        style="margin-left: -30px; cursor: pointer"
+                        @click="hidePassword"
+                    ></i>
                 </div>
-                <div class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto mt-4">
-                    <button class="btn btn-primary" type="submit" @click="emailPasswordLogin">
+                <div
+                    class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto mt-4"
+                >
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                        @click="emailPasswordLogin"
+                    >
                         Login
                     </button>
                     <label class="text-center Aoboshi-One">OR</label>
-                    <button id="GoogleSignIn" class="d-flex justify-content-center align-items-center pointing"
-                        type="submit" @click="googleLogin">
+                    <button
+                        id="GoogleSignIn"
+                        class="d-flex justify-content-center align-items-center pointing"
+                        type="submit"
+                        @click="googleLogin"
+                    >
                         <img src="../assets/img/ecommerce/Google.png" />
-                        <label class="pointing"> Login with Google </label>
+                        <label class="pointing text-black">
+                            Login with Google
+                        </label>
                     </button>
                 </div>
             </div>
 
-            <label class="text-center mt-4 pt-3 pb-2 Aoboshi-One border-top border-black">
+            <label
+                class="text-center mt-4 pt-3 pb-2 Aoboshi-One border-top border-black"
+            >
                 Need an account?
             </label>
-            <div class="d-flex justify-content-center w-75 mx-auto" style="max-width: 400px">
-                <button class="btn btn-primary w-75 mx-auto" type="submit" @click="toRegistration()">
+            <div
+                class="d-flex justify-content-center w-75 mx-auto"
+                style="max-width: 400px"
+            >
+                <button
+                    class="btn btn-primary w-75 mx-auto"
+                    type="submit"
+                    @click="toRegistration()"
+                >
                     Register
                 </button>
             </div>
         </div>
     </div>
-
     <Toast />
 </template>
 
@@ -149,14 +195,18 @@ export default {
     }
 }
 
-
 video {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    height: 100vh;
     z-index: -1;
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    video {
+        width: 100%;
+    }
 }
 
 .background-container {
@@ -174,7 +224,7 @@ video {
     color: black;
     text-transform: uppercase;
     /* font-size: 100px; */
-    font-family: 'Sigmar';
+    font-family: "Sigmar";
     font-weight: bolder;
     line-height: 1;
     letter-spacing: 10px;
@@ -194,18 +244,34 @@ video {
     max-width: 800px;
     border-radius: 30px;
     overflow-y: scroll;
-
 }
+
+/* Custom Scrollbar START*/
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    /* background: #888; */
+    /* border-left: 1px solid grey; */
+    background: transparent;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #000000;
+}
+/* Custom Scrollbar END*/
 
 .login-container:hover {
     background-color: rgba(255, 255, 255, 0.95);
 }
 
-.login-container>h1 {
+.login-container > h1 {
     font-size: 32px;
 }
 
-.login-container>label {
+.login-container > label {
     font-size: 20px;
     display: block;
 }
@@ -216,11 +282,11 @@ video {
         width: 75%;
     }
 
-    .login-container>h1 {
+    .login-container > h1 {
         font-size: 28px;
     }
 
-    .login-container>label {
+    .login-container > label {
         font-size: 16px;
     }
 }
@@ -261,13 +327,13 @@ button {
     background-color: #edfdff;
 }
 
-#GoogleSignIn>img {
+#GoogleSignIn > img {
     height: 25px;
     margin-right: 10px;
     padding: 2px;
 }
 
-#GoogleSignIn>label {
+#GoogleSignIn > label {
     font-weight: 600;
 }
 </style>

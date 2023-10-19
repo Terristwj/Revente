@@ -5,6 +5,9 @@ import { routes } from "../router/router.js";
 import { onAuthStateChanged } from "firebase/auth";
 import FBInstanceAuth from "../services/Firebase/FirebaseAuthentication";
 
+// Track userID
+import { userStore } from "../main.js";
+
 export default {
     data() {
         return {
@@ -41,7 +44,18 @@ export default {
     mounted() {
         // When Login or Logout
         onAuthStateChanged(this.auth, (user) => {
+            // Update UserID store - START
+            const store = userStore;
+            // If logged in
+            if (user) {
+                store.setUserID(user.uid);
+            } else {
+                store.setUserID(null);
+            }
+            // console.log(store.getUserID());
+            // Update UserID store - END
             // console.log(user);
+
             this.isLoggedIn = user ? true : false;
             if (this.isLoggedIn) {
                 this.navRoutes = routes.filter(

@@ -1,13 +1,22 @@
 <script>
 import ScrollSection from "../components/ScrollSection.vue";
 import GameCanvas from "../components/GameCanvas.vue";
+
 export default {
     name: "App",
     components: {
         ScrollSection: ScrollSection,
         GameCanvas: GameCanvas,
     },
+    methods: {
+        scrollToContent5() {
+            const content5 = document.getElementById('content-5');
+            content5.scrollIntoView({ behavior: 'smooth' });
+        },
+    },
 };
+
+
 
 </script>
 
@@ -32,7 +41,7 @@ export default {
 
         <div class="content-1 row pt-4">
             <div class="col-4 m-0 p-0">
-                <img src="../assets/img/ecommerce/about-content.png" alt="" id="firstimg" class="img-fluid" >
+                <img src="../assets/img/ecommerce/about-content.png" alt="" id="firstimg" class="img-fluid">
             </div>
             <div class="col-8 my-auto">
 
@@ -89,6 +98,8 @@ export default {
 
         </div>
 
+
+
         <div class="row mb-3">
             <ScrollSection transition="fade" class="content-4 card-bg">
                 <h1>Our Team</h1>
@@ -101,23 +112,26 @@ export default {
             </ScrollSection>
         </div>
 
-        <div class="row">
-            <ScrollSection transition="slideUp" class="content-5 game-bg">
+      
+            <div class="row justify-content-center text-center py-5">
+                <button class="button button-pulse" @click="scrollToContent5">L E A R N &nbsp; M O R E</button>
+            </div>
+      
+
+        <div class="row" id="content-5">
+            <ScrollSection transition="slideUp" class=" game-bg">
                 <div class="text-center">
                     <h1>Welcome to Our Sustainability Game!</h1>
                     <br>
-
-                    <p style="text-align:center;">Test your knowledge and make a positive impact on the planet. Play now and learn about sustainability
+                    <p style="text-align:center;">Test your knowledge and make a positive impact on the planet. Play now and
+                        learn about sustainability
                         in an interactive and fun way!</p>
-
-
                 </div>
 
             </ScrollSection>
         </div>
 
         <div class="row m-0">
-
             <div class="game d-flex" style="justify-content:center; align-items:center;">
                 <GameCanvas />
             </div>
@@ -127,10 +141,47 @@ export default {
 </template>
 
 <style scoped>
-*{
+* {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
+.button-pulse {
+    animation: pulse 2s infinite 3s cubic-bezier(0.25, 0, 0, 1);
+    box-shadow: 0 0 0 0 rgb(0, 0, 0);
+   
+}
+
+@keyframes pulse {
+    to {
+        box-shadow: 0 0 0 10px rgba(207, 148, 148, 0.755);
+    }
+}
+
+.button {
+    position: relative;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid white;
+    border-radius: 1000px;
+    padding: 10px 20px;
+    margin: 40px;
+    box-shadow: 0 2px 5px 0 rgba(3, 6, 26, 0.15);
+    transition: .5s all ease-in-out;
+    font-weight: 500;
+    width: 30%;
+}
+.button:hover{
+        cursor: pointer;
+        background: white;
+        color: #1F4141;
+        animation: none;
+}
+
+
 .game-bg {
     background-image: url("../assets/img/ecommerce/pixelbg2.jpeg");
     /* background-size:contain; */
@@ -217,7 +268,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    -webkit-text-stroke: 1px rgb(27, 27, 27);
+    /* -webkit-text-stroke: 1px rgb(27, 27, 27); */
     height: 60dvh;
 }
 
@@ -234,7 +285,7 @@ export default {
     }
 
     .header-text {
-      
+
         /* transform: translateY(-7rem); */
         height: 60dvh;
     }
@@ -243,10 +294,24 @@ export default {
         font-size: 8vw;
     }
 
-   
+
+}
+@media (min-width:320px){
+    .button-pulse{
+        font-size: 10px!important;
+        width: 50%!important;
+    }
+}
+
+@media (min-width:425px){
+    .button-pulse{
+        font-size: 15px!important;
+        width: 50%!important;
+    }
 }
 
 @media (max-width: 576px) {
+   
     .header-text h1 {
         font-size: 8vw;
     }
@@ -262,11 +327,15 @@ export default {
     #coverimg {
         max-height: 40dvh;
     }
+    
 }
 
 
 
 @media (max-width: 768px) {
+    .button-pulse{
+        font-size: 15px;
+    }
     .header-text h1 {
         font-size: 8vw;
     }
@@ -274,6 +343,7 @@ export default {
     .header-text {
         height: 50dvh;
     }
+    
 
     .body-spacer {
         margin-top: 40dvh;
@@ -294,8 +364,13 @@ export default {
     .row p {
         font-size: 12px;
     }
-
 }
+
+@media(min-width: 1024px){
+        .button-pulse{
+        font-size: 20px;
+    }
+    }
 
 
 </style>
