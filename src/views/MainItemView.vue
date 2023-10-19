@@ -26,6 +26,7 @@
                         <li>ut doloremque dolore corrupti, architecto iusto beatae.</li>
                     </ul>
                 </div>
+                    <button type="button" class="btn btn-clear m-3">Add to Cart</button>
             </div>
         </div>
     </div>
@@ -39,7 +40,7 @@ export default {
             product: {},
             category: {},
             itemID: '',
-            image:''
+            image: ''
 
         }
     },
@@ -58,20 +59,20 @@ export default {
 
         //hardcode
         itemStore.setItemID('jN2TrVSILV7eIMmzhJfV');
-    
+
         this.itemID = itemStore.getItemID();
         // console.log(this.itemID);
         // this.product = data[this.itemID];
 
-        let my_product =  FBInstanceFirestore.getProducts(this.itemID);
+        let my_product = FBInstanceFirestore.getProducts(this.itemID);
         my_product.then((data) => {
             // Handle the data once the promise is resolved
             this.product = data;
             console.log(data); // Do something with the data
-            }).catch((error) => {
+        }).catch((error) => {
             // Handle any errors that occur during the promise execution
             console.error(error);
-            });
+        });
         // this.product = data[1];
         this.category = { categoryName: "Tee" }
 
@@ -83,5 +84,24 @@ export default {
 <style>
 .category {
     font-weight: 400;
+}
+.btn-clear:hover {
+    background-color: black;
+    color: white;
+}
+.btn {
+    border-radius: 23px;
+}
+
+.btn-clear {
+    border: 1px solid black;
+}
+
+@media (max-width: 768px) {
+
+    * {
+        font-size: 10px;
+    }
+
 }
 </style>
