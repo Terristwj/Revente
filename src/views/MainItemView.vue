@@ -1,8 +1,6 @@
-
-
 <template>
     <div class="container">
-        <div class="row pt-5">
+        <div class="row py-5 border-bottom-black">
             <div class="col-md-1"></div>
             <!--            display image-->
             <div class="col-md-4 col-12">
@@ -11,7 +9,7 @@
             <!--            display product details-->
             <div class="col-md-6 col-12 pt-3 pt-md-0">
                 <h4>{{ product.name }}</h4>
-                <h6 class="catgory font-italic"> {{ category.categoryName }}</h6>
+                <h6 class="catgory font-italic" > {{ category.categoryName }}</h6>
                 <h6 class="font-weight-bold"> $ {{ product.price }}</h6>
                 <p>
                     {{ product.description }}
@@ -19,30 +17,71 @@
                 <div class="features pt-3">
                     <h5><strong>Features</strong></h5>
                     <ul>
-                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
+                        <li>We will dynamically add the info here through AI</li>
                         <li>Officia quas, officiis eius magni error magnam voluptatem</li>
                         <li>nesciunt quod! Earum voluptatibus quaerat dolorem doloribus</li>
                         <li>molestias ipsum ab, ipsa consectetur laboriosam soluta et</li>
                         <li>ut doloremque dolore corrupti, architecto iusto beatae.</li>
                     </ul>
                 </div>
-                    <button type="button" class="btn btn-clear m-3">Add to Cart</button>
+                <button type="button" class="btn btn-clear m-3">Add to Cart</button>
             </div>
         </div>
+        <div class="text-center">
+            <div class="tab">
+                <button class="tablinks w-50" :class="{ 'clicked': descriptionShow }" @click="openTab(event,'description')">Description</button>
+                <button class="tablinks w-50" :class="{ 'clicked': sizeShow }" @click="openTab(event,'size')">Size</button>
+            </div>
+            <div v-if="descriptionShow" class="tabcontent">
+                <h3>{{ description }}</h3>
+                <p>London is the capital city of England.</p>
+
+            </div>
+            <div v-if="sizeShow" class="tabcontent">
+                <h3>{{ size }}</h3>
+                <p>Paris is the capital of France.</p>
+
+            </div>
+        </div>
+
     </div>
 </template>
 <script>
+
+
+
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { itemStore } from "../main.js";
+
+
+
 export default {
     data() {
         return {
             product: {},
             category: {},
             itemID: '',
-            image: ''
+            image: '',
+            description: 'TEST TEST',
+            size: 'TEST TESTsadasd',
+            descriptionShow: true,
+            sizeShow: false,
 
+        };
+    },
+    methods: {
+        openTab(event, tabName) {
+
+            // console.log('openTab');
+            if(tabName == 'description'){
+                this.descriptionShow = true;
+                this.sizeShow = false;}
+            else{
+                this.descriptionShow = false;
+                this.sizeShow = true;
+            }
         }
+
     },
     created() {
         // let data = {
@@ -74,27 +113,73 @@ export default {
             console.error(error);
         });
         // this.product = data[1];
-        this.category = { categoryName: "Tee" }
-
-
-
+        this.category = { categoryName: "Tee" };
     },
 }
 </script>
 <style>
+.clicked{
+    background-color: #ddd;
+}
 .category {
     font-weight: 400;
 }
+
 .btn-clear:hover {
     background-color: black;
     color: white;
 }
+
 .btn {
     border-radius: 23px;
 }
 
 .btn-clear {
     border: 1px solid black;
+}
+
+.tablinks {
+    border: 1px solid black;
+    margin: 0;
+    color: black;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid white;
+    border-bottom: none;
+    /* background-color: #f1f1f1; */
+
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    /* background-color: inherit; */
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 10dvh;
+    border: 1px solid #fffefe;
+    border-top: none;
+    margin-bottom: 5dvh;
 }
 
 @media (max-width: 768px) {
