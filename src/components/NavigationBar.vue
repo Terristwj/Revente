@@ -8,6 +8,9 @@ import FBInstanceAuth from "../services/Firebase/FirebaseAuthentication";
 // Track userID
 import { userStore } from "../main.js";
 
+//import Icons
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 export default {
     data() {
         return {
@@ -19,9 +22,10 @@ export default {
             auth: FBInstanceAuth.getAuth(),
 
             // For Navigation Bar
-            routesExcludedLoggedIn: ["Register", "Login", "NotFound"],
-            routesExcludedLoggedOut: ["Register", "Game", "NotFound"],
+            routesExcludedLoggedIn: ["Register", "Login", "NotFound", "Home", "Listing"],
+            routesExcludedLoggedOut: ["Register", "Login", "NotFound", "Home", "Listing"],
             navRoutes: null,
+
         };
     },
     methods: {
@@ -79,6 +83,9 @@ export default {
             }
         });
     },
+    components: {
+        FontAwesomeIcon,
+    },
 };
 </script>
 
@@ -91,47 +98,27 @@ export default {
     <nav class="navbar navbar-expand-lg w-100 border-bottom shadow-sm p-2">
         <div id="navigationBarContent" class="container-fluid">
             <!-- Logo START -->
-            <RouterLink to="/"
-                ><img alt="Reventé logo" src="@/assets/logo.svg" width="125"
-            /></RouterLink>
+            <RouterLink to="/"><img alt="Reventé logo" src="@/assets/logo.svg" width="125" /></RouterLink>
 
             <!-- Logo END -->
 
             <!-- Mobile START -->
             <!-- Mobile Tab Icon START -->
-            <Button
-                text
-                icon="pi pi-bars"
-                severity="secondary"
-                @click="mobileTabVisible = true"
-                class="d-lg-none"
-            />
+            <Button text icon="pi pi-bars" severity="secondary" @click="mobileTabVisible = true" class="d-lg-none" />
             <!-- Mobile Tab Icon END -->
 
             <!-- Mobile Tab Items START -->
             <Sidebar v-model:visible="mobileTabVisible" position="right">
                 <template #header>
                     <div class="w-100 pe-5">
-                        <RouterLink to="/" @click="mobileTabVisible = false"
-                            ><img
-                                alt="Reventé logo"
-                                src="@/assets/logo.svg"
-                                width="125"
-                        /></RouterLink>
+                        <RouterLink to="/" @click="mobileTabVisible = false"><img alt="Reventé logo" src="@/assets/logo.svg"
+                                width="125" /></RouterLink>
                     </div>
                 </template>
                 <ul class="navbar-nav">
-                    <li
-                        v-for="route in navRoutes"
-                        :key="route.name"
-                        class="nav-item"
-                    >
-                        <RouterLink
-                            class="nav-link"
-                            :to="route.path"
-                            @click="mobileTabVisible = false"
-                            >{{ route.name }}</RouterLink
-                        >
+                    <li v-for="route in navRoutes" :key="route.name" class="nav-item">
+                        <RouterLink class="nav-link" :to="route.path" @click="mobileTabVisible = false">
+                            {{ route.name }} </RouterLink>
                     </li>
                     <li v-if="isLoggedIn" class="nav-item">
                         <a class="nav-link pointing" @click="handleLogout">
@@ -144,19 +131,13 @@ export default {
             <!-- Mobile END -->
 
             <!-- Desktop Tab Items START -->
-            <div
-                class="collapse navbar-collapse d-lg-flex justify-content-end"
-                id="navbarNavDropdown"
-            >
+            <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                    <li
-                        v-for="route in navRoutes"
-                        :key="route.name"
-                        class="nav-item"
-                    >
-                        <RouterLink class="nav-link" :to="route.path">{{
-                            route.name
-                        }}</RouterLink>
+                    <li v-for="route in navRoutes" :key="route.name" class="nav-item">
+                        <RouterLink class="nav-link" :to="route.path">
+                            <font-awesome-icon :icon="route.icon" />
+                            {{ route.name }}
+                        </RouterLink>
                     </li>
                     <li v-if="isLoggedIn" class="nav-item pointing">
                         <a class="nav-link" @click="handleLogout"> Sign out </a>
@@ -176,6 +157,7 @@ nav {
     top: 0;
     z-index: 1;
 }
+
 .nav-item {
     box-shadow: 0px 0px grey;
 }
