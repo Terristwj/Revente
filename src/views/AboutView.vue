@@ -112,11 +112,15 @@ export default {
             </ScrollSection>
         </div>
 
-      
-            <div class="row justify-content-center text-center py-5">
-                <button class="button button-pulse" @click="scrollToContent5">L E A R N &nbsp; M O R E</button>
-            </div>
-      
+        <div class="row justify-content-center text-center py-5">
+            <button
+                class="button button-pulse"
+                style="width: 15%"
+                @click="scrollToContent5"
+            >
+                L E A R N &nbsp; M O R E
+            </button>
+        </div>
 
         <div class="row" id="content-5">
             <ScrollSection transition="slideUp" class="game-bg">
@@ -152,7 +156,6 @@ export default {
 .button-pulse {
     animation: pulse 2s infinite 3s cubic-bezier(0.25, 0, 0, 1);
     box-shadow: 0 0 0 0 rgb(0, 0, 0);
-   
 }
 
 @keyframes pulse {
@@ -175,7 +178,6 @@ export default {
     box-shadow: 0 2px 5px 0 rgba(3, 6, 26, 0.15);
     transition: 0.5s all ease-in-out;
     font-weight: 500;
-    width: 30%;
 }
 .button:hover {
     cursor: pointer;
@@ -293,8 +295,6 @@ export default {
     .header-text h1 {
         font-size: 8vw;
     }
-
-
 }
 
 @media (max-width: 576px) {
@@ -313,13 +313,9 @@ export default {
     #coverimg {
         max-height: 40dvh;
     }
-    
 }
 
 @media (max-width: 768px) {
-    .button-pulse{
-        font-size: 15px;
-    }
     .header-text h1 {
         font-size: 8vw;
     }
@@ -327,7 +323,6 @@ export default {
     .header-text {
         height: 50dvh;
     }
-    
 
     .body-spacer {
         margin-top: 40dvh;
@@ -348,15 +343,5 @@ export default {
     .row p {
         font-size: 12px;
     }
-}
-
-@media(min-width: 1024px){
-        .button-pulse{
-        font-size: 20px;
-    }
-    }
-
-
-</style>
 }
 </style>
