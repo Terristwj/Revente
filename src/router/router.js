@@ -74,11 +74,6 @@ export const routes = [
       requiresAuth: false,
     },
   },
-  {
-	path: "/profile",
-	name: "Profile",
-	component: () => import("../views/ProfileView.vue"),
-  }
 ];
 
 const router = createRouter({
