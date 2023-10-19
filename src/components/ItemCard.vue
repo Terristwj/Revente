@@ -1,43 +1,40 @@
 <template>
-    <div class="card flex align-items-center justify-content-center">
-        <div class="card" style="width: 18rem;">
-            <img src="https://primefaces.org/cdn/primevue/images/usercard.png" class="card-img-top" alt="..." id="card_img">
+    <div class="card" style="width: 18rem;">
+        <img src="https://primefaces.org/cdn/primevue/images/usercard.png" class="card-img-top" alt="..." id="card_img">
 
-            <div class="card-body">
-                <h5 class="card-title">{{ i.name }}</h5>
-                <p class="card-text">{{ i.brand }}</p>
-                <p class="card-text">{{ i.seller }}</p>
-                <p class="card-text">$ {{ i.price }}</p>
+        <div class="card-body pb-0 pt-1">
+            <h5 class="card-title">{{ i.name }}</h5>
+            <p class="card-text">{{ i.brand }}</p>
+            <p class="card-text">{{ i.seller }}</p>
+            <p class="card-text">$ {{ i.price }}</p>
 
-                <div class="container">
-                    <button type="button" class="btn btn-clear m-3" @click="visible = true">Quick View</button>
-                    <button type="button" class="btn btn-clear-like m-3" id="fav"><font-awesome-icon
-                            :icon="['far', 'heart']" /></button>
-                </div>
+            <div class="container">
+                <button type="button" class="btn btn-clear m-3" @click="visible = true">Quick View</button>
+                <button type="button" class="btn btn-clear-like m-3" id="fav"><font-awesome-icon
+                        :icon="['far', 'heart']" /></button>
             </div>
+        </div>
 
 
-            <Dialog v-model:visible="visible" modal :header="i.name" :style="{ width: '70vw' }">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col">
-                            <img src="https://primefaces.org/cdn/primevue/images/usercard.png" class="card-img-top"
-                                alt="...">
-                        </div>
-                        <div class="col">
-                            <p class="card-text">{{ i.brand }}</p>
-                            <p class="card-text">{{ i.seller }}</p>
-                            <p class="card-text">$ {{ i.price }}</p>
-                            <p class="card-text">{{ i.description }}</p>
-                            <div class="container text-center">
-                                <button type="button" class="btn btn-clear m-3">Add to Cart</button>
-                                <button type="button" class="btn btn-dark m-3">More Details</button>
-                            </div>
+        <Dialog v-model:visible="visible" modal :header="i.name" :style="{ width: '70vw' }">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <img src="https://primefaces.org/cdn/primevue/images/usercard.png" class="card-img-top" alt="...">
+                    </div>
+                    <div class="col">
+                        <p class="card-text">{{ i.brand }}</p>
+                        <p class="card-text">{{ i.seller }}</p>
+                        <p class="card-text">$ {{ i.price }}</p>
+                        <p class="card-text">{{ i.description }}</p>
+                        <div class="container text-center p-0">
+                            <button type="button" class="btn btn-clear m-3">Add to Cart</button>
+                            <button type="button" class="btn btn-dark m-3">More Details</button>
                         </div>
                     </div>
                 </div>
-            </Dialog>
-        </div>
+            </div>
+        </Dialog>
     </div>
 </template>
 
