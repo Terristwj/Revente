@@ -21,34 +21,52 @@
 				type: String,
 				required: true,
 			},
+			price: {
+				type: Number,
+				required: true,
+			},
 		},
 	};
 </script>
 
 <template>
-	<img :src="imgUrl" :alt="itemName" class="cart-img" />
-	<div class="align-items-center justify-content-center">
-		<h6 class="mb-3">{{ name }}</h6>
-		<p>{{ brand }}</p>
-		<p>Size: {{ size }}</p>
-		<p>
-			Seller: <a href="#" class="seller-link">{{ seller }}</a>
-		</p>
-		<div class="mt-4">
-			<button class="btn btn-outline-dark me-sm-2">
-				<font-awesome-icon :icon="['far', 'heart']" />
-				Add to Wishlist
-			</button>
-			<button class="btn btn-outline-dark ms-sm-2">
-				<font-awesome-icon :icon="['far', 'trash-can']" /> Remove
-			</button>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-3 ps-0">
+				<img :src="imgUrl" :alt="itemName" class="cart-img" />
+			</div>
+			<div class="col-9">
+				<div class="row">
+					<div class="col-auto">
+						<h6>{{ name }}</h6>
+					</div>
+					<div class="col-3">
+						<h6>${{ price }}</h6>
+					</div>
+				</div>
+				<p>{{ brand }}</p>
+				<p>Size: {{ size }}</p>
+				<p>
+					Seller: <a href="#" class="seller-link">{{ seller }}</a>
+				</p>
+				<div class="mt-4">
+					<button class="btn btn-outline-dark me-sm-2">
+						<font-awesome-icon :icon="['far', 'heart']" />
+						Add to Wishlist
+					</button>
+					<button class="btn btn-outline-dark ms-sm-2">
+						<font-awesome-icon :icon="['far', 'trash-can']" />
+						Remove
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <style scoped>
 	p {
-		line-height: 90%;
+		line-height: 85%;
 	}
 	.cart-img {
 		width: 167px;
