@@ -4,7 +4,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 // Track userID
 import { useCurrentUserStore } from "./stores/currentUser.js";
-
+import { useCurrentItemID } from "./stores/currentItem.js";
 import App from "./App.vue";
 import router from "./router/router.js";
 
@@ -29,6 +29,7 @@ const app = createApp(App);
 
 app.use(createPinia());
 export const userStore = useCurrentUserStore();
+export const itemStore = useCurrentItemID();
 app.use(router);
 
 // Refer to PrimeVue.js for the full list of components

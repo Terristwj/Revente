@@ -70,6 +70,11 @@ export const routes = [
         component: () => import("../views/CartView.vue"),
     },
     {
+        path: "/MainItem",
+        name: "MainItem",
+        component: () => import("../views/MainItemView.vue"),
+    },
+    {
         // path: *
         path: "/:catchAll(.*)",
         name: "NotFound",
