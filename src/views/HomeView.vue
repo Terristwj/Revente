@@ -1,6 +1,5 @@
 <script>
 import BigCarousel from "../components/BigCarousel.vue";
-import ItemCard from "../components/ItemCard.vue";
 import router from "../router/router.js";
 
 import { ref, onMounted, onUnmounted } from "vue";
@@ -20,7 +19,6 @@ export default {
     },
     components: {
         BigCarousel,
-        ItemCard,
     },
     methods: {
         toRegistration() {
@@ -202,7 +200,6 @@ export default {
                     </div>
                 </div>
             </div>
-            <ItemCard />
         </div>
     </body>
 </template>
