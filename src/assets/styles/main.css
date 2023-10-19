@@ -48,6 +48,35 @@ a,
     font-family: "Indie Flower";
 }
 
+@font-face {
+    font-family: 'inter-bold';
+    src: url("./fonts/Inter-Bold.ttf");
+}
+
+@font-face {
+    font-family: 'inter-light';
+    src: url("./fonts/Inter-Light.ttf");
+}
+
+@font-face {
+    font-family: 'inter-regular';
+    src: url("./fonts/Inter-Regular.ttf");
+}
+
+@font-face {
+    font-family: 'inter-thin';
+    src: url("./fonts/Inter-Thin.ttf");
+}
+
+@font-face {
+    font-family: 'inter-medium';
+    src: url("./fonts/Inter-Medium.ttf");
+}
+
+h1 {
+    font-family: 'inter-bold';
+}
+
 .pointing {
     cursor: pointer;
 }

@@ -43,7 +43,7 @@ export default {
                 />
             </div>
             <div class="col-8 my-auto">
-                <h1>Fashionably Green</h1>
+                <h1 class="mb-3">Fashionably Green</h1>
                 <p style="text-align: justify">
                     With REVENTÉ, you are supporting sustainable fashion!
                     Explore a curated collection of fashionable clothing, made
@@ -54,7 +54,7 @@ export default {
                     footprint. Join us in redefining fashion with style and
                     conscience.
                 </p>
-                <p style="font-style: italic">
+                <p style="font-style: italic; font-family: 'inter-light';">
                     REVENTÉ: where style meets sustainability.
                 </p>
             </div>
