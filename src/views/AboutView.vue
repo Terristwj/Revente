@@ -24,7 +24,7 @@ export default {
     <header class="video-header">
         <!-- <video src="../assets/videos/exampleVid.mp4" autoplay loop playsinline muted>
         </video> -->
-        <img src="../assets/img/ecommerce/about.svg" alt="" id="coverimg" />
+        <img src="../assets/img/ecommerce/about.svg" alt="" id="covering" />
         <div class="header-text">
             <h1 class="flicker">About Us</h1>
         </div>
