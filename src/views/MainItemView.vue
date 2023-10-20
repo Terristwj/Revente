@@ -27,7 +27,7 @@
                 <button type="button" class="btn btn-clear m-3">Add to Cart</button>
             </div>
         </div>
-        <div class="text-center">
+        <div class="row text-center">
             <div class="tab">
                 <button class="tablinks w-50" :class="{ 'clicked': descriptionShow }" @click="openTab(event,'description')">Description</button>
                 <button class="tablinks w-50" :class="{ 'clicked': sizeShow }" @click="openTab(event,'size')">Size</button>
