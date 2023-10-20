@@ -145,6 +145,12 @@ export const routes = [
 		icon: ['fas', 'user'],
 	},
 	{
+		path: '/checkout',
+		name: 'Checkout',
+		component: () => import('../views/CheckoutView.vue'),
+		icon: ['fas', 'user'],
+	},
+	{
 		// path: *
 		path: '/:catchAll(.*)',
 		name: 'NotFound',
