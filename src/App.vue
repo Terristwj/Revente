@@ -2,6 +2,7 @@
 import NavigationBar from "./components/NavigationBar.vue";
 import FooterComponent from "./components/FooterComponent.vue";
 
+
 export default {
     created() {
         document.addEventListener("keydown", this.handleSpacebar);

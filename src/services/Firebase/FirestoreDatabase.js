@@ -70,6 +70,14 @@ class FirebaseFirestore {
             country: "USA",
         });
     };
+
+    getProducts = async function (productID) {
+        // console.log(userID);
+        const docRef = doc(FirestoreDatabase, "products", productID);
+        const docSnap = await getDoc(docRef);
+        // console.log(docSnap.data());
+        return docSnap.data();
+    }
 }
 
 const FBInstanceFirestore = new FirebaseFirestore();
