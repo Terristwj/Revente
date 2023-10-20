@@ -9,7 +9,7 @@
             <!--            display product details-->
             <div class="col-md-6 col-12 pt-3 pt-md-0">
                 <h4>{{ product.name }}</h4>
-                <h6 class="catgory font-italic" > {{ category.categoryName }}</h6>
+                <h6 class="catgory font-italic"> {{ category.categoryName }}</h6>
                 <h6 class="font-weight-bold"> $ {{ product.price }}</h6>
                 <p>
                     {{ product.description }}
@@ -24,13 +24,22 @@
                         <li>ut doloremque dolore corrupti, architecto iusto beatae.</li>
                     </ul>
                 </div>
-                <button type="button" class="btn btn-clear m-3">Add to Cart</button>
+                <div class="row w-75 wishcart">
+                    <button type="button" class="btn btn-clear my-4" @click="addCart()">Add to Cart</button>
+                    <button class="btn btn-outline-dark me-sm-2" @click="addWishList()">
+                        <font-awesome-icon :icon="['far', 'heart']" />
+                        Add to Wishlist
+                    </button>
+                </div>
+
+
             </div>
         </div>
         <div class="row text-center">
             <div class="tab">
-                <button class="tablinks w-50" :class="{ 'clicked': descriptionShow }" @click="openTab(event,'description')">Description</button>
-                <button class="tablinks w-50" :class="{ 'clicked': sizeShow }" @click="openTab(event,'size')">Size</button>
+                <button class="tablinks w-50" :class="{ 'clicked': descriptionShow }"
+                    @click="openTab(event, 'description')">Description</button>
+                <button class="tablinks w-50" :class="{ 'clicked': sizeShow }" @click="openTab(event, 'size')">Size</button>
             </div>
             <div v-if="descriptionShow" class="tabcontent">
                 <h3>{{ description }}</h3>
@@ -73,14 +82,22 @@ export default {
         openTab(event, tabName) {
 
             // console.log('openTab');
-            if(tabName == 'description'){
+            if (tabName == 'description') {
                 this.descriptionShow = true;
-                this.sizeShow = false;}
-            else{
+                this.sizeShow = false;
+            }
+            else {
                 this.descriptionShow = false;
                 this.sizeShow = true;
             }
+        },
+        addCart() {
+            console.log('addCart');
+        },
+        addWishList() {
+            console.log('addWishList');
         }
+
 
     },
     created() {
@@ -118,9 +135,10 @@ export default {
 }
 </script>
 <style>
-.clicked{
+.clicked {
     background-color: #ddd;
 }
+
 .category {
     font-weight: 400;
 }
@@ -186,6 +204,17 @@ export default {
 
     * {
         font-size: 10px;
+    }
+    .tab button{
+        font-size: 12px;
+    }
+
+}
+
+@media(max-width:425px){
+    .wishcart{
+        margin-left: auto;
+        margin-right: auto;
     }
 
 }
