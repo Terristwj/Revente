@@ -67,6 +67,11 @@ export const routes = [
 		component: () => import('../views/FAQView.vue'),
 	},
 	{
+        path: "/MainItem",
+        name: "MainItem",
+        component: () => import("../views/MainItemView.vue"),
+    },
+	{
 		path: '/profile',
 		name: 'Profile',
 		// route level code-splitting
