@@ -8,6 +8,11 @@ export default {
 </script>
 
 <template>
+	<div class="container">
+		<h2 class="row my-4">
+			CATALOGUE
+		</h2>
+    </div>
     <SideMenuBar />
 </template>
 
