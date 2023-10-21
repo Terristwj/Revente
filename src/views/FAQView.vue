@@ -10,6 +10,7 @@ export default {
 };
 </script>
 
+
 <template>
     <div id="faq">
         <Card>
@@ -75,9 +76,6 @@ export default {
                                     the measurements given on each individual product page. Thank you!
 
                                 </p>
-                                
-                                    
-                                
                             </AccordionTab>
                             <AccordionTab header="Does Reventé have a retail store?">
                                 <p>
@@ -152,6 +150,23 @@ export default {
             </template>
         </Card>
     </div>
+
+    <div id="faq">
+        <Card>
+            <template #title> Claire: Your personal AI Assistant </template>
+            <template #content>
+                <div style="position:relative;">
+                    <Accordion>
+                <AccordionTab header="Ask me anything">
+                    <iframe width="350" height="430" allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/ae2dede1-2cfa-4ba7-8458-062aaf47c01b" class="chatbot"></iframe>
+                    </AccordionTab>
+               </Accordion>
+
+                </div>
+            
+            </template>
+        </Card>
+    </div>
 </template>
 
 <style scoped>
@@ -166,4 +181,14 @@ export default {
         margin: 5% auto;
         max-width: 1200px;
     }
-}</style>
+}
+.chatbot{
+    /* z-index: -1; */
+    border: none;
+    overflow: hidden;
+    margin: auto;
+    display: block;
+    width: 100%;
+    height: 50dvh;
+}
+</style>
