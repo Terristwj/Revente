@@ -50,7 +50,83 @@ export const routes = [
       requiresNoAuth: true,
     },
   },
+  {
+    path: "/about",
+    name: "About",
+    // route level code-splitting
+    // this generates a separate chunk (About.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import("../views/AboutView.vue"),
+  },
+  {
+    path: "/faq",
+    name: "FAQ",
+    // route level code-splitting
+    // this generates a separate chunk (About.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import("../views/FAQView.vue"),
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    // route level code-splitting
+    // this generates a separate chunk (About.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import("../views/UserProfile.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/LoginView.vue"),
+    props: true,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/RegisterView.vue"),
+  },
+  // {
+  //     path: "/game",
+  //     name: "Game",
+  //     // route level code-splitting
+  //     // this generates a separate chunk (About.[hash].js) for this route
+  //     // which is lazy-loaded when the route is visited.
+  //     component: () => import("../views/GameView.vue"),
+  //     meta: {
+  //         requiresAuth: true,
+  //     },
+  // },
+  {
+    path: "/listing",
+    name: "Listing",
+    component: () => import("../views/ListingView.vue"),
+  },
+  {
+    path: "/Cart",
+    name: "Cart",
+    component: () => import("../views/CartView.vue"),
+  },
+  {
+    // path: *
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import("../views/404View.vue"),
+  },
 
+  // {
+  //     path: "/game",
+  //     name: "Game",
+  //     // route level code-splitting
+  //     // this generates a separate chunk (About.[hash].js) for this route
+  //     // which is lazy-loaded when the route is visited.
+  //     component: () => import("../views/GameView.vue"),
+  //     meta: {
+  //         requiresAuth: true,
+  //     },
+  // },
   {
     path: "/listing",
     name: "Listing",
