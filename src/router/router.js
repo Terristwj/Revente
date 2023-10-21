@@ -11,125 +11,122 @@ import { getAuth } from "firebase/auth";
 // });
 
 export const isAuthenticated = () => {
-  let auth = getAuth();
-  let user = auth.currentUser;
-  return !!user;
+    let auth = getAuth();
+    let user = auth.currentUser;
+    return !!user;
 };
 
 // Add routes here
 export const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: () => import("../views/HomeView.vue"),
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    icon: ["fas", "info"],
-    component: () => import("../views/AboutView.vue"),
-  },
-
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/LoginView.vue"),
-    props: true,
-    meta: {
-      requiresNoAuth: true,
+    // Common Pages START
+    {
+        path: "/",
+        name: "Home",
+        component: () => import("../views/HomeView.vue"),
     },
-  },
-  {
-    path: "/faq",
-    name: "FAQ",
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import("../views/FAQView.vue"),
-  },
-
-  {
-    path: "/register",
-    name: "Register",
-    component: () => import("../views/RegisterView.vue"),
-  },
-  // {
-  //     path: "/game",
-  //     name: "Game",
-  //     // route level code-splitting
-  //     // this generates a separate chunk (About.[hash].js) for this route
-  //     // which is lazy-loaded when the route is visited.
-  //     component: () => import("../views/GameView.vue"),
-  //     meta: {
-  //         requiresAuth: true,
-  //     },
-  // },
-  // {
-  //     path: "/game",
-  //     name: "Game",
-  //     // route level code-splitting
-  //     // this generates a separate chunk (About.[hash].js) for this route
-  //     // which is lazy-loaded when the route is visited.
-  //     component: () => import("../views/GameView.vue"),
-  //     meta: {
-  //         requiresAuth: true,
-  //     },
-  // },
-  {
-    path: "/listing",
-    name: "Listing",
-    component: () => import("../views/ListingView.vue"),
-  },
-  {
-    path: "/Cart",
-    name: "Cart",
-    component: () => import("../views/CartView.vue"),
-    icon: ["fas", "bag-shopping"],
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import("../views/ProfileView.vue"),
-    icon: ["fas", "user"],
-    meta: {
-      requiresAuth: true,
+    {
+        path: "/about",
+        name: "About",
+        icon: ["fas", "info"],
+        component: () => import("../views/AboutView.vue"),
     },
-  },
-  {
-    // path: *
-    path: "/:catchAll(.*)",
-    name: "NotFound",
-    component: () => import("../views/404View.vue"),
-  },
+    {
+        path: "/faq",
+        name: "FAQ",
+        component: () => import("../views/FAQView.vue"),
+    },
+    // Common Pages END
 
-  //upload page
-  {
-    path: "/upload",
-    name: "Upload",
-    component: () => import("../views/UploadProductView.vue"),
-  }
+    // Product Catalogue START
+    {
+        path: "/listing",
+        name: "Listing",
+        component: () => import("../views/ListingView.vue"),
+    },
+    {
+        path: "/Cart",
+        name: "Cart",
+        icon: ["fas", "bag-shopping"],
+        component: () => import("../views/CartView.vue"),
+    },
+    // Product Catalogue END
+
+    // User Profile START
+    {
+        path: "/profile",
+        name: "Profile",
+        component: () => import("../views/ProfileView.vue"),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/profile/settings",
+        name: "Settings",
+        component: () => import("../views/UserSettingsView.vue"),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    // User Profile END
+
+    // Login/Register START
+    {
+        path: "/login",
+        name: "Login",
+        component: () => import("../views/LoginView.vue"),
+        meta: {
+            requiresNoAuth: true,
+        },
+    },
+    {
+        path: "/register",
+        name: "Register",
+        component: () => import("../views/RegisterView.vue"),
+        meta: {
+            requiresNoAuth: true,
+        },
+    },
+    // Login/Register END
+
+    // Others START
+    {
+        // path: *
+        path: "/:catchAll(.*)",
+        name: "NotFound",
+        component: () => import("../views/404View.vue"),
+    },
+    // Others END
+
+    // Incomplete Views goes here START
+    // upload page
+    {
+        path: "/upload",
+        name: "Upload",
+        component: () => import("../views/UploadProductView.vue"),
+    },
+    // Incomplete Views goes here END
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routes,
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: routes,
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !isAuthenticated()) {
     setTimeout(function () {
-      if (userStore.getUserID()) {
-        console.log(userStore.getUserID());
-      } else {
-        router.push("/login");
-      }
+        if (to.meta.requiresAuth && !isAuthenticated()) {
+            if (userStore.getUserID()) {
+                console.log(userStore.getUserID());
+            } else {
+                router.push("/login");
+            }
+        } else if (to.meta.requiresNoAuth && isAuthenticated()) {
+            router.push("/");
+        } else {
+            next();
+        }
     }, 1000);
-  } else {
-    next();
-  }
 });
 
 export default router;

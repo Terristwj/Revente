@@ -434,6 +434,10 @@ button:hover {
     box-shadow: 0px 0px 0px 3px #c7d2fe;
 }
 
+button {
+    padding: 10px;
+}
+
 input:focus {
     box-shadow: none;
 }

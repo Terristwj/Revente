@@ -112,7 +112,7 @@ class FirebaseAuthentication {
                     phone,
                     address,
                     city,
-                    region
+                    region,
                 );
 
                 router.push(loginPath);
