@@ -158,7 +158,7 @@ export default {
                 <div style="position:relative;">
                     <Accordion>
                 <AccordionTab header="Ask me anything">
-                    <iframe width="350" height="430" allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/ae2dede1-2cfa-4ba7-8458-062aaf47c01b" class="chatbot"></iframe>
+                    <iframe allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/ae2dede1-2cfa-4ba7-8458-062aaf47c01b" class="chatbot"></iframe>
                     </AccordionTab>
                </Accordion>
 
@@ -189,6 +189,6 @@ export default {
     margin: auto;
     display: block;
     width: 100%;
-    height: 50dvh;
+    height: 75dvh;
 }
 </style>
