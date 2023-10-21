@@ -6,6 +6,10 @@ export default {
         toRegistration() {
             router.push("/register");
         },
+        scrollToChatBot() {
+            const content5 = document.getElementById("chat");
+            content5.scrollIntoView({ behavior: "smooth" });
+        },
     },
 };
 </script>
@@ -66,7 +70,10 @@ export default {
                                     each individual product page. If you have
                                     any further queries about sizing, please
                                     chat with
-                                    <a href="#">Claire</a>.
+                                    <button id="button_claire" @click="scrollToChatBot()">Claire</button>,
+                                    your personal Assistant!!
+
+
                                 </p>
                             </AccordionTab>
                             <AccordionTab header="What is my size and how do I compare it with the measurements given?">
@@ -91,17 +98,20 @@ export default {
                         <Accordion>
                             <AccordionTab header="How do I list my order?">
                                 <p>
-                                 You will have to fill out a form and send our admins a request. Once approved please make your way down to any of our outlets to drop off your items and we will do the rest!
+                                    You will have to fill out a form and send our admins a request. Once approved please
+                                    make your way down to any of our outlets to drop off your items and we will do the rest!
                                 </p>
                             </AccordionTab>
                             <AccordionTab header="Can I get back my item after I send it off to your outlets?">
                                 <p>
-                                    Unfortunately no. As part of our company policy, we do not allow any returns of items that has been dropped off as we will be doing the necessary to sell your items.
+                                    Unfortunately no. As part of our company policy, we do not allow any returns of items
+                                    that has been dropped off as we will be doing the necessary to sell your items.
                                 </p>
                             </AccordionTab>
                             <AccordionTab header="When will I get paid based on the amount we agreed on">
                                 <p>
-                                   You will be paid in 3-5 working days after your item has been dropped off at our outlets.
+                                    You will be paid in 3-5 working days after your item has been dropped off at our
+                                    outlets.
                                 </p>
                             </AccordionTab>
                         </Accordion>
@@ -155,15 +165,17 @@ export default {
         <Card>
             <template #title> Claire: Your personal AI Assistant </template>
             <template #content>
-                <div style="position:relative;">
+                <div id="chat">
                     <Accordion>
-                <AccordionTab header="Ask me anything">
-                    <iframe allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/ae2dede1-2cfa-4ba7-8458-062aaf47c01b" class="chatbot"></iframe>
-                    </AccordionTab>
-               </Accordion>
+                        <AccordionTab header="Ask me anything">
+                            <iframe allow="microphone;"
+                                src="https://console.dialogflow.com/api-client/demo/embedded/ae2dede1-2cfa-4ba7-8458-062aaf47c01b"
+                                class="chatbot"></iframe>
+                        </AccordionTab>
+                    </Accordion>
 
                 </div>
-            
+
             </template>
         </Card>
     </div>
@@ -182,7 +194,8 @@ export default {
         max-width: 1200px;
     }
 }
-.chatbot{
+
+.chatbot {
     /* z-index: -1; */
     border: none;
     overflow: hidden;
@@ -191,4 +204,15 @@ export default {
     width: 100%;
     height: 75dvh;
 }
-</style>
+
+#button_claire {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: blue;
+    padding: 0;
+}
+
+#button_claire:hover {
+    color: red;
+}</style>
