@@ -344,7 +344,7 @@ export default {
                     y: 325,
                 },
                 image: {
-                    src: "./img/embySprite.png",
+                    src: "./img/2d_game/embySprite.png",
                 },
                 frames: {
                     max: 4,
@@ -360,7 +360,7 @@ export default {
                     y: 100,
                 },
                 image: {
-                    src: "./img/draggleSprite.png",
+                    src: "./img/2d_game/draggleSprite.png",
                 },
                 frames: {
                     max: 4,
@@ -414,13 +414,15 @@ export default {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 1026, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 1026, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1992, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1031, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 1031, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 2048, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -493,9 +495,7 @@ export default {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ];
 
         function rectangularCollision({ rectangle1, rectangle2 }) {
@@ -655,8 +655,8 @@ export default {
 
             faint() {
                 let queryBox = document.querySelector("#dialogueBox");
-                console.log(this.name);
-                console.log(this.name == "Draggle");
+                // console.log(this.name);
+                // console.log(this.name == "Draggle");
                 if (this.name == "Draggle") {
                     queryBox.innerHTML =
                         this.name + " fainted! You won! But nothing happens...";
@@ -692,7 +692,7 @@ export default {
                     case "Fireball": {
                         audio.initFireball.play();
                         const fireballImage = new Image();
-                        fireballImage.src = "./img/fireball.png";
+                        fireballImage.src = "./img/2d_game/fireball.png";
                         const fireball = new Sprite({
                             position: {
                                 x: this.position.x,
@@ -738,7 +738,7 @@ export default {
                         break;
                     }
                     case "Tackle": {
-                        console.log(2);
+                        // console.log(2);
                         const tl = gsap.timeline();
 
                         let movementDistance = 20;
@@ -849,7 +849,7 @@ export default {
         for (let i = 0; i < charactersMapData.length; i += 70) {
             charactersMap.push(charactersMapData.slice(i, 70 + i));
         }
-        console.log(charactersMap);
+        // console.log(charactersMap);
 
         const boundaries = [];
         const offset = {
@@ -889,10 +889,10 @@ export default {
 
         const characters = [];
         const villagerImg = new Image();
-        villagerImg.src = "./img/villager/Idle.png";
+        villagerImg.src = "./img/2d_game/villager/Idle.png";
 
         const oldManImg = new Image();
-        oldManImg.src = "./img/oldMan/Idle.png";
+        oldManImg.src = "./img/2d_game/oldMan/Idle.png";
 
         charactersMap.forEach((row, i) => {
             row.forEach((symbol, j) => {
@@ -912,10 +912,38 @@ export default {
                             scale: 3,
                             animate: true,
                             dialogue: [
-                                "Hello there! Are you lost?",
-                                "I am a Prof Z, a SMU Professor.",
-                                "Do you know there are 4 tracks for SMU IS?",
-                                "Find the other professors to learn more!",
+                                "Hello there! Are you lost? Well here are some fun facts about sustainability anyway!",
+                                "I am a Researcher Greenie.",
+                                "Did you know that it can take more than 700 gallons of water to make a single t-shirt",
+                                "Thats a mad amount right! Jeez",
+                                "Did you know almost all clothes are 100% recyclable but.. our landfills are still filled with 60% textile waste",
+                                "Luckily we have revente where you can sell and buy old clothes.. one man's trash is another man treasure am i right :D",
+                                "Find the other researchers to learn more!",
+                            ],
+                        })
+                    );
+                } else if (symbol === 1992) {
+                    characters.push(
+                        new Character({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y,
+                            },
+                            image: villagerImg,
+                            frames: {
+                                max: 4,
+                                hold: 60,
+                            },
+                            scale: 3,
+                            animate: true,
+                            dialogue: [
+                                "Hello there taking a break from shopping? Well here are some fun facts about sustainability!",
+                                "I am a Researcher Greenie the second! Hope you saw my twin",
+                                "Fun fact 1: The Average Person Only Wears 20% of Their Clothes 80% of the Time",
+                                "Only 15% is recycled or donated, and the rest goes directly to the landfill or is incinerated",
+                                "Luckily we have revente where you can sell and buy old clothes.. one man's trash is another man treasure am i right :D",
+                                "Oops did i repeat what my twin said o wells! Enjoy shopping!",
+                                "Find the other researchers to learn more!",
                             ],
                         })
                     );
@@ -934,7 +962,37 @@ export default {
                                 hold: 60,
                             },
                             scale: 3,
-                            dialogue: ["You wanna switch to biz instead?"],
+                            animate: true,
+                            dialogue: [
+                                "Hello there! I am a Researcher Hynki Pinkie.",
+                                " Over 80 billion new pieces of clothing are bought each year worldwide, which is 400% more than what we consumed just two decades ago.",
+                                "Did you know that the fashion industry is responsible for 10% of annual global carbon emissions, more than all international flights and maritime shipping combined. ",
+                                "Thats surprising right! Jeez",
+                                "Continue shopping and thanks for visitng me!",
+                            ],
+                        })
+                    );
+                } else if (symbol === 2048) {
+                    characters.push(
+                        new Character({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y,
+                            },
+                            image: oldManImg,
+                            frames: {
+                                max: 4,
+                                hold: 60,
+                            },
+                            scale: 3,
+                            animate: true,
+                            dialogue: [
+                                "Hello there! I am a Researcher Hynki Pinkie.",
+                                " Over 80 billion new pieces of clothing are bought each year worldwide, which is 400% more than what we consumed just two decades ago.",
+                                "Did you know that the fashion industry is responsible for 10% of annual global carbon emissions, more than all international flights and maritime shipping combined. ",
+                                "Thats surprising right! Jeez",
+                                "Continue shopping and thanks for visitng me!",
+                            ],
                         })
                     );
                 }
@@ -953,22 +1011,22 @@ export default {
         });
 
         const image = new Image();
-        image.src = "./img/Pellet Town.png";
+        image.src = "./img/2d_game/Pellet Town.png";
 
         const foregroundImage = new Image();
-        foregroundImage.src = "./img/foregroundObjects.png";
+        foregroundImage.src = "./img/2d_game/foregroundObjects.png";
 
         const playerDownImage = new Image();
-        playerDownImage.src = "./img/playerDown.png";
+        playerDownImage.src = "./img/2d_game/playerDown.png";
 
         const playerUpImage = new Image();
-        playerUpImage.src = "./img/playerUp.png";
+        playerUpImage.src = "./img/2d_game/playerUp.png";
 
         const playerLeftImage = new Image();
-        playerLeftImage.src = "./img/playerLeft.png";
+        playerLeftImage.src = "./img/2d_game/playerLeft.png";
 
         const playerRightImage = new Image();
-        playerRightImage.src = "./img/playerRight.png";
+        playerRightImage.src = "./img/2d_game/playerRight.png";
 
         const player = new Sprite({
             position: {
@@ -1346,7 +1404,7 @@ export default {
         });
 
         const battleBackgroundImage = new Image();
-        battleBackgroundImage.src = "./img/battleBackground.png";
+        battleBackgroundImage.src = "./img/2d_game/battleBackground.png";
         const battleBackground = new Sprite({
             position: {
                 x: 0,
@@ -1383,7 +1441,7 @@ export default {
             document.querySelectorAll("button").forEach((button) => {
                 button.addEventListener("click", (e) => {
                     const selectedAttack = attacks[e.currentTarget.innerHTML];
-                    console.log(selectedAttack);
+                    // console.log(selectedAttack);
                     emby.attack({
                         attack: selectedAttack,
                         recipient: draggle,
@@ -1472,7 +1530,7 @@ export default {
             battleAnimationId = window.requestAnimationFrame(animateBattle);
             battleBackground.draw();
 
-            console.log(battleAnimationId);
+            // console.log(battleAnimationId);
 
             renderedSprites.forEach((sprite) => {
                 sprite.draw();
@@ -1521,7 +1579,8 @@ export default {
                 "
             ></div>
 
-            <canvas></canvas>
+            <canvas class="border border-2 border-dark"></canvas>
+
             <div
                 id="characterDialogueBox"
                 style="
@@ -1531,6 +1590,7 @@ export default {
                     bottom: 0;
                     left: 0;
                     right: 0;
+                    border: 2px black solid;
                     border-top: 4px black solid;
                     display: none;
                     padding: 12px;
@@ -1616,6 +1676,7 @@ export default {
                         bottom: 0;
                         left: 0;
                         right: 0;
+                        border: 2px black solid;
                         border-top: 4px black solid;
                         display: flex;
                     "
@@ -1674,8 +1735,8 @@ export default {
     justify-content: center;
     overflow: hidden;
     margin: auto;
-    background-color: black;
-    border: 5px solid black;
+    background-color: rgb(255, 255, 255);
+    /* border: 5px solid black; */
     margin: 0px 0px;
 }
 
