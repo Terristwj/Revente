@@ -104,6 +104,13 @@ export const routes = [
     name: "NotFound",
     component: () => import("../views/404View.vue"),
   },
+
+  //upload page
+  {
+    path: "/upload",
+    name: "Upload",
+    component: () => import("../views/UploadProductView.vue"),
+  }
 ];
 
 const router = createRouter({
