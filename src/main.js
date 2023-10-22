@@ -23,7 +23,7 @@ import {
     faInstagram,
     faTiktok,
 } from "@fortawesome/free-brands-svg-icons";
-import { faHeart, faUser, faInfo, faShoppingBag } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faUser, faInfo, faShoppingBag, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 const app = createApp(App);
 
@@ -39,7 +39,7 @@ connectPrimeVue(app);
 export const FirestoreDatabase = connectFirebase();
 
 // Font-Awesome Icons
-library.add(faFacebookF, faTwitter, faInstagram, faTiktok, faHeart, far, faUser, faInfo, faShoppingBag);
+library.add(faFacebookF, faTwitter, faInstagram, faTiktok, faHeart, far, faUser, faInfo, faShoppingBag, faUpload);
 app.component("font-awesome-icon", FontAwesomeIcon);
 
 app.mount("#app");
