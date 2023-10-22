@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between">
-                    <h3 class="m-3">What do you want to list today?</h3>
+                    <h3 class="m-3" style="font-family:inter-medium;">List your preloved items here</h3>
                     <button type="button" class="btn btn-dark m-3 px-4">List Now</button>
                 </div>
             </div>
@@ -13,6 +13,7 @@
     <div class='container-fluid content'>
         <form action="">
             <div class='row p-1 justify-content-around'>
+               
 
                 <!-- upload box -->
                 <div class='col-md-4 col-sm-11 shadow p-3 mb-5 bg-white rounded mx-4 upload d-flex justify-content-center align-items-center'>
@@ -50,7 +51,7 @@
                                 placeholder="Condition" class="w-full md:w-14rem" />
                         </div>
                         <h4 class="lead mt-3">Notes on condition (Optional)</h4>
-                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                        <textarea name="ConditionNotes" id="" cols="30" rows="5" class="form-control" placeholder="Example: Stained, Minor defects at the collar area, Perfect Condition"></textarea>
 
                     </div>
 
@@ -70,7 +71,7 @@
                             </span>
                         </div>
                         <h4 class="lead mt-3">Description (Optional)</h4>
-                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                        <textarea name="" id="Description" cols="30" rows="5" class="form-control"></textarea>
 
                     </div>
 
@@ -115,11 +116,11 @@ const brand = ref(null);
 // change this to categories / condition
 const selectedCity = ref();
 const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
+    { name: 'Shirt', code: 'SH' },
+    { name: 'Hoodie', code: 'HO' },
+    { name: 'Pants', code: 'PA' },
+    { name: 'Shorts', code: 'SHO' },
+    { name: 'Skirt', code: 'SKR' }
 ]);
 
 const selectedCondition = ref();
@@ -146,12 +147,14 @@ input[type="file"] {
 }
 
 #upload_box {
-    border: 1px dashed #000000;
+    border: 1.5px dashed #000000;
     border-radius: 10px;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
     height: 200px;
+   background-color: rgb(180, 180, 180);
+   opacity: 0.9;
     /* width: 500px; */
 }
 
@@ -165,13 +168,17 @@ input[type="file"] {
 }
 
 .upload {
-    height: 500px;
+    height: 50dvh;
+    background-image: url("../assets/img/ecommerce/uploadimg1.png");
+    background-position:center;
 }
 
 .head {
     top: 56px;
     z-index: 999;
-    background-color: white;
+    background-color: rgb(248, 228, 213);
+    opacity: 0.9;
+  
 }
 
 .content {
