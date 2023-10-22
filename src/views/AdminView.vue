@@ -1,10 +1,14 @@
 <template>
+    <!-- tabs -->
     <div class="row text-center">
         <div class="tab">
-            <button class="tablinks w-50" :class="{ 'clicked': pendingShow }" @click="openTab('pending')">Pending</button>
-            <button class="tablinks w-50" :class="{ 'clicked': approvedShow }"
+            <button class="tablinks w-25" :class="{ 'clicked': pendingShow }" @click="openTab('pending')">Pending</button>
+            <button class="tablinks w-25" :class="{ 'clicked': approvedShow }"
                 @click="openTab('approved')">Approved</button>
+                <button class="tablinks w-25" :class="{ 'click': statsShow }" @click="openTab('stats')">Stats</button>
         </div>
+
+        <!-- pending content -->
         <div v-if="pendingShow" class="tabcontent">
             <h3>Pending</h3>
             <div class="card">
@@ -18,6 +22,8 @@
                 </DataTable>
             </div>
         </div>
+
+        <!-- approved content -->
         <div v-if="approvedShow" class="tabcontent">
             <h3>Approved</h3>
             <div class="card">
@@ -31,6 +37,11 @@
                 </DataTable>
             </div>
         </div>
+
+        <!-- stats content -->
+        <div v-if="statsShow" class="tabcontent">
+            <h1>stats</h1>
+        </div>
     </div>
 </template>
 
@@ -40,6 +51,7 @@ export default {
         return {
             pendingShow: true,
             approvedShow: false,
+            statsShow: false,
             products: null,
         }
     },
@@ -49,10 +61,16 @@ export default {
             if (word == "pending") {
                 this.pendingShow = true;
                 this.approvedShow = false;
+                this.statsShow = false;
             }
-            else {
+            else if (word == "approved") {
                 this.pendingShow = false;
                 this.approvedShow = true;
+                this.statsShow = false;
+            } else {
+                this.pendingShow = false;
+                this.approvedShow = false;
+                this.statsShow = true;
             }
         },
     },
