@@ -101,9 +101,12 @@ export const routes = [
     // Incomplete Views goes here START
     // upload page
     {
-        path: "/upload",
+        path: "/profile/upload",
         name: "Upload",
         component: () => import("../views/UploadProductView.vue"),
+        meta: {
+            requiresAuth: true,
+        },
     },
     // Incomplete Views goes here END
 ];

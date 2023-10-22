@@ -77,7 +77,7 @@ export default {
                 const routesExcluded = this.routesExcludedInBoth.concat(
                     this.routesExcludedLoggedOut
                 );
-                console.log(routes);
+                // console.log(routes);
                 this.navRoutes = routes.filter(
                     (route) => !routesExcluded.includes(route.name)
                 );
