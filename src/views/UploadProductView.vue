@@ -59,14 +59,14 @@
                         <h4 class="lead">Item Details</h4>
                         <div class="container-fluid py-3">
                             <span class="p-float-label">
-                                <InputText id="username" v-model="value" class="form-control" />
-                                <label for="username">Listing Name</label>
+                                <InputText id="itemdetails" v-model="itemDetails" class="form-control" />
+                                <label for="itemdetails">Listing Name</label>
                             </span>
                         </div>
                         <div class="container-fluid py-3">
                             <span class="p-float-label">
-                                <InputText id="username" v-model="value" class="form-control" />
-                                <label for="username">Brand</label>
+                                <InputText id="brand" v-model="brand" class="form-control" />
+                                <label for="brand">Brand</label>
                             </span>
                         </div>
                         <h4 class="lead mt-3">Description (Optional)</h4>
@@ -80,8 +80,8 @@
                         <h4 class="lead">Drop-off Location</h4>
                         <div class="container-fluid py-3">
                             <span class="p-float-label">
-                                <InputText id="username" v-model="value" class="form-control" />
-                                <label for="username">Address</label>
+                                <InputText id="address" v-model="address" class="form-control" />
+                                <label for="address">Address</label>
                             </span>
                         </div>
                     </div>
@@ -91,8 +91,8 @@
                         <h4 class="lead">Price</h4>
                         <div class="container-fluid py-3">
                             <span class="p-float-label">
-                                <InputText id="username" v-model="value" class="form-control" />
-                                <label for="username">Price</label>
+                                <InputText id="price" v-model="price" class="form-control" />
+                                <label for="price">Price</label>
                             </span>
                         </div>
                     </div>
@@ -106,6 +106,11 @@
 
 <script setup>
 import { ref } from "vue";
+
+const price = ref(null);
+const address = ref(null);
+const itemDetails = ref(null);
+const brand = ref(null);
 
 // change this to categories / condition
 const selectedCity = ref();
