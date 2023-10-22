@@ -1,16 +1,13 @@
 <script>
-import SideMenuBar from "../components/SideMenuBar.vue";
 import CollapsibleSidebar from "../components/CollapsibleSidebar.vue";
 export default {
     components: {
-        SideMenuBar,
         CollapsibleSidebar,
     },
     data () {
         return {
             cSidebar: [
                 {
-                    content: SideMenuBar,
                     open: false,
                 },
             ]
