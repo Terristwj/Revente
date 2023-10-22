@@ -34,7 +34,7 @@ export default {
 <template>
     <body>
         <div class="container-fluid">
-            <div :class="sidebarOpen() ? 'row flex' : 'col col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3'">
+            <div class="row">
                 <div :class="sidebarOpen()? 'col col-md-3 col-lg-3 col-sm-3 col-xxl-3' : ''">
                     <CollapsibleSidebar 
                     :cSidebar="cSidebar"
@@ -43,26 +43,26 @@ export default {
                     />
                 </div>
 
-                <div :class="sidebarOpen() ? 'col col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-9' : 'row flex'">
+                <div :class="sidebarOpen() ? 'col col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-9' : ''">
                     <div class="container-fluid">
                         <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                             <h2 class="text-center">Current Listings</h2>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
                                 <ItemCard />
                             </div>
             
