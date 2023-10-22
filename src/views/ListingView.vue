@@ -46,7 +46,8 @@ export default {
                 <div :class="sidebarOpen() ? 'col col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-9' : ''">
                     <div class="container-fluid">
                         <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
-                            <h2 class="text-center">Current Listings</h2>
+                            <h2 class="text-start m-3 mb-4" style="font-family: inter-bold; color: black;">Current Listings</h2>
+                            <h6 class="mb-4 mx-4" style="font-family: inter-light;">Total</h6>
                             <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
                                 <ItemCard />
                             </div>
