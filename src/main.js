@@ -27,7 +27,6 @@ import { faHeart, faUser, faInfo, faShoppingBag, faUpload } from "@fortawesome/f
 import { far } from "@fortawesome/free-regular-svg-icons";
 const app = createApp(App);
 
-
 app.use(createPinia());
 export const userStore = useCurrentUserStore();
 export const itemStore = useCurrentItemID();
