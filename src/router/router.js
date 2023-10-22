@@ -110,7 +110,17 @@ export const routes = [
     path: "/upload",
     name: "Upload",
     component: () => import("../views/UploadProductView.vue"),
-  }
+  },
+
+  // admin page
+  {
+    path: "/admin",
+    name: "Admin",
+    component: () => import("../views/AdminView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = createRouter({

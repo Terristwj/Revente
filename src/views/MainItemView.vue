@@ -134,7 +134,7 @@ export default {
     },
 }
 </script>
-<style>
+<style scoped>
 .clicked {
     background-color: #ddd;
 }
