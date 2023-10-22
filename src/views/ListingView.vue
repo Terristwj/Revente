@@ -47,7 +47,10 @@ export default {
                     <div class="container-fluid">
                         <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                             <h2 class="text-start m-3 mb-4" style="font-family: inter-bold; color: black;">Current Listings</h2>
-                            <h6 class="mb-4 mx-4" style="font-family: inter-light;">Total</h6>
+                                <p class="w-100">                                
+                                    <span class="mb-4 mx-4 w-50" style="font-family: inter-light;">Total</span>
+                                    <span class="mb-4 mx-4 text-end w-50" style="font-family: inter-light;">Sort</span>
+                                </p>
                             <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
                                 <ItemCard />
                             </div>
