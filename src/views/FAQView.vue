@@ -92,6 +92,7 @@ export default {
                                     array of features!
                                 </p>
                             </AccordionTab>
+                            
                         </Accordion>
                     </AccordionTab>
                     <AccordionTab header="Sellers">
@@ -112,6 +113,12 @@ export default {
                                 <p>
                                     You will be paid in 3-5 working days after your item has been dropped off at our
                                     outlets.
+                                </p>
+                            </AccordionTab>
+                            <AccordionTab header="How do you decide on the pricing of the item I wish to sell">
+                                <p>
+                                   With the use of AI, we will be able to determine the price of your item based on the quality and condition of your product! 
+                                   After verifying the product, we will then be able to determine the price of your item. If you do not agree with the price, you may choose to not sell your item to us.
                                 </p>
                             </AccordionTab>
                         </Accordion>

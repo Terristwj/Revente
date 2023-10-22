@@ -8,7 +8,7 @@ class FirebaseFirestore {
         const docSnap = await getDoc(docRef);
         // console.log(docRef);
         // console.log(docSnap);
-        
+
         // User has logged before
         if (docSnap.exists()) {
             // console.log("Document data:", docSnap.data());
@@ -22,17 +22,18 @@ class FirebaseFirestore {
                 userEmail,
 
                 userDisplayName,
-                null,
+                "",
 
-                null,
-                null,
-                null,
-                null
+                "",
+                "",
+                "",
+                ""
             );
             // console.log("Created Doc");
         }
     };
 
+    // New user
     registerAccount = async function (
         userID,
         email,
@@ -45,8 +46,9 @@ class FirebaseFirestore {
         city,
         region
     ) {
-        // New user
         await setDoc(doc(FirestoreDatabase, "users", userID), {
+            image_src:
+                "https://firebasestorage.googleapis.com/v0/b/smu-wad2.appspot.com/o/users%2FDefaultProfileImage.png?alt=media&token=1b1fc85e-3603-402a-8fb0-1df04f8addc4",
             userID,
             email,
 
@@ -57,6 +59,54 @@ class FirebaseFirestore {
             address,
             city,
             region,
+
+            description: "",
+        });
+        // console.log("Created Doc");
+    };
+
+    // For displaying Account info
+    getAccount = async function (userID) {
+        const docRef = doc(FirestoreDatabase, "users", userID);
+        const docSnap = await getDoc(docRef);
+
+        // console.log("Document data:", docSnap.data());
+        return docSnap.data();
+    };
+
+    // Update
+    updateAccount = async function (
+        image_src,
+        userID,
+        email,
+
+        firstName,
+        lastName,
+
+        phone,
+        address,
+        city,
+        region,
+
+        description
+    ) {
+        // Retrieve image filePath
+
+        // New user
+        await setDoc(doc(FirestoreDatabase, "users", userID), {
+            image_src,
+            userID,
+            email,
+
+            first_name: firstName,
+            last_name: lastName,
+
+            phone,
+            address,
+            city,
+            region,
+
+            description,
         });
         // console.log("Created Doc");
     };
@@ -77,7 +127,7 @@ class FirebaseFirestore {
         const docSnap = await getDoc(docRef);
         // console.log(docSnap.data());
         return docSnap.data();
-    }
+    };
 }
 
 const FBInstanceFirestore = new FirebaseFirestore();

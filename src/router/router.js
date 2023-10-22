@@ -18,6 +18,7 @@ export const isAuthenticated = () => {
 
 // Add routes here
 export const routes = [
+  // Common Pages START
   {
     path: "/",
     name: "Home",
@@ -26,84 +27,15 @@ export const routes = [
   {
     path: "/about",
     name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     icon: ["fas", "info"],
     component: () => import("../views/AboutView.vue"),
-  },
-
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/LoginView.vue"),
-    props: true,
-    meta: {
-      requiresNoAuth: true,
-    },
   },
   {
     path: "/faq",
     name: "FAQ",
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import("../views/FAQView.vue"),
   },
-
-  {
-    path: "/register",
-    name: "Register",
-    component: () => import("../views/RegisterView.vue"),
-  },
-  // {
-  //     path: "/game",
-  //     name: "Game",
-  //     // route level code-splitting
-  //     // this generates a separate chunk (About.[hash].js) for this route
-  //     // which is lazy-loaded when the route is visited.
-  //     component: () => import("../views/GameView.vue"),
-  //     meta: {
-  //         requiresAuth: true,
-  //     },
-  // },
-  // {
-  //     path: "/game",
-  //     name: "Game",
-  //     // route level code-splitting
-  //     // this generates a separate chunk (About.[hash].js) for this route
-  //     // which is lazy-loaded when the route is visited.
-  //     component: () => import("../views/GameView.vue"),
-  //     meta: {
-  //         requiresAuth: true,
-  //     },
-  // },
-  {
-    path: "/listing",
-    name: "Listing",
-    component: () => import("../views/ListingView.vue"),
-  },
-  {
-    path: "/Cart",
-    name: "Cart",
-    component: () => import("../views/CartView.vue"),
-    icon: ["fas", "bag-shopping"],
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    component: () => import("../views/ProfileView.vue"),
-    icon: ["fas", "user"],
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    // path: *
-    path: "/:catchAll(.*)",
-    name: "NotFound",
-    component: () => import("../views/404View.vue"),
-  },
+  // Common Pages END
 
   //upload page
   {
@@ -121,6 +53,75 @@ export const routes = [
       requiresAuth: true,
     },
   },
+  // Product Catalogue START
+  {
+    path: "/listing",
+    name: "Listing",
+    component: () => import("../views/ListingView.vue"),
+  },
+  {
+    path: "/Cart",
+    name: "Cart",
+    icon: ["fas", "bag-shopping"],
+    component: () => import("../views/CartView.vue"),
+  },
+  // Product Catalogue END
+
+  // User Profile START
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../views/ProfileView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile/settings",
+    name: "Settings",
+    component: () => import("../views/UserSettingsView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  // User Profile END
+
+  // Login/Register START
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/LoginView.vue"),
+    meta: {
+      requiresNoAuth: true,
+    },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/RegisterView.vue"),
+    meta: {
+      requiresNoAuth: true,
+    },
+  },
+  // Login/Register END
+
+  // Others START
+  {
+    // path: *
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import("../views/404View.vue"),
+  },
+  // Others END
+
+  // Incomplete Views goes here START
+  // upload page
+  {
+    path: "/upload",
+    name: "Upload",
+    component: () => import("../views/UploadProductView.vue"),
+  },
+  // Incomplete Views goes here END
 ];
 
 const router = createRouter({
@@ -129,17 +130,19 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !isAuthenticated()) {
-    setTimeout(function () {
+  setTimeout(function () {
+    if (to.meta.requiresAuth && !isAuthenticated()) {
       if (userStore.getUserID()) {
         console.log(userStore.getUserID());
       } else {
         router.push("/login");
       }
-    }, 1000);
-  } else {
-    next();
-  }
+    } else if (to.meta.requiresNoAuth && isAuthenticated()) {
+      router.push("/");
+    } else {
+      next();
+    }
+  }, 1000);
 });
 
 export default router;

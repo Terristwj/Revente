@@ -12,7 +12,10 @@ import router from "./router/router.js";
 import connectPrimeVue from "./services/PrimeVue.js";
 
 // Firebase Database
-import connectFirebase from "./services/Firebase/FirebaseConfig";
+import connectFirebase, {
+    getMyFirestore,
+    getMyStorage,
+} from "./services/Firebase/FirebaseConfig";
 
 // Font-Awesome Icons
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -36,7 +39,9 @@ app.use(router);
 connectPrimeVue(app);
 
 // Refer to Firebase.js for configuration
-export const FirestoreDatabase = connectFirebase();
+const firebaseApp = connectFirebase();
+export const FirestoreDatabase = getMyFirestore(firebaseApp);
+export const FirestoreStorage = getMyStorage(firebaseApp);
 
 // Font-Awesome Icons
 library.add(faFacebookF, faTwitter, faInstagram, faTiktok, faHeart, far, faUser, faInfo, faShoppingBag, faUpload);
