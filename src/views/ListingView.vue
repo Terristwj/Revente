@@ -1,11 +1,4 @@
 <script>
-<<<<<<< Updated upstream
-import SideMenuBar from "../components/SideMenuBar.vue";
-export default {
-    components: {
-        SideMenuBar,
-    },
-=======
 import CollapsibleSidebar from "../components/CollapsibleSidebar.vue";
 import ItemCard from '../components/ItemCard.vue';
 export default {
@@ -35,19 +28,10 @@ export default {
             }
         },
     }
->>>>>>> Stashed changes
 };
 </script>
 
 <template>
-<<<<<<< Updated upstream
-	<div class="container">
-		<h2 class="row my-4">
-			CATALOGUE
-		</h2>
-    </div>
-    <SideMenuBar />
-=======
     <body>
         <div class="container-fluid">
             <div :class="sidebarOpen() ? 'row flex' : 'col col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3'">
@@ -88,7 +72,6 @@ export default {
             </div>
         </div>
     </body>
->>>>>>> Stashed changes
 </template>
 
 <style scoped></style>
