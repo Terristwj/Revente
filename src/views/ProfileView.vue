@@ -75,7 +75,6 @@ export default {
     data() {
         return {
             rating: 10,
-
         }
     },
     components: {
