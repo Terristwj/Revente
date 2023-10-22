@@ -35,7 +35,7 @@ export default {
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div :class="sidebarOpen()? 'col col-md-3 col-lg-3 col-sm-3 col-xxl-3' : ''">
+                <div :class="sidebarOpen()? 'col col-md-5 col-lg-4 col-xxl-3' : ''">
                     <CollapsibleSidebar 
                     :cSidebar="cSidebar"
                     :open="cSidebar.open"
@@ -43,7 +43,7 @@ export default {
                     />
                 </div>
 
-                <div :class="sidebarOpen() ? 'col col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-9' : ''">
+                <div :class="sidebarOpen() ? 'col col-md-7 col-lg-8 col-xxl-8' : ''">
                     <div class="container-fluid">
                         <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                             <h2 class="text-start m-3 mb-4" style="font-family: inter-bold; color: black;">Current Listings</h2>
