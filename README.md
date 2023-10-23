@@ -123,3 +123,11 @@ Special thanks to the following resources that helped us along the way:
 4. [Cloud Firestore Database](https://firebase.google.com/docs/firestore)
 
 Feel free to add more screenshots and shoutouts to your GitHub profiles, repositories, or any contributors who played a significant role in the project. Good luck with your portfolio piece!
+
+-   Our Team:
+
+    -   [Terristwj](https://github.com/Terristwj)
+    -   [adriank0h](https://github.com/adriank0h)
+    -   [owengohh](https://github.com/owengohh)
+    -   [viqeey](https://github.com/viqeey)
+    -   [0gw0](https://github.com/0gw0)
