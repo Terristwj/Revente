@@ -1,7 +1,11 @@
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore";
 import { FirestoreDatabase } from "./../../main.js";
 
 class FirebaseFirestore {
+    //
+    // Firestore Handle User START
+    //
+    // Google Login
     GoogleLogin = async function (userID, userDisplayName, userEmail) {
         // console.log(userID);
         const docRef = doc(FirestoreDatabase, "users", userID);
@@ -74,7 +78,7 @@ class FirebaseFirestore {
         return docSnap.data();
     };
 
-    // Update
+    // Update Account info
     updateAccount = async function (
         image_src,
         userID,
@@ -110,6 +114,131 @@ class FirebaseFirestore {
         });
         // console.log("Created Doc");
     };
+    //
+    // Firestore Handle User END
+    //
+
+    //
+    // Firestore Handle Product/Item START
+    //
+
+    createProduct = async function (
+        // Seller
+        seller_ID,
+
+        // Product Details
+        product_name,
+        brand,
+        description,
+
+        // Category
+        gender,
+        category,
+
+        // Condition
+        condition,
+        condition_notes,
+
+        // Others
+        drop_off_location,
+        price
+    ) {
+        // (1) Add a new document with a generated id.
+        const docRef = await addDoc(collection(FirestoreDatabase, "products"), {
+            seller_ID,
+
+            product_name,
+            brand,
+            description,
+
+            gender,
+            category,
+
+            condition,
+            condition_notes,
+
+            drop_off_location,
+            price,
+        });
+
+        // (2) Get product_ID
+        let product_ID = docRef.id;
+        // console.log("Document written with ID: ", docRef.id);
+
+        // (3) Update product_ID into Firestore
+        await setDoc(doc(FirestoreDatabase, "products", product_ID), {
+            seller_ID,
+            product_ID,
+
+            product_name,
+            brand,
+            description,
+
+            gender,
+            category,
+
+            condition,
+            condition_notes,
+
+            drop_off_location,
+            price,
+        });
+
+        // (4) Return product_ID for other usage
+        return product_ID;
+    };
+
+    // Adds/updates 'image_src' into a product's document
+    updateProductImageSrc = async function (
+        // Seller & Product
+        seller_ID,
+        product_ID,
+
+        // Product Details
+        product_name,
+        brand,
+        description,
+
+        // Category
+        gender,
+        category,
+
+        // Condition
+        condition,
+        condition_notes,
+
+        // Others
+        drop_off_location,
+        price,
+
+        // Image URL (To be Added)
+        image_src
+    ) {
+        await setDoc(doc(FirestoreDatabase, "products", product_ID), {
+            seller_ID,
+            product_ID,
+
+            product_name,
+            brand,
+            description,
+
+            gender,
+            category,
+
+            condition,
+            condition_notes,
+
+            drop_off_location,
+            price,
+
+            // (To be Added)
+            image_src,
+        });
+    };
+
+    //
+    // Firestore Handle Product/Item END
+    //
 
     // Example codes
     // Add a new document in collection "cities"

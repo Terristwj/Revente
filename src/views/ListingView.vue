@@ -1,16 +1,15 @@
 <script>
-import SideMenuBar from "../components/SideMenuBar.vue";
 import CollapsibleSidebar from "../components/CollapsibleSidebar.vue";
+import ItemCard from '../components/ItemCard.vue';
 export default {
     components: {
-        SideMenuBar,
         CollapsibleSidebar,
+        ItemCard,
     },
     data () {
         return {
             cSidebar: [
                 {
-                    content: SideMenuBar,
                     open: false,
                 },
             ]
@@ -19,19 +18,63 @@ export default {
     methods: {
         toggleOpen: function () {
             this.cSidebar.open = !this.cSidebar.open;
+        },
 
-        }
+        sidebarOpen: function () {
+            if (this.cSidebar.open == true) {
+                return true
+            } else {
+                return false
+            }
+        },
     }
 };
 </script>
 
 <template>
     <body>
-        <CollapsibleSidebar 
-        :cSidebar="cSidebar"
-        :open="cSidebar.open"
-        @toggleOpen="toggleOpen"
-        />
+        <div class="container-fluid">
+            <div class="row">
+                <div :class="sidebarOpen()? 'col col-md-5 col-lg-4 col-xxl-3' : ''">
+                    <CollapsibleSidebar 
+                    :cSidebar="cSidebar"
+                    :open="cSidebar.open"
+                    @toggleOpen="toggleOpen"
+                    />
+                </div>
+
+                <div :class="sidebarOpen() ? 'col col-md-7 col-lg-8 col-xxl-8' : ''">
+                    <div class="container-fluid">
+                        <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
+                            <h2 class="text-start m-3 mb-4" style="font-family: inter-bold; color: black;">Current Listings</h2>
+                                <p class="w-100">                                
+                                    <span class="mb-4 mx-4 w-50" style="font-family: inter-light;">Total</span>
+                                    <span class="mb-4 mx-4 text-end w-50" style="font-family: inter-light;">Sort</span>
+                                </p>
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
+                                <ItemCard />
+                            </div>
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
+                                <ItemCard />
+                            </div>
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
+                                <ItemCard />
+                            </div>
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
+                                <ItemCard />
+                            </div>
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
+                                <ItemCard />
+                            </div>
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-6 pb-2 list-item">
+                                <ItemCard />
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </template>
 
@@ -109,5 +152,6 @@ CollapsibleSideBar {
     opacity: 1;
     max-height: 1000px;
 }
+
 
 </style>

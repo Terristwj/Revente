@@ -37,13 +37,6 @@ export const routes = [
   },
   // Common Pages END
 
-  //upload page
-  {
-    path: "/upload",
-    name: "Upload",
-    component: () => import("../views/UploadProductView.vue"),
-  },
-
   // admin page
   {
     path: "/admin",
@@ -113,13 +106,16 @@ export const routes = [
     component: () => import("../views/404View.vue"),
   },
   // Others END
-
+  // Incomplete Views goes here END
   // Incomplete Views goes here START
   // upload page
   {
-    path: "/upload",
+    path: "/profile/upload",
     name: "Upload",
     component: () => import("../views/UploadProductView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   // Incomplete Views goes here END
 ];

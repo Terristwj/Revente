@@ -204,13 +204,12 @@ export default {
 <template>
     <div id="Profile" class="container">
         <div
-            class="border border-3 mx-auto my-5 px-5 py-4 d-flex flex-column gap-4"
+            class="border border-3 mx-auto my-5 px-5 py-4 d-flex flex-column gap-4 shadow"
         >
             <!-- Profile Image START -->
             <div class="row d-flex align-items-center">
                 <Image
-                    class="col-12 col-md-4 img-thumbnail p-2"
-                    style="max-height: 300px; max-width: 300px"
+                    class="profile-Img-Container col-12 col-md-4 img-thumbnail p-2"
                     alt="Image"
                     preview
                 >
@@ -329,20 +328,13 @@ export default {
 
             <!-- Update Button -->
             <div class="d-flex justify-content-center gap-3">
-                <button class="btn btn-primary" @click="submitForm()">
+                <button class="btn btn-dark" @click="submitForm()">
                     Update
                 </button>
-                <button
-                    class="btn btn-primary"
-                    type="submit"
-                    @click="toCancel()"
-                >
-                    Cancel
-                </button>
+                <button class="btn btn-dark" @click="toCancel()">Cancel</button>
             </div>
         </div>
     </div>
-    <Toast />
 </template>
 
 <style scoped>
@@ -352,6 +344,10 @@ export default {
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+    .profile-Img-Container {
+        max-height: 300px;
+        max-width: 300px;
+    }
 }
 button {
     width: 200px;
