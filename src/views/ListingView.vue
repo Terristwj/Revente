@@ -51,22 +51,22 @@ export default {
                                     <span class="mb-4 mx-4 w-50" style="font-family: inter-light;">Total</span>
                                     <span class="mb-4 mx-4 text-end w-50" style="font-family: inter-light;">Sort</span>
                                 </p>
-                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col col-xxl-3 col-xl-3 col-lg-3 col-md-3 pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-6 pb-2 list-item">
                                 <ItemCard />
                             </div>
             
@@ -152,5 +152,6 @@ CollapsibleSideBar {
     opacity: 1;
     max-height: 1000px;
 }
+
 
 </style>
