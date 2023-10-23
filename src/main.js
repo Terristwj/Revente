@@ -26,7 +26,13 @@ import {
     faInstagram,
     faTiktok,
 } from "@fortawesome/free-brands-svg-icons";
-import { faHeart, faUser, faInfo, faShoppingBag, faUpload } from "@fortawesome/free-solid-svg-icons";
+import {
+    faHeart,
+    faUser,
+    faInfo,
+    faShoppingBag,
+    faUpload,
+} from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 const app = createApp(App);
 
@@ -44,7 +50,18 @@ export const FirestoreDatabase = getMyFirestore(firebaseApp);
 export const FirestoreStorage = getMyStorage(firebaseApp);
 
 // Font-Awesome Icons
-library.add(faFacebookF, faTwitter, faInstagram, faTiktok, faHeart, far, faUser, faInfo, faShoppingBag, faUpload);
+library.add(
+    faFacebookF,
+    faTwitter,
+    faInstagram,
+    faTiktok,
+    faHeart,
+    far,
+    faUser,
+    faInfo,
+    faShoppingBag,
+    faUpload
+);
 app.component("font-awesome-icon", FontAwesomeIcon);
 
 app.mount("#app");

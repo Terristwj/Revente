@@ -3,13 +3,14 @@ import { FirestoreStorage } from "../../main.js";
 
 class FirebaseStorage {
     // 'type' refers to 'users' or 'products'
+    // 'filename' must be unique - Preferably the object_ID
     // 'file' comes from the Blob or File API
     uploadImage = async function (type, fileName, file) {
         let hasError = false;
         // File path in Firebase Storage
         let pathRef = ref(FirestoreStorage, `${type}/${fileName}`);
         // eslint-disable-next-line no-unused-vars
-        uploadBytes(pathRef, file)
+        await uploadBytes(pathRef, file)
             // eslint-disable-next-line no-unused-vars
             .then((snapshot) => {
                 // console.log(snapshot);
@@ -26,7 +27,7 @@ class FirebaseStorage {
     // 'type' refers to 'users' or 'products'
     getImageUrl = async function (type, fileName) {
         let pathRef = ref(FirestoreStorage, `${type}/${fileName}`);
-        let url = getDownloadURL(pathRef)
+        let url = await getDownloadURL(pathRef)
             .then((url) => {
                 return url;
             })

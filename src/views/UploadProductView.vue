@@ -1,139 +1,609 @@
+<script>
+import router from "../router/router.js";
+import { userStore } from "../main.js";
+import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
+import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
+
+export default {
+    data() {
+        return {
+            // Item Image
+            imageSrc: "",
+            imageFile: "",
+
+            // Gender
+            gender: "",
+            genderOptions: ["Male", "Female"],
+
+            // Category
+            category: "",
+            categories: [
+                { name: "Top" },
+                { name: "Bottom" },
+                { name: "Dress" },
+            ],
+
+            // Condition
+            condition: "",
+            conditions: [
+                { name: "Brand New" },
+                { name: "Lightly Used" },
+                { name: "Well Used" },
+                { name: "Heavily Used" },
+            ],
+            conditionNotes: "",
+
+            // Item Information
+            itemName: "",
+            itemBrand: "",
+            itemDescription: "",
+
+            // Others
+            dropOffLocation: "",
+            price: 0.0,
+
+            // Code-related
+            isLoading: false,
+            firstError: "",
+            isSuccessful: false,
+        };
+    },
+    methods: {
+        onFileChange(event) {
+            if (event.target.files.length > 0) {
+                this.imageFile = event.target.files[0];
+                this.imageSrc = URL.createObjectURL(this.imageFile);
+            }
+        },
+        async submitForm() {
+            // If there are no errors, submit the form
+            this.isLoading = true;
+            await this.doSubmitForm();
+            this.isLoading = false;
+        },
+        async doSubmitForm() {
+            if (this.isEverythingValid()) {
+                this.firebaseAddItem();
+            } else {
+                this.showToastError(this.firstError);
+            }
+        },
+        isEverythingValid() {
+            // Validate form fields
+            this.firstError = "";
+
+            if (!this.imageFile) {
+                this.firstError = "Please provide an item photo.";
+                return false;
+            }
+
+            if (!this.gender) {
+                this.firstError = "Please select the item's gender.";
+                return false;
+            }
+
+            if (!this.category) {
+                this.firstError = "Please tell us the category.";
+                return false;
+            } else if (!this.categories.includes(this.category)) {
+                this.firstError = "Please select a proper category.";
+                return false;
+            }
+
+            if (!this.condition) {
+                this.firstError = "Please tell us the condition.";
+                return false;
+            } else if (!this.conditions.includes(this.condition)) {
+                this.firstError = "Please select a proper category.";
+                return false;
+            }
+
+            if (!this.conditionNotes) {
+                this.firstError = "Please tell us more about the condition.";
+                return false;
+            }
+
+            if (!this.itemName) {
+                this.firstError = "What is the item's name?";
+                return false;
+            }
+
+            if (!this.itemBrand) {
+                this.itemBrand = "unbranded";
+            }
+
+            if (!this.itemDescription) {
+                this.firstError = "Tell us more about this item.";
+                return false;
+            }
+
+            if (!this.dropOffLocation) {
+                this.firstError = "Where do you intend to deliver the item?";
+                return false;
+            }
+
+            if (!this.dropOffLocation) {
+                this.firstError = "Please enter a price.";
+                return false;
+            }
+
+            return true;
+        },
+        async firebaseAddItem() {
+            let hasError = false;
+
+            // (1) Add doc into Firestore
+            // (2) Retrieve the product_ID of add_doc
+            const productID = await FBInstanceFirestore.createProduct(
+                // Seller
+                userStore.getUserID(),
+
+                // Product Details
+                this.itemName,
+                this.itemBrand,
+                this.itemDescription,
+
+                // Category
+                this.gender,
+                this.category,
+
+                // Condition
+                this.condition,
+                this.conditionNotes,
+
+                // Others
+                this.dropOffLocation,
+                this.price
+            );
+
+            // (3) Upload item_image_file into Storage using product_ID
+            // Upload image
+            hasError = await FBInstanceStorage.uploadImage(
+                "products",
+                productID,
+                this.imageFile
+            );
+
+            if (hasError) {
+                this.firstError = "Please try again later.";
+            } else {
+                //
+                // (4) Retrieve item_image_src from Storage
+                //
+                const url = await FBInstanceStorage.getImageUrl(
+                    "products",
+                    productID
+                );
+
+                //
+                // (5) Set doc item_image_src into Firestore
+                //
+                // If there is no URL - Error
+                if (!url) {
+                    this.firstError = "Please try again later.";
+                } else {
+                    // Firebase Update User
+                    let errorCode =
+                        await FBInstanceFirestore.updateProductImageSrc(
+                            // Seller & Product
+                            userStore.getUserID(),
+                            productID,
+
+                            // Product Details
+                            this.itemName,
+                            this.itemBrand,
+                            this.itemDescription,
+
+                            // Category
+                            this.gender,
+                            this.category,
+
+                            // Condition
+                            this.condition,
+                            this.conditionNotes,
+
+                            // Others
+                            this.dropOffLocation,
+                            this.price,
+
+                            // Image URL (To be Added)
+                            url
+                        );
+                    // console.log(errorCode);
+                    switch (errorCode) {
+                        default:
+                            this.firstError = errorCode;
+                    }
+                }
+                // console.log(url);
+            }
+
+            // Debugging
+            // await FBInstanceStorage.listImages();
+
+            if (this.firstError) {
+                this.showToastError(this.firstError);
+            } else {
+                this.showToastSuccess();
+                this.isSuccessful = true;
+                // Re-render data
+                document.getElementById("file-upload").value = "";
+            }
+        },
+        showToastError(detail) {
+            this.$toast.add({
+                severity: "error",
+                summary: "Listing Failed",
+                detail,
+                life: 3000,
+            });
+        },
+        showToastSuccess() {
+            this.$toast.add({
+                severity: "success",
+                summary: "Your Listing was Successfully created!",
+                life: 3000,
+            });
+        },
+        clearPage() {
+            // Item Image
+            this.imageSrc = "";
+            this.imageFile = "";
+
+            // Gender
+            this.gender = "";
+
+            // Category
+            this.category = "";
+
+            // Condition
+            this.condition = "";
+            this.conditionNotes = "";
+
+            // Item Information
+            this.itemName = "";
+            this.itemBrand = "";
+            this.itemDescription = "";
+
+            // Others
+            this.dropOffLocation = "";
+            this.price = 0.0;
+
+            // Code-related
+            this.isSuccessful = false;
+        },
+        toCancel() {
+            router.go(-1);
+        },
+    },
+};
+</script>
+
 <template>
     <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-        <header class="head fixed-top">
+    <header class="head fixed-top shadow border-top border-2">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-between">
-                    <h3 class="m-3">What do you want to list today?</h3>
-                    <button type="button" class="btn btn-dark m-3 px-4">List Now</button>
-                </div>
+            <div
+                class="d-flex justify-content-between align-items-center mx-4 mx-lg-5"
+            >
+                <h3 id="Welcome-Text" class="my-3">
+                    What do you want to list today?
+                </h3>
+                <button
+                    type="button"
+                    id="List-Now-Btn"
+                    class="btn btn-dark my-3 px-4"
+                    @click="submitForm()"
+                >
+                    List Now
+                </button>
             </div>
         </div>
-        </header>
-    <div class='container-fluid content'>
-        <form action="">
-            <div class='row p-1 justify-content-around'>
+    </header>
+    <div class="container-fluid content">
+        <div class="row p-1 justify-content-around mx-lg-1">
+            <!-- Upload Box START -->
+            <div
+                class="col col-sm-11 col-md-6 col-xl-5 shadow mb-5 p-3 bg-white rounded upload d-flex justify-content-center align-items-center"
+            >
+                <label
+                    id="upload_box"
+                    class="w-100 h-100 d-flex justify-content-center align-items-center text-center"
+                    for="file-upload"
+                >
+                    <!-- When Image is PROVIDED START -->
+                    <div v-if="imageSrc" class="w-100 h-100">
+                        <Image class="w-100 h-100" alt="Image" preview>
+                            <!-- Image Hover START -->
+                            <template #indicatoricon>
+                                <div class="row d-flex gap-2">
+                                    <i
+                                        class="col pi pi-search-plus"
+                                        style="font-size: 2rem"
+                                    ></i>
+                                    <i
+                                        class="col pi pi-upload"
+                                        style="font-size: 2rem"
+                                    ></i>
+                                </div>
+                            </template>
+                            <!-- Image Hover END -->
 
-                <!-- upload box -->
-                <div class='col-md-4 col-sm-11 shadow p-3 mb-5 bg-white rounded mx-4 upload d-flex justify-content-center align-items-center'>
-                    <div class="container-fluid">
-                        <div class="container-fluid d-flex justify-content-center align-items-center text-center"
-                            id="upload_box">
-                            <label for="file-upload" class="custom-file-upload">
-                                <font-awesome-icon :icon="['fas', 'upload']" size="2xl" />
-                                <p class="button">Select Photos</p>
-                            </label>
-                            <input id="file-upload" type="file" />
-                        </div>
+                            <!-- Image START -->
+                            <template #image>
+                                <img
+                                    style="
+                                        width: 100%;
+                                        height: 100%;
+                                        aspect-ratio: 1 / 1;
+                                        object-fit: cover;
+                                    "
+                                    :src="imageSrc"
+                                    alt="preview"
+                                />
+                            </template>
+                            <!-- Image END -->
+
+                            <!-- Preview START -->
+                            <template #preview="slotProps">
+                                <label
+                                    for="file-upload"
+                                    class="pointing position-relative"
+                                    :style="slotProps.style"
+                                    @click="slotProps.onClick"
+                                >
+                                    <!-- Zoomed Image Displayed -->
+                                    <img
+                                        id="Item-Image"
+                                        :src="imageSrc"
+                                        alt="preview"
+                                        width="500"
+                                        height="500"
+                                    />
+
+                                    <!-- Image Overlay -->
+                                    <div
+                                        id="Item-Image-Overlay"
+                                        class="w-100 h-100 position-absolute top-0 start-0 opacity bg-black d-flex justify-content-center align-items-center"
+                                    >
+                                        <i
+                                            class="pi pi-upload text-white mb-3"
+                                            style="font-size: 3rem"
+                                        ></i>
+                                    </div>
+                                </label>
+                            </template>
+                            <!-- Preview END -->
+                        </Image>
                     </div>
-                </div>
+                    <!-- When Image is PROVIDED END -->
 
-                <!-- Categories -->
-                <div class="col-md-7 col-sm-12">
-                    <div class="row">
-                        <div class='col-11 shadow p-3 mb-5 bg-white rounded mx-4 categories'>
-                        <h4 class="lead">Category</h4>
+                    <!-- Upload Icon START -->
+                    <div v-else>
+                        <font-awesome-icon
+                            :icon="['fas', 'upload']"
+                            size="2xl"
+                        />
+                        <p class="button">Upload a Photo</p>
+                    </div>
+                    <!-- Upload Icon END -->
+
+                    <!-- Upload Control Start -->
+                    <input
+                        id="file-upload"
+                        type="file"
+                        accept="image/png, image/gif, image/jpeg"
+                        @change="onFileChange($event)"
+                    />
+                    <!-- Upload Control END -->
+                </label>
+            </div>
+            <!-- Upload Box END -->
+
+            <!-- Right Container START -->
+            <div class="col-sm-12 col-md-5 col-xl-6 mb-5">
+                <div class="row gap-3 mx-4 mx-md-0">
+                    <!-- Categories -->
+                    <div class="col-12 shadow p-3 bg-white rounded categories">
+                        <h5 class="bold">Gender & Category</h5>
                         <div>
+                            <SelectButton
+                                v-model="gender"
+                                :options="genderOptions"
+                                aria-labelledby="basic"
+                                :pt="{
+                                    button: ({ context }) => ({
+                                        class: context.active
+                                            ? 'bg-black'
+                                            : undefined,
+                                    }),
+                                }"
+                            />
                             <div class="card flex justify-content-center">
-                                <Dropdown v-model="selectedCity" editable showClear :options="cities" optionLabel="name"
-                                    placeholder="Select a Category" class="w-full md:w-14rem" />
+                                <Dropdown
+                                    class="w-full md:w-14rem"
+                                    v-model="category"
+                                    :options="categories"
+                                    optionLabel="name"
+                                    placeholder="Select a Category"
+                                    editable
+                                    showClear
+                                />
                             </div>
                         </div>
-                    </div> <!-- col -->
-                    <!-- row -->
+                    </div>
 
                     <!-- Condition -->
-                    <div class="col-11 shadow p-3 mb-5 bg-white rounded mx-4">
-                        <h4 class="lead">Condition</h4>
+                    <div class="col-12 shadow p-3 bg-white rounded">
+                        <h5 class="bold">Condition</h5>
                         <div class="card flex justify-content-center">
-                            <Dropdown v-model="selectedCondition" editable showClear :options="conditions" optionLabel="name"
-                                placeholder="Condition" class="w-full md:w-14rem" />
+                            <Dropdown
+                                class="w-full md:w-14rem"
+                                v-model="condition"
+                                :options="conditions"
+                                optionLabel="name"
+                                placeholder="Condition"
+                                editable
+                                showClear
+                            />
                         </div>
-                        <h4 class="lead mt-3">Notes on condition (Optional)</h4>
-                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
-
+                        <h5 class="bold mt-3">Condition Note</h5>
+                        <Textarea
+                            class="form-control"
+                            v-model="conditionNotes"
+                            autoResize
+                            rows="5"
+                            cols="30"
+                            placeholder="Fresh and new with a fragrant scent."
+                        ></Textarea>
                     </div>
 
                     <!-- Item-details -->
-                        <div class="col-11 shadow p-3 mb-5 bg-white rounded mx-4">
-                        <h4 class="lead">Item Details</h4>
-                        <div class="container-fluid py-3">
+                    <div class="col-12 shadow p-3 bg-white rounded">
+                        <h5 class="bold">Item Information</h5>
+                        <div class="pt-3">
                             <span class="p-float-label">
-                                <InputText id="username" v-model="value" class="form-control" />
-                                <label for="username">Listing Name</label>
+                                <InputText
+                                    id="Item-Name"
+                                    class="form-control"
+                                    v-model="itemName"
+                                />
+                                <label for="Item-Name">Item Name</label>
                             </span>
                         </div>
-                        <div class="container-fluid py-3">
+                        <div class="pt-4">
                             <span class="p-float-label">
-                                <InputText id="username" v-model="value" class="form-control" />
-                                <label for="username">Brand</label>
+                                <InputText
+                                    id="Item-Brand"
+                                    class="form-control"
+                                    v-model="itemBrand"
+                                />
+                                <label for="Item-Brand">Brand (Optional)</label>
                             </span>
                         </div>
-                        <h4 class="lead mt-3">Description (Optional)</h4>
-                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
-
+                        <h5 class="bold mt-3">Description</h5>
+                        <Textarea
+                            class="form-control"
+                            v-model="itemDescription"
+                            autoResize
+                            rows="5"
+                            cols="30"
+                            placeholder="A fabulous product with wonderful perks."
+                        ></Textarea>
                     </div>
 
-
                     <!-- Drop-off Location -->
-                        <div class="col-11 shadow p-3 mb-5 bg-white rounded mx-4">
-                        <h4 class="lead">Drop-off Location</h4>
-                        <div class="container-fluid py-3">
+                    <div class="col-12 shadow p-3 bg-white rounded">
+                        <h5 class="bold">Drop-off Location</h5>
+                        <div class="pt-3">
                             <span class="p-float-label">
-                                <InputText id="username" v-model="value" class="form-control" />
-                                <label for="username">Address</label>
+                                <InputText
+                                    id="Drop-Off-Location"
+                                    class="form-control"
+                                    v-model="dropOffLocation"
+                                />
+                                <label for="Drop-Off-Location">Address</label>
                             </span>
                         </div>
                     </div>
 
                     <!-- Price -->
-                        <div class="col-11 shadow p-3 mb-5 bg-white rounded mx-4">
-                        <h4 class="lead">Price</h4>
-                        <div class="container-fluid py-3">
-                            <span class="p-float-label">
-                                <InputText id="username" v-model="value" class="form-control" />
-                                <label for="username">Price</label>
-                            </span>
-                        </div>
+                    <div class="col-12 shadow p-3 bg-white rounded">
+                        <h5 class="bold">Price</h5>
+                        <InputNumber
+                            id="Price"
+                            class="w-100"
+                            v-model="price"
+                            mode="decimal"
+                            prefix="S$"
+                            :minFractionDigits="2"
+                            :maxFractionDigits="2"
+                            :min="0"
+                        />
                     </div>
                 </div>
-                    </div>
-                </div>
-                
-        </form>
-    </div> <!-- container -->
+            </div>
+        </div>
+    </div>
+    <!-- Right Container END -->
+
+    <!-- Successful Followup -->
+    <Dialog
+        v-model:visible="isSuccessful"
+        class="text-black"
+        style="width: 80vw; max-width: 800px"
+        :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+        modal
+        :closable="false"
+    >
+        <template #header>
+            <h5>
+                <span class="bg-black text-white py-1 px-2 fw-bold">{{
+                    itemName
+                }}</span>
+                &nbsp;is successfully listed!
+            </h5>
+        </template>
+
+        <template #default>
+            <h4 class="text-black fw-bold">What's Next?</h4>
+            <p>
+                Although your item has been listed,
+                <mark><b>it has yet to be approved!</b></mark>
+                <br />
+                Come on down to our physical warehouse to deliver your items
+                there.
+            </p>
+            <p>
+                Once approved, your listed item will be displayed on our product
+                catalogue for everyone to see!
+            </p>
+            <p>
+                Do remember to check by from time-to-time on your listed items.
+            </p>
+            <div
+                class="row d-flex justify-content-center gap-2 mt-4 w-100 mx-auto"
+            >
+                <button
+                    class="col-12 col-sm btn btn-dark py-2"
+                    style="max-width: 400px"
+                    @click="clearPage()"
+                >
+                    Make New Listing
+                </button>
+                <button
+                    class="col-12 col-sm btn btn-dark py-2"
+                    style="max-width: 400px"
+                    @click="toCancel()"
+                >
+                    Back To Profile
+                </button>
+            </div>
+        </template>
+    </Dialog>
 </template>
 
-<script setup>
-import { ref } from "vue";
-
-// change this to categories / condition
-const selectedCity = ref();
-const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-]);
-
-const selectedCondition = ref();
-const conditions = ref([
-    { name: 'Brand New' },
-    { name: 'Like New' },
-    { name: 'Lightly Used' },
-    { name: 'Well Used' },
-    { name: 'Heavily Used' },
-
-])
-</script>
-
-
 <style scoped>
-.custom-file-upload {
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
+#Welcome-Text {
+    display: none;
+}
+#List-Now-Btn {
+    width: 100%;
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    #Welcome-Text {
+        display: block;
+    }
+    #List-Now-Btn {
+        width: initial;
+    }
+}
+#Item-Image-Overlay {
+    opacity: 0;
+}
+#Item-Image-Overlay:hover {
+    opacity: 0.8;
 }
 
 input[type="file"] {
@@ -142,17 +612,12 @@ input[type="file"] {
 
 #upload_box {
     border: 1px dashed #000000;
-    border-radius: 10px;
-    display: inline-block;
-    padding: 6px 12px;
     cursor: pointer;
-    height: 200px;
-    /* width: 500px; */
 }
 
 .button {
     border: 1px solid #000000;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     margin-top: 0.5rem;
     border-radius: 10px;
     color: white;
