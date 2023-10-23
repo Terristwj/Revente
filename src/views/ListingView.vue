@@ -31,7 +31,7 @@
 		<div class="container-fluid">
 			<SideMenuBar />
 			<div
-				class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center gap-5"
+				class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center gap-3 gap-md-4 gap-lg-5"
 			>
 				<ItemCard v-for="(num, index) in test" :key="index" />
 			</div>
