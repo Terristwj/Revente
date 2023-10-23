@@ -19,6 +19,7 @@
 		"@stripe/stripe-js": "^2.1.9",
 		"animejs": "^3.2.1",
 		"axios": "^1.5.1",
+		"express": "^4.18.2",
 		"firebase": "^10.4.0",
 		"firebaseui": "^6.1.0",
 		"gsap": "^3.12.2",
