@@ -255,6 +255,7 @@ class FirebaseFirestore {
         });
     };
 
+    // get a product
     getProducts = async function (productID) {
         // console.log(userID);
         const docRef = doc(FirestoreDatabase, "products", productID);
