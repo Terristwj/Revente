@@ -22,10 +22,10 @@ export default {
             auth: FBInstanceAuth.getAuth(),
 
             // For Navigation Bar
-            routesExcludedLoggedIn: ["Register", "Login", "NotFound", "Home", "Listing","MainItem"],
-            routesExcludedLoggedOut: ["Register", "Login", "NotFound", "Home", "Listing","MainItem"],
+            routesExcludedInBoth: ["Home", "Register", "NotFound"],
+            routesExcludedLoggedIn: ["Login", "Listing"],
+            routesExcludedLoggedOut: ["Profile", "Settings"],
             navRoutes: null,
-
         };
     },
     methods: {
@@ -62,8 +62,11 @@ export default {
 
             this.isLoggedIn = user ? true : false;
             if (this.isLoggedIn) {
+                const routesExcluded = this.routesExcludedInBoth.concat(
+                    this.routesExcludedLoggedIn
+                );
                 this.navRoutes = routes.filter(
-                    (route) => !this.routesExcludedLoggedIn.includes(route.name)
+                    (route) => !routesExcluded.includes(route.name)
                 );
                 this.showToast(
                     "success",
@@ -71,9 +74,12 @@ export default {
                     "Welcome to Reventé!"
                 );
             } else {
+                const routesExcluded = this.routesExcludedInBoth.concat(
+                    this.routesExcludedLoggedOut
+                );
+                // console.log(routes);
                 this.navRoutes = routes.filter(
-                    (route) =>
-                        !this.routesExcludedLoggedOut.includes(route.name)
+                    (route) => !routesExcluded.includes(route.name)
                 );
                 this.showToast(
                     "warn",
@@ -98,27 +104,48 @@ export default {
     <nav class="navbar navbar-expand-lg w-100 border-bottom shadow-sm p-2">
         <div id="navigationBarContent" class="container-fluid">
             <!-- Logo START -->
-            <RouterLink to="/"><img alt="Reventé logo" src="@/assets/logo.svg" width="125" /></RouterLink>
+            <RouterLink to="/"
+                ><img alt="Reventé logo" src="@/assets/logo.svg" width="125"
+            /></RouterLink>
 
             <!-- Logo END -->
 
             <!-- Mobile START -->
             <!-- Mobile Tab Icon START -->
-            <Button text icon="pi pi-bars" severity="secondary" @click="mobileTabVisible = true" class="d-lg-none" />
+            <Button
+                text
+                icon="pi pi-bars"
+                severity="secondary"
+                @click="mobileTabVisible = true"
+                class="d-lg-none"
+            />
             <!-- Mobile Tab Icon END -->
 
             <!-- Mobile Tab Items START -->
             <Sidebar v-model:visible="mobileTabVisible" position="right">
                 <template #header>
                     <div class="w-100 pe-5">
-                        <RouterLink to="/" @click="mobileTabVisible = false"><img alt="Reventé logo" src="@/assets/logo.svg"
-                                width="125" /></RouterLink>
+                        <RouterLink to="/" @click="mobileTabVisible = false"
+                            ><img
+                                alt="Reventé logo"
+                                src="@/assets/logo.svg"
+                                width="125"
+                        /></RouterLink>
                     </div>
                 </template>
                 <ul class="navbar-nav">
-                    <li v-for="route in navRoutes" :key="route.name" class="nav-item">
-                        <RouterLink class="nav-link" :to="route.path" @click="mobileTabVisible = false">
-                            {{ route.name }} </RouterLink>
+                    <li
+                        v-for="route in navRoutes"
+                        :key="route.name"
+                        class="nav-item"
+                    >
+                        <RouterLink
+                            class="nav-link"
+                            :to="route.path"
+                            @click="mobileTabVisible = false"
+                        >
+                            {{ route.name }}
+                        </RouterLink>
                     </li>
                     <li v-if="isLoggedIn" class="nav-item">
                         <a class="nav-link pointing" @click="handleLogout">
@@ -131,11 +158,21 @@ export default {
             <!-- Mobile END -->
 
             <!-- Desktop Tab Items START -->
-            <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="navbarNavDropdown">
+            <div
+                class="collapse navbar-collapse d-lg-flex justify-content-end"
+                id="navbarNavDropdown"
+            >
                 <ul class="navbar-nav">
-                    <li v-for="route in navRoutes" :key="route.name" class="nav-item">
+                    <li
+                        v-for="route in navRoutes"
+                        :key="route.name"
+                        class="nav-item"
+                    >
                         <RouterLink class="nav-link" :to="route.path">
-                            <font-awesome-icon :icon="route.icon" />
+                            <font-awesome-icon
+                                v-if="route.icon"
+                                :icon="route.icon"
+                            />
                             {{ route.name }}
                         </RouterLink>
                     </li>
