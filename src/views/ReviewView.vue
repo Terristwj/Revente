@@ -1,8 +1,10 @@
 <script>
 import ReviewItem from "../components/ReviewItem.vue";
+import RatingItem from "../components/RatingItem.vue";
 export default {
     components: {
 			ReviewItem,
+			RatingItem,
 	},
     data() { 
 			return { 
@@ -38,10 +40,11 @@ export default {
 		</div>
 
 		<!--BELOW IS THE REVIEWING PORTION-->
+		<RatingItem v-model="rating"/>
 
 	</body>
 </template>
 
-<style>
+<style scoped>
 
 </style>
