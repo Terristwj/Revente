@@ -117,9 +117,17 @@ export const routes = [
         },
     },
     {
-        path: "/orderhistory",
+        path: "/orderHistory",
         name: "Order History",
         component: () => import("../views/OrderHistory.vue"),
+        meta: {
+            requiresNoAuth: true,
+        },
+    },
+    {
+        path: "/reviewView",
+        name: "Review View",
+        component: () => import("../views/ReviewView.vue"),
         meta: {
             requiresNoAuth: true,
         },

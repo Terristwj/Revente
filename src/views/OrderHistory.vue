@@ -49,7 +49,7 @@ export default {
 			:seller="item.seller"
 			:name="item.name"
 			/>
-		</div>	
+		</div>
 	</body>
 </template>
 

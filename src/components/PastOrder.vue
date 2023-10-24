@@ -53,16 +53,34 @@ export default {
 
 
 <template>
-    <div class="row p-5 border border-dark">
-        <div class="col col-auto justify-content-center">
-            <img :src="imgUrl" :alt="name" class="itemImg"/>
+    <div class="row p-5">
+
+        <div class="col col-sm-8 col-md-9 col-lg-9 col-xxl-9">
+            <div class="col col-auto justify-content-center">
+                <img :src="imgUrl" :alt="name" class="itemImg"/>
+            </div>
+            <div class="col col-auto justify-content-center px-4">
+                <p class="deliveryDate">DELIVERED ON {{deliverydate}}</p>
+                <p class="itemName">{{name}}</p>
+                <p class="brandName">{{brand}}</p>
+                <p class="size">Size: {{size}}</p>
+                <p>Seller: <a href="#" class="sellerLink">{{seller}}</a></p>
+            </div>
         </div>
-        <div class="col col-auto justify-content-center px-4 border border-dark">
-            <p class="deliveryDate">DELIVERED ON {{deliverydate}}</p>
-            <p class="itemName">{{name}}</p>
-            <p class="brandName">{{brand}}</p>
-            <p class="size">Size: {{size}}</p>
-            <p>Seller: <a href="#" class="sellerLink">{{seller}}</a></p>
+
+        <div class="col col-sm-4 col-md-3 col-lg-3 col-xxl-3 p-0 wrap">
+            <!--this is for the router button-->
+            <div class="buttonLoc">
+                <button 
+                @click="$router.push('/reviewView')"
+                class="reviewButton"
+                >
+                Leave a Review
+                </button>
+                <button class="reviewButton">
+                    View Similar Items
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -77,6 +95,7 @@ p {
     font-family: 'inter-light';
     font-style: italic;
     text-transform: uppercase;
+    font-size: 16px;
 }
 
 .itemName {
@@ -94,8 +113,8 @@ p {
     max-height: 200px;
     object-fit: cover;
     float: left;
-    margin-right: 1rem;
-    border: 1px solid black;
+    margin-right: 3rem;
+
 }
 
 .sellerLink {
@@ -103,6 +122,25 @@ p {
     color: black;
     font-size: 14px;
     font-family: 'inter-regular';
+}
+
+.buttonLoc {
+    display: flex;
+    white-space: nowrap;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+}
+
+.reviewButton {
+    background-color: white;
+    padding: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+    border: 0.5px solid black;
+    font-family: 'inter-light';
+    margin-right: 10px;
 }
 
 </style>
