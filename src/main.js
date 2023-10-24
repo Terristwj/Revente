@@ -35,6 +35,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
+
 // google maps geolocation
 import Vue3Geolocation from "vue3-geolocation";
 

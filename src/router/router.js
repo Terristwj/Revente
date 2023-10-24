@@ -124,7 +124,7 @@ export const routes = [
     component: () => import("../views/UploadProductView.vue"),
     meta: {
       requiresAuth: true,
-    },
+    }},
     // Others END
 
     // Incomplete Views goes here START
