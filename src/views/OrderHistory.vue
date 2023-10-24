@@ -34,7 +34,10 @@ export default {
 
 <template>
 	<body>
+		<!--BELOW IS THE HEADER-->
 		<h2 class="m-5 mb-4">Order History</h2>
+
+		<!--BELOW ARE THE PAST ORDER ITEMS-->
 		<div class="container-fluid">
 			<PastOrders
 			v-for="(item, index) in items"
