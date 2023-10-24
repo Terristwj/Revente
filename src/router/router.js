@@ -125,7 +125,7 @@ export const routes = [
         },
     },
     {
-        path: "/reviewView",
+        path: "/reviewView/:id",
         name: "Review View",
         component: () => import("../views/ReviewView.vue"),
         meta: {

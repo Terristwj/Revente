@@ -31,30 +31,13 @@ export default {
     data() {
         return {
             // key: value
-            uuid: crypto.randomUUID()
-        };
+        }
     }, // data
     
     methods: {
-        parseDataToReviewPage() {
-            // validate inputs
-            // console.log(this.deliverydate)
-            let dataObject = {
-                dd: this.deliverydate,
-                imgUrl: this.imgUrl,
-                brand: this.brand,
-                size: this.size,
-                seller: this.seller,
-                name: this.name
-            }
-
-            this.$router.push({
-                path: `reviewview/${this.uuid}`,
-                query: {data: JSON.stringify(dataObject)}
-            })
-        }
+        methodName() {
             
-        
+        }
     }, // methods;
     
     watch: {
@@ -82,21 +65,6 @@ export default {
                 <p class="brandName">{{brand}}</p>
                 <p class="size">Size: {{size}}</p>
                 <p>Seller: <a href="#" class="sellerLink">{{seller}}</a></p>
-            </div>
-        </div>
-
-        <div class="col col-sm-4 col-md-3 col-lg-3 col-xxl-3 p-0 wrap">
-            <!--this is for the router button-->
-            <div class="buttonLoc">
-                <button 
-                @click="parseDataToReviewPage()"                 
-                class="reviewButton"
-                >
-                Leave a Review
-                </button>
-                <button class="reviewButton">
-                    View Similar Items
-                </button>
             </div>
         </div>
     </div>
@@ -139,25 +107,6 @@ p {
     color: black;
     font-size: 14px;
     font-family: 'inter-regular';
-}
-
-.buttonLoc {
-    display: flex;
-    white-space: nowrap;
-    align-items: start;
-    width: 100%;
-    height: 100%;
-}
-
-.reviewButton {
-    background-color: white;
-    padding: 8px;
-    padding-left: 20px;
-    padding-right: 20px; 
-    border-radius: 5px;
-    border: 0.5px solid black;
-    font-family: 'inter-light';
-    margin-right: 10px;
 }
 
 </style>
