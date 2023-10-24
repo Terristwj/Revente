@@ -70,6 +70,14 @@ export const routes = [
     },
     // User Profile END
 
+	//Main Item Start
+	{
+        path: "/MainItem",
+        name: "MainItem",
+        component: () => import("../views/MainItemView.vue"),
+    },
+	//Main Item end
+
     // Login/Register START
     {
         path: "/login",
