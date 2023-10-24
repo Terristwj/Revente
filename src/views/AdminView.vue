@@ -1,25 +1,26 @@
 <template>
     <!-- tabs -->
     <div class="row text-center mb-4">
-     
+
         <div class="tab d-flex">
             <div class="col">
-                <button class="tablinks w-100" :class="{ 'clicked': pendingShow }" @click="openTab('pending')">Pending</button>
+                <button class="tablinks w-100" :class="{ 'clicked': pendingShow }"
+                    @click="openTab('pending')">Pending</button>
 
             </div>
             <div class="col">
                 <button class="tablinks w-100" :class="{ 'clicked': approvedShow }"
-                @click="openTab('approved')">Approved</button>
+                    @click="openTab('approved')">Approved</button>
 
             </div>
             <div class="col">
-   
+
                 <button class="tablinks w-100" :class="{ 'clicked': statsShow }" @click="openTab('stats')">Stats</button>
             </div>
-            
-        
+
+
         </div>
-        
+
         <!-- pending content -->
         <div v-if="pendingShow" class="tabcontent py-5">
             <h2 class="mb-5 heading">Pending</h2>
@@ -28,37 +29,42 @@
                 <h3>No Pending Products!</h3>
             </div>
             <div class="container" v-if="!noPending">
-                
-                <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="thead-light">
-                        <tr class="table-danger" style="border:1px solid black;">
-                            <th scope="col">ID</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action Taken</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <tr v-for="(product,idx) in pendingProducts" :key="product.id">
-                            <td>{{ product.id }}</td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ product.category }}</td>
-                            <td>{{ product.status }}</td>
-                            <td>
-                                <button class="btn btn-success mx-2" @click="approveProduct(product,idx)">Approve</button>
-                                <button class="btn btn-danger mx-0" @click="removeProduct(idx)">Reject</button>
-                            </td>
-                        </tr>
-                    </tbody>
 
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-light">
+                            <tr class="table-danger" style="border:1px solid black;">
+                                <th scope="col">ID</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Price (Quoted by seller)</th>
+                                <th scope="col">Price (AI Generated Price)</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action Taken</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <tr v-for="(product, idx) in pendingProducts" :key="product.id">
+                                <td>{{ product.id }}</td>
+                                <td>{{ product.name }}</td>
+
+                                <td :class="getPriceClass(product.price, product.modifiedPrice)">{{ product.price }}</td>
+                                <td>{{ product.modifiedPrice }}</td>
+                                <td>{{ product.category }}</td>
+                                <td>{{ product.status }}</td>
+                                <td>
+                                    <button class="btn btn-success mx-2"
+                                        @click="approveProduct(product, idx,product.modifiedPrice)">Approve</button>
+                                    <button class="btn btn-danger mx-0" @click="removeProduct(idx)">Reject</button>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
                 </div>
-              
+
             </div>
         </div>
 
@@ -67,29 +73,29 @@
             <h2 class="mb-5 heading">Approved</h2>
             <div class="container">
                 <div class="table-responsive">
-                <table class="table table-striped custom-table">
-                    <thead class="thead-light">
-                        <tr class="table-success" style="border:1px solid black;">
-                            <th scope="col">ID</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="product in approvedProducts" :key="product.id">
-                            <td>{{ product.id }}</td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ product.category }}</td>
-                            <td>{{ product.status }}</td>
-                        </tr>
-                    </tbody>
+                    <table class="table table-striped custom-table">
+                        <thead class="thead-light">
+                            <tr class="table-success" style="border:1px solid black;">
+                                <th scope="col">ID</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="product in approvedProducts" :key="product.id">
+                                <td>{{ product.id }}</td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.price }}</td>
+                                <td>{{ product.category }}</td>
+                                <td>{{ product.status }}</td>
+                            </tr>
+                        </tbody>
 
-                </table>
-            </div>
-              
+                    </table>
+                </div>
+
             </div>
         </div>
 
@@ -112,21 +118,14 @@ export default {
 
             //fake getting it from the server
             pendingProducts: [
-                { id: 3121, name: 'Shirt', price: 10.99, category: 'Electronics', status: 'Pending',  },
-                { id: 4212,  name: 'Pants', price: 24.99, category: 'Clothing', status: 'Pending',},
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' },
-                 { id: 3513,  name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending' }
-                
-                
+                { id: 3121, name: 'Shirt', price: 10.99, category: 'Electronics', status: 'Pending', modifiedPrice: null },
+                { id: 4212, name: 'Pants', price: 24.99, category: 'Clothing', status: 'Pending', modifiedPrice: null },
+                { id: 3513, name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending', modifiedPrice: null },
+                { id: 3513, name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending', modifiedPrice: null },
+
+
+
+
                 // Add more products here
             ],
             //fake getting it from server
@@ -138,10 +137,12 @@ export default {
             ],
         }
     },
-    computed:{
-        noPending(){
+    computed: {
+        noPending() {
             return this.pendingProducts.length == 0;
         },
+
+
     },
     methods: {
         openTab(word) {
@@ -163,36 +164,61 @@ export default {
         },
 
         //needs to update server
-        approveProduct(product,idx) {
+        approveProduct(product, idx,newprice) {
             // console.log('approveProduct');
             this.pendingProducts[idx].status = "Approved";
+            this.pendingProducts[idx].price = newprice;
             this.approvedProducts.push(product);
-            this.pendingProducts.splice(idx,1);
+            this.pendingProducts.splice(idx, 1);
         },
         //needs to update server
         removeProduct(idx) {
             // console.log('removeProduct');
-            this.pendingProducts.splice(idx,1);
-        }
+            this.pendingProducts.splice(idx, 1);
+        },
+
+
+        modifyPrice(originalPrice) {
+            // Calculate the modified price here, for example:
+            const randomValue = Math.floor(Math.random() * 21) - 10;
+            return (originalPrice + randomValue).toFixed(2);
+        },
+        getPriceClass(price, modifiedPrice) {
+            return {
+                'text-success': price <= modifiedPrice,
+                'text-danger': price > modifiedPrice,
+            };
+        },
+
+
+    },
+
+    mounted() {
+        // Compute and store modified prices for each product
+        this.pendingProducts.forEach((product) => {
+            product.modifiedPrice = this.modifyPrice(product.price);
+        });
     },
 
 }
 </script>
 
 <style scoped>
-td{
+td {
     font-size: 1rem;
     padding: 20px;
 }
-th{
+
+th {
     font-weight: bolder;
     font-size: 1.2rem;
-    
+
 }
 
-table { 
+table {
     border: 1px solid #000000;
 }
+
 .clicked {
     background-color: #15020254;
 }
@@ -216,10 +242,12 @@ table {
     /* background-color: #f1f1f1; */
 
 }
-.col{
+
+.col {
     border: 0.5px solid rgb(196, 191, 191);
-    
+
 }
+
 /* Style the buttons inside the tab */
 .tab button {
     /* background-color: inherit; */
@@ -253,9 +281,10 @@ table {
     .tab button {
         font-size: 12px;
     }
-    .heading{
+
+    .heading {
         font-size: 1.5rem;
     }
-   
+
 }
 </style>
