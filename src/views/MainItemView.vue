@@ -37,7 +37,7 @@
         </div>
         <div class="row text-center">
             <div class="tab">
-                <button class="tablinks w-50" :class="{ 'clicked': descriptionShow }"
+                <button class="tablinks w-50" :class="{'clicked': descriptionShow }"
                     @click="openTab(event, 'description')">Description</button>
                 <button class="tablinks w-50" :class="{ 'clicked': sizeShow }" @click="openTab(event, 'size')">Size</button>
             </div>
@@ -62,8 +62,6 @@
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { itemStore } from "../main.js";
 
-
-
 export default {
     data() {
         return {
@@ -80,7 +78,6 @@ export default {
     },
     methods: {
         openTab(event, tabName) {
-
             // console.log('openTab');
             if (tabName == 'description') {
                 this.descriptionShow = true;
@@ -101,35 +98,34 @@ export default {
 
     },
     created() {
-        // let data = {
-        //     1: {
-        //         "product_id": 1,
-        //         "product_name": "Vintage Tee",
-        //         "description": "nesciunt quod! Earum voluptatibus quaerat dolorem doloribus",
-        //         "price": "100",
-        //         "imgSrc": "../assets/img/ecommerce/exampleTee.png",
-        //         "color": "white"
-        //     }
-        // };
+        //hardcoded data
+        let data = {
+            1: {
+                "product_id": 1,
+                "product_name": "Vintage Tee",
+                "description": "nesciunt quod! Earum voluptatibus quaerat dolorem doloribus",
+                "price": "100",
+                "imgSrc": "../assets/img/ecommerce/exampleTee.png",
+                "color": "white"
+            }
+        };
         //  console.log(itemStore.getItemID());
 
-        //hardcode
-        itemStore.setItemID('jN2TrVSILV7eIMmzhJfV');
+        // //hardcode
 
-        this.itemID = itemStore.getItemID();
-        // console.log(this.itemID);
-        // this.product = data[this.itemID];
+        // itemStore.setItemID('jN2TrVSILV7eIMmzhJfV');
+        // this.itemID = itemStore.getItemID();
+        // let my_product = FBInstanceFirestore.getProducts(this.itemID);
+        // my_product.then((data) => {
+        //     // Handle the data once the promise is resolved
+        //     this.product = data;
+        //     console.log(data); // Do something with the data
+        // }).catch((error) => {
+        //     // Handle any errors that occur during the promise execution
+        //     console.error(error);
+        // });
 
-        let my_product = FBInstanceFirestore.getProducts(this.itemID);
-        my_product.then((data) => {
-            // Handle the data once the promise is resolved
-            this.product = data;
-            console.log(data); // Do something with the data
-        }).catch((error) => {
-            // Handle any errors that occur during the promise execution
-            console.error(error);
-        });
-        // this.product = data[1];
+        this.product = data[1];
         this.category = { categoryName: "Tee" };
     },
 }
