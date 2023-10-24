@@ -39,7 +39,7 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import Vue3Geolocation from "vue3-geolocation";
 
 const app = createApp(App);
-
+app.use(Vue3Geolocation);
 app.use(createPinia());
 export const userStore = useCurrentUserStore();
 export const itemStore = useCurrentItemID();
@@ -67,8 +67,5 @@ library.add(
   faUpload
 );
 app.component("font-awesome-icon", FontAwesomeIcon);
-
-app.use(Vue3Geolocation);
-
 
 app.mount("#app");
