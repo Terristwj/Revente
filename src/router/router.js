@@ -125,6 +125,7 @@ export const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
     // Others END
 
     // Incomplete Views goes here START
