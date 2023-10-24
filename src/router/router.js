@@ -116,6 +116,14 @@ export const routes = [
             requiresAuth: true,
         },
     },
+    {
+        path: "/orderhistory",
+        name: "Order History",
+        component: () => import("../views/OrderHistory.vue"),
+        meta: {
+            requiresNoAuth: true,
+        },
+    },
     // Incomplete Views goes here END
 ];
 
