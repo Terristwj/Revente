@@ -57,9 +57,18 @@ export default {
         },
         async submitForm() {
             // If there are no errors, submit the form
-            this.isLoading = true;
+            this.toggleLoadingUI();
             await this.doSubmitForm();
-            this.isLoading = false;
+            this.toggleLoadingUI();
+        },
+        // Disable button when isLoading
+        toggleLoadingUI() {
+            let listNowBtn = document.getElementById("List-Now-Btn");
+
+            this.isLoading = !this.isLoading;
+            this.isLoading
+                ? (listNowBtn.disabled = true)
+                : (listNowBtn.disabled = false);
         },
         async doSubmitForm() {
             if (this.isEverythingValid()) {
@@ -133,6 +142,10 @@ export default {
             let hasError = false;
 
             // (1) Add doc into Firestore
+            let category = this.category.name;
+            let condition = this.condition.name;
+            let isApproved = false;
+
             // (2) Retrieve the product_ID of add_doc
             const productID = await FBInstanceFirestore.createProduct(
                 // Seller
@@ -145,15 +158,16 @@ export default {
 
                 // Category
                 this.gender,
-                this.category,
+                category,
 
                 // Condition
-                this.condition,
+                condition,
                 this.conditionNotes,
 
                 // Others
                 this.dropOffLocation,
-                this.price
+                this.price,
+                isApproved
             );
 
             // (3) Upload item_image_file into Storage using product_ID
@@ -196,15 +210,16 @@ export default {
 
                             // Category
                             this.gender,
-                            this.category,
+                            category,
 
                             // Condition
-                            this.condition,
+                            condition,
                             this.conditionNotes,
 
                             // Others
                             this.dropOffLocation,
                             this.price,
+                            isApproved,
 
                             // Image URL (To be Added)
                             url

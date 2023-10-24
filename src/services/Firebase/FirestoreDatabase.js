@@ -141,7 +141,8 @@ class FirebaseFirestore {
 
         // Others
         drop_off_location,
-        price
+        price,
+        is_approved
     ) {
         // (1) Add a new document with a generated id.
         const docRef = await addDoc(collection(FirestoreDatabase, "products"), {
@@ -159,6 +160,7 @@ class FirebaseFirestore {
 
             drop_off_location,
             price,
+            is_approved,
         });
 
         // (2) Get product_ID
@@ -182,6 +184,7 @@ class FirebaseFirestore {
 
             drop_off_location,
             price,
+            is_approved,
         });
 
         // (4) Return product_ID for other usage
@@ -210,6 +213,7 @@ class FirebaseFirestore {
         // Others
         drop_off_location,
         price,
+        is_approved,
 
         // Image URL (To be Added)
         image_src
@@ -230,6 +234,7 @@ class FirebaseFirestore {
 
             drop_off_location,
             price,
+            is_approved,
 
             // (To be Added)
             image_src,
