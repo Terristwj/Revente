@@ -125,8 +125,27 @@ export const routes = [
     meta: {
       requiresAuth: true,
     },
-  },
-  // Incomplete Views goes here END
+    // Others END
+
+    // Incomplete Views goes here START
+    // upload page
+    {
+        path: "/profile/upload",
+        name: "Upload",
+        component: () => import("../views/UploadProductView.vue"),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/orderhistory",
+        name: "Order History",
+        component: () => import("../views/OrderHistory.vue"),
+        meta: {
+            requiresNoAuth: true,
+        },
+    },
+    // Incomplete Views goes here END
 ];
 
 const router = createRouter({
