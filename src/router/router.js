@@ -79,15 +79,24 @@ export const routes = [
   },
   // User Profile END
 
-  // Login/Register START
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/LoginView.vue"),
-    meta: {
-      requiresNoAuth: true,
+	//Main Item Start
+	{
+        path: "/MainItem",
+        name: "MainItem",
+        component: () => import("../views/MainItemView.vue"),
     },
-  },
+	//Main Item end
+
+    // Login/Register START
+    {
+        path: "/login",
+        name: "Login",
+        component: () => import("../views/LoginView.vue"),
+        meta: {
+            requiresNoAuth: true,
+        },
+    },
+  
   {
     path: "/register",
     name: "Register",
