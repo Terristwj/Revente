@@ -1,6 +1,13 @@
 <script>
 	export default {
 		name: 'SideMenuBar',
+		props: {
+			isSidebarFullscreen: {
+				type: Boolean,
+				required: false,
+				default: true,
+			},
+		},
 		data() {
 			return {
 				// Gender section
@@ -48,18 +55,28 @@
 				console.log(this.maxPriceInput);
 			},
 		},
+		computed: {
+			sidebarClass() {
+				return this.isSidebarFullscreen
+					? 'offcanvas offcanvas-start'
+					: '';
+			},
+			sidebarStyle() {
+				return this.isSidebarFullscreen ? '' : 'max-width: 260px';
+			},
+		},
 	};
 </script>
 
 <template>
 	<div
-		class="offcanvas offcanvas-start"
+		:class="sidebarClass"
 		tabindex="-1"
 		id="offcanvas"
 		data-bs-keyboard="false"
 		data-bs-backdrop="false"
 	>
-		<div class="offcanvas-header">
+		<div class="offcanvas-header" v-if="isSidebarFullscreen">
 			<h6 class="offcanvas-title" id="offcanvas">Filter</h6>
 			<button
 				type="button"
@@ -68,7 +85,7 @@
 				aria-label="Close"
 			></button>
 		</div>
-		<div class="flex-shrink-0 p-3 offcanvas-body" style="min-width: 260px">
+		<div class="flex-shrink-0 p-3 offcanvas-body" :style="sidebarStyle">
 			<!-- Gender (default open) -->
 			<ul class="list-unstyled ps-0">
 				<li class="mb-1">

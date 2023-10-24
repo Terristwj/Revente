@@ -29,6 +29,7 @@
     "vue-preloader": "^1.1.2",
     "vue-responsive-video-background-player": "^2.3.1",
     "vue-router": "^4.2.4",
+    "vue-window-size": "^2.0.0",
     "vuetify": "^3.3.21",
     "vuex": "^4.0.2"
   },
