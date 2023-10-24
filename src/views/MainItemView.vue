@@ -111,7 +111,7 @@ export default {
         };
         //  console.log(itemStore.getItemID());
 
-        // //hardcode
+        // //hardcode to get data from database
 
         // itemStore.setItemID('jN2TrVSILV7eIMmzhJfV');
         // this.itemID = itemStore.getItemID();
