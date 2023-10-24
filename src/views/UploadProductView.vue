@@ -4,12 +4,12 @@ import router from "../router/router.js";
 import { userStore } from "../main.js";
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
-import GoogleMaps from "../components/GoogleMaps.vue";
+import GoogleMap from "../components/GoogleMap.vue";
 
 
 export default {
     components: {
-        GoogleMaps,
+        GoogleMap
     },
     data() {
         return {
@@ -422,9 +422,7 @@ export default {
                     <div class="col-12 shadow p-3 bg-white rounded">
                         <h5 class="bold">Drop-off Location</h5>
                         <div class="pt-3">
-                            <div id="map">
-                                <GoogleMaps />
-                            </div>
+                                <GoogleMap />
                         </div>
                     </div>
 
@@ -551,7 +549,4 @@ input[type="file"] {
     margin-top: 80px;
 }
 
-#map {
-    padding: 1rem;
-}
 </style>
