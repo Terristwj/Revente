@@ -34,8 +34,8 @@ export default {
 <template>
     <body>
         <div class="container-fluid">
-            <div :class="sidebarOpen() ? 'row flex' : 'col col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3'">
-                <div :class="sidebarOpen()? 'col col-md-3 col-lg-3 col-sm-3 col-xxl-3' : ''">
+            <div class="row">
+                <div :class="sidebarOpen()? 'col col-md-5 col-lg-4 col-xxl-3' : ''">
                     <CollapsibleSidebar 
                     :cSidebar="cSidebar"
                     :open="cSidebar.open"
@@ -43,26 +43,30 @@ export default {
                     />
                 </div>
 
-                <div :class="sidebarOpen() ? 'col col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-9' : 'row flex'">
+                <div :class="sidebarOpen() ? 'col col-md-7 col-lg-8 col-xxl-8' : ''">
                     <div class="container-fluid">
                         <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
-                            <h2 class="text-center">Current Listings</h2>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <h2 class="text-start m-3 mb-4" style="font-family: inter-bold; color: black;">Current Listings</h2>
+                                <p class="w-100">                                
+                                    <span class="mb-4 mx-4 w-50" style="font-family: inter-light;">Total</span>
+                                    <span class="mb-4 mx-4 text-end w-50" style="font-family: inter-light;">Sort</span>
+                                </p>
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-10 pb-2 list-item">
                                 <ItemCard />
                             </div>
-                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                            <div class="col col-xxl-3 col-xl-5 col-lg-10 col-md-10 col-sm-6 pb-2 list-item">
                                 <ItemCard />
                             </div>
             
@@ -74,4 +78,80 @@ export default {
     </body>
 </template>
 
-<style scoped></style>
+<style>
+
+CollapsibleSideBar {
+    display: flex;
+}
+.cSidebar {
+    justify-content: center;
+    margin: 15px auto;
+    margin-left: 15px;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    background-color: white;
+    align-items: center;
+    display: inline-block;
+}
+
+.cSidebar h3 {
+    font-size: 18px;
+    margin: 0px;
+    padding-left: 5px;
+    font-weight: 400;
+    font-family: 'inter-regular';
+    color: black;
+    text-align: left;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.4s linear; 
+}
+
+.cSidebar h3::after {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%) rotate(-180deg);
+
+    width: 20px;
+    height: 20px;
+
+    background-image: url('../assets/angle-up-solid.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.cSidebar .sidebarContent {
+    color: white;
+    opacity: 0;
+    max-height: 0px;
+    overflow-y: hidden;
+    transition:  all 0.4s ease out;
+}
+
+.cSidebar.open {
+    width: 300px;
+    transition: all 0.2s linear;
+}
+
+.cSidebar.open h3 {
+    margin-bottom: 40px;
+}
+
+.cSidebar.open h3::after {
+    transform:translateY(-50%) rotate(0deg);
+}
+
+.cSidebar.open .sidebarContent {
+    opacity: 1;
+    max-height: 1000px;
+}
+
+
+</style>

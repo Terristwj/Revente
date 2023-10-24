@@ -1313,7 +1313,7 @@ export default {
         window.addEventListener("keydown", (e) => {
             if (player.isInteracting) {
                 switch (e.key) {
-                    case " ": {
+                    case "Enter": {
                         player.interactionAsset.dialogueIndex++;
 
                         const { dialogueIndex, dialogue } =
@@ -1340,7 +1340,7 @@ export default {
             }
 
             switch (e.key) {
-                case " ": {
+                case "Enter": {
                     if (!player.interactionAsset) return;
 
                     // beginning the conversation

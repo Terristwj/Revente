@@ -19,13 +19,13 @@
             <div class="row">
                 <div class="col mx-auto text-center py-1">
                     <ul class="list-unstyled d-inline-flex">
-                        <li class="mx-1 px-2"><a class="link-body-emphasis" href="#"><font-awesome-icon
+                        <li class="mx-1 px-2"><a class="link-body-emphasis" href="https://www.facebook.com/profile.php?id=61552687107509"><font-awesome-icon
                                     :icon="['fab', 'facebook-f']" size="2xl" /></a></li>
-                        <li class="mx-1 px-2"><a class="link-body-emphasis" href="#"><font-awesome-icon
+                        <li class="mx-1 px-2"><a class="link-body-emphasis" href="https://twitter.com/SG_Revente"><font-awesome-icon
                                     :icon="['fab', 'twitter']" size="2xl" /></a></li>
-                        <li class="mx-1 px-2 "><a class="link-body-emphasis" href="#"><font-awesome-icon
+                        <li class="mx-1 px-2 "><a class="link-body-emphasis" href="https://www.instagram.com/revente_123/"><font-awesome-icon
                                     :icon="['fab', 'instagram']" size="2xl" /></a></li>
-                        <li class="mx-1 px-2 "><a class="link-body-emphasis" href="#"><font-awesome-icon
+                        <li class="mx-1 px-2 "><a class="link-body-emphasis" href="https://www.tiktok.com/@sg_revente?lang=en"><font-awesome-icon
                                     :icon="['fab', 'tiktok']" size="2xl"/></a></li>
                     </ul>
                 </div>
