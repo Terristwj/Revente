@@ -239,14 +239,14 @@ export default {
     },
     // In your Vue component
     created() {
-        // grabs all the data already
+        // grabs all the data already AND SPLITS them into pending and approved
         FBInstanceFirestore.getAllProducts().then((data) => {
-            // Handle the data once the promise is resolved
             for (const key in data) {
                 if (data[key].is_approved == "false") {
                     this.pendingProducts.push(data[key]);
                 }
                 else {
+                    //if dh the same product, push to approvedProducts
                     if(this.approvedProducts.includes(data[key]) == false){
                         this.approvedProducts.push(data[key]);
                     }
@@ -263,42 +263,6 @@ export default {
             // Handle any errors that occur during the promise execution
             console.error(error);
         });
-
-
-        // Get all pending products from the server
-
-        // pendingProductIDs = [...];
-
-        // for loop to add products inside the pendingProduct array
-        // for (let i = 0; i < pendingProductIDs.length; i++) {
-        // let pending_product = FBInstanceFirestore.getProducts(pendingProductIDs[i]);
-        // pending_product.then((data) => {
-        //     // Handle the data once the promise is resolved
-        //     this.pendingProduct.push = data;
-        //     console.log(data); // Do something with the data
-        // }).catch((error) => {
-        //     // Handle any errors that occur during the promise execution
-        //     console.error(error);
-        // });
-        // }
-
-        // Get all approved products from the server
-        // approvedProductIDs = [...];
-
-        // for loop to add products inside the approvedProduct array
-        // for (let i = 0; i < approvedProductIDs.length; i++) {
-        // let approved_product = FBInstanceFirestore.getProducts(approvedProductIDs[i]);
-        // approved_product.then((data) => {
-        //     // Handle the data once the promise is resolved
-        //     this.approvedProduct.push = data;
-        //     console.log(data); // Do something with the data
-        // }).catch((error) => {
-        //     // Handle any errors that occur during the promise execution
-        //     console.error(error);
-        // });
-        // }
-
-
 
     },
 
