@@ -1,4 +1,4 @@
-import { doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, addDoc, getDocs } from "firebase/firestore";
 import { FirestoreDatabase } from "./../../main.js";
 
 class FirebaseFirestore {
@@ -213,10 +213,12 @@ class FirebaseFirestore {
         // Others
         drop_off_location,
         price,
+        modifiedPrice,
         is_approved,
 
         // Image URL (To be Added)
-        image_src
+        image_src,
+        status
     ) {
         await setDoc(doc(FirestoreDatabase, "products", product_ID), {
             seller_ID,
@@ -234,10 +236,12 @@ class FirebaseFirestore {
 
             drop_off_location,
             price,
+            modifiedPrice,
             is_approved,
 
             // (To be Added)
             image_src,
+            status
         });
     };
 
@@ -263,6 +267,85 @@ class FirebaseFirestore {
         // console.log(docSnap.data());
         return docSnap.data();
     };
+
+    // Get all Product_ID
+    getAllProducts = async function () {
+        const querySnapshot = await getDocs(
+            collection(FirestoreDatabase, "products")
+        );
+
+        let products = [];
+
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            products.push(doc.data());
+        });
+
+        // console.log("Document data:", docSnap.data());
+        return products;
+    };
+
+    updateProductStatus= async function (
+        // Seller & Product
+        seller_ID,
+        product_ID,
+
+        // Product Details
+        product_name,
+        brand,
+        description,
+
+        // Category
+        gender,
+        category,
+
+        // Condition
+        condition,
+        condition_notes,
+
+        // Others
+        drop_off_location,
+        price,
+        modifiedPrice,
+        is_approved,
+
+        // Image URL (To be Added)
+        image_src,
+        size
+
+    ) {
+        await setDoc(doc(FirestoreDatabase, "products", product_ID), {
+            seller_ID,
+            product_ID,
+
+            product_name,
+            brand,
+            description,
+
+            gender,
+            category,
+
+            condition,
+            condition_notes,
+
+            drop_off_location,
+            price,
+            modifiedPrice,
+            is_approved,
+
+            // (To be Added)
+            image_src,
+            size
+       
+        });
+    };
+
+
+
+
+
+
+
 }
 
 const FBInstanceFirestore = new FirebaseFirestore();
