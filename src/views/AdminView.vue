@@ -28,36 +28,42 @@
             <div v-if="noPending" class="my-5">
                 <h3>No Pending Products!</h3>
             </div>
-            <div class="container" v-if="!noPending">
+            <div class="container w-100" v-if="!noPending">
 
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead class="thead-light">
                             <tr class="table-danger" style="border:1px solid black;">
                                 <th scope="col">ID</th>
+                                <th scope="col">Product</th>
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Price (Quoted by seller)</th>
                                 <th scope="col">Price (AI Generated Price)</th>
                                 <th scope="col">Category</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action Taken</th>
+                                <th scope="col">Accept</th>
+                                <th scope="col">Reject</th>
+                                <th scope="col">Insert Size Description</th>
                             </tr>
                         </thead>
                         <tbody>
-
-
-                            <tr v-for="(product, idx) in pendingProducts" :key="product.id">
-                                <td>{{ product.id }}</td>
-                                <td>{{ product.name }}</td>
-
+                            <tr v-for="(product, idx) in pendingProducts" :key="product.product_ID">
+                                <td>{{ product.product_ID }}</td>
+                                <td><img :src="product.image_src" alt="Product Image"
+                                        :style="{ width: '100px', height: '100px' }" /></td>
+                                <td>{{ product.product_name }}</td>
                                 <td :class="getPriceClass(product.price, product.modifiedPrice)">{{ product.price }}</td>
                                 <td>{{ product.modifiedPrice }}</td>
                                 <td>{{ product.category }}</td>
-                                <td>{{ product.status }}</td>
                                 <td>
                                     <button class="btn btn-success mx-2"
-                                        @click="approveProduct(product, idx,product.modifiedPrice)">Approve</button>
+                                        @click="approveProduct(product, idx, product.modifiedPrice)">Approve</button>
+                                </td>
+                                <td>
                                     <button class="btn btn-danger mx-0" @click="removeProduct(idx)">Reject</button>
+                                </td>
+                                <td>
+                                    <textarea name="detailedSizing" :id="'detailedSizing-' + idx" v-model="productSize[idx]"
+                                        cols="20" rows="5"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -80,16 +86,17 @@
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Category</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Size</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="product in approvedProducts" :key="product.id">
-                                <td>{{ product.id }}</td>
-                                <td>{{ product.name }}</td>
+                                <td>{{ product.product_ID }}</td>
+                                <td>{{ product.product_name }}</td>
                                 <td>{{ product.price }}</td>
                                 <td>{{ product.category }}</td>
-                                <td>{{ product.status }}</td>
+                                <td class="text-wrap">{{ product.size }}</td>
+                              
                             </tr>
                         </tbody>
 
@@ -107,32 +114,26 @@
 </template>
 
 <script>
+import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 
 export default {
     data() {
         return {
+            productSize: [],
             pendingShow: true,
             approvedShow: false,
             statsShow: false,
             // products: null,
 
-            //fake getting it from the server
-            pendingProducts: [
-                { id: 3121, name: 'Shirt', price: 10.99, category: 'Electronics', status: 'Pending', modifiedPrice: null },
-                { id: 4212, name: 'Pants', price: 24.99, category: 'Clothing', status: 'Pending', modifiedPrice: null },
-                { id: 3513, name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending', modifiedPrice: null },
-                { id: 3513, name: 'Skirt', price: 15.49, category: 'Home & Kitchen', status: 'Pending', modifiedPrice: null },
-
-
-
-
-                // Add more products here
-            ],
+            pendingProducts: [],
             //fake getting it from server
             approvedProducts: [
-                { id: 5311, name: 'Jacket', price: 10.99, category: 'Electronics', status: 'Approved' },
-                { id: 2942, name: 'Sweatshirt', price: 24.99, category: 'Clothing', status: 'Approved' },
-                { id: 3435, name: 'Potato', price: 15.49, category: 'Home & Kitchen', status: 'Approved' },
+                {
+                    product_ID: 5311, product_name: 'Jacket', price: 10.99, category: 'Electronics', status: 'Approved',
+                    size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm`
+                },
+                { product_ID: 2942, product_name: 'Sweatshirt', price: 24.99, category: 'Clothing', status: 'Approved', size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm` },
+                { product_ID: 3435, product_name: 'Potato', price: 15.49, category: 'Home & Kitchen', status: 'Approved', size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm` },
                 // Add more products here
             ],
         }
@@ -144,6 +145,7 @@ export default {
 
 
     },
+
     methods: {
         openTab(word) {
             // console.log('openTab');
@@ -164,24 +166,55 @@ export default {
         },
 
         //needs to update server
-        approveProduct(product, idx,newprice) {
+        approveProduct(product, idx, newprice) {
             // console.log('approveProduct');
-            this.pendingProducts[idx].status = "Approved";
-            this.pendingProducts[idx].price = newprice;
-            this.approvedProducts.push(product);
-            this.pendingProducts.splice(idx, 1);
+            const size = this.productSize[idx];
+
+            if (size) {
+                // console.log(size);
+                this.pendingProducts[idx].status = "Approved";
+                this.pendingProducts[idx].price = newprice;
+                let id = this.pendingProducts[idx].product_ID;
+                console.log(id);
+                this.approvedProducts.push(product);
+                console.log(this.approvedProducts);
+                for (const key in this.approvedProducts) {
+                    if (this.approvedProducts[key].product_ID == id) {
+                        this.approvedProducts[key].size = size;
+                    }
+                }
+
+                this.pendingProducts.splice(idx, 1);
+                this.productSize[idx] = '';
+
+            } else {
+                // Size is not filled, show a notification
+                alert('Please fill in the size');
+            }
         },
+
         //needs to update server
         removeProduct(idx) {
             // console.log('removeProduct');
-            this.pendingProducts.splice(idx, 1);
+            if (this.pendingProducts[idx].price <= this.pendingProducts[idx].modifiedPrice) {
+                alert('Are you sure you want to reject this product?')
+            }
+            else {
+                this.pendingProducts.splice(idx, 1);
+            }
+
+
         },
 
+        // modifyPrice(originalPrice) {
+        //     // Calculate the modified price here, for example:
+        //     const randomValue = Math.floor(Math.random() * 21) - 10;
+        //     return (originalPrice + randomValue).toFixed(2);
+        // },
 
-        modifyPrice(originalPrice) {
-            // Calculate the modified price here, for example:
+        modifyPrice(price) {
             const randomValue = Math.floor(Math.random() * 21) - 10;
-            return (originalPrice + randomValue).toFixed(2);
+            return (price + randomValue).toFixed(2);
         },
         getPriceClass(price, modifiedPrice) {
             return {
@@ -192,13 +225,63 @@ export default {
 
 
     },
+    // In your Vue component
+    created() {
+        // grabs all the data already
+        FBInstanceFirestore.getAllProducts().then((data) => {
+            // Handle the data once the promise is resolved
+            this.pendingProducts = data;
+            this.pendingProducts.forEach((product) => {
+                product.modifiedPrice = this.modifyPrice(product.price);
 
-    mounted() {
-        // Compute and store modified prices for each product
-        this.pendingProducts.forEach((product) => {
-            product.modifiedPrice = this.modifyPrice(product.price);
+            });
+            console.log(data); // Do something with the data
+        }).catch((error) => {
+            // Handle any errors that occur during the promise execution
+            console.error(error);
         });
+
+
+        // Get all pending products from the server
+
+        // pendingProductIDs = [...];
+
+        // for loop to add products inside the pendingProduct array
+        // for (let i = 0; i < pendingProductIDs.length; i++) {
+        // let pending_product = FBInstanceFirestore.getProducts(pendingProductIDs[i]);
+        // pending_product.then((data) => {
+        //     // Handle the data once the promise is resolved
+        //     this.pendingProduct.push = data;
+        //     console.log(data); // Do something with the data
+        // }).catch((error) => {
+        //     // Handle any errors that occur during the promise execution
+        //     console.error(error);
+        // });
+        // }
+
+        // Get all approved products from the server
+        // approvedProductIDs = [...];
+
+        // for loop to add products inside the approvedProduct array
+        // for (let i = 0; i < approvedProductIDs.length; i++) {
+        // let approved_product = FBInstanceFirestore.getProducts(approvedProductIDs[i]);
+        // approved_product.then((data) => {
+        //     // Handle the data once the promise is resolved
+        //     this.approvedProduct.push = data;
+        //     console.log(data); // Do something with the data
+        // }).catch((error) => {
+        //     // Handle any errors that occur during the promise execution
+        //     console.error(error);
+        // });
+        // }
+
+
+
     },
+
+
+
+
 
 }
 </script>
@@ -207,11 +290,15 @@ export default {
 td {
     font-size: 1rem;
     padding: 20px;
+    /* border-bottom: 1px solid #000000; */
+    border: 1px solid #000000;
+    vertical-align: middle;
 }
 
 th {
     font-weight: bolder;
     font-size: 1.2rem;
+    border: 1px solid #000000;
 
 }
 
@@ -270,6 +357,18 @@ table {
     border: 1px solid #fffefe;
     border-top: none;
     margin-bottom: 5dvh;
+}
+
+.my-custom-table {
+    width: 100%;
+    /* Set the width of the table to 100% */
+}
+
+.table-responsive {
+    max-height: 600px;
+    /* Set the maximum height of the table container */
+    overflow-y: auto;
+    /* Enable vertical scrolling if the content exceeds the container's height */
 }
 
 @media (max-width: 768px) {
