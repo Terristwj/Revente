@@ -1,4 +1,4 @@
-import { doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, addDoc, getDocs } from "firebase/firestore";
 import { FirestoreDatabase } from "./../../main.js";
 
 class FirebaseFirestore {
@@ -262,6 +262,23 @@ class FirebaseFirestore {
         const docSnap = await getDoc(docRef);
         // console.log(docSnap.data());
         return docSnap.data();
+    };
+
+    // Get all Product_ID
+    getAllProducts = async function () {
+        const querySnapshot = await getDocs(
+            collection(FirestoreDatabase, "products")
+        );
+
+        let products = [];
+
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            products.push(doc.data());
+        });
+
+        // console.log("Document data:", docSnap.data());
+        return products;
     };
 }
 
