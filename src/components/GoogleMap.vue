@@ -1,8 +1,11 @@
 <template>
     <div>
+        <!-- call the auto complete -->
         <GoogleAddressAutocomplete :apiKey="apiKey" v-model="address" @callback="getAddressData" class="form-control"
             placeholder="address" />
-        <div id="map" style="width: 100%; height: 500px"></div>
+            <div class="pt-1"></div>
+        <!-- map -->
+        <div id="map" style="width: 100%; height: 500px;"></div>
     </div>
 </template>
 
@@ -30,6 +33,8 @@ export default {
             },
         };
     },
+
+    // used geolocation to get the laptop location and centralise the map
     created() {
         this.$getLocation()
             .then((coordinates) => {
@@ -57,6 +62,8 @@ export default {
             });
     },
     methods: {
+
+        // reload the map when we get the location
         getAddressData(place) {
             // const place = this.$refs.autocomplete.getPlace();
             // console.log(place);
@@ -83,3 +90,10 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+#map {
+    height: 100%;
+    padding: 1rem;
+}
+</style>
