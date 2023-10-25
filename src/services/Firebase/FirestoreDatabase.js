@@ -142,7 +142,9 @@ class FirebaseFirestore {
         // Others
         drop_off_location,
         price,
-        is_approved
+        modifiedPrice,
+        is_approved,
+       
     ) {
         // (1) Add a new document with a generated id.
         const docRef = await addDoc(collection(FirestoreDatabase, "products"), {
@@ -160,7 +162,9 @@ class FirebaseFirestore {
 
             drop_off_location,
             price,
+            modifiedPrice,
             is_approved,
+         
         });
 
         // (2) Get product_ID
@@ -215,10 +219,11 @@ class FirebaseFirestore {
         price,
         modifiedPrice,
         is_approved,
+   
 
         // Image URL (To be Added)
         image_src,
-        status
+        
     ) {
         await setDoc(doc(FirestoreDatabase, "products", product_ID), {
             seller_ID,
@@ -238,10 +243,11 @@ class FirebaseFirestore {
             price,
             modifiedPrice,
             is_approved,
+           
 
             // (To be Added)
             image_src,
-            status
+            
         });
     };
 
@@ -285,6 +291,7 @@ class FirebaseFirestore {
         return products;
     };
 
+    //update product status.. is_approved:true;false and will auto update the size
     updateProductStatus= async function (
         // Seller & Product
         seller_ID,
@@ -308,7 +315,7 @@ class FirebaseFirestore {
         price,
         modifiedPrice,
         is_approved,
-
+       
         // Image URL (To be Added)
         image_src,
         size

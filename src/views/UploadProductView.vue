@@ -153,6 +153,7 @@ export default {
             let category = this.category.name;
             let condition = this.condition.name;
             let isApproved = false;
+            let modifiedPrice = 0;
 
             // (2) Retrieve the product_ID of add_doc
             const productID = await FBInstanceFirestore.createProduct(
@@ -175,6 +176,7 @@ export default {
                 // Others
                 this.dropOffLocation,
                 this.price,
+                modifiedPrice,
                 isApproved
             );
 
