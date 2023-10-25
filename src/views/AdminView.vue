@@ -63,7 +63,8 @@
                                 </td>
                                 <td>
                                     <textarea name="detailedSizing" :id="'detailedSizing-' + idx" v-model="productSize[idx]"
-                                        cols="20" rows="5"></textarea>
+                                        cols="20" rows="5"
+                                        placeholder="Chest Width: cm, Shoulder Width: cm, Sleeve Length: cm, Length: cm"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -96,7 +97,7 @@
                                 <td>{{ product.price }}</td>
                                 <td>{{ product.category }}</td>
                                 <td class="text-wrap">{{ product.size }}</td>
-                              
+
                             </tr>
                         </tbody>
 
@@ -173,6 +174,26 @@ export default {
             if (size) {
                 // console.log(size);
                 this.pendingProducts[idx].status = "Approved";
+               
+                //update firebase
+                FBInstanceFirestore.updateProductStatus(
+                    this.pendingProducts[idx].seller_ID,
+                    this.pendingProducts[idx].product_ID,
+                    this.pendingProducts[idx].product_name,
+                    this.pendingProducts[idx].brand,
+                    this.pendingProducts[idx].description,
+                    this.pendingProducts[idx].gender,
+                    this.pendingProducts[idx].category,
+                    this.pendingProducts[idx].condition,
+                    this.pendingProducts[idx].condition_notes,
+                    this.pendingProducts[idx].drop_off_location,
+                    this.pendingProducts[idx].price,
+                    this.pendingProducts[idx].modifiedPrice,
+                    "true",
+                    this.pendingProducts[idx].image_src,
+                    size,
+                );
+
                 this.pendingProducts[idx].price = newprice;
                 let id = this.pendingProducts[idx].product_ID;
                 console.log(id);
@@ -183,10 +204,8 @@ export default {
                         this.approvedProducts[key].size = size;
                     }
                 }
-
                 this.pendingProducts.splice(idx, 1);
                 this.productSize[idx] = '';
-
             } else {
                 // Size is not filled, show a notification
                 alert('Please fill in the size');
@@ -202,15 +221,8 @@ export default {
             else {
                 this.pendingProducts.splice(idx, 1);
             }
-
-
         },
 
-        // modifyPrice(originalPrice) {
-        //     // Calculate the modified price here, for example:
-        //     const randomValue = Math.floor(Math.random() * 21) - 10;
-        //     return (originalPrice + randomValue).toFixed(2);
-        // },
 
         modifyPrice(price) {
             const randomValue = Math.floor(Math.random() * 21) - 10;
@@ -230,12 +242,23 @@ export default {
         // grabs all the data already
         FBInstanceFirestore.getAllProducts().then((data) => {
             // Handle the data once the promise is resolved
-            this.pendingProducts = data;
+            for (const key in data) {
+                if (data[key].is_approved == "false") {
+                    this.pendingProducts.push(data[key]);
+                }
+                else {
+                    if(this.approvedProducts.includes(data[key]) == false){
+                        this.approvedProducts.push(data[key]);
+                    }
+                   
+                }
+            }
+           
             this.pendingProducts.forEach((product) => {
                 product.modifiedPrice = this.modifyPrice(product.price);
 
             });
-            console.log(data); // Do something with the data
+            console.log(this.pendingProducts); // Do something with the data
         }).catch((error) => {
             // Handle any errors that occur during the promise execution
             console.error(error);
