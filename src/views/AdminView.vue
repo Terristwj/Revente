@@ -244,11 +244,6 @@ export default {
             pendingProducts: [],
             //fake getting it from server
             approvedProducts: [
-                {
-                    product_ID: 5311, product_name: 'Jacket', modifiedPrice: 10.99, category: 'Electronics', status: 'Approved',
-                    size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm`, image_src: ''
-                },
-                // Add more products here
             ],
         }
     },
