@@ -3,6 +3,7 @@ import router from "../router/router.js";
 import { userStore } from "../main.js";
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
+import BackendOpenAI from "../services/Backend/OpenAI.js";
 import GoogleMap from "../components/GoogleMap.vue";
 
 export default {
@@ -48,6 +49,7 @@ export default {
 
             // Code-related
             isLoading: false,
+            isListing: false,
             firstError: "",
             isSuccessful: false,
         };
@@ -65,17 +67,26 @@ export default {
         async submitForm() {
             // If there are no errors, submit the form
             this.toggleLoadingUI();
+            this.isListing = true;
+
             await this.doSubmitForm();
+
             this.toggleLoadingUI();
+            this.isListing = false;
         },
-        // Disable button when isLoading
+        // Disable 'List Now' and 'AI' when isLoading
         toggleLoadingUI() {
             let listNowBtn = document.getElementById("List-Now-Btn");
+            let AIBtn = document.getElementById("AI-Button");
 
             this.isLoading = !this.isLoading;
-            this.isLoading
-                ? (listNowBtn.disabled = true)
-                : (listNowBtn.disabled = false);
+            if (this.isLoading) {
+                listNowBtn.disabled = true;
+                AIBtn.disabled = true;
+            } else {
+                listNowBtn.disabled = false;
+                AIBtn.disabled = false;
+            }
         },
         async doSubmitForm() {
             if (this.isEverythingValid()) {
@@ -281,6 +292,29 @@ export default {
             this.dropOffLocation = loc;
             // console.log(loc);
         },
+        async generateDescription() {
+            this.toggleLoadingUI();
+
+            let prompt = "Help me generate a description for a clothing ware.";
+            prompt +=
+                "Here are some additional information about the item, if any:";
+
+            if (this.gender) prompt += `It is meant for ${this.gender}`;
+            if (this.category) prompt += `It is a ${this.category}`;
+            if (this.condition) prompt += `It is ${this.condition}`;
+            if (this.conditionNotes)
+                prompt += `Additional notes on its condition are: ${this.conditionNotes}`;
+            if (this.itemName) prompt += `It is called ${this.itemName}`;
+            if (this.itemBrand)
+                prompt += `It's brand is from ${this.itemBrand}`;
+
+            await BackendOpenAI.generatePrompt(prompt).then((res) => {
+                console.log(res.data);
+                this.itemDescription = res.data.response;
+            });
+
+            this.toggleLoadingUI();
+        },
     },
 };
 </script>
@@ -303,7 +337,7 @@ export default {
                     @click="submitForm()"
                 >
                     <ProgressSpinner
-                        v-if="isLoading"
+                        v-if="isListing"
                         style="width: 15px; height: 100%; padding-left: -20px"
                         strokeWidth="8"
                         animationDuration=".5s"
@@ -504,7 +538,24 @@ export default {
                                 <label for="Item-Brand">Brand (Optional)</label>
                             </span>
                         </div>
-                        <h5 class="bold mt-3">Description</h5>
+                        <div class="d-flex gap-3">
+                            <h5 class="bold mt-3">Description</h5>
+                            <Button
+                                id="AI-Button"
+                                class="btn-danger my-2 py-0 rounded-2"
+                                severity="help"
+                                label="AI"
+                                icon="pi pi-bolt"
+                                icon-pos="right"
+                                size="small"
+                                :pt="{
+                                    icon: {
+                                        class: 'm-0',
+                                    },
+                                }"
+                                @click="generateDescription()"
+                            />
+                        </div>
                         <Textarea
                             class="form-control"
                             v-model="itemDescription"

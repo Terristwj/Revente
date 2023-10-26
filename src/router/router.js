@@ -166,7 +166,7 @@ router.beforeEach((to, from, next) => {
         } else {
             next();
         }
-    }, 500);
+    }, 1000);
 });
 
 export default router;
