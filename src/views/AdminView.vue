@@ -155,7 +155,7 @@ export default {
     methods: {
         showConfetti() {
             return confetti({
-                particleCount: 1500,
+                particleCount: 2000,
                 spread: 600
             });
         },
@@ -288,7 +288,7 @@ export default {
 
 <style scoped>
 button {
-    margin: 40px;
+    margin: 30px;
 }
 
 .custom-btn {
