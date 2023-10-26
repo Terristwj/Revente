@@ -300,6 +300,10 @@ export default {
         toCancel() {
             router.go(-1);
         },
+        updateDropOff(loc) {
+            this.dropOffLocation = loc;
+            console.log(loc);
+        }
     },
 };
 </script>
@@ -439,7 +443,7 @@ export default {
                     <div class="col-12 shadow p-3 bg-white rounded">
                         <h5 class="bold">Drop-off Location</h5>
                         <div class="pt-3">
-                                <GoogleMap />
+                                <GoogleMap @drop-off="updateDropOff" />
                         </div>
                     </div>
 
