@@ -84,6 +84,7 @@
                         <thead class="thead-light">
                             <tr class="table-success" style="border:1px solid black;">
                                 <th scope="col">ID</th>
+                                <th scope="col">Product</th>
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Category</th>
@@ -93,8 +94,10 @@
                         <tbody>
                             <tr v-for="product in approvedProducts" :key="product.id">
                                 <td>{{ product.product_ID }}</td>
+                                <td><img :src="product.image_src" alt="Product Image"
+                                        :style="{ width: '100px', height: '100px' }" /></td>
                                 <td>{{ product.product_name }}</td>
-                                <td>{{ product.price }}</td>
+                                <td>{{ product.modifiedPrice}}</td>
                                 <td>{{ product.category }}</td>
                                 <td class="text-wrap">{{ product.size }}</td>
 
@@ -125,16 +128,13 @@ export default {
             approvedShow: false,
             statsShow: false,
             // products: null,
-
             pendingProducts: [],
             //fake getting it from server
             approvedProducts: [
                 {
-                    product_ID: 5311, product_name: 'Jacket', price: 10.99, category: 'Electronics', status: 'Approved',
-                    size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm`
+                    product_ID: 5311, product_name: 'Jacket', modifiedPrice: 10.99, category: 'Electronics', status: 'Approved',
+                    size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm`, image_src : ''
                 },
-                { product_ID: 2942, product_name: 'Sweatshirt', price: 24.99, category: 'Clothing', status: 'Approved', size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm` },
-                { product_ID: 3435, product_name: 'Potato', price: 15.49, category: 'Home & Kitchen', status: 'Approved', size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm` },
                 // Add more products here
             ],
         }
