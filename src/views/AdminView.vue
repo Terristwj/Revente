@@ -116,7 +116,99 @@
 
         <!-- stats content -->
         <div v-if="statsShow" class="tabcontent">
-            <h2 class="mb-5 heading">Stats</h2>
+
+
+            <div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+                <h1 class="mb-5 heading" style="font-weight:bold;">ADMIN DASHBOARD</h1>
+                <div class="grid">
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="surface-card shadow-2 p-3 border-round">
+                            <div class="flex justify-content-between mb-3">
+                                <div>
+                                    <span class="block text-500 font-medium mb-3">Orders</span>
+                                    <div class="text-900 font-medium text-xl">152</div>
+                                </div>
+                                <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                    style="width:2.5rem;height:2.5rem">
+                                    <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <span class="text-green-500 font-medium">24 new </span>
+                            <span class="text-500">since last visit</span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="surface-card shadow-2 p-3 border-round">
+                            <div class="flex justify-content-between mb-3">
+                                <div>
+                                    <span class="block text-500 font-medium mb-3">Approved</span>
+                                    <div class="text-900 font-medium text-xl">102 Approved</div>
+                                </div>
+                                <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                                    style="width:2.5rem;height:2.5rem">
+                                    <i class="pi pi-comment text-purple-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <span class="text-green-500 font-medium">50 </span>
+                            <span class="text-500">Rejected</span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="surface-card shadow-2 p-3 border-round">
+                            <div class="flex justify-content-between mb-3">
+                                <div>
+                                    <span class="block text-500 font-medium mb-3">Revenue</span>
+                                    <div class="text-900 font-medium text-xl">$2100</div>
+                                </div>
+                                <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                                    style="width:2.5rem;height:2.5rem">
+                                    <i class="pi pi-map-marker text-orange-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <span class="text-green-500 font-medium">%52+ </span>
+                            <span class="text-500">since last week</span>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6 lg:col-3">
+                        <div class="surface-card shadow-2 p-3 border-round">
+                            <div class="flex justify-content-between mb-3">
+                                <div>
+                                    <span class="block text-500 font-medium mb-3">Customers</span>
+                                    <div class="text-900 font-medium text-xl">28441</div>
+                                </div>
+                                <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                                    style="width:2.5rem;height:2.5rem">
+                                    <i class="pi pi-inbox text-cyan-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <span class="text-green-500 font-medium">520 </span>
+                            <span class="text-500">newly registered</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-12 md:col-6 lg:col-12">
+                            <div class="surface-card shadow-2 p-3 border-round">
+                                <div class="flex justify-content-between mb-3">
+                                    <div>
+                                        <span class="block text-500 font-medium mb-3">Orders</span>
+                                        <div class="text-900 font-medium text-xl">152</div>
+                                    </div>
+                                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                        style="width:2.5rem;height:2.5rem">
+                                        <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
+                                    </div>
+                                </div>
+                                <span class="text-green-500 font-medium">24 new </span>
+                                <span class="text-500">since last visit</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -124,6 +216,7 @@
 <script>
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import confetti from "https://esm.run/canvas-confetti@1";
+
 
 export default {
     data() {
@@ -288,7 +381,7 @@ export default {
 
 <style scoped>
 button {
-    margin: 30px;
+    margin: 20px;
 }
 
 .custom-btn {

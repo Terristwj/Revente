@@ -1,4 +1,7 @@
 import "./assets/styles/main.css";
+import "primeflex/primeflex.css";
+
+
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
