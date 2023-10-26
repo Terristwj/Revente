@@ -45,7 +45,8 @@ export default {
                 brand: this.brand,
                 size: this.size,
                 seller: this.seller,
-                name: this.name
+                name: this.name,
+                uuid: this.uuid
             }
 
             this.$router.push({
@@ -93,9 +94,6 @@ export default {
                 class="reviewButton"
                 >
                 Leave a Review
-                </button>
-                <button class="reviewButton">
-                    View Similar Items
                 </button>
             </div>
         </div>
