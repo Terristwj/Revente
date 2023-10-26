@@ -26,10 +26,14 @@
             <h2 class="mb-5 heading">Pending</h2>
 
             <div v-if="noPending" class="my-5">
-                <h3>No Pending Products!</h3>
+                <div>
+                    <h3>Yay! No Pending Products!</h3>
+                    <button class="custom-btn btn-12" @click="showConfetti"><span>CLICK ME</span><span>S U R P R I S
+                            E</span></button>
+
+                </div>
             </div>
             <div class="container w-100" v-if="!noPending">
-
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead class="thead-light">
@@ -97,7 +101,7 @@
                                 <td><img :src="product.image_src" alt="Product Image"
                                         :style="{ width: '100px', height: '100px' }" /></td>
                                 <td>{{ product.product_name }}</td>
-                                <td>{{ product.modifiedPrice}}</td>
+                                <td>{{ product.modifiedPrice }}</td>
                                 <td>{{ product.category }}</td>
                                 <td class="text-wrap">{{ product.size }}</td>
 
@@ -119,6 +123,7 @@
 
 <script>
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
+import confetti from "https://esm.run/canvas-confetti@1";
 
 export default {
     data() {
@@ -133,7 +138,7 @@ export default {
             approvedProducts: [
                 {
                     product_ID: 5311, product_name: 'Jacket', modifiedPrice: 10.99, category: 'Electronics', status: 'Approved',
-                    size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm`, image_src : ''
+                    size: `Chest Width: 132 cm, Shoulder Width: 56 cm, Sleeve Length: 60 cm, Length: 70 cm`, image_src: ''
                 },
                 // Add more products here
             ],
@@ -144,10 +149,16 @@ export default {
             return this.pendingProducts.length == 0;
         },
 
-
     },
 
+
     methods: {
+        showConfetti() {
+            return confetti({
+                particleCount: 1500,
+                spread: 600
+            });
+        },
         openTab(word) {
             // console.log('openTab');
             if (word == "pending") {
@@ -174,7 +185,7 @@ export default {
             if (size) {
                 // console.log(size);
                 this.pendingProducts[idx].status = "Approved";
-               
+
                 //update firebase
                 FBInstanceFirestore.updateProductStatus(
                     this.pendingProducts[idx].seller_ID,
@@ -247,13 +258,13 @@ export default {
                 }
                 else {
                     //if dh the same product, push to approvedProducts
-                    if(this.approvedProducts.includes(data[key]) == false){
+                    if (this.approvedProducts.includes(data[key]) == false) {
                         this.approvedProducts.push(data[key]);
                     }
-                   
+
                 }
             }
-           
+
             this.pendingProducts.forEach((product) => {
                 product.modifiedPrice = this.modifyPrice(product.price);
 
@@ -270,10 +281,113 @@ export default {
 
 
 
+
+
 }
 </script>
 
 <style scoped>
+button {
+    margin: 40px;
+}
+
+.custom-btn {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+        7px 7px 20px 0px rgba(0, 0, 0, .1),
+        4px 4px 5px 0px rgba(0, 0, 0, .1);
+    outline: none;
+}
+
+.btn-12 {
+    position: relative;
+    right: 20px;
+    bottom: 20px;
+    border: none;
+    box-shadow: none;
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    -webkit-perspective: 230px;
+    perspective: 230px;
+}
+
+.btn-12 span {
+    background: rgb(0, 172, 238);
+    background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1) 100%);
+    display: block;
+    position: absolute;
+    width: 130px;
+    height: 40px;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+        7px 7px 20px 0px rgba(0, 0, 0, .1),
+        4px 4px 5px 0px rgba(0, 0, 0, .1);
+    border-radius: 5px;
+    margin: 0;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.btn-12 span:nth-child(1) {
+    box-shadow:
+        -7px -7px 20px 0px #fff9,
+        -4px -4px 5px 0px #fff9,
+        7px 7px 20px 0px #0002,
+        4px 4px 5px 0px #0001;
+    -webkit-transform: rotateX(90deg);
+    -moz-transform: rotateX(90deg);
+    transform: rotateX(90deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+
+.btn-12 span:nth-child(2) {
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 50% -20px;
+    -moz-transform-origin: 50% 50% -20px;
+    transform-origin: 50% 50% -20px;
+}
+
+.btn-12:hover span:nth-child(1) {
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+        7px 7px 20px 0px rgba(0, 0, 0, .1),
+        4px 4px 5px 0px rgba(0, 0, 0, .1);
+    -webkit-transform: rotateX(0deg);
+    -moz-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+
+.btn-12:hover span:nth-child(2) {
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+        7px 7px 20px 0px rgba(0, 0, 0, .1),
+        4px 4px 5px 0px rgba(0, 0, 0, .1);
+    color: transparent;
+    -webkit-transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+}
+
+
+
+
 td {
     font-size: 1rem;
     padding: 20px;
