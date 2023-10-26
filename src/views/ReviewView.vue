@@ -16,8 +16,7 @@ export default {
 				rating: 4.5,
 				textinput: "",
 			},
-			previewImage: null,
-			imageUploaded: false,
+			imageSrc: null,
 			};
 	},
 
@@ -76,11 +75,14 @@ export default {
 			</div>
 		</div>
 
-		<div class="container photoPortion">
+		<div class="container uploadPhoto">
 			<h4>Upload Photo <span class="optional"> (Optional) </span></h4>
-			<div class="photoPortion">
-				<img v-if="imageUploaded" src="previewImage" class="uploading-image"/>
-				<input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)">
+			
+			<div>
+				<div class="photoPortion">
+					<img :src="imageSrc" class="uploading-image"/>
+					<input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)">
+				</div>
 			</div>
 		</div>
 
@@ -124,11 +126,21 @@ textarea {
 }
 
 .uploading-image{
-	display:flex;
+	display: flex;
+	max-height: 200px;
+	width: auto;
 }
 
 .photoPortion {
-	margin: 40px;
+	margin-top: 30px;
+	border: 0.5px solid grey;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 40px;
+	padding-right: 40px;
+	border-radius: 5px;
+	max-width: 700px;
+	display: flex;
 }
 
 .submit {
@@ -145,6 +157,10 @@ textarea {
 	margin-left: 50px;
 	margin-bottom: 50px;
 	color: white;
+}
+
+.uploadPhoto {
+	margin: 40px;
 }
 
 </style>
