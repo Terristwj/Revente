@@ -114,6 +114,23 @@ class FirebaseFirestore {
         });
         // console.log("Created Doc");
     };
+
+      // Get all Product_ID
+      getAllUsers = async function () {
+        const querySnapshot = await getDocs(
+            collection(FirestoreDatabase, "users")
+        );
+
+        let users = [];
+
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            users.push(doc.data());
+        });
+
+        // console.log("Document data:", docSnap.data());
+        return users;
+    };
     //
     // Firestore Handle User END
     //
@@ -290,6 +307,7 @@ class FirebaseFirestore {
         // console.log("Document data:", docSnap.data());
         return products;
     };
+
 
     //update product status.. is_approved:true;false and will auto update the size
     updateProductStatus= async function (

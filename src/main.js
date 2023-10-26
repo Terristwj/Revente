@@ -1,7 +1,5 @@
 import "./assets/styles/main.css";
 
-
-
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 // Track userID
@@ -34,9 +32,11 @@ import {
   faInfo,
   faShoppingBag,
   faUpload,
+  faCircleCheck,
+  faHourglassHalf,
+  faMoneyBillTrendUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-
 
 // google maps geolocation
 import Vue3Geolocation from "vue3-geolocation";
@@ -67,7 +67,10 @@ library.add(
   faUser,
   faInfo,
   faShoppingBag,
-  faUpload
+  faUpload,
+  faCircleCheck,
+  faHourglassHalf,
+  faMoneyBillTrendUp
 );
 app.component("font-awesome-icon", FontAwesomeIcon);
 
