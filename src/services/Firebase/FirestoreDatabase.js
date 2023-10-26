@@ -1,4 +1,11 @@
-import { doc, setDoc, getDoc, collection, addDoc, getDocs } from "firebase/firestore";
+import {
+    doc,
+    setDoc,
+    getDoc,
+    getDocs,
+    collection,
+    addDoc,
+} from "firebase/firestore";
 import { FirestoreDatabase } from "./../../main.js";
 
 class FirebaseFirestore {
@@ -115,8 +122,8 @@ class FirebaseFirestore {
         // console.log("Created Doc");
     };
 
-      // Get all Product_ID
-      getAllUsers = async function () {
+    // Get all Product_ID
+    getAllUsers = async function () {
         const querySnapshot = await getDocs(
             collection(FirestoreDatabase, "users")
         );
@@ -158,11 +165,13 @@ class FirebaseFirestore {
 
         // Others
         drop_off_location,
-        price,
-        modifiedPrice,
-        is_approved,
-       
+        price
     ) {
+        // (o) Default values
+        const modified_price = 0;
+        const is_approved = false;
+        const is_bought = false;
+
         // (1) Add a new document with a generated id.
         const docRef = await addDoc(collection(FirestoreDatabase, "products"), {
             seller_ID,
@@ -179,9 +188,11 @@ class FirebaseFirestore {
 
             drop_off_location,
             price,
-            modifiedPrice,
+
+            // Default values
+            modified_price,
             is_approved,
-         
+            is_bought,
         });
 
         // (2) Get product_ID
@@ -205,7 +216,11 @@ class FirebaseFirestore {
 
             drop_off_location,
             price,
+
+            // Default values
+            modified_price,
             is_approved,
+            is_bought,
         });
 
         // (4) Return product_ID for other usage
@@ -214,58 +229,86 @@ class FirebaseFirestore {
 
     // Adds/updates 'image_src' into a product's document
     updateProductImageSrc = async function (
-        // Seller & Product
-        seller_ID,
+        // Document Key
         product_ID,
 
-        // Product Details
-        product_name,
-        brand,
-        description,
-
-        // Category
-        gender,
-        category,
-
-        // Condition
-        condition,
-        condition_notes,
-
-        // Others
-        drop_off_location,
-        price,
-        modifiedPrice,
-        is_approved,
-   
-
         // Image URL (To be Added)
-        image_src,
-        
+        image_src
     ) {
-        await setDoc(doc(FirestoreDatabase, "products", product_ID), {
-            seller_ID,
-            product_ID,
+        console.log(1);
+        await this.getProduct(product_ID).then(async (productData) => {
+            console.log(productData);
+            const seller_ID = productData.seller_ID;
+            const product_ID = productData.product_ID;
 
-            product_name,
-            brand,
-            description,
+            const product_name = productData.product_name;
+            const brand = productData.brand;
+            const description = productData.description;
 
-            gender,
-            category,
+            const gender = productData.gender;
+            const category = productData.category;
 
-            condition,
-            condition_notes,
+            const condition = productData.condition;
+            const condition_notes = productData.condition_notes;
 
-            drop_off_location,
-            price,
-            modifiedPrice,
-            is_approved,
-           
+            const drop_off_location = productData.drop_off_location;
+            const price = productData.price;
 
-            // (To be Added)
-            image_src,
-            
+            const modifiedPrice = productData.modified_price;
+            const is_approved = productData.is_approved;
+            const is_bought = productData.is_bought;
+
+            await setDoc(doc(FirestoreDatabase, "products", product_ID), {
+                seller_ID,
+                product_ID,
+
+                product_name,
+                brand,
+                description,
+
+                gender,
+                category,
+
+                condition,
+                condition_notes,
+
+                drop_off_location,
+                price,
+
+                modifiedPrice,
+                is_approved,
+                is_bought,
+
+                // (To be Added)
+                image_src,
+            });
+            console.log(4);
         });
+    };
+
+    // Get a specific product
+    getProduct = async function (productID) {
+        // console.log(productID);
+        const docRef = doc(FirestoreDatabase, "products", productID);
+        const docSnap = await getDoc(docRef);
+        // console.log(docSnap.data());
+        return docSnap.data();
+    };
+
+    // Get all Product_ID
+    getAllProducts = async function () {
+        const querySnapshot = await getDocs(
+            collection(FirestoreDatabase, "products")
+        );
+
+        let products = [];
+
+        // For each doc (product) in collection (products)
+        querySnapshot.forEach((doc) => {
+            products.push(doc.data());
+        });
+
+        return products;
     };
 
     //
@@ -282,35 +325,8 @@ class FirebaseFirestore {
         });
     };
 
-    // get a product
-    getProducts = async function (productID) {
-        // console.log(userID);
-        const docRef = doc(FirestoreDatabase, "products", productID);
-        const docSnap = await getDoc(docRef);
-        // console.log(docSnap.data());
-        return docSnap.data();
-    };
-
-    // Get all Product_ID
-    getAllProducts = async function () {
-        const querySnapshot = await getDocs(
-            collection(FirestoreDatabase, "products")
-        );
-
-        let products = [];
-
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            products.push(doc.data());
-        });
-
-        // console.log("Document data:", docSnap.data());
-        return products;
-    };
-
-
     //update product status.. is_approved:true;false and will auto update the size
-    updateProductStatus= async function (
+    updateProductStatus = async function (
         // Seller & Product
         seller_ID,
         product_ID,
@@ -333,11 +349,10 @@ class FirebaseFirestore {
         price,
         modifiedPrice,
         is_approved,
-       
+
         // Image URL (To be Added)
         image_src,
         size
-
     ) {
         await setDoc(doc(FirestoreDatabase, "products", product_ID), {
             seller_ID,
@@ -360,17 +375,9 @@ class FirebaseFirestore {
 
             // (To be Added)
             image_src,
-            size
-       
+            size,
         });
     };
-
-
-
-
-
-
-
 }
 
 const FBInstanceFirestore = new FirebaseFirestore();
