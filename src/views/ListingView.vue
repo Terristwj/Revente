@@ -36,7 +36,10 @@
 						@click="visibleLeft = true"
 					>
 						Filter
-						<font-awesome-icon :icon="['fab', 'filter']" />
+						<font-awesome-icon
+							:icon="['fas', 'filter']"
+							class="mx-2"
+						/>
 					</button>
 				</div>
 			</div>
