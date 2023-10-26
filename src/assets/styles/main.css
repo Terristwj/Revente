@@ -1,6 +1,7 @@
 @import "./base.css";
 @import "./responsive.css";
 
+
 /* #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -155,4 +156,11 @@ h1 {
 /* Transition Effect */
 * {
     transition-duration: 0.2s;
+}
+
+a{
+    text-decoration: none;
+    color:black;
+    font-size: large;
+    font-weight: bold;
 }

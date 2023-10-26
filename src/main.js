@@ -1,41 +1,46 @@
-import "./assets/styles/main.css";
+import './assets/styles/main.css';
 
-import { createApp } from "vue";
-import { createPinia } from "pinia";
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 // Track userID
-import { useCurrentUserStore } from "./stores/currentUser.js";
-import { useCurrentItemID } from "./stores/currentItem.js";
-import App from "./App.vue";
-import router from "./router/router.js";
+import { useCurrentUserStore } from './stores/currentUser.js';
+import { useCurrentItemID } from './stores/currentItem.js';
+import App from './App.vue';
+import router from './router/router.js';
 
 // Component library
-import connectPrimeVue from "./services/PrimeVue.js";
+import connectPrimeVue from './services/PrimeVue.js';
 
 // Firebase Database
 import connectFirebase, {
-    getMyFirestore,
-    getMyStorage,
-} from "./services/Firebase/FirebaseConfig";
+	getMyFirestore,
+	getMyStorage,
+} from './services/Firebase/FirebaseConfig';
 
 // Font-Awesome Icons
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-    faFacebookF,
-    faTwitter,
-    faInstagram,
-    faTiktok,
-} from "@fortawesome/free-brands-svg-icons";
+	faFacebookF,
+	faTwitter,
+	faInstagram,
+	faTiktok,
+} from '@fortawesome/free-brands-svg-icons';
 import {
-    faHeart,
-    faUser,
-    faInfo,
-    faShoppingBag,
-    faUpload,
-} from "@fortawesome/free-solid-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
-const app = createApp(App);
+	faHeart,
+	faUser,
+	faInfo,
+	faShoppingBag,
+	faUpload,
+	faFilter,
+} from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
+// google maps geolocation
+import Vue3Geolocation from 'vue3-geolocation';
+
+const app = createApp(App);
+app.use(Vue3Geolocation);
 app.use(createPinia());
 export const userStore = useCurrentUserStore();
 export const itemStore = useCurrentItemID();
@@ -51,17 +56,18 @@ export const FirestoreStorage = getMyStorage(firebaseApp);
 
 // Font-Awesome Icons
 library.add(
-    faFacebookF,
-    faTwitter,
-    faInstagram,
-    faTiktok,
-    faHeart,
-    far,
-    faUser,
-    faInfo,
-    faShoppingBag,
-    faUpload
+	faFacebookF,
+	faTwitter,
+	faInstagram,
+	faTiktok,
+	faHeart,
+	far,
+	faUser,
+	faInfo,
+	faShoppingBag,
+	faUpload,
+	faFilter
 );
-app.component("font-awesome-icon", FontAwesomeIcon);
+app.component('font-awesome-icon', FontAwesomeIcon);
 
-app.mount("#app");
+app.mount('#app');

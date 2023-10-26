@@ -20,7 +20,7 @@ export default {
         <Card>
             <template #title> Frequently Asked Questions </template>
             <template #content>
-                <Accordion>
+                <Accordion class="custom-accordion">
                     <AccordionTab header="My Account">
                         <Accordion>
                             <AccordionTab header="How do I create an account?">
@@ -192,6 +192,12 @@ export default {
 #faq {
     margin: auto;
     max-width: 1200px;
+    color: black !important;
+    text-decoration: none !important;
+}
+.p-accordion .p-accordion-header .p-accordion-header-link{
+    color: black !important;
+    text-decoration: none !important;
 }
 
 /* X-Large devices (large desktops, 1200px and up) */
