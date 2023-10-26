@@ -216,6 +216,8 @@
 <script>
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import confetti from "https://esm.run/canvas-confetti@1";
+import "primeflex/primeflex.css";
+
 
 
 export default {
