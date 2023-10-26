@@ -1,30 +1,60 @@
 <script>
 	import CountryDropdown from '../components/CountryDropdown.vue';
-	import Stripe from 'stripe';
+	import { StripeElements, StripeElement } from 'vue-stripe-js';
+	import { loadStripe } from '@stripe/stripe-js';
+	import { defineComponent, ref, onBeforeMount } from 'vue';
 	export default {
 		components: {
 			CountryDropdown,
+			StripeElements,
+			StripeElement,
 		},
-		async mounted() {
-			const { publishableKey } = await fetch('/config').then((r) =>
-				r.json()
-			);
-			if (!publishableKey) {
-				console.log(
-					'No publishable key returned from the server. Please check `.env` and try again'
-				);
-				alert(
-					'Please set your Stripe publishable API key in the .env file'
-				);
-			}
+		setup() {
+			const stripeKey = ref('pk_test_TYooMQauvdEDq54NiTphI7jx'); // test key
+			const instanceOptions = ref({
+				// https://stripe.com/docs/js/initializing#init_stripe_js-options
+			});
+			const elementsOptions = ref({
+				// https://stripe.com/docs/js/elements_object/create#stripe_elements-options
+			});
+			const cardOptions = ref({
+				// https://stripe.com/docs/stripe.js#element-options
+				value: {
+					postalCode: '12345',
+				},
+			});
+			const stripeLoaded = ref(false);
+			const card = ref();
+			const elms = ref();
 
-			const stripe = Stripe(publishableKey, {
-				apiVersion: import.meta.env.VITE_API_VERSION,
+			onBeforeMount(() => {
+				const stripePromise = loadStripe(stripeKey.value);
+				stripePromise.then(() => {
+					stripeLoaded.value = true;
+				});
 			});
 
-			const elements = stripe.elements();
-			const card = elements.create('card');
-			card.mount('#card-element');
+			const pay = () => {
+				// Get stripe element
+				const cardElement = card.value.stripeElement;
+
+				// Access instance methods, e.g. createToken()
+				elms.value.instance.createToken(cardElement).then((result) => {
+					// Handle result.error or result.token
+					console.log(result);
+				});
+			};
+
+			return {
+				stripeKey,
+				stripeLoaded,
+				instanceOptions,
+				elementsOptions,
+				cardOptions,
+				card,
+				elms,
+				pay,
+			};
 		},
 		data() {
 			return {
@@ -42,11 +72,6 @@
 					lastName: '',
 					phoneNumber: '',
 				},
-				formDisabled: true,
-				amount: 500,
-				submitted: false,
-				stripe: null,
-				cardElement: null,
 			};
 		},
 		methods: {
@@ -54,71 +79,7 @@
 				console.log(code);
 				this.shippingLocation.countryCode = code;
 			},
-			async handleSubmit() {
-				console.log(this.shippingLocation, this.personalDetails);
-				// Disable double submission of the form
-				if (this.submitted) {
-					return;
-				}
-				this.submitted = true;
-				this.formDisabled = true;
-
-				// Make a call to the server to create a new
-				// payment intent and store its client_secret.
-				const { error: backendError, clientSecret } = await fetch(
-					'/create-payment-intent',
-					{
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							currency: 'sgd',
-							paymentMethodType: 'card',
-							amount: this.amount,
-						}),
-					}
-				).then((r) => r.json());
-
-				if (backendError) {
-					console.log(backendError.message);
-
-					// reenable the form.
-					this.submitted = false;
-					this.formDisabled = false;
-					return;
-				}
-
-				console.log(`Client secret returned.`);
-
-				const nameInput = document.querySelector('#name');
-
-				// Confirm the card payment given the clientSecret
-				// from the payment intent that was just created on
-				// the server.
-				const { error: stripeError, paymentIntent } =
-					await this.stripe.confirmCardPayment(clientSecret, {
-						payment_method: {
-							card: this.cardElement,
-							billing_details: {
-								name: nameInput.value,
-							},
-						},
-					});
-
-				if (stripeError) {
-					console.log(stripeError.message);
-
-					// reenable the form.
-					this.submitted = false;
-					this.formDisabled = false;
-					return;
-				}
-
-				console.log(
-					`Payment ${paymentIntent.status}: ${paymentIntent.id}`
-				);
-			},
+			async handleSubmit() {},
 		},
 	};
 </script>
@@ -281,10 +242,25 @@
 					<h3 class="my-5">3. Payment</h3>
 					<div class="row gy-3">
 						<div class="col-md-7 required">
-							<label for="card-element"> Card Details </label>
-							<div id="card-element">
-								<!-- Elements will create input elements here -->
-							</div>
+							<label for="cc-details" class="form-label"
+								>Card Details</label
+							>
+							<StripeElements
+								id="cc-details"
+								class="form-control"
+								v-if="stripeLoaded"
+								v-slot="{ elements, instance }"
+								ref="elms"
+								:stripe-key="stripeKey"
+								:instance-options="instanceOptions"
+								:elements-options="elementsOptions"
+							>
+								<StripeElement
+									ref="card"
+									:elements="elements"
+									:options="cardOptions"
+								/>
+							</StripeElements>
 						</div>
 
 						<div class="col-md-5 required">
