@@ -1,19 +1,20 @@
 <script>
 import ReviewItem from "../components/ReviewItem.vue";
-import RatingItem from "../components/RatingItem.vue";
+import vue3starRatings from "vue3-star-ratings";
+import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
+import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
 export default {
     components: {
 			ReviewItem,
-			RatingItem,
+			vue3starRatings,
 	},
     data() { 
-			return { 
+		return { 
 		// key: value
 			item: JSON.parse(this.$route.query.data),
 			review: {
-				rating: "",
+				rating: 4.5,
 				textinput: "",
-				id: this.uuid,
 			},
 			previewImage: null,
 			imageUploaded: false,
@@ -21,18 +22,13 @@ export default {
 	},
 
     methods: {
-		uploadImage(e){
-			const image = e.target.files[0];
-			const reader = new FileReader();
-			this.imageUploaded = true;
-			reader.readAsDataURL(image);
-			reader.onload = e =>{
-				this.previewImage = e.target.result;
-				console.log(this.previewImage);
-			};
-
+        onFileChange(event) {
+            if (event.target.files.length > 0) {
+                this.imageFile = event.target.files[0];
+                this.imageSrc = URL.createObjectURL(this.imageFile);
+            }
 		},
-    } 
+    },
     };
 </script>
 
@@ -57,7 +53,16 @@ export default {
 		<!--BELOW IS THE REVIEWING PORTION-->
 		<div class="container ratingPortion">
 			<h4>Rating</h4>
-			<RatingItem v-model="review.rating"/>
+			<div>
+				<vue3starRatings
+				v-model="review.rating"
+				:starSize="'32'"
+				starColor="#ff9800"
+				inactiveColor="#333333"
+				:numberOfStars="5"
+				:disableClick="false" 
+			/>
+			</div>
 		</div>
 
 		<div class="container reviewPortion">
@@ -75,7 +80,7 @@ export default {
 			<h4>Upload Photo <span class="optional"> (Optional) </span></h4>
 			<div class="photoPortion">
 				<img v-if="imageUploaded" src="previewImage" class="uploading-image"/>
-				<input type="file" accept="image/jpeg" @change="uploadImage(e)">
+				<input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)">
 			</div>
 		</div>
 

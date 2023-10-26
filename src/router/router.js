@@ -133,17 +133,11 @@ export const routes = [
         path: "/orderHistory",
         name: "Order History",
         component: () => import("../views/OrderHistory.vue"),
-        meta: {
-            requiresNoAuth: true,
-        },
     },
     {
         path: "/reviewView/:id",
         name: "Review View",
         component: () => import("../views/ReviewView.vue"),
-        meta: {
-            requiresNoAuth: true,
-        },
     },
     // Incomplete Views goes here END
 ];
