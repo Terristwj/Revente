@@ -121,7 +121,6 @@ export const routes = [
 		component: () => import('../views/404View.vue'),
 	},
 	// Others END
-	// Incomplete Views goes here END
 	// upload page
 	{
 		path: '/profile/upload',
@@ -143,6 +142,11 @@ export const routes = [
 		path: '/reviewView/:id',
 		name: 'Review View',
 		component: () => import('../views/ReviewView.vue'),
+	},
+	{
+		path: '/checkout',
+		name: 'Checkout',
+		component: () => import('../views/CheckoutView.vue'),
 	},
 	// Incomplete Views goes here END
 ];
