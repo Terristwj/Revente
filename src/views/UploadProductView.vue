@@ -138,7 +138,7 @@ export default {
                 return false;
             }
 
-            if (!this.price) {
+            if (this.price == 0) {
                 this.firstError = "Please enter a price.";
                 return false;
             }
@@ -341,6 +341,7 @@ export default {
                                 <img
                                     style="
                                         height: 100%;
+                                        width: 100%;
                                         aspect-ratio: 1 / 1;
                                         object-fit: cover;
                                     "
@@ -501,7 +502,7 @@ export default {
                     <!-- Drop-off Location -->
                     <div class="col-12 shadow p-3 bg-white rounded">
                         <h5 class="bold">Drop-off Location</h5>
-                        <div class="pt-1">
+                        <div class="pt-4">
                             <span class="p-float-label">
                                 <InputText
                                     id="Drop-Off-Location"
