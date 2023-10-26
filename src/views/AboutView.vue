@@ -3,6 +3,7 @@ import ScrollSection from "../components/ScrollSection.vue";
 import GameCanvas from "../components/GameCanvas.vue";
 
 export default {
+    
     name: "App",
     components: {
         ScrollSection: ScrollSection,

@@ -289,12 +289,11 @@ export default {
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-3">
-                    <button class="btn btn-primary w-50" @click="submitForm()">
+                    <button class="btn btn-dark w-50" @click="submitForm()">
                         Register
                     </button>
                     <button
-                        class="btn btn-primary w-50"
-                        type="submit"
+                        class="btn btn-dark w-50"
                         @click="toCancel()"
                     >
                         Cancel
@@ -303,7 +302,6 @@ export default {
             </div>
         </div>
     </div>
-    <Toast />
 </template>
 
 <style scoped>
@@ -432,6 +430,10 @@ button {
 input:hover,
 button:hover {
     box-shadow: 0px 0px 0px 3px #c7d2fe;
+}
+
+button {
+    padding: 10px;
 }
 
 input:focus {

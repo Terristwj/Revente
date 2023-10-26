@@ -133,8 +133,7 @@ export default {
                     class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto mt-4"
                 >
                     <button
-                        class="btn btn-primary"
-                        type="submit"
+                        class="btn btn-dark"
                         @click="emailPasswordLogin"
                     >
                         Login
@@ -143,7 +142,7 @@ export default {
                     <button
                         id="GoogleSignIn"
                         class="d-flex justify-content-center align-items-center pointing"
-                        type="submit"
+                        
                         @click="googleLogin"
                     >
                         <img src="../assets/img/ecommerce/Google.png" />
@@ -164,8 +163,7 @@ export default {
                 style="max-width: 400px"
             >
                 <button
-                    class="btn btn-primary w-75 mx-auto"
-                    type="submit"
+                    class="btn btn-dark w-75 mx-auto"
                     @click="toRegistration()"
                 >
                     Register
@@ -173,7 +171,6 @@ export default {
             </div>
         </div>
     </div>
-    <Toast />
 </template>
 
 <style scoped>

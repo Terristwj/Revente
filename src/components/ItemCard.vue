@@ -45,6 +45,10 @@
     object-fit: fill;
 }
 
+.card-body {
+    margin: 10px;
+}
+
 .card-text {
     margin: 0;
 }

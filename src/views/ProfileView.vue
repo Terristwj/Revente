@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- User -->
+        <!-- User Jumbotron -->
         <div class="p-3 mb-4 bg-light rounded-3">
             <div class="container-fluid py-2">
                 <div class="row">
@@ -75,7 +75,6 @@ export default {
     data() {
         return {
             rating: 10,
-
         }
     },
     components: {

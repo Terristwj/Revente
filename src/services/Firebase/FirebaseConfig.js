@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 export default function connectFirebase() {
     // Firebase Database
@@ -17,6 +18,18 @@ export default function connectFirebase() {
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    getMyAnalytics(app);
+    return app;
+}
+
+function getMyAnalytics(app) {
     getAnalytics(app);
+}
+
+export function getMyFirestore(app) {
     return getFirestore(app);
+}
+
+export function getMyStorage(app) {
+    return getStorage(app);
 }
