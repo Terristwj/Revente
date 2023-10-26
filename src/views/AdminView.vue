@@ -33,7 +33,7 @@
 
                 </div>
             </div>
-            <div class="container w-100" v-if="!noPending">
+            <div class="" v-if="!noPending">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead class="thead-light">
@@ -82,7 +82,7 @@
         <!-- approved content -->
         <div v-if="approvedShow" class="tabcontent">
             <h2 class="mb-5 heading">Approved</h2>
-            <div class="container">
+            <div class="">
                 <div class="table-responsive">
                     <table class="table table-striped custom-table">
                         <thead class="thead-light">
@@ -314,8 +314,8 @@ export default {
                     this.pendingProducts[idx].condition_notes,
                     this.pendingProducts[idx].drop_off_location,
                     this.pendingProducts[idx].price,
-                    this.pendingProducts[idx].modifiedPrice,
-                    "true",
+                    parseFloat(this.pendingProducts[idx].modifiedPrice),
+                    true,
                     this.pendingProducts[idx].image_src,
                     size,
                 );
@@ -366,7 +366,7 @@ export default {
         // grabs all the data already AND SPLITS them into pending and approved
         FBInstanceFirestore.getAllProducts().then((data) => {
             for (const key in data) {
-                if (data[key].is_approved == "false") {
+                if (data[key].is_approved == false) {
                     this.pendingProducts.push(data[key]);
                 }
                 else {
