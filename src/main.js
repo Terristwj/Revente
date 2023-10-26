@@ -1,7 +1,7 @@
 import './assets/styles/main.css';
 
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 // Track userID
 import { useCurrentUserStore } from './stores/currentUser.js';
 import { useCurrentItemID } from './stores/currentItem.js';
@@ -27,14 +27,16 @@ import {
 	faTiktok,
 } from '@fortawesome/free-brands-svg-icons';
 import {
-	faHeart,
-	faUser,
-	faInfo,
-	faShoppingBag,
-	faUpload,
-	faFilter,
-} from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
+  faHeart,
+  faUser,
+  faInfo,
+  faShoppingBag,
+  faUpload,
+  faCircleCheck,
+  faHourglassHalf,
+  faMoneyBillTrendUp,
+} from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
 
 // google maps geolocation
 import Vue3Geolocation from 'vue3-geolocation';
@@ -56,17 +58,19 @@ export const FirestoreStorage = getMyStorage(firebaseApp);
 
 // Font-Awesome Icons
 library.add(
-	faFacebookF,
-	faTwitter,
-	faInstagram,
-	faTiktok,
-	faHeart,
-	far,
-	faUser,
-	faInfo,
-	faShoppingBag,
-	faUpload,
-	faFilter
+  faFacebookF,
+  faTwitter,
+  faInstagram,
+  faTiktok,
+  faHeart,
+  far,
+  faUser,
+  faInfo,
+  faShoppingBag,
+  faUpload,
+  faCircleCheck,
+  faHourglassHalf,
+  faMoneyBillTrendUp
 );
 app.component('font-awesome-icon', FontAwesomeIcon);
 

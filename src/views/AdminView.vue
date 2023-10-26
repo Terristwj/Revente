@@ -117,98 +117,111 @@
         <!-- stats content -->
         <div v-if="statsShow" class="tabcontent">
 
+            <div class="container-fluid">
+                <h1 class="mb-5 py-3 heading" style="font-weight:bold;">ADMIN DASHBOARD</h1>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5 d-flex" style="justify-content:center; align-item:center;">
+                                        <div class="my-auto ">
+                                            <font-awesome-icon :icon="['fas', 'hourglass-half']" bounce size="2xl" />
+                                        </div>
 
-            <div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
-                <h1 class="mb-5 heading" style="font-weight:bold;">ADMIN DASHBOARD</h1>
-                <div class="grid">
-                    <div class="col-12 md:col-6 lg:col-3">
-                        <div class="surface-card shadow-2 p-3 border-round">
-                            <div class="flex justify-content-between mb-3">
-                                <div>
-                                    <span class="block text-500 font-medium mb-3">Orders</span>
-                                    <div class="text-900 font-medium text-xl">152</div>
-                                </div>
-                                <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
-                                    style="width:2.5rem;height:2.5rem">
-                                    <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
-                                </div>
-                            </div>
-                            <span class="text-green-500 font-medium">24 new </span>
-                            <span class="text-500">since last visit</span>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-6 lg:col-3">
-                        <div class="surface-card shadow-2 p-3 border-round">
-                            <div class="flex justify-content-between mb-3">
-                                <div>
-                                    <span class="block text-500 font-medium mb-3">Approved</span>
-                                    <div class="text-900 font-medium text-xl">102 Approved</div>
-                                </div>
-                                <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
-                                    style="width:2.5rem;height:2.5rem">
-                                    <i class="pi pi-comment text-purple-500 text-xl"></i>
-                                </div>
-                            </div>
-                            <span class="text-green-500 font-medium">50 </span>
-                            <span class="text-500">Rejected</span>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-6 lg:col-3">
-                        <div class="surface-card shadow-2 p-3 border-round">
-                            <div class="flex justify-content-between mb-3">
-                                <div>
-                                    <span class="block text-500 font-medium mb-3">Revenue</span>
-                                    <div class="text-900 font-medium text-xl">$2100</div>
-                                </div>
-                                <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
-                                    style="width:2.5rem;height:2.5rem">
-                                    <i class="pi pi-map-marker text-orange-500 text-xl"></i>
-                                </div>
-                            </div>
-                            <span class="text-green-500 font-medium">%52+ </span>
-                            <span class="text-500">since last week</span>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-6 lg:col-3">
-                        <div class="surface-card shadow-2 p-3 border-round">
-                            <div class="flex justify-content-between mb-3">
-                                <div>
-                                    <span class="block text-500 font-medium mb-3">Customers</span>
-                                    <div class="text-900 font-medium text-xl">28441</div>
-                                </div>
-                                <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
-                                    style="width:2.5rem;height:2.5rem">
-                                    <i class="pi pi-inbox text-cyan-500 text-xl"></i>
-                                </div>
-                            </div>
-                            <span class="text-green-500 font-medium">520 </span>
-                            <span class="text-500">newly registered</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-fluid">
-                    <div class="row">
-
-                        <div class="col-12 md:col-6 lg:col-12">
-                            <div class="surface-card shadow-2 p-3 border-round">
-                                <div class="flex justify-content-between mb-3">
-                                    <div>
-                                        <span class="block text-500 font-medium mb-3">Orders</span>
-                                        <div class="text-900 font-medium text-xl">152</div>
                                     </div>
-                                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
-                                        style="width:2.5rem;height:2.5rem">
-                                        <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
+                                    <div class="col-7">
+                                        <div class="numbers">
+                                            <div>
+                                                <p class="card-category">Pending Products</p>
+                                                <h4 class="card-title">{{ this.pendingProducts.length }}</h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <span class="text-green-500 font-medium">24 new </span>
-                                <span class="text-500">since last visit</span>
+                            </div>
+                            <div class="card-footer">
+                               
                             </div>
                         </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5 d-flex" style="justify-content:center; align-item:center;">
+                                        <div class="my-auto ">
+                                            <font-awesome-icon :icon="['fas', 'circle-check']" bounce size="2xl" />
+                                        </div>
 
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="numbers">
+                                            <div>
+                                                <p class="card-category">Approved Products</p>
+                                                <h4 class="card-title">{{ this.approvedProducts.length }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5 d-flex" style="justify-content:center; align-item:center;">
+                                        <div class="my-auto ">
+                                            <font-awesome-icon :icon="['fas', 'money-bill-trend-up']" spin spin-reverse size="2xl" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="numbers">
+                                            <div>
+                                                <p class="card-category">Total Revenue</p>
+                                                <h4 class="card-title">{{totalRevenue}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats"><!----> <!---->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5 d-flex" style="justify-content:center; align-item:center;">
+                                        <div class="my-auto ">
+                                            <font-awesome-icon :icon="['fas', 'user']" size="2xl" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="numbers">
+                                            <div>
+                                                <p class="card-category">Users</p>
+                                                <h4 class="card-title">{{this.userIDs.length}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                              
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </template>
@@ -225,6 +238,8 @@ export default {
             pendingShow: true,
             approvedShow: false,
             statsShow: false,
+            userIDs:[],
+          
             // products: null,
             pendingProducts: [],
             //fake getting it from server
@@ -241,6 +256,13 @@ export default {
         noPending() {
             return this.pendingProducts.length == 0;
         },
+        totalRevenue(){
+            let total = 0;
+            for (const key in this.approvedProducts) {
+                total += parseFloat(this.approvedProducts[key].modifiedPrice);
+            }
+            return total;
+        }
 
     },
 
@@ -326,8 +348,6 @@ export default {
                 this.pendingProducts.splice(idx, 1);
             }
         },
-
-
         modifyPrice(price) {
             const randomValue = Math.floor(Math.random() * 21) - 10;
             return (price + randomValue).toFixed(2);
@@ -367,6 +387,16 @@ export default {
             // Handle any errors that occur during the promise execution
             console.error(error);
         });
+
+         // grabs all the userIDs
+         FBInstanceFirestore.getAllUsers().then((data) => {
+            this.userIDs = data;
+           
+        }).catch((error) => {
+            // Handle any errors that occur during the promise execution
+            console.error(error);
+        });
+
 
     },
 
@@ -568,7 +598,7 @@ table {
 @media (max-width: 768px) {
 
     * {
-        font-size: 10px;
+        font-size: 15px;
     }
 
     .tab button {
@@ -578,6 +608,6 @@ table {
     .heading {
         font-size: 1.5rem;
     }
+    
 
-}
-</style>
+}</style>
