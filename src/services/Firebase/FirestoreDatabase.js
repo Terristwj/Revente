@@ -235,9 +235,8 @@ class FirebaseFirestore {
         // Image URL (To be Added)
         image_src
     ) {
-        console.log(1);
         await this.getProduct(product_ID).then(async (productData) => {
-            console.log(productData);
+            // console.log(productData);
             const seller_ID = productData.seller_ID;
             const product_ID = productData.product_ID;
 
@@ -282,7 +281,6 @@ class FirebaseFirestore {
                 // (To be Added)
                 image_src,
             });
-            console.log(4);
         });
     };
 

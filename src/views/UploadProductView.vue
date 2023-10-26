@@ -79,7 +79,7 @@ export default {
         },
         async doSubmitForm() {
             if (this.isEverythingValid()) {
-                this.firebaseAddItem();
+                await this.firebaseAddItem();
             } else {
                 this.showToastError(this.firstError);
             }
@@ -295,12 +295,28 @@ export default {
                 <h3 id="Welcome-Text" class="my-3">
                     What do you want to list today?
                 </h3>
+
                 <button
                     type="button"
                     id="List-Now-Btn"
                     class="btn btn-dark my-3 px-4"
                     @click="submitForm()"
                 >
+                    <ProgressSpinner
+                        v-if="isLoading"
+                        style="width: 15px; height: 100%; padding-left: -20px"
+                        strokeWidth="8"
+                        animationDuration=".5s"
+                        aria-label="Custom ProgressSpinner"
+                        :pt="{
+                            circle: {
+                                style: {
+                                    stroke: 'white',
+                                    animation: 'none',
+                                },
+                            },
+                        }"
+                    />
                     List Now
                 </button>
             </div>
