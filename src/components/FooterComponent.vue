@@ -78,6 +78,7 @@
                                     </p>
                                 </Dialog>
                         <li class="nav-item mb-2"><router-link to="/faq" class="nav-link p-0 text-body-secondary">FAQ</router-link></li>
+                        <li class="nav-item mb-2"><router-link to="/profile" class="nav-link p-0 text-body-secondary">Drop Off Address</router-link></li>
                         <li class="nav-item mb-2"><router-link to="/tnc" class="nav-link p-0 text-body-secondary">Terms and Conditions</router-link></li>
                     </ul>
                 </div>
