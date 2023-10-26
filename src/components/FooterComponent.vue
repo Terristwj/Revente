@@ -50,13 +50,13 @@
                             <div class="d-flex flex-column w-100">
                                 <input id="newsletter1" type="text" class="form-control mb-2" placeholder="Email address" v-model="email">
                                 <button class="btn btn-dark" type="button" @click="subscribe">SUBSCRIBE</button>
-                                <Dialog v-model:visible="visible" modal header="Subscription Status" :style="{ width: '50vw' }">
+                                <Dialog v-model:visible="visible" modal header="Subscription Status" :style="{ width: '50vw' }"  :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
                                     <p>
                                       Thanks for subscribing! Do check your email for a confirmation email and future promotions!
                                     </p>
                                 </Dialog>
 
-                                <Dialog v-model:visible="visible1" modal header="Error! :(" :style="{ width: '50vw' }">
+                                <Dialog v-model:visible="visible1" modal header="Error! :(" :style="{ width: '50vw' }"  :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
                                     <p>
                                       Wrong Email format! Please check and try again!
                                     
@@ -71,12 +71,15 @@
                     <h5>Customer Care</h5>
                     <ul class="nav flex-column">
                       
-                        <li class="nav-item mb-2"><router-link to="/about" class="nav-link p-0 text-body-secondary">Contact</router-link></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary" @click="visible3=true ">Contact Us</a></li>
+                        <Dialog v-model:visible="visible3" modal header="Contact Us" :style="{ width: '50vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }" >
+                                    <p>
+                                      For any enuiries, you may contact our help desk at revente.admin@gmail.com for more assistance! Our mobile help desk is 24/7 and in any case of emergencies feel free to call +65 9471 9372! 
+                                    </p>
+                                </Dialog>
                         <li class="nav-item mb-2"><router-link to="/faq" class="nav-link p-0 text-body-secondary">FAQ</router-link></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Shipping Info</a>
-                        </li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Terms and
-                                Conditions</a></li>
+                        <li class="nav-item mb-2"><router-link to="/profile" class="nav-link p-0 text-body-secondary">Drop Off Address</router-link></li>
+                        <li class="nav-item mb-2"><router-link to="/tnc" class="nav-link p-0 text-body-secondary">Terms and Conditions</router-link></li>
                     </ul>
                 </div>
             </div>
@@ -96,6 +99,7 @@ import Dialog from 'primevue/dialog';
 
 const visible = ref(false);
 const visible1 = ref(false);
+const visible3 = ref(false);
 const email = ref('');
 
 function isValidEmail(email) {

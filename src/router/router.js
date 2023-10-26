@@ -35,6 +35,12 @@ export const routes = [
     name: "FAQ",
     component: () => import("../views/FAQView.vue"),
   },
+  {
+    path: "/tnc",
+    name: "TnC",
+    component: () => import("../views/TnCView.vue"),
+  },
+  
   // Common Pages END
 
   // admin page
