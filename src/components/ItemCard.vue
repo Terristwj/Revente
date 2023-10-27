@@ -1,5 +1,5 @@
 <template>
-    <div class="card" style="width: 18rem;">
+    <div class="card mb-2" style="width: 18rem;">
         <img :src="product.image_src" alt="Product Image" class="card-img-top" id="card_img" />
 
         <div class="card-body pb-0 pt-1">
@@ -8,9 +8,9 @@
             <p class="card-text">{{ product.condition }}</p>
             <p class="card-text">$ {{ product.modifiedPrice }}</p>
 
-            <div class="container">
-                <button type="button" class="btn btn-clear m-3" @click="visible = true">Quick View</button>
-                <button type="button" class="btn btn-clear-like m-3" id="fav"><font-awesome-icon
+            <div class="d-flex">
+                <button type="button" class="btn btn-clear my-3 mr-0 m1-3" @click="visible = true">Quick View</button>
+                <button type="button" class="btn btn-clear-like" id="fav" ><font-awesome-icon
                         :icon="['far', 'heart']" /></button>
             </div>
         </div>
@@ -27,9 +27,9 @@
                         <p class="card-text">{{ product.condition }}</p>
                         <p class="card-text">$ {{ product.modifiedPrice }}</p>
                         <p class="card-text">{{ product.description }}</p>
-                        <div class="container text-center p-0">
-                            <button type="button" class="btn btn-clear m-3">Add to Cart</button>
-                            <button type="button" class="btn btn-dark m-3">More Details</button>
+                        <div class="container p-0">
+                            <button type="button" class="btn btn-clear">Add to Cart</button>
+                            <button type="button" class="btn btn-dark m-3" @click="linkToMoreDetails(product.product_ID)">More Details</button>
                         </div>
                     </div>
                 </div>
@@ -84,6 +84,8 @@
 
 <script setup>
 import { ref } from "vue";
+// import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
+import { itemStore } from "../main.js";
 
 const visible = ref(false);
 
@@ -93,12 +95,12 @@ const visible = ref(false);
 export default {
 
     props: {
-			product: {
-				type: Array,
-				required: true,
-			},
-			
-		},
+        product: {
+            type: Array,
+            required: true,
+        },
+
+    },
 
 
     data() {
@@ -110,6 +112,10 @@ export default {
     },
 
     methods: {
+        linkToMoreDetails(id) {
+            itemStore.setItemID(id);
+            this.$router.push({ name: "MainItem" });
+        },
     }
 }
 </script>

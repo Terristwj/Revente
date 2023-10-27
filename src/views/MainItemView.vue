@@ -1,6 +1,6 @@
 <script>
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
-// import { itemStore } from "../main.js";
+import { itemStore } from "../main.js";
 
 export default {
     data() {
@@ -17,6 +17,7 @@ export default {
             // Condition
             condition: "",
             conditionNotes: "",
+            brand: "",
 
             // Item Information
             itemID: "",
@@ -27,8 +28,9 @@ export default {
             // Others
             dropOffLocation: "",
             price: 0.0,
+            generalSize: "",
 
-            size: "TEST TESTsadasd",
+            size: "",
 
             // Code-related
             isLoading: true,
@@ -39,38 +41,67 @@ export default {
     methods: {
         async getProductData() {
             // //hardcode to get data from database
-            const itemID = "ICUUp4n7RfnPzLjP6Hd8";
+            // const itemID = "ICUUp4n7RfnPzLjP6Hd8";
 
             // For later implementation
             //  console.log(itemStore.getItemID());
             // itemStore.setItemID('jN2TrVSILV7eIMmzhJfV');
-            // this.itemID = itemStore.getItemID();
+            let itemID = itemStore.getItemID();
 
             FBInstanceFirestore.getProduct(itemID)
                 .then((data) => {
                     // Handle the data once the promise is resolved
                     console.log(data);
                     this.imageSrc = data.image_src;
+                    this.brand = data.brand;
 
                     this.gender = data.gender;
 
                     this.category = data.category;
 
                     this.condition = data.condition;
-                    this.conditionNotes = data.conditionNotes;
+                    this.conditionNotes = data.condition_notes;
 
                     this.itemName = data.product_name;
                     this.itemBrand = data.brand;
                     this.itemDescription = data.description;
 
                     this.dropOffLocation = data.drop_off_location;
-                    this.price = parseFloat(data.price);
+                    this.price = parseFloat(data.modifiedPrice);
+                    this.size = data.size;
+
+                    const parts = this.size.split(' ');
+
+                    // Initialize the length
+                    let length = 0;
+
+                    // Iterate through the parts to extract the length
+                    for (let i = 0; i < parts.length; i++) {
+                        const part = parts[i];
+                        if (part === "Length:") {
+                            length = parseFloat(parts[i + 1]);
+                            break; // Exit the loop once length is found
+                        }
+                    }
+                    if (length >= 120) {
+                        this.generalSize = "Large";
+                    } else if (length >= 100) {
+                        this.generalSize = "Medium";
+                    }
+                    else if (length >= 80) {
+                        this.generalSize = "Small";
+                    }
+                    else {
+                        this.generalSize = "Extra Small";
+                    }
                 })
                 .catch((error) => {
                     // Handle any errors that occur during the promise execution
                     console.error(error);
                 });
         },
+
+
         openTab(event, tabName) {
             // console.log('openTab');
             if (tabName == "description") {
@@ -93,6 +124,7 @@ export default {
             this.getProductData();
             this.isLoading = false;
         }, 1000);
+
     },
 };
 </script>
@@ -103,7 +135,7 @@ export default {
             <div class="col-md-1"></div>
             <!--            display image-->
             <div class="col-md-4 col-12">
-                <img :src="imageSrc" class="img-fluid" />
+                <img :src="imageSrc" class="img-fluid img_style" />
             </div>
             <!--            display product details-->
             <div class="col-md-6 col-12 pt-3 pt-md-0">
@@ -111,44 +143,40 @@ export default {
                 <h6 class="catgory font-italic">{{ category }}</h6>
                 <h6 class="font-weight-bold">$ {{ price }}</h6>
                 <p>
-                    {{ itemDescription }}
+                    {{ condition }}
                 </p>
                 <div class="features pt-3">
                     <h5><strong>Features</strong></h5>
                     <ul>
                         <li>
-                            We will dynamically add the info here through AI
+                            Gender:
+                            {{ gender }}
                         </li>
                         <li>
-                            Officia quas, officiis eius magni error magnam
-                            voluptatem
+                            Brand: {{ brand }}
                         </li>
                         <li>
-                            nesciunt quod! Earum voluptatibus quaerat dolorem
-                            doloribus
+                            Product Name:
+                            {{ itemName }}
                         </li>
                         <li>
-                            molestias ipsum ab, ipsa consectetur laboriosam
-                            soluta et
+                            Condition:
+                            {{ conditionNotes }}
                         </li>
                         <li>
-                            ut doloremque dolore corrupti, architecto iusto
-                            beatae.
+                            Size:
+                            {{ generalSize }}
                         </li>
+
+
+
                     </ul>
                 </div>
                 <div class="row w-75 wishcart">
-                    <button
-                        type="button"
-                        class="btn btn-clear my-4"
-                        @click="addCart()"
-                    >
+                    <button type="button" class="btn btn-clear my-4" @click="addCart()">
                         Add to Cart
                     </button>
-                    <button
-                        class="btn btn-outline-dark me-sm-2"
-                        @click="addWishList()"
-                    >
+                    <button class="btn btn-outline-dark me-sm-2" @click="addWishList()">
                         <font-awesome-icon :icon="['far', 'heart']" />
                         Add to Wishlist
                     </button>
@@ -157,34 +185,35 @@ export default {
         </div>
         <div class="row text-center">
             <div class="tab">
-                <button
-                    class="tablinks w-50"
-                    :class="{ clicked: descriptionShow }"
-                    @click="openTab(event, 'description')"
-                >
+                <button class="tablinks w-50" :class="{ clicked: descriptionShow }" @click="openTab(event, 'description')">
                     Description
                 </button>
-                <button
-                    class="tablinks w-50"
-                    :class="{ clicked: sizeShow }"
-                    @click="openTab(event, 'size')"
-                >
+                <button class="tablinks w-50" :class="{ clicked: sizeShow }" @click="openTab(event, 'size')">
                     Size
                 </button>
             </div>
             <div v-if="descriptionShow" class="tabcontent">
-                <h3>{{ itemDescription }}</h3>
-                <p>London is the capital city of England.</p>
+                <h2>More description</h2>
+                <p>{{ itemDescription }}</p>
             </div>
             <div v-if="sizeShow" class="tabcontent">
-                <h3>{{ size }}</h3>
-                <p>Paris is the capital of France.</p>
+                <h2>Detailed Size</h2>
+                <h3>
+                    {{ generalSize }}
+                </h3>
+                <p>{{ size }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
+.img_style {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
 .clicked {
     background-color: #ddd;
 }
@@ -252,6 +281,7 @@ export default {
     * {
         font-size: 10px;
     }
+
     .tab button {
         font-size: 12px;
     }
