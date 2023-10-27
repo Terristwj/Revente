@@ -56,7 +56,7 @@ export default {
                 .then((data) => {
                     this.temp = data;
                     // Handle the data once the promise is resolved
-                    console.log(data);
+                    // console.log(data);
                     this.imageSrc = data.image_src;
                     this.brand = data.brand;
 
@@ -122,6 +122,7 @@ export default {
             alert("Item already added to cart, please check your cart");
         }
         else{
+            console.log(this.temp);
             FBInstanceFirestore.addToCart(
                 this.temp.seller_ID,
                 this.temp.product_ID,
