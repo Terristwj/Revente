@@ -10,7 +10,7 @@
 
             <div class="d-flex">
                 <button type="button" class="btn btn-clear my-3 mr-0 m1-3" @click="visible = true">Quick View</button>
-                <button type="button" class="btn btn-clear-like" id="fav" ><font-awesome-icon
+                <button type="button" class="btn btn-clear-like" id="fav"><font-awesome-icon
                         :icon="['far', 'heart']" /></button>
             </div>
         </div>
@@ -28,8 +28,10 @@
                         <p class="card-text">$ {{ product.modifiedPrice }}</p>
                         <p class="card-text">{{ product.description }}</p>
                         <div class="container p-0">
-                            <button type="button" class="btn btn-clear">Add to Cart</button>
-                            <button type="button" class="btn btn-dark m-3" @click="linkToMoreDetails(product.product_ID)">More Details</button>
+                            <button type="button" class="btn btn-clear" @click="addCart(product.product_ID)">Add to
+                                Cart</button>
+                            <button type="button" class="btn btn-dark m-3"
+                                @click="linkToMoreDetails(product.product_ID)">More Details</button>
                         </div>
                     </div>
                 </div>
@@ -84,8 +86,10 @@
 
 <script setup>
 import { ref } from "vue";
-// import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
+import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { itemStore } from "../main.js";
+import { userStore } from "../main.js";
+
 
 const visible = ref(false);
 
@@ -108,6 +112,8 @@ export default {
             emptyHeart: `<font-awesome-icon
                             :icon="['far', 'heart']" />`,
             heart: `<font-awesome-icon :icon="['fas', 'heart']" style="color: #ff0000;" />`,
+            temp: [],
+            user_ID: "",
         };
     },
 
@@ -115,6 +121,57 @@ export default {
         linkToMoreDetails(id) {
             itemStore.setItemID(id);
             this.$router.push({ name: "MainItem" });
+        },
+        addCart(id) {
+            this.user_ID = userStore.getUserID();
+            FBInstanceFirestore.getProduct(id)
+                .then((data) => {
+                    this.temp = data;
+                    // console.log(this.temp);
+                    if (this.temp.addToCart == true) {
+                        alert("Item already added to cart, please check your cart");
+                    }
+                    else {
+                        FBInstanceFirestore.addToCart(
+                            this.temp.seller_ID,
+                            this.temp.product_ID,
+                            this.temp.product_name,
+                            this.temp.brand,
+                            this.temp.description,
+                            this.temp.gender,
+                            this.temp.category,
+                            this.temp.condition,
+                            this.temp.condition_notes,
+                            this.temp.drop_off_location,
+                            this.temp.price,
+                            parseFloat(this.temp.modifiedPrice),
+                            true,
+                            false,
+                            this.temp.image_src,
+                            this.temp.size,
+                            this.user_ID,
+                            true
+                        );
+                        FBInstanceFirestore.getProduct(id)
+                            .then((data) => {
+                                this.temp = data;
+                                // console.log(data);
+                            })
+                            .catch((error) => {
+                                // Handle any errors that occur during the promise execution
+                                console.error(error);
+                            });
+
+                        if (this.temp.addToCart == true) {
+                            alert("Item added to cart, please check your cart");
+                        }
+                    }
+                })
+                .catch((error) => {
+                    // Handle any errors that occur during the promise execution
+                    console.error(error);
+                });
+
         },
     }
 }

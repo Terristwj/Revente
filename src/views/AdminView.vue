@@ -411,6 +411,7 @@ export default {
                     this.pendingProducts[idx].price,
                     parseFloat(this.pendingProducts[idx].modifiedPrice),
                     true,
+                    false,
                     this.pendingProducts[idx].image_src,
                     size,
                 );
