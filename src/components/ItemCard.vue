@@ -152,7 +152,7 @@ export default {
                             this.user_ID,
                             true
                         );
-                        FBInstanceFirestore.getProduct(id)
+                        FBInstanceFirestore.getProduct(this.temp.product_ID)
                             .then((data) => {
                                 this.temp = data;
                                 // console.log(data);

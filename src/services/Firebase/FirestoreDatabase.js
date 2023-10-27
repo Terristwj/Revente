@@ -122,7 +122,7 @@ class FirebaseFirestore {
         // console.log("Created Doc");
     };
 
-    // Get all Product_ID
+    // Get all Users IDs
     getAllUsers = async function () {
         const querySnapshot = await getDocs(
             collection(FirestoreDatabase, "users")
@@ -137,6 +137,15 @@ class FirebaseFirestore {
 
         // console.log("Document data:", docSnap.data());
         return users;
+    };
+
+    //get specific user
+    getUser = async function (userID) {
+        // console.log(productID);
+        const docRef = doc(FirestoreDatabase, "users", userID);
+        const docSnap = await getDoc(docRef);
+        // console.log(docSnap.data());
+        return docSnap.data();
     };
     //
     // Firestore Handle User END
