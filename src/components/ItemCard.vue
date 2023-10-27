@@ -1,12 +1,12 @@
 <template>
     <div class="card" style="width: 18rem;">
-        <img src="https://primefaces.org/cdn/primevue/images/usercard.png" class="card-img-top" alt="..." id="card_img">
+        <img :src="product.image_src" alt="Product Image" class="card-img-top" id="card_img" />
 
         <div class="card-body pb-0 pt-1">
-            <h5 class="card-title">{{ i.name }}</h5>
-            <p class="card-text">{{ i.brand }}</p>
-            <p class="card-text">{{ i.seller }}</p>
-            <p class="card-text">$ {{ i.price }}</p>
+            <h5 class="card-title">{{ product.product_name }}</h5>
+            <p class="card-text">{{ product.brand }}</p>
+            <p class="card-text">{{ product.condition }}</p>
+            <p class="card-text">$ {{ product.modifiedPrice }}</p>
 
             <div class="container">
                 <button type="button" class="btn btn-clear m-3" @click="visible = true">Quick View</button>
@@ -16,17 +16,17 @@
         </div>
 
 
-        <Dialog v-model:visible="visible" modal :header="i.name" :style="{ width: '70vw' }">
+        <Dialog v-model:visible="visible" modal :header="product.product_name" :style="{ width: '70vw' }">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col">
-                        <img src="https://primefaces.org/cdn/primevue/images/usercard.png" class="card-img-top" alt="...">
+                        <img :src="product.image_src" alt="Product Image" :style="{ width: '300px', height: '300px' }" class="card-img-top" />
                     </div>
                     <div class="col">
-                        <p class="card-text">{{ i.brand }}</p>
-                        <p class="card-text">{{ i.seller }}</p>
-                        <p class="card-text">$ {{ i.price }}</p>
-                        <p class="card-text">{{ i.description }}</p>
+                        <p class="card-text">{{ product.brand }}</p>
+                        <p class="card-text">{{ product.condition }}</p>
+                        <p class="card-text">$ {{ product.modifiedPrice }}</p>
+                        <p class="card-text">{{ product.description }}</p>
                         <div class="container text-center p-0">
                             <button type="button" class="btn btn-clear m-3">Add to Cart</button>
                             <button type="button" class="btn btn-dark m-3">More Details</button>
@@ -85,22 +85,21 @@ const visible = ref(false);
 
 <script>
 export default {
-    props: ["item"],
+
+    props: {
+			product: {
+				type: Array,
+				required: true,
+			},
+			
+		},
+
 
     data() {
         return {
-
             emptyHeart: `<font-awesome-icon
                             :icon="['far', 'heart']" />`,
             heart: `<font-awesome-icon :icon="['fas', 'heart']" style="color: #ff0000;" />`,
-            i: {
-                name: "Item Name",
-                brand: "Brand Name",
-                seller: "Seller Name",
-                price: "Price",
-                description: "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-                link: '',
-            }
         };
     },
 
