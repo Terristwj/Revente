@@ -24,24 +24,11 @@
                 <div class="container-fluid">
                     <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Current Listings</h2>
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
+                        <!-- add in using v-for -->
+                        <!-- <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
                             <ItemCard />
-                        </div>
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
-                            <ItemCard />
-                        </div>
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
-                            <ItemCard />
-                        </div>
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
-                            <ItemCard />
-                        </div>
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
-                            <ItemCard />
-                        </div>
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
-                            <ItemCard />
-                        </div>
+                        </div> -->
+                     
 
 
 
@@ -69,7 +56,7 @@
 </template>
 
 <script>
-import ItemCard from '../components/ItemCard.vue';
+// import ItemCard from '../components/ItemCard.vue';
 import Rating from 'primevue/rating';
 export default {
     data() {
@@ -78,7 +65,7 @@ export default {
         }
     },
     components: {
-        ItemCard,
+        // ItemCard,
         Rating,
     }
 }

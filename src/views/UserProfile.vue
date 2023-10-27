@@ -9,7 +9,7 @@ export default {
     beforeMount() {
         setTimeout(function () {
             if (userStore.getUserID()) {
-                // console.log(userStore.getUserID());
+                console.log(userStore.getUserID());
             } else {
                 router.push("/login");
             }

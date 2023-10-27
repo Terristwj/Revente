@@ -1,10 +1,13 @@
 <script>
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { itemStore } from "../main.js";
+import { userStore } from "../main.js";
 
 export default {
     data() {
         return {
+            temp: [],
+            user_ID: "",
             // Item Image
             imageSrc: "",
 
@@ -31,6 +34,7 @@ export default {
             generalSize: "",
 
             size: "",
+            local_itemID: "",
 
             // Code-related
             isLoading: true,
@@ -46,10 +50,11 @@ export default {
             // For later implementation
             //  console.log(itemStore.getItemID());
             // itemStore.setItemID('jN2TrVSILV7eIMmzhJfV');
-            let itemID = itemStore.getItemID();
+            this.local_itemID = itemStore.getItemID();
 
-            FBInstanceFirestore.getProduct(itemID)
+            FBInstanceFirestore.getProduct(this.local_itemID)
                 .then((data) => {
+                    this.temp = data;
                     // Handle the data once the promise is resolved
                     console.log(data);
                     this.imageSrc = data.image_src;
@@ -113,7 +118,45 @@ export default {
             }
         },
         addCart() {
-            console.log("addCart");
+        if(this.temp.addToCart == true){
+            alert("Item already added to cart, please check your cart");
+        }
+        else{
+            FBInstanceFirestore.addToCart(
+                this.temp.seller_ID,
+                this.temp.product_ID,
+                this.temp.product_name,
+                this.temp.brand,
+                this.temp.description,
+                this.temp.gender,
+                this.temp.category,
+                this.temp.condition,
+                this.temp.condition_notes,
+                this.temp.drop_off_location,
+                this.temp.price,
+                parseFloat(this.temp.modifiedPrice),
+                true,
+                false,
+                this.temp.image_src,
+                this.temp.size,
+                this.user_ID,
+                true
+            );
+            FBInstanceFirestore.getProduct(this.local_itemID)
+                .then((data) => {
+                    this.temp = data;
+                    // console.log(data);
+                })
+                .catch((error) => {
+                    // Handle any errors that occur during the promise execution
+                    console.error(error);
+                });
+
+            if(this.temp.addToCart == true){
+                alert("Item added to cart, please check your cart");
+            }
+        }
+            
         },
         addWishList() {
             console.log("addWishList");
@@ -123,6 +166,7 @@ export default {
         setTimeout(() => {
             this.getProductData();
             this.isLoading = false;
+            this.user_ID = userStore.getUserID();
         }, 1000);
 
     },

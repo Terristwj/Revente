@@ -64,6 +64,7 @@ export const routes = [
         icon: ["fas", "bag-shopping"],
         component: () => import("../views/CartView.vue"),
     },
+    
     // Product Catalogue END
 
     // User Profile START
