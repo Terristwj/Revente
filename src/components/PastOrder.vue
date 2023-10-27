@@ -40,7 +40,7 @@ export default {
             // validate inputs
             // console.log(this.deliverydate)
             let dataObject = {
-                dd: this.deliverydate,
+                deliverydate: this.deliverydate,
                 imgUrl: this.imgUrl,
                 brand: this.brand,
                 size: this.size,
