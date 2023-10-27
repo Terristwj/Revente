@@ -1,7 +1,7 @@
 import './assets/styles/main.css';
 
-import { createApp } from "vue";
-import { createPinia } from "pinia";
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 // Track userID
 import { useCurrentUserStore } from './stores/currentUser.js';
 import { useCurrentItemID } from './stores/currentItem.js';
