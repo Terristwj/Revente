@@ -1,8 +1,8 @@
 <script>
 	export default {
 		props: {
-			imgurls: {
-				type: Array,
+			products: {
+				type: Object,
 				required: true,
 			},
 			imgDesc: {
@@ -27,10 +27,15 @@
 </script>
 
 <template>
-	<div :id="carouId" class="carousel slide" data-bs-ride="carousel">
+	<div
+		:id="carouId"
+		class="carousel slide"
+		data-bs-ride="carousel"
+		style="max-width: 100%"
+	>
 		<div class="carousel-indicators">
 			<button
-				v-for="(imgurl, index) in imgurls"
+				v-for="(product, index) in products"
 				:key="index"
 				type="button"
 				:data-bs-target="carouIdStr"
@@ -39,15 +44,35 @@
 				aria-current="true"
 			></button>
 		</div>
-		<div class="carousel-inner">
+		<div
+			class="carousel-inner"
+			style="max-height: 0; padding-bottom: 100%; position: relative"
+		>
 			<div
-				v-for="(imgurl, index) in imgurls"
+				v-for="(product, index) in products"
 				:key="index"
 				class="carousel-item"
 				:class="{ active: index === 0 }"
 				:data-bs-interval="interval"
+				style="
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+				"
 			>
-				<img :src="imgurl" class="d-block w-100" :alt="imgDesc" />
+				<div
+					class="image-container"
+					style="width: 100%; height: 100%; overflow: hidden"
+				>
+					<img
+						:src="product.image_src"
+						class="d-block w-100"
+						:alt="imgDesc"
+						style="width: 100%; height: 100%; object-fit: cover"
+					/>
+				</div>
 			</div>
 		</div>
 		<button
