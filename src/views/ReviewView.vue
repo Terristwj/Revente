@@ -10,13 +10,24 @@ export default {
 	},
     data() { 
 		return { 
-		// key: value
+			//obtain data from Order History
+			//dataObject = {deliverydate,imgUrl,brand,size, seller, name, uuid}
 			item: JSON.parse(this.$route.query.data),
+
+			//obtain data from review inputs
 			review: {
-				rating: 4.5,
+				rating: 3.5,
 				textinput: "",
 			},
+
+			//item image
 			imageSrc: null,
+
+			// Firebase-Related Codes
+			isLoading: false,
+            firstError: "",
+            isSuccessful: false,
+
 			};
 	},
 
@@ -27,13 +38,162 @@ export default {
                 this.imageSrc = URL.createObjectURL(this.imageFile);
             }
 		},
+
+		//Firebase-Related Codes
+		async submitForm() {
+            // If there are no errors, submit the form
+            await this.doSubmitForm();
+        },
+
+        //Firebase related methods
+        async doSubmitForm() {
+            if (this.isEverythingValid()) {
+                await this.firebaseAddItem();
+            } else {
+                this.showToastError(this.firstError);
+            }
+        },
+
+		isEverythingValid() {
+            // Validate form fields
+            this.firstError = "";
+
+            if (!this.imageSrc) {
+                this.firstError = "Please provide an item photo.";
+                return false;
+            }
+
+            if (!this.review.textinput) {
+                this.review.textinput = "Please tell us more about the condition.";
+                return false;
+            }
+
+            if (!this.review.rating) {
+                this.firstError = "What is the item's name?";
+                return false;
+            }
+
+            return true;
+        },
+
+		async firebaseAddItem() {
+            let hasError = false;
+
+            // (1) Add doc into Firestore
+			//dataObject = {deliverydate,imgUrl,brand,size, seller, name, uuid}
+			let rating = this.review.rating;
+			let review = this.review.textinput;
+
+            // (2) Retrieve the product_ID of add_doc
+            const reviewID = await FBInstanceFirestore.createReview(
+                
+				// Seller and Product details
+                userStore.getUserID(),
+				userStore.getOrderedProductID(),
+
+                // Review Details
+                rating,
+                review,
+            );
+
+            // (3) Upload item_image_file into Storage using product_ID
+            // Upload image
+            hasError = await FBInstanceStorage.uploadImage(
+                "reviews",
+                reviewID,
+                this.imageSrc
+            );
+
+            if (hasError) {
+                this.firstError = "Please try again later.";
+            } else {
+                //
+                // (4) Retrieve item_image_src from Storage
+                //
+                const url = await FBInstanceStorage.getImageUrl(
+                    "reviews",
+                    reviewID
+                );
+
+                //
+                // (5) Set doc item_image_src into Firestore
+                //
+                // If there is no URL - Error
+                if (!url) {
+                    this.firstError = "Please try again later.";
+                } else {
+                    // Firebase Update User
+                    let errorCode =
+                        await FBInstanceFirestore.updateProductImageSrc(
+                            // Seller and Product details
+                            userStore.getUserID(),
+                            userStore.getOrderedProductID(),
+
+                            // Review Details
+                            rating,
+                            review,
+
+                            // Image URL (To be Added)
+                            url
+                        );
+                    // console.log(errorCode);
+                    switch (errorCode) {
+                        default:
+                            this.firstError = errorCode;
+                    }
+                }
+                // console.log(url);
+            }
+
+            // Debugging
+            // await FBInstanceStorage.listImages();
+
+            if (this.firstError) {
+                this.showToastError(this.firstError);
+            } else {
+                this.showToastSuccess();
+                this.isSuccessful = true;
+                // Re-render data
+                this.imageSrc = "";
+            }
+        },
+
+        showToastError(detail) {
+            this.$toast.add({
+                severity: "error",
+                summary: "ReviewFailed",
+                detail,
+                life: 3000,
+            });
+        },
+
+        showToastSuccess() {
+            this.$toast.add({
+                severity: "success",
+                summary: "Your Review was Successfully created!",
+                life: 3000,
+            });
+        },
+
+        clearPage() {
+            // Item Image
+            this.imageSrc = "";
+
+            //reviews
+            this.review.rating = 0;
+            this.review.textinput = 0;
+
+            // Firebase-Related Codes
+            this.isSuccessful = false;
+        },
+
     },
     };
 </script>
 
 <template>
 	<body>
-		<!--BELOW IS THE HEADER-->
+		<!--BELOW IS THE TITLE-->
 		<h2 class="m-5 mb-4">Leave a Review</h2>
 
 		<!--BELOW IS THE ITEM DETAIL-->
@@ -70,7 +230,6 @@ export default {
 			</div>
 
 			<div class="row reviewInput">
-				<p>{{ review.textinput }}</p>
 				<textarea v-model="review.textinput" placeholder="add multiple lines"></textarea>
 			</div>
 		</div>
@@ -80,23 +239,54 @@ export default {
 			
 			<div>
 				<div class="photoPortion">
-					<img :src="imageSrc" class="uploading-image"/>
+					<img :src="imageSrc" class="uploading-image" id="file-upload"/>
 					<input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)">
 				</div>
 			</div>
 		</div>
 
-		<button class="submit">
+		<button class="submit" @click="submitForm()">
 			SUBMIT
 		</button>
 
 	</body>
+
+        <!-- Successful Followup -->
+        <Dialog
+        v-model:visible="isSuccessful"
+        class="text-black"
+        style="width: 80vw; max-width: 800px"
+        :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+        modal
+        :closable="false"
+    >
+        <template #header>
+            <h5>
+                <span class="bg-black text-white py-1 px-2 fw-bold">Your Review for {{
+                    item.name
+                }}</span>
+                &nbsp;is successfully uploaded!
+            </h5>
+
+            <div>
+                <button @click="$router.push('/')">Back to Homepage</button>
+            </div>
+
+        </template>
+    </Dialog>
+
 </template>
 
 <style scoped>
 
-h3 {
+h4 {
 	font-family: "inter-bold";
+	color: black;
+}
+
+h2 {
+	font-family: "inter-bold";
+	color: black;
 }
 
 .itemContainer {

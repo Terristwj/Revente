@@ -85,23 +85,23 @@ export const routes = [
   },
   // User Profile END
 
-	//Main Item Start
-	{
-        path: "/MainItem",
-        name: "MainItem",
-        component: () => import("../views/MainItemView.vue"),
-    },
-	//Main Item end
+  //Main Item Start
+  {
+    path: "/MainItem",
+    name: "MainItem",
+    component: () => import("../views/MainItemView.vue"),
+  },
+  //Main Item end
 
-    // Login/Register START
-    {
-        path: "/login",
-        name: "Login",
-        component: () => import("../views/LoginView.vue"),
-        meta: {
-            requiresNoAuth: true,
-        },
+  // Login/Register START
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/LoginView.vue"),
+    meta: {
+      requiresNoAuth: true,
     },
+  },
 
   {
     path: "/register",
@@ -132,26 +132,26 @@ export const routes = [
       requiresAuth: true,
     },
   },
-    // Others END
+  // Others END
 
-    // Incomplete Views goes here START
-    {
-        path: "/orderHistory",
-        name: "Order History",
-        component: () => import("../views/OrderHistory.vue"),
-    },
-    {
-        path: "/reviewView/:id",
-        name: "Review View",
-        component: () => import("../views/ReviewView.vue"),
-    },
-  	{
-  		path: '/checkout',
-  		name: 'Checkout',
-  		component: () => import('../views/CheckoutView.vue'),
-  		icon: ['fas', 'user'],
-  	},
-    // Incomplete Views goes here END
+  // Incomplete Views goes here START
+  {
+    path: "/orderHistory",
+    name: "Order History",
+    component: () => import("../views/OrderHistory.vue"),
+  },
+  {
+    path: "/reviewView/:id",
+    name: "Review View",
+    component: () => import("../views/ReviewView.vue"),
+  },
+  {
+    path: "/checkout",
+    name: "Checkout",
+    component: () => import("../views/CheckoutView.vue"),
+    icon: ["fas", "user"],
+  },
+  // Incomplete Views goes here END
 ];
 
 const router = createRouter({
