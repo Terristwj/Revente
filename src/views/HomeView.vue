@@ -1,6 +1,8 @@
 <script>
 	import BigCarousel from '../components/BigCarousel.vue';
+	import SmallCarousel from '../components/SmallCarousel.vue';
 	import router from '../router/router.js';
+	import FBInstanceFirestore from '../services/Firebase/FirestoreDatabase.js';
 
 	import { ref, onMounted, onUnmounted } from 'vue';
 	import anime from 'animejs';
@@ -8,17 +10,30 @@
 	import transitions from '../utilities/transitions';
 
 	export default {
+		created() {
+			// grabs all the data already AND SPLITS them into pending and approved
+			FBInstanceFirestore.getAllProducts()
+				.then((data) => {
+					for (const key in data) {
+						if (data[key].is_approved == true) {
+							this.approvedProducts.push(data[key]);
+						}
+					}
+					console.log(this.approvedProducts);
+				})
+				.catch((error) => {
+					// Handle any errors that occur during the promise execution
+					console.error(error);
+				});
+		},
 		data() {
 			return {
-				imgurls: [
-					'/src/assets/img/ecommerce/Google.png',
-					'/src/assets/img/ecommerce/Google.png',
-					'/src/assets/img/ecommerce/Google.png',
-				],
+				approvedProducts: [],
 			};
 		},
 		components: {
 			BigCarousel,
+			SmallCarousel,
 		},
 		methods: {
 			toRegistration() {
@@ -172,23 +187,27 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-6">
-						<h1>Sale</h1>
+						<h1 class="my-3">Sale</h1>
 						<BigCarousel
-							:imgurls="imgurls"
-							imgDesc="Example"
+							:products="approvedProducts"
+							imgDesc="Sale"
 							carouId="SaleCarousel"
 							:interval="5000"
 						/>
 					</div>
 					<div class="col-md-6">
-						<h1>New Drops</h1>
+						<h1 class="my-3">New Drops</h1>
 						<BigCarousel
-							:imgurls="imgurls"
-							imgDesc="Example2"
+							:products="approvedProducts"
+							imgDesc="New Drops"
 							carouId="DropCarousel"
 							:interval="7000"
 						/>
 					</div>
+				</div>
+				<div class="row my-5">
+					<h1 class="my-4">Featured</h1>
+					<SmallCarousel :products="approvedProducts" />
 				</div>
 			</div>
 		</div>

@@ -71,9 +71,7 @@
 					<SideMenuBar />
 				</Sidebar>
 				<div class="col-md-12 col-lg-9 col-xl-10">
-					<div
-						class="row row-cols-2 justify-content-center gap-2 gap-lg-3"
-					>
+					<div class="row justify-content-center gap-2 gap-lg-3">
 						<ItemCard
 							v-for="(product, index) in approvedProducts"
 							:key="index"
