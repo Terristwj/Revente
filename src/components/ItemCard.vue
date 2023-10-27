@@ -16,11 +16,11 @@
         </div>
 
 
-        <Dialog v-model:visible="visible" modal :header="product.product_name" :style="{ width: '70vw' }">
+        <Dialog v-model:visible="visible" modal :header="product.product_name" :style="{ width: '50vw' }">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col">
-                        <img :src="product.image_src" alt="Product Image" :style="{ width: '300px', height: '300px' }" class="card-img-top" />
+                        <img :src="product.image_src" alt="Product Image" id="dialog_img" class="card-img-top" />
                     </div>
                     <div class="col">
                         <p class="card-text">{{ product.brand }}</p>
@@ -41,6 +41,12 @@
 <style scoped>
 #card_img {
     width: 100%;
+    height: 18rem;
+    object-fit: fill;
+}
+
+#dialog_img {
+    width: auto;
     height: 18rem;
     object-fit: fill;
 }
