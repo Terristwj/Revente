@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                               
+
                             </div>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -176,7 +176,8 @@
                                 <div class="row">
                                     <div class="col-5 d-flex" style="justify-content:center; align-item:center;">
                                         <div class="my-auto ">
-                                            <font-awesome-icon :icon="['fas', 'money-bill-trend-up']" spin spin-reverse size="2xl" />
+                                            <font-awesome-icon :icon="['fas', 'money-bill-trend-up']" spin spin-reverse
+                                                size="2xl" />
                                         </div>
 
                                     </div>
@@ -184,7 +185,7 @@
                                         <div class="numbers">
                                             <div>
                                                 <p class="card-category">Total Revenue</p>
-                                                <h4 class="card-title">${{totalRevenue}}</h4>
+                                                <h4 class="card-title">${{ totalRevenue }}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -208,17 +209,31 @@
                                         <div class="numbers">
                                             <div>
                                                 <p class="card-category">Users</p>
-                                                <h4 class="card-title">{{this.userIDs.length}}</h4>
+                                                <h4 class="card-title">{{ this.userIDs.length }}</h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                              
+
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row" >
+                    <div class="col-lg-4 col-md-12" style="margin-top:10dvh;">
+                        <h2>Approval Tracking</h2>
+                        <Doughnut :data="PieData" :options="options" />
+                    </div>
+                    <div class="col-lg-2"></div>
+
+                
+                    <div class="col-lg-6 col-md-12" style="margin-top:10dvh;">
+                        <h2>Catalog Items</h2>
+                        <Bar :data="BarData" :options="options" />
+                    </div>
+
                 </div>
             </div>
 
@@ -230,34 +245,119 @@
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import confetti from "https://esm.run/canvas-confetti@1";
 
+import {
+    Chart as ChartJS,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend,
+    BarElement,
+    CategoryScale,
+    LinearScale
+} from 'chart.js'
+import { Doughnut } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
+
+ChartJS.register(CategoryScale, LinearScale,ArcElement, BarElement, Title, Tooltip, Legend)
+
+
+
+
 
 export default {
+    components: {
+        Doughnut,
+        Bar
+    },
     data() {
         return {
             productSize: [],
             pendingShow: true,
             approvedShow: false,
             statsShow: false,
-            userIDs:[],
-          
+            userIDs: [],
+
             // products: null,
             pendingProducts: [],
             //fake getting it from server
-            approvedProducts: [
-            ],
+            approvedProducts: [],
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+            },
         }
     },
     computed: {
         noPending() {
             return this.pendingProducts.length == 0;
         },
-        totalRevenue(){
+        totalRevenue() {
             let total = 0;
             for (const key in this.approvedProducts) {
                 total += parseFloat(this.approvedProducts[key].modifiedPrice);
             }
+            return total.toFixed(2);
+        },
+        approvedCount() {
+            return this.approvedProducts.length; // Calculate the number of approved products
+        },
+        notApprovedCount() {
+            return this.pendingProducts.length; // Calculate the number of not approved products
+        },
+        totalTops(){
+            let total = 0;
+            for (const key in this.approvedProducts) {
+                if(this.approvedProducts[key].category == "Top"){
+                    total += 1;
+                }
+            }
             return total;
-        }
+        },
+        totalBottoms(){
+            let total = 0;
+            for (const key in this.approvedProducts) {
+                if(this.approvedProducts[key].category == "Bottom"){
+                    total += 1;
+                }
+            }
+            return total;
+        },
+        totalDresses(){
+            let total = 0;
+            for (const key in this.approvedProducts) {
+                if(this.approvedProducts[key].category == "Dress"){
+                    total += 1;
+                }
+            }
+            return total;
+        },
+        
+        PieData() {
+            return {
+                labels: ['Approved', 'Not Approved'],
+                datasets: [
+                    {
+                        backgroundColor: ['#41B883', '#E46651'],
+                        data: [this.approvedCount, this.notApprovedCount]
+                    }
+                ]
+            };
+        },
+        BarData() {
+            return{
+            labels: [
+                'Top',
+                'Bottom',
+                'Dress',
+            ],
+                datasets: [
+                    {
+                        label: 'Catalog Items',
+                        backgroundColor: ['#3498db', '#2ecc71','#e74c3c'],
+                        data: [this.totalTops, this.totalBottoms, this.totalDresses]
+                    }
+                ]
+        }}
 
     },
 
@@ -383,10 +483,10 @@ export default {
             console.error(error);
         });
 
-         // grabs all the userIDs
-         FBInstanceFirestore.getAllUsers().then((data) => {
+        // grabs all the userIDs
+        FBInstanceFirestore.getAllUsers().then((data) => {
             this.userIDs = data;
-           
+
         }).catch((error) => {
             // Handle any errors that occur during the promise execution
             console.error(error);
@@ -503,7 +603,9 @@ button {
     transform: rotateX(-90deg);
 }
 
-
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 
 td {
@@ -603,6 +705,7 @@ table {
     .heading {
         font-size: 1.5rem;
     }
-    
 
-}</style>
+
+}
+</style>
