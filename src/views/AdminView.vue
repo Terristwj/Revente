@@ -184,7 +184,7 @@
                                         <div class="numbers">
                                             <div>
                                                 <p class="card-category">Total Revenue</p>
-                                                <h4 class="card-title">{{totalRevenue}}</h4>
+                                                <h4 class="card-title">${{totalRevenue}}</h4>
                                             </div>
                                         </div>
                                     </div>
