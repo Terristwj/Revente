@@ -1,73 +1,96 @@
 <script>
-	export default {
-		props: {
-			totalOriginal: {
-				type: Number,
-				required: true,
-			},
-			discounts: {
-				type: Number,
-				required: false,
-				default: 0,
-			},
-			shipping: {
-				type: Number,
-				required: false,
-				default: 0,
-			},
-			total: {
-				type: Number,
-				required: true,
-			},
-			itemCount: {
-				type: Number,
-				required: true,
-			},
+export default {
+	props: {
+		totalOriginal: {
+			type: Number,
+			required: true,
 		},
-		data() {
-			return {
-				promoInput: '',
-				promoMsg: '',
-				// todo: replace with database promo codes later
-				promoCodes: ['PROMO1', 'PROMO2', 'PROMO3'],
-			};
+		discounts: {
+			type: Number,
+			required: false,
+			default: 0,
 		},
-		methods: {
-			goToCheckout() {
-				this.$router.push('/checkout');
-			},
-			applyPromo() {
-				this.promoMsg = '';
-				if (this.promoCodes.includes(this.promoInput)) {
-					this.promoMsg = 'Promo code applied!';
-					setTimeout(() => {
-						this.promoMsg = '';
-					}, 4000);
-					this.promoInput = '';
-				} else {
-					this.promoMsg = 'Invalid promo code!';
-					setTimeout(() => {
-						this.promoMsg = '';
-					}, 4000);
-					this.promoInput = '';
-				}
-			},
+		shipping: {
+			type: Number,
+			required: false,
+			default: 0,
 		},
-		computed: {
-			calculatedPromoClass() {
-				if (this.promoMsg === 'Invalid promo code!') {
-					return 'text-danger';
-				} else {
-					return 'text-success';
-				}
-			},
+		total: {
+			type: Number,
+			required: true,
 		},
-		watch: {
-			promoInput() {
-				this.promoInput = this.promoInput.toUpperCase();
-			},
+		itemCount: {
+			type: Number,
+			required: true,
 		},
-	};
+	},
+	data() {
+		return {
+			promoInput: '',
+			promoMsg: '',
+			// todo: replace with database promo codes later
+			promoCodes: ['PROMO1', 'PROMO2', 'PROMO3'],
+		};
+	},
+	methods: {
+		goToCheckout() {
+			console.log("checkout");
+			fetch("http://localhost:4242/create-checkout-session", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					success_url: "http://localhost:5173/success",
+					cancel_url: "http://localhost:5173/cart",
+					items: [
+						{ priceInCents: 10000, name: "T-shirt" },
+						{ priceInCents: 20000, name: "Pants" },
+					],
+				}),
+			}).then(res => {
+				if (res.ok) return res.json()
+				return res.json().then(json => Promise.reject(json))
+			}).then(({ url }) => {
+				// console.log(url);
+				window.location = url
+			})
+				.catch(e => {
+					console.error(e.error)
+				})
+		},
+		applyPromo() {
+			this.promoMsg = '';
+			if (this.promoCodes.includes(this.promoInput)) {
+				this.promoMsg = 'Promo code applied!';
+				setTimeout(() => {
+					this.promoMsg = '';
+				}, 4000);
+				this.promoInput = '';
+			} else {
+				this.promoMsg = 'Invalid promo code!';
+				setTimeout(() => {
+					this.promoMsg = '';
+				}, 4000);
+				this.promoInput = '';
+			}
+		},
+	},
+	computed: {
+		calculatedPromoClass() {
+			if (this.promoMsg === 'Invalid promo code!') {
+				return 'text-danger';
+			} else {
+				return 'text-success';
+			}
+		},
+	},
+	watch: {
+		promoInput() {
+			this.promoInput = this.promoInput.toUpperCase();
+		},
+	},
+};
 </script>
 
 <template>
@@ -79,26 +102,13 @@
 		<div class="row">
 			<div class="col-sm-9">
 				<div class="input-group mb-3">
-					<input
-						autofocus
-						type="text"
-						class="form-control"
-						placeholder="Enter promo code here"
-						aria-label="promo code input"
-						aria-describedby="promo-btn"
-						id="promoCode"
-						v-model="promoInput"
-						@keydown.enter="applyPromo"
-					/>
+					<input autofocus type="text" class="form-control" placeholder="Enter promo code here"
+						aria-label="promo code input" aria-describedby="promo-btn" id="promoCode" v-model="promoInput"
+						@keydown.enter="applyPromo" />
 				</div>
 			</div>
 			<div class="col-sm-3">
-				<button
-					class="btn btn-dark"
-					type="button"
-					id="promo-btn"
-					@click="applyPromo"
-				>
+				<button class="btn btn-dark" type="button" id="promo-btn" @click="applyPromo">
 					Apply
 				</button>
 			</div>
@@ -132,10 +142,11 @@
 </template>
 
 <style scoped>
-	p {
-		line-height: 70%;
-	}
-	.border-red {
-		border: 2px solid red;
-	}
+p {
+	line-height: 70%;
+}
+
+.border-red {
+	border: 2px solid red;
+}
 </style>
