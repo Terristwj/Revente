@@ -11,7 +11,7 @@
                 </template>
             </Card>
         </div>
-        <div class="col-md-8 col-lg-6 p-3 d-flex justify-content-center align-items-center order-lg-last">
+        <div class="col-md-12 col-lg-6 p-3 order-lg-last d-flex justify-content-center align-items-center ">
             <img class='img-fluid' src="../assets/img/ecommerce/success.png" alt="">
         </div>
     </div>
@@ -20,8 +20,9 @@
 <style scoped>
 .img-fluid {
     height: auto;
-    width: 100%;
-    padding: 5rem;
+    width: 70%;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
 .btn {
