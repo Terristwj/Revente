@@ -1,12 +1,12 @@
 import axios from "axios";
 
 // eslint-disable-next-line no-unused-vars
-const DEPLOYED_LOCAL_URL = import.meta.env.VITE_LOCAL_BACKEND_URL;
+const LOCAL_BACKEND_URL = import.meta.env.VITE_LOCAL_BACKEND_URL;
 // eslint-disable-next-line no-unused-vars
 const DEPLOYED_BACKEND_URL = import.meta.env.VITE_DEPLOYED_BACKEND_URL;
 
 // EDIT THIS URL FOR TESTING
-const URL = DEPLOYED_LOCAL_URL;
+const URL = DEPLOYED_BACKEND_URL;
 
 // OpenAI API Key
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_APIKEY;

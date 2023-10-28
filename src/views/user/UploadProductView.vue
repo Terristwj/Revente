@@ -1,10 +1,10 @@
 <script>
-import router from "../router/router.js";
-import { userStore } from "../main.js";
-import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
-import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
-import BackendOpenAI from "../services/Backend/OpenAI.js";
-import GoogleMap from "../components/GoogleMap.vue";
+import router from "../../router/router.js";
+import { userStore } from "../../main.js";
+import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
+import FBInstanceStorage from "../../services/Firebase/FirebaseStorage.js";
+import BackendOpenAI from "../../services/Backend/OpenAI.js";
+import GoogleMap from "../../components/GoogleMap.vue";
 
 export default {
     components: {
@@ -718,7 +718,7 @@ input[type="file"] {
 
 #upload_background {
     height: 50dvh;
-    background-image: url("../assets/img/ecommerce/uploadimg1.png");
+    background-image: url("../../assets/img/ecommerce/uploadimg1.png");
     background-position: center;
 }
 

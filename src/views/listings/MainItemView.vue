@@ -1,9 +1,6 @@
 <script>
-import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
-import { itemStore } from "../main.js";
-import { userStore } from "../main.js";
-import { shoppingCart } from "../main.js";
-import { wishList } from "../main.js";
+import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
+import { itemStore, userStore, shoppingCart, wishList } from "../../main.js";
 
 export default {
     data() {
@@ -77,7 +74,7 @@ export default {
                     this.price = parseFloat(data.modifiedPrice);
                     this.size = data.size;
 
-                    const parts = this.size.split(' ');
+                    const parts = this.size.split(" ");
 
                     // Initialize the length
                     let length = 0;
@@ -94,11 +91,9 @@ export default {
                         this.generalSize = "Large";
                     } else if (length >= 100) {
                         this.generalSize = "Medium";
-                    }
-                    else if (length >= 80) {
+                    } else if (length >= 80) {
                         this.generalSize = "Small";
-                    }
-                    else {
+                    } else {
                         this.generalSize = "Extra Small";
                     }
                 })
@@ -107,7 +102,6 @@ export default {
                     console.error(error);
                 });
         },
-
 
         openTab(event, tabName) {
             // console.log('openTab');
@@ -122,22 +116,20 @@ export default {
         addCart() {
             if (shoppingCart.getCart().includes(this.local_itemID)) {
                 alert("Item already added to cart, please check your cart");
-            }
-            else {
+            } else {
                 shoppingCart.addCart(this.local_itemID);
                 console.log(shoppingCart.getCart());
             }
-
         },
         addWishList() {
             if (wishList.getWishList().includes(this.local_itemID)) {
-                alert("Item already added to wishlist, please check your wishlist");
-            }
-            else {
+                alert(
+                    "Item already added to wishlist, please check your wishlist"
+                );
+            } else {
                 wishList.addWish(this.local_itemID);
                 // console.log(wishList.getWishList());
             }
-
         },
     },
     created() {
@@ -146,7 +138,6 @@ export default {
             this.isLoading = false;
             this.user_ID = userStore.getUserID();
         }, 1000);
-
     },
 };
 </script>
@@ -174,9 +165,7 @@ export default {
                             Gender:
                             {{ gender }}
                         </li>
-                        <li>
-                            Brand: {{ brand }}
-                        </li>
+                        <li>Brand: {{ brand }}</li>
                         <li>
                             Product Name:
                             {{ itemName }}
@@ -189,16 +178,20 @@ export default {
                             Size:
                             {{ generalSize }}
                         </li>
-
-
-
                     </ul>
                 </div>
                 <div class="row w-75 wishcart">
-                    <button type="button" class="btn btn-clear my-4" @click="addCart()">
+                    <button
+                        type="button"
+                        class="btn btn-clear my-4"
+                        @click="addCart()"
+                    >
                         Add to Cart
                     </button>
-                    <button class="btn btn-outline-dark me-sm-2" @click="addWishList()">
+                    <button
+                        class="btn btn-outline-dark me-sm-2"
+                        @click="addWishList()"
+                    >
                         <font-awesome-icon :icon="['far', 'heart']" />
                         Add to Wishlist
                     </button>
@@ -207,10 +200,18 @@ export default {
         </div>
         <div class="row text-center">
             <div class="tab">
-                <button class="tablinks w-50" :class="{ clicked: descriptionShow }" @click="openTab(event, 'description')">
+                <button
+                    class="tablinks w-50"
+                    :class="{ clicked: descriptionShow }"
+                    @click="openTab(event, 'description')"
+                >
                     Description
                 </button>
-                <button class="tablinks w-50" :class="{ clicked: sizeShow }" @click="openTab(event, 'size')">
+                <button
+                    class="tablinks w-50"
+                    :class="{ clicked: sizeShow }"
+                    @click="openTab(event, 'size')"
+                >
                     Size
                 </button>
             </div>

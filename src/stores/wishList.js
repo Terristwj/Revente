@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 
-export const useCurrentWishList  = defineStore("currentWishList", () => {
+export const useCurrentWishList = defineStore("currentWishList", () => {
     const wishList = ref([]);
 
     function addWish(uid) {
@@ -18,8 +18,6 @@ export const useCurrentWishList  = defineStore("currentWishList", () => {
     };
 });
 
-
-
 /**
  *  Used to retrieve the current user that is logged in.
  *  Note: If using mounted, must call timeout()
@@ -35,4 +33,3 @@ export const useCurrentWishList  = defineStore("currentWishList", () => {
  *  8|      },
  *  9|   }
  */
-

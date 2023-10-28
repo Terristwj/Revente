@@ -1,8 +1,8 @@
 <script>
-import router from "../router/router.js";
+import router from "../../router/router.js";
 
 // For Firebase Login
-import FBInstanceAuth from "../services/Firebase/FirebaseAuthentication";
+import FBInstanceAuth from "../../services/Firebase/FirebaseAuthentication";
 
 export default {
     data() {
@@ -97,7 +97,7 @@ export default {
 
 <template>
     <video playsinline autoplay muted loop>
-        <source src="../assets/videos/login.webm" type="video/webm" />
+        <source src="../../assets/videos/login.webm" type="video/webm" />
     </video>
 
     <div class="background-container">
@@ -132,20 +132,16 @@ export default {
                 <div
                     class="d-flex justify-content-center flex-column gap-1 w-75 mx-auto mt-4"
                 >
-                    <button
-                        class="btn btn-dark"
-                        @click="emailPasswordLogin"
-                    >
+                    <button class="btn btn-dark" @click="emailPasswordLogin">
                         Login
                     </button>
                     <label class="text-center Aoboshi-One">OR</label>
                     <button
                         id="GoogleSignIn"
                         class="d-flex justify-content-center align-items-center pointing"
-                        
                         @click="googleLogin"
                     >
-                        <img src="../assets/img/ecommerce/Google.png" />
+                        <img src="../../assets/img/ecommerce/Google.png" />
                         <label class="pointing text-black">
                             Login with Google
                         </label>

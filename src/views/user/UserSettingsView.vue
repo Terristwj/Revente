@@ -1,12 +1,13 @@
 <script>
-import router from "../router/router.js";
-import { userStore } from "../main.js";
-import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
-import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
+import router from "../../router/router.js";
+import { userStore } from "../../main.js";
+import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
+import FBInstanceStorage from "../../services/Firebase/FirebaseStorage.js";
 
 export default {
     data() {
         return {
+            FBQuotaReached: false,
             isLoading: true,
 
             imageSrc: "",
@@ -31,23 +32,29 @@ export default {
     methods: {
         async getAccountData() {
             this.userID = userStore.getUserID();
-            FBInstanceFirestore.getAccount(this.userID).then((data) => {
-                this.imageSrc = data.image_src;
-                this.userID = data.userID;
-                this.email = data.email;
+            await FBInstanceFirestore.getAccount(this.userID)
+                .then((data) => {
+                    this.imageSrc = data.image_src;
+                    this.userID = data.userID;
+                    this.email = data.email;
 
-                // console.log(data.first_name);
-                this.fName = data.first_name;
-                this.lName = data.last_name;
-                this.phone = data.phone;
+                    // console.log(data.first_name);
+                    this.fName = data.first_name;
+                    this.lName = data.last_name;
+                    this.phone = data.phone;
 
-                this.address = data.address;
-                this.city = data.city;
-                this.region = data.region;
+                    this.address = data.address;
+                    this.city = data.city;
+                    this.region = data.region;
 
-                this.description = data.description;
-                // console.log(data);
-            });
+                    this.description = data.description;
+                    // console.log(data);
+                })
+                .catch((error) => {
+                    // Handle any errors that occur during the promise execution
+                    console.log(error);
+                    this.FBQuotaReached = true;
+                });
         },
         onFileChange(event) {
             if (event.target.files.length > 0) {
@@ -192,9 +199,18 @@ export default {
         },
     },
     mounted() {
-        setTimeout(() => {
-            this.getAccountData();
-            this.isLoading = false;
+        setTimeout(async () => {
+            await this.getAccountData();
+            if (this.FBQuotaReached) {
+                this.$toast.add({
+                    severity: "error",
+                    summary: "Database Quota Reached",
+                    detail: "Database Quota will reset at SGT 1pm.",
+                    life: 15000,
+                });
+            } else {
+                this.isLoading = false;
+            }
         }, 1000);
     },
     beforeMount() {},

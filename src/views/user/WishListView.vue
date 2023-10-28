@@ -1,36 +1,42 @@
 <script>
-import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
-import { userStore, wishList } from "../main.js";
-import { shoppingCart } from "../main.js";
-import SmallCarousel from '../components/SmallCarousel.vue';
-import router from "../router/router.js";
+import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
+import { userStore, wishList } from "../../main.js";
+import { shoppingCart } from "../../main.js";
+import SmallCarousel from "../../components/SmallCarousel.vue";
+import router from "../../router/router.js";
 
 export default {
     data() {
         return {
+            // Database Quota related
+            FBQuotaReached: false,
+
             cart: [],
-            userID: '',
+            userID: "",
             generalSize: [],
             recentProducts: [],
             reccomendedProducts: [],
             category: {},
-            popularCategory: '',
+            popularCategory: "",
         };
     },
-    computed: {
-    },
+    computed: {},
     methods: {
         toListing() {
-            router.push("/listing");
+            router.push("/listings");
         },
         async getProductData() {
-            FBInstanceFirestore.getAllProducts()
+            await FBInstanceFirestore.getAllProducts()
                 .then((data) => {
                     this.generalSize = [];
                     for (let i = 0; i < data.length; i++) {
-                        if (shoppingCart.getCart().includes(data[i].product_ID)) {
+                        if (
+                            shoppingCart.getCart().includes(data[i].product_ID)
+                        ) {
                             let size = data[i].size;
-                            let sellerName = FBInstanceFirestore.getUser(data[i].seller_ID);
+                            let sellerName = FBInstanceFirestore.getUser(
+                                data[i].seller_ID
+                            );
                             sellerName
                                 .then((name) => {
                                     // Use the data here
@@ -42,7 +48,7 @@ export default {
                                     // Handle any errors that might occur
                                     console.error(error);
                                 });
-                            const parts = size.split(' ');
+                            const parts = size.split(" ");
 
                             // Initialize the length
                             let length = 0;
@@ -59,53 +65,54 @@ export default {
                                 this.generalSize.push("Large");
                             } else if (length >= 100) {
                                 this.generalSize.push("Medium");
-                            }
-                            else if (length >= 80) {
+                            } else if (length >= 80) {
                                 this.generalSize.push("Small");
-                            }
-                            else {
+                            } else {
                                 this.generalSize.push("Extra Small");
                             }
                         }
                     }
-
                 })
                 .catch((error) => {
                     // Handle any errors that occur during the promise execution
-                    console.error(error);
+                    console.log(error);
+                    this.FBQuotaReached = true;
                 });
         },
     },
     components: {
-        SmallCarousel
+        SmallCarousel,
     },
     mounted() {
         // When enter from About page - START
-        if (sessionStorage.getItem('toReload')) {
-            sessionStorage.removeItem('toReload');
+        if (sessionStorage.getItem("toReload")) {
+            sessionStorage.removeItem("toReload");
             location.reload();
         }
 
         // When enter from About page - END
     },
-    created() {
-        setTimeout(() => {
-            this.getProductData();
+    async created() {
+        setTimeout(async () => {
+            await this.getProductData();
             this.isLoading = false;
             this.user_ID = userStore.getUserID();
         }, 1000);
+
         let recent = wishList.getWishList();
         for (let i = 0; i < recent.length; i++) {
-            FBInstanceFirestore.getProduct(recent[i])
+            await FBInstanceFirestore.getProduct(recent[i])
                 .then((data) => {
                     this.recentProducts.push(data);
+
                     let ind_category = data.category;
                     if (this.category[ind_category] == undefined) {
                         this.category[ind_category] = 1;
                     } else {
                         this.category[ind_category] += 1;
                     }
-                    console.log(this.category);
+                    // console.log(this.category);
+
                     let max = 0;
                     for (const [key, value] of Object.entries(this.category)) {
                         if (value > max) {
@@ -116,40 +123,53 @@ export default {
                 })
                 .catch((error) => {
                     // Handle any errors that occur during the promise execution
-                    console.error(error);
+                    console.log(error);
+                    this.FBQuotaReached = true;
                 });
         }
 
-        FBInstanceFirestore.getAllProducts()
+        await FBInstanceFirestore.getAllProducts()
             .then((data) => {
                 for (const key in data) {
-                    if (data[key].category == this.popularCategory && data[key].is_approved == true) {
+                    if (
+                        data[key].category == this.popularCategory &&
+                        data[key].is_approved == true
+                    ) {
                         this.reccomendedProducts.push(data[key]);
                     }
                 }
-
             })
             .catch((error) => {
                 // Handle any errors that occur during the promise execution
-                console.error(error);
+                console.log(error);
+                this.FBQuotaReached = true;
             });
 
-
+        if (this.FBQuotaReached) {
+            this.$toast.add({
+                severity: "error",
+                summary: "Database Quota Reached",
+                detail: "Database Quota will reset at SGT 1pm.",
+                life: 15000,
+            });
+        }
     },
 };
 </script>
-    
+
 <template>
     <div class="container">
-        <h1 class="my-4">
-            Your Personal Currated Wishlist
-        </h1>
+        <h1 class="my-4">Your Personal Currated Wishlist</h1>
         <p>
-            Browse through our categories for inspiration and add something
-            you like.
+            Browse through our categories for inspiration and add something you
+            like.
         </p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-            <button class="btn btn-outline-dark me-md-2 px-md-5" type="button" @click="toListing()">
+            <button
+                class="btn btn-outline-dark me-md-2 px-md-5"
+                type="button"
+                @click="toListing()"
+            >
                 LISTINGS
             </button>
         </div>
@@ -163,11 +183,10 @@ export default {
         </div>
     </div>
 </template>
-    
+
 <style scoped>
 .section {
     margin-top: 50px;
-    margin-bottom: 50px ;
+    margin-bottom: 50px;
 }
 </style>
-    

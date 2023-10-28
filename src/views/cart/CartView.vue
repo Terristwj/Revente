@@ -1,12 +1,12 @@
 <script>
-import CartItem from '../components/CartItem.vue';
-import CheckoutBar from '../components/CheckoutBar.vue';
-import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
-import { userStore } from "../main.js";
-import { shoppingCart } from "../main.js";
-import { recents } from "../main.js";
-import SmallCarousel from '../components/SmallCarousel.vue';
-import router from "../router/router.js";
+import CartItem from '../../components/CartItem.vue';
+import CheckoutBar from '../../components/CheckoutBar.vue';
+import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
+import { userStore } from "../../main.js";
+import { shoppingCart } from "../../main.js";
+import { recents } from "../../main.js";
+import SmallCarousel from '../../components/SmallCarousel.vue';
+import router from "../../router/router.js";
 
 export default {
 	data() {

@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 
-export const useCurrentRecents  = defineStore("currentRecents", () => {
+export const useCurrentRecents = defineStore("currentRecents", () => {
     const recentsView = ref([]);
 
     function addRecents(uid) {
@@ -18,8 +18,6 @@ export const useCurrentRecents  = defineStore("currentRecents", () => {
     };
 });
 
-
-
 /**
  *  Used to retrieve the current user that is logged in.
  *  Note: If using mounted, must call timeout()
@@ -35,4 +33,3 @@ export const useCurrentRecents  = defineStore("currentRecents", () => {
  *  8|      },
  *  9|   }
  */
-

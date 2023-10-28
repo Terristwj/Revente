@@ -1,9 +1,8 @@
 <script>
-import ScrollSection from "../components/ScrollSection.vue";
-import GameCanvas from "../components/GameCanvas.vue";
+import ScrollSection from "../../components/ScrollSection.vue";
+import GameCanvas from "../../components/GameCanvas.vue";
 
 export default {
-    
     name: "App",
     components: {
         ScrollSection: ScrollSection,
@@ -25,7 +24,7 @@ export default {
     <header class="video-header">
         <!-- <video src="../assets/videos/exampleVid.mp4" autoplay loop playsinline muted>
         </video> -->
-        <img src="../assets/img/ecommerce/about.svg" alt="" id="coverimg" />
+        <img src="../../assets/img/ecommerce/about.svg" alt="" id="coverimg" />
         <div class="header-text">
             <h1 class="flicker">About Us</h1>
         </div>
@@ -36,7 +35,7 @@ export default {
         <div class="content-1 row pt-4">
             <div class="col-4 m-0 p-0">
                 <img
-                    src="../assets/img/ecommerce/about-content.png"
+                    src="../../assets/img/ecommerce/about-content.png"
                     alt=""
                     id="firstimg"
                     class="img-fluid"
@@ -92,7 +91,7 @@ export default {
 
             <div class="col-4 m-0 p-0">
                 <img
-                    src="../assets/img/ecommerce/sustainable_fash.png"
+                    src="../../assets/img/ecommerce/sustainable_fash.png"
                     alt=""
                     id="firstimg"
                 />
@@ -141,7 +140,10 @@ export default {
             </div>
             <div class="col game-instructions">
                 <h3>How to play!</h3>
-                <p>Use <kbd>W</kbd> to move up, <kbd>A</kbd> to move left, <kbd>S</kbd> to move down, and <kbd>D</kbd> to move right</p>
+                <p>
+                    Use <kbd>W</kbd> to move up, <kbd>A</kbd> to move left,
+                    <kbd>S</kbd> to move down, and <kbd>D</kbd> to move right
+                </p>
                 <p>Press <kbd>Enter</kbd> to interact with NPCs</p>
             </div>
         </div>
@@ -154,10 +156,11 @@ export default {
     overflow-y: hidden;
 }
 .game-instructions {
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 10px;
-  text-align: center;}
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
 .button-pulse {
     animation: pulse 2s infinite 3s cubic-bezier(0.25, 0, 0, 1);
     box-shadow: 0 0 0 0 rgb(0, 0, 0);
@@ -193,7 +196,7 @@ export default {
 }
 
 .game-bg {
-    background-image: url("../assets/img/ecommerce/pixelbg2.jpeg");
+    background-image: url("../../assets/img/ecommerce/pixelbg2.jpeg");
     /* background-size:contain; */
 }
 
@@ -205,7 +208,7 @@ export default {
 }
 
 .card-bg {
-    background-image: url("../assets/img/ecommerce/about1.png");
+    background-image: url("../../assets/img/ecommerce/about1.png");
     background-size: cover;
 }
 

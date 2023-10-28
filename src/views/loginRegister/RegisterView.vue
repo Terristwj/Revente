@@ -1,8 +1,8 @@
 <script>
-import router from "../router/router.js";
+import router from "../../router/router.js";
 
 // For Firebase Register
-import FBInstanceAuth from "../services/Firebase/FirebaseAuthentication";
+import FBInstanceAuth from "../../services/Firebase/FirebaseAuthentication";
 
 export default {
     data() {
@@ -157,7 +157,7 @@ export default {
 
 <template>
     <video playsinline autoplay muted loop>
-        <source src="../assets/videos/login.webm" type="video/webm" />
+        <source src="../../assets/videos/login.webm" type="video/webm" />
     </video>
     <div class="background-container">
         <div class="register-container mx-auto">
@@ -292,10 +292,7 @@ export default {
                     <button class="btn btn-dark w-50" @click="submitForm()">
                         Register
                     </button>
-                    <button
-                        class="btn btn-dark w-50"
-                        @click="toCancel()"
-                    >
+                    <button class="btn btn-dark w-50" @click="toCancel()">
                         Cancel
                     </button>
                 </div>
