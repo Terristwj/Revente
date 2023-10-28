@@ -37,7 +37,7 @@
 </style>
 
 <script>
-
+import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 
 export default {
     data() {
@@ -57,11 +57,51 @@ export default {
         },
 
         // firebase method
+        updateDatabase(arr) {
+            arr.forEach((id) => {
+                FBInstanceFirestore.getProduct(id).then((data) => {
+                    console.log(data);
+                    data.is_bought = true;
+                    console.log(data);
+                    FBInstanceFirestore.updateProductStatus(
+
+                        // Seller and Product
+                        data.seller_ID,
+                        data.product_ID,
+
+                        // Product Details
+                        data.product_name,
+                        data.brand,
+                        data.description,
+
+                        // Category
+                        data.gender,
+                        data.category,
+
+                        // Condition
+                        data.condition,
+                        data.condition_notes,
+
+                        // Others
+                        data.drop_off_location,
+                        data.price,
+                        data.modifiedPrice,
+                        data.is_approved,
+                        data.is_bought,
+
+                        // Image Url (to be added)
+                        data.image_src,
+                        data.size
+                    );
+                });
+            });
+        }
     },
 
     created() {
         this.productIds = this.getProductIds()
         console.log(this.productIds);
+        this.updateDatabase(this.productIds);
     }
 }
 </script>

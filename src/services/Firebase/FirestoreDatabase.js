@@ -392,62 +392,6 @@ class FirebaseFirestore {
     });
   };
 
-  // update product status.. is_bought:true;false
-  deleteProductStatus = async function (
-    // Seller & Product
-    seller_ID,
-    product_ID,
-
-    // Product Details
-    product_name,
-    brand,
-    description,
-
-    // Category
-    gender,
-    category,
-
-    // Condition
-    condition,
-    condition_notes,
-
-    // Others
-    drop_off_location,
-    price,
-    modifiedPrice,
-    is_approved,
-    is_bought,
-
-    // Image URL (To be Added)
-    image_src,
-    size
-  ) {
-    await setDoc(doc(FirestoreDatabase, "products", product_ID), {
-      seller_ID,
-      product_ID,
-
-      product_name,
-      brand,
-      description,
-
-      gender,
-      category,
-
-      condition,
-      condition_notes,
-
-      drop_off_location,
-      price,
-      modifiedPrice,
-      is_approved,
-      is_bought,
-
-      // (To be Added)
-      image_src,
-      size,
-    });
-  };
-
   //add to cart, add user_ID and change bought to true
   addToCart = async function (
     // Seller & Product
