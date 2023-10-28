@@ -23,6 +23,10 @@ export default {
 			type: Number,
 			required: true,
 		},
+		cartItems: {
+			type: Array,
+			required: true,
+		}
 	},
 	data() {
 		return {
@@ -43,10 +47,7 @@ export default {
 				body: JSON.stringify({
 					success_url: "http://localhost:5173/success",
 					cancel_url: "http://localhost:5173/cart",
-					items: [
-						{ priceInCents: 10000, name: "T-shirt" },
-						{ priceInCents: 20000, name: "Pants" },
-					],
+					items: this.cartItems,
 				}),
 			}).then(res => {
 				if (res.ok) return res.json()

@@ -17,7 +17,8 @@ export default {
 			recentProducts: [],
 			reccomendedProducts: [],
 			category: {},
-			popularCategory:'',
+			popularCategory: '',
+			changedCart: [],
 		};
 	},
 	computed: {
@@ -37,9 +38,33 @@ export default {
 		},
 	},
 	methods: {
+		getCartDetails() {
+			FBInstanceFirestore.getAllProducts().then((data) => {
+				console.log(data);
+				console.log(shoppingCart.getCart());
+				data.forEach((item) => {
+					if (shoppingCart.getCart().includes(item.product_ID)) {
+						var obj = {};
+						for (var prop in item) {
+							if (prop == "product_name") {
+								obj["name"] = item[prop];
+								console.log(obj["name"]);
+							}
+							if (prop == "modifiedPrice") {
+								obj["priceInCents"] = item[prop] * 100;
+								console.log(obj["priceInCents"]);
+							}
+						}
+						this.changedCart.push(obj);
+					}
+				})
+				console.log(this.changedCart);
+
+			})
+		},
 		toListing() {
-            router.push("/listing");
-        },
+			router.push("/listing");
+		},
 		cartItemStyle(index) {
 			let styling = '';
 			if (index === this.cart.length - 1) {
@@ -56,6 +81,7 @@ export default {
 			FBInstanceFirestore.getAllProducts()
 				.then((data) => {
 					this.generalSize = [];
+					console.log(data);
 					for (let i = 0; i < data.length; i++) {
 						if (shoppingCart.getCart().includes(data[i].product_ID)) {
 							let size = data[i].size;
@@ -65,14 +91,16 @@ export default {
 									// Use the data here
 									data[i].seller_name = name.first_name;
 									this.cart.push(data[i]);
-									console.log(data[i].seller_name);
-								})
+									console.log(this.cart);
+
+								}
+								)
 								.catch((error) => {
 									// Handle any errors that might occur
 									console.error(error);
 								});
+							
 							const parts = size.split(' ');
-
 							// Initialize the length
 							let length = 0;
 
@@ -96,13 +124,14 @@ export default {
 								this.generalSize.push("Extra Small");
 							}
 						}
+						
 					}
-
 				})
 				.catch((error) => {
 					// Handle any errors that occur during the promise execution
 					console.error(error);
 				});
+
 		},
 	},
 	components: {
@@ -122,6 +151,7 @@ export default {
 	created() {
 		setTimeout(() => {
 			this.getProductData();
+			this.getCartDetails();
 			this.isLoading = false;
 			this.user_ID = userStore.getUserID();
 		}, 1000);
@@ -144,6 +174,7 @@ export default {
 							this.popularCategory = key;
 						}
 					}
+
 				})
 				.catch((error) => {
 					// Handle any errors that occur during the promise execution
@@ -152,18 +183,19 @@ export default {
 		}
 
 		FBInstanceFirestore.getAllProducts()
-				.then((data) => {
-					for (const key in data) {
-						if (data[key].category == this.popularCategory && data[key].is_approved == true) {
-							this.reccomendedProducts.push(data[key]);
-						}
+			.then((data) => {
+				// console.log(data);
+				for (const key in data) {
+					if (data[key].category == this.popularCategory && data[key].is_approved == true) {
+						this.reccomendedProducts.push(data[key]);
 					}
-				
-				})
-				.catch((error) => {
-					// Handle any errors that occur during the promise execution
-					console.error(error);
-				});
+				}
+
+			})
+			.catch((error) => {
+				// Handle any errors that occur during the promise execution
+				console.error(error);
+			});
 
 
 	},
@@ -197,7 +229,8 @@ export default {
 						:class="cartItemStyle(index)" :itemID="item.product_ID" />
 				</div>
 				<div class="col-lg-4">
-					<CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length" />
+					<CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length"
+						:cartItems="this.changedCart" />
 				</div>
 			</div>
 		</div>
