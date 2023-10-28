@@ -1,25 +1,29 @@
 <script>
 	export default {
 		name: 'SideMenuBar',
+		props: {
+			brands: {
+				type: Array,
+			},
+		},
 		data() {
 			return {
 				// Gender section
 				genderPicked: '',
-				genders: ['MEN', 'WOMEN'],
+				genders: ['Male', 'Female', 'Unisex'],
 				// Brand section
 				brandsPicked: [],
-				brands: ['unbranded', 'nike', 'adidas', 'puma', 'gucci'],
 				brandSearchInput: '',
 				// Price section
 				priceRangeSelected: '',
-				priceRanges: [
-					'SG $0 ~ SG $50',
-					'SG $50 ~ SG $100',
-					'SG $100 ~ SG $150',
-					'SG $150 ~ SG $200',
-					'SG $200 ~ SG $250',
-					'SG $250 ~ SG $300',
-				],
+				priceRanges: {
+					'SG $0 ~ SG $50': [0, 50],
+					'SG $50 ~ SG $100': [50, 100],
+					'SG $100 ~ SG $150': [100, 150],
+					'SG $150 ~ SG $200': [150, 200],
+					'SG $200 ~ SG $250': [200, 250],
+					'SG $250 ~ SG $300': [250, 300],
+				},
 				minPriceInput: '',
 				maxPriceInput: '',
 				isPriceRangeWrong: false,
@@ -28,12 +32,15 @@
 		watch: {
 			genderPicked() {
 				console.log(this.genderPicked);
+				this.$emit('gender-picked', this.genderPicked);
 			},
 			brandsPicked() {
 				console.log(this.brandsPicked);
+				this.$emit('brands-picked', this.brandsPicked);
 			},
 			priceRangeSelected() {
 				console.log(this.priceRangeSelected);
+				this.$emit('price-range-selected', this.priceRangeSelected);
 			},
 		},
 		methods: {
@@ -43,9 +50,12 @@
 					setTimeout(() => {
 						this.isPriceRangeWrong = false;
 					}, 2000);
+				} else {
+					this.$emit('price-range-selected', [
+						this.minPriceInput,
+						this.maxPriceInput,
+					]);
 				}
-				console.log(this.minPriceInput);
-				console.log(this.maxPriceInput);
 			},
 		},
 	};
@@ -84,7 +94,7 @@
 								:value="gender"
 								:id="gender"
 							/>
-							<label class="form-check-label" :for="gender">
+							<label class="form-check-label caps" :for="gender">
 								{{ gender }}
 							</label>
 						</div>
@@ -170,18 +180,18 @@
 				>
 					<div
 						class="form-check"
-						v-for="priceRange in priceRanges"
+						v-for="(priceRange, key) in priceRanges"
 						:key="priceRange"
 					>
 						<input
 							v-model="priceRangeSelected"
 							class="form-check-input"
 							type="radio"
-							:id="priceRange"
+							:id="key"
 							:value="priceRange"
 						/>
-						<label class="form-check-label" :for="priceRange">
-							{{ priceRange }}
+						<label class="form-check-label" :for="key">
+							{{ key }}
 						</label>
 					</div>
 					<div class="mt-4">
@@ -223,3 +233,9 @@
 		<!-- Size -->
 	</ul>
 </template>
+
+<style scoped>
+	.caps {
+		text-transform: uppercase;
+	}
+</style>
