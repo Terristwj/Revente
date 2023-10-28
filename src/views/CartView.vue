@@ -17,7 +17,7 @@ export default {
 			recentProducts: [],
 			reccomendedProducts: [],
 			category: {},
-			popularCategory:'',
+			popularCategory: '',
 		};
 	},
 	computed: {
@@ -38,8 +38,8 @@ export default {
 	},
 	methods: {
 		toListing() {
-            router.push("/listing");
-        },
+			router.push("/listing");
+		},
 		cartItemStyle(index) {
 			let styling = '';
 			if (index === this.cart.length - 1) {
@@ -152,18 +152,18 @@ export default {
 		}
 
 		FBInstanceFirestore.getAllProducts()
-				.then((data) => {
-					for (const key in data) {
-						if (data[key].category == this.popularCategory && data[key].is_approved == true) {
-							this.reccomendedProducts.push(data[key]);
-						}
+			.then((data) => {
+				for (const key in data) {
+					if (data[key].category == this.popularCategory && data[key].is_approved == true) {
+						this.reccomendedProducts.push(data[key]);
 					}
-				
-				})
-				.catch((error) => {
-					// Handle any errors that occur during the promise execution
-					console.error(error);
-				});
+				}
+
+			})
+			.catch((error) => {
+				// Handle any errors that occur during the promise execution
+				console.error(error);
+			});
 
 
 	},
@@ -172,9 +172,12 @@ export default {
 
 <template>
 	<div class="container">
-		<h1 class="my-5">
+		<h1 class="my-4">
 			Shopping Cart <span v-if="cartContent">({{ cartContent }})</span>
 		</h1>
+		<p>
+			If you have removed an item; please go back one page and come back. <strong>Do not refresh pls D:</strong>
+		</p>
 		<div v-if="!cartContent">
 			<h3>Your Shopping Cart is empty.</h3>
 			<p>
@@ -195,6 +198,7 @@ export default {
 					<CartItem v-for="(item, index) in cart" :key="index" :name="item.name" :price="item.modifiedPrice"
 						:size="generalSize[index]" :brand="item.brand" :seller="item.seller_name" :imgUrl="item.image_src"
 						:class="cartItemStyle(index)" :itemID="item.product_ID" />
+					
 				</div>
 				<div class="col-lg-4">
 					<CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length" />

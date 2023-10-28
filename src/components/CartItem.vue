@@ -1,5 +1,6 @@
 <script>
-import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
+
+import { wishList,shoppingCart } from "../main.js";
 export default {
 	data() {
 		return {
@@ -39,39 +40,18 @@ export default {
 
 	methods: {
 		remove(id) {
-		
-			
-			FBInstanceFirestore.getProduct(id)
-                .then((data) => {
-                    this.temp = data;
-                    // console.log(this.temp);
-                        FBInstanceFirestore.removeCart(
-                            this.temp.seller_ID,
-                            this.temp.product_ID,
-                            this.temp.product_name,
-                            this.temp.brand,
-                            this.temp.description,
-                            this.temp.gender,
-                            this.temp.category,
-                            this.temp.condition,
-                            this.temp.condition_notes,
-                            this.temp.drop_off_location,
-                            this.temp.price,
-                            parseFloat(this.temp.modifiedPrice),
-                            true,
-                            false,
-                            this.temp.image_src,
-                            this.temp.size,
-                            '',
-                            false
-                        );	
-                })
-                .catch((error) => {
-                    // Handle any errors that occur during the promise execution
-                    console.error(error);
-                });
-				
-		}
+			shoppingCart.removeCart(id);	
+		},
+		addWishList(id) {
+            if (wishList.getWishList().includes(id)) {
+                alert("Item already added to wishlist, please check your wishlist");
+            }
+            else {
+                wishList.addWish(id);
+                // console.log(wishList.getWishList());
+            }
+
+        },
 
 	},
 };
@@ -99,7 +79,7 @@ export default {
 					Seller: <a href="#" class="seller-link">{{ seller }}</a>
 				</p>
 				<div class="mt-4">
-					<button class="btn btn-outline-dark me-sm-2">
+					<button class="btn btn-outline-dark me-sm-2" @click="addWishList(itemID)">
 						<font-awesome-icon :icon="['far', 'heart']" />
 						Add to Wishlist
 					</button>
