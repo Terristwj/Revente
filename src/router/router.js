@@ -59,6 +59,11 @@ export const routes = [
     component: () => import("../views/ListingView.vue"),
   },
   {
+    path: "/wishlist",
+    name: "WishList",
+    component: () => import("../views/WishlistView.vue"),
+  },
+  {
     path: "/Cart",
     name: "Cart",
     icon: ["fas", "bag-shopping"],
