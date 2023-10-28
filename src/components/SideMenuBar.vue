@@ -8,14 +8,19 @@
 		},
 		data() {
 			return {
-				// Gender section
+				// Values to be passed to parent component
 				genderPicked: '',
-				genders: ['Male', 'Female', 'Unisex'],
-				// Brand section
-				brandsPicked: [],
-				brandSearchInput: '',
-				// Price section
 				priceRangeSelected: '',
+				brandsPicked: [],
+
+				// inputs
+				brandSearchInput: '',
+				minPriceInput: '',
+				maxPriceInput: '',
+
+				// Gender selection
+				genders: ['Male', 'Female', 'Unisex'],
+				// Price selection
 				priceRanges: {
 					'SG $0 ~ SG $50': [0, 50],
 					'SG $50 ~ SG $100': [50, 100],
@@ -24,9 +29,12 @@
 					'SG $200 ~ SG $250': [200, 250],
 					'SG $250 ~ SG $300': [250, 300],
 				},
-				minPriceInput: '',
-				maxPriceInput: '',
 				isPriceRangeWrong: false,
+
+				// Sidebar section, to determine which section is open
+				isGenderOpen: false,
+				isBrandOpen: false,
+				isPriceOpen: false,
 			};
 		},
 		watch: {
@@ -57,6 +65,21 @@
 					]);
 				}
 			},
+			openGender() {
+				this.isGenderOpen = !this.isGenderOpen;
+				this.isBrandOpen = false;
+				this.isPriceOpen = false;
+			},
+			openBrand() {
+				this.isGenderOpen = false;
+				this.isBrandOpen = !this.isBrandOpen;
+				this.isPriceOpen = false;
+			},
+			openPrice() {
+				this.isGenderOpen = false;
+				this.isBrandOpen = false;
+				this.isPriceOpen = !this.isPriceOpen;
+			},
 		},
 	};
 </script>
@@ -66,22 +89,18 @@
 	<ul class="list-unstyled ps-0">
 		<li class="mb-1">
 			<div class="row">
-				<div
-					class="col-10"
-					data-bs-toggle="collapse"
-					data-bs-target="#gender-collapse"
-					aria-expanded="false"
-				>
-					Gender
-				</div>
+				<div class="col-10" @click="openGender">Gender</div>
 				<button
 					class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-					data-bs-toggle="collapse"
-					data-bs-target="#gender-collapse"
-					aria-expanded="false"
+					@click="openGender"
+					:aria-expanded="[isGenderOpen ? true : false]"
 				></button>
 			</div>
-			<div class="collapse" id="gender-collapse">
+			<div
+				class="collapse"
+				:class="{ show: isGenderOpen }"
+				id="gender-collapse"
+			>
 				<ul
 					class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3 ms-3"
 				>
@@ -107,22 +126,18 @@
 		<!-- Brand  -->
 		<li class="mb-1">
 			<div class="row">
-				<div
-					class="col-10"
-					data-bs-toggle="collapse"
-					data-bs-target="#brand-collapse"
-					aria-expanded="false"
-				>
-					Brand
-				</div>
+				<div class="col-10" @click="openBrand">Brand</div>
 				<button
 					class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-					data-bs-toggle="collapse"
-					data-bs-target="#brand-collapse"
-					aria-expanded="false"
+					@click="openBrand"
+					:aria-expanded="[isBrandOpen ? true : false]"
 				></button>
 			</div>
-			<div class="collapse" id="brand-collapse">
+			<div
+				class="collapse"
+				:class="{ show: isBrandOpen }"
+				id="brand-collapse"
+			>
 				<ul
 					class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3 ms-3"
 				>
@@ -159,22 +174,18 @@
 		<!-- Price -->
 		<li class="mb-1">
 			<div class="row">
-				<div
-					class="col-10"
-					data-bs-toggle="collapse"
-					data-bs-target="#price-collapse"
-					aria-expanded="false"
-				>
-					Price
-				</div>
+				<div class="col-10" @click="openPrice">Price</div>
 				<button
 					class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-					data-bs-toggle="collapse"
-					data-bs-target="#price-collapse"
-					aria-expanded="false"
+					@click="openPrice"
+					:aria-expanded="[isPriceOpen ? true : false]"
 				></button>
 			</div>
-			<div class="collapse" id="price-collapse">
+			<div
+				class="collapse"
+				:class="{ show: isPriceOpen }"
+				id="price-collapse"
+			>
 				<div
 					class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3"
 				>
