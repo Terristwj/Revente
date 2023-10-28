@@ -36,7 +36,7 @@
             <div class="" v-if="!noPending">
                 <div class="table-responsive">
                     <table class="table table-striped">
-                        <thead class="thead-light">
+                        <thead class="thead-light" style="position: sticky; top: 0;">
                             <tr class="table-danger" style="border:1px solid black;">
                                 <th scope="col">ID</th>
                                 <th scope="col">Product</th>
@@ -85,7 +85,7 @@
             <div class="">
                 <div class="table-responsive">
                     <table class="table table-striped custom-table">
-                        <thead class="thead-light">
+                        <thead class="thead-light" style="position: sticky; top: 0;">
                             <tr class="table-success" style="border:1px solid black;">
                                 <th scope="col">ID</th>
                                 <th scope="col">Product</th>
