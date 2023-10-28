@@ -43,7 +43,7 @@ export default {
 				console.log(data);
 				console.log(shoppingCart.getCart());
 				data.forEach((item) => {
-					if (shoppingCart.getCart().includes(item.product_ID)) {
+					if (shoppingCart.getCart().includes(item.product_ID) && item.is_bought == false) {
 						var obj = {};
 						for (var prop in item) {
 							if (prop == "product_name") {
@@ -83,7 +83,7 @@ export default {
 					this.generalSize = [];
 					console.log(data);
 					for (let i = 0; i < data.length; i++) {
-						if (shoppingCart.getCart().includes(data[i].product_ID)) {
+						if (shoppingCart.getCart().includes(data[i].product_ID) && data[i].is_bought == false) {
 							let size = data[i].size;
 							let sellerName = FBInstanceFirestore.getUser(data[i].seller_ID);
 							sellerName
@@ -226,7 +226,7 @@ export default {
 		<div class="cart-section">
 			<div class="row">
 				<div class="col-lg-8">
-					<CartItem v-for="(item, index) in cart" :key="index" :name="item.name" :price="item.modifiedPrice"
+					<CartItem v-for="(item, index) in cart" :key="index" :name="item.product_name" :price="item.modifiedPrice"
 						:size="generalSize[index]" :brand="item.brand" :seller="item.seller_name" :imgUrl="item.image_src"
 						:class="cartItemStyle(index)" :itemID="item.product_ID" />
 					
