@@ -26,6 +26,10 @@ export default {
 		cartItems: {
 			type: Array,
 			required: true,
+		},
+		itemIds: {
+			type: Array,
+			required: true,
 		}
 	},
 	data() {
@@ -39,13 +43,14 @@ export default {
 	methods: {
 		goToCheckout() {
 			console.log("checkout");
+			console.log(this.itemIds);
 			fetch("https://revente-backend.vercel.app/create-checkout-session", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					success_url: "http://localhost:5173/success",
+					success_url: "http://localhost:5173/success?product_ids=" + (this.itemIds).toString(),
 					cancel_url: "http://localhost:5173/cart",
 					items: this.cartItems,
 				}),

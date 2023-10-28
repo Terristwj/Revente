@@ -18,7 +18,12 @@ export default {
 			reccomendedProducts: [],
 			category: {},
 			popularCategory: '',
+
+			// get the priceInCents and the name of product from the cart
 			changedCart: [],
+
+			// get the product ids of cartItems
+			cartItems: [],
 		};
 	},
 	computed: {
@@ -40,12 +45,12 @@ export default {
 	methods: {
 		getCartDetails() {
 			FBInstanceFirestore.getAllProducts().then((data) => {
-				console.log(data);
+				// console.log(data);
 				console.log(shoppingCart.getCart());
 				data.forEach((item) => {
 					if (shoppingCart.getCart().includes(item.product_ID)) {
-						var obj = {};
-						for (var prop in item) {
+						let obj = {};
+						for (let prop in item) {
 							if (prop == "product_name") {
 								obj["name"] = item[prop];
 								console.log(obj["name"]);
@@ -54,11 +59,14 @@ export default {
 								obj["priceInCents"] = item[prop] * 100;
 								console.log(obj["priceInCents"]);
 							}
+
 						}
 						this.changedCart.push(obj);
+						this.cartItems.push(item.product_ID);
 					}
 				})
 				console.log(this.changedCart);
+				console.log(this.cartItems);
 
 			})
 		},
@@ -99,7 +107,7 @@ export default {
 									// Handle any errors that might occur
 									console.error(error);
 								});
-							
+
 							const parts = size.split(' ');
 							// Initialize the length
 							let length = 0;
@@ -124,7 +132,7 @@ export default {
 								this.generalSize.push("Extra Small");
 							}
 						}
-						
+
 					}
 				})
 				.catch((error) => {
@@ -229,11 +237,11 @@ export default {
 					<CartItem v-for="(item, index) in cart" :key="index" :name="item.name" :price="item.modifiedPrice"
 						:size="generalSize[index]" :brand="item.brand" :seller="item.seller_name" :imgUrl="item.image_src"
 						:class="cartItemStyle(index)" :itemID="item.product_ID" />
-					
+
 				</div>
 				<div class="col-lg-4">
 					<CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length"
-						:cartItems="this.changedCart" />
+						:cartItems="this.changedCart" :itemIds="this.cartItems" />
 				</div>
 			</div>
 		</div>
