@@ -139,6 +139,11 @@ export default {
             >
                 <GameCanvas />
             </div>
+            <div class="col game-instructions">
+                <h3>How to play!</h3>
+                <p>Use <kbd>W</kbd> to move up, <kbd>A</kbd> to move left, <kbd>S</kbd> to move down, and <kbd>D</kbd> to move right</p>
+                <p>Press <kbd>Enter</kbd> to interact with NPCs</p>
+            </div>
         </div>
     </div>
 </template>
@@ -148,7 +153,11 @@ export default {
     overflow-x: hidden;
     overflow-y: hidden;
 }
-
+.game-instructions {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  text-align: center;}
 .button-pulse {
     animation: pulse 2s infinite 3s cubic-bezier(0.25, 0, 0, 1);
     box-shadow: 0 0 0 0 rgb(0, 0, 0);
