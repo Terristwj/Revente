@@ -6,6 +6,7 @@ import { userStore } from "../main.js";
 import { shoppingCart } from "../main.js";
 import { recents } from "../main.js";
 import SmallCarousel from '../components/SmallCarousel.vue';
+import router from "../router/router.js";
 
 export default {
 	data() {
@@ -36,6 +37,9 @@ export default {
 		},
 	},
 	methods: {
+		toListing() {
+            router.push("/listing");
+        },
 		cartItemStyle(index) {
 			let styling = '';
 			if (index === this.cart.length - 1) {
@@ -179,11 +183,9 @@ export default {
 			</p>
 			<br />
 			<div class="d-grid gap-2 d-md-flex justify-content-md-start">
-				<button class="btn btn-outline-dark me-md-2 px-md-5" type="button">
-					NEW ARRIVALS
-				</button>
-				<button class="btn btn-outline-dark px-md-5" type="button">
-					TRENDING
+				<button class="btn btn-outline-dark me-md-2 px-md-5" type="button" @click="toListing()">
+					LISTINGS
+
 				</button>
 			</div>
 		</div>
