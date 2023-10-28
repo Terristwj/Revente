@@ -322,9 +322,9 @@ class FirebaseFirestore {
     return products;
   };
 
-  //
+  
   // Firestore Handle Product/Item END
-  //
+  
 
   // Example codes
   // Add a new document in collection "cities"
@@ -392,122 +392,7 @@ class FirebaseFirestore {
     });
   };
 
-  //add to cart, add user_ID and change bought to true
-  addToCart = async function (
-    // Seller & Product
-    seller_ID,
-    product_ID,
-
-    // Product Details
-    product_name,
-    brand,
-    description,
-
-    // Category
-    gender,
-    category,
-
-    // Condition
-    condition,
-    condition_notes,
-
-    // Others
-    drop_off_location,
-    price,
-    modifiedPrice,
-    is_approved,
-    is_bought,
-
-    // Image URL (To be Added)
-    image_src,
-    size,
-    user_ID,
-    addToCart
-  ) {
-    await setDoc(doc(FirestoreDatabase, "products", product_ID), {
-      seller_ID,
-      product_ID,
-
-      product_name,
-      brand,
-      description,
-
-      gender,
-      category,
-
-      condition,
-      condition_notes,
-
-      drop_off_location,
-      price,
-      modifiedPrice,
-      is_approved,
-      is_bought,
-
-      // (To be Added)
-      image_src,
-      size,
-      user_ID,
-      addToCart,
-    });
-  };
-  //remove from cart, remove user_ID and change bought to false
-  removeCart = async function (
-    // Seller & Product
-    seller_ID,
-    product_ID,
-
-    // Product Details
-    product_name,
-    brand,
-    description,
-
-    // Category
-    gender,
-    category,
-
-    // Condition
-    condition,
-    condition_notes,
-
-    // Others
-    drop_off_location,
-    price,
-    modifiedPrice,
-    is_approved,
-    is_bought,
-
-    // Image URL (To be Added)
-    image_src,
-    size,
-    user_ID
-  ) {
-    await setDoc(doc(FirestoreDatabase, "products", product_ID), {
-      seller_ID,
-      product_ID,
-
-      product_name,
-      brand,
-      description,
-
-      gender,
-      category,
-
-      condition,
-      condition_notes,
-
-      drop_off_location,
-      price,
-      modifiedPrice,
-      is_approved,
-      is_bought,
-
-      // (To be Added)
-      image_src,
-      size,
-      user_ID,
-    });
-  };
+  
 }
 
 const FBInstanceFirestore = new FirebaseFirestore();
