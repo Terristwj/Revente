@@ -6,8 +6,8 @@
 	export default {
 		components: {
 			CountryDropdown,
-			StripeElements,
-			StripeElement,
+			// StripeElements,
+			// StripeElement,
 		},
 		setup() {
 			const stripeKey = ref('pk_test_TYooMQauvdEDq54NiTphI7jx'); // test key
