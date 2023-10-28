@@ -70,7 +70,7 @@
 					class="col-10"
 					data-bs-toggle="collapse"
 					data-bs-target="#gender-collapse"
-					aria-expanded="true"
+					aria-expanded="false"
 				>
 					Gender
 				</div>
@@ -78,10 +78,10 @@
 					class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
 					data-bs-toggle="collapse"
 					data-bs-target="#gender-collapse"
-					aria-expanded="true"
+					aria-expanded="false"
 				></button>
 			</div>
-			<div class="collapse show" id="gender-collapse">
+			<div class="collapse" id="gender-collapse">
 				<ul
 					class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3 ms-3"
 				>
@@ -111,7 +111,7 @@
 					class="col-10"
 					data-bs-toggle="collapse"
 					data-bs-target="#brand-collapse"
-					aria-expanded="true"
+					aria-expanded="false"
 				>
 					Brand
 				</div>
@@ -119,10 +119,10 @@
 					class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
 					data-bs-toggle="collapse"
 					data-bs-target="#brand-collapse"
-					aria-expanded="true"
+					aria-expanded="false"
 				></button>
 			</div>
-			<div class="collapse show" id="brand-collapse">
+			<div class="collapse" id="brand-collapse">
 				<ul
 					class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3 ms-3"
 				>
@@ -163,7 +163,7 @@
 					class="col-10"
 					data-bs-toggle="collapse"
 					data-bs-target="#price-collapse"
-					aria-expanded="true"
+					aria-expanded="false"
 				>
 					Price
 				</div>
@@ -171,10 +171,10 @@
 					class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
 					data-bs-toggle="collapse"
 					data-bs-target="#price-collapse"
-					aria-expanded="true"
+					aria-expanded="false"
 				></button>
 			</div>
-			<div class="collapse show" id="price-collapse">
+			<div class="collapse" id="price-collapse">
 				<div
 					class="btn-toggle-nav list-unstyled fw-normal pb-1 small mt-4 ms-3"
 				>

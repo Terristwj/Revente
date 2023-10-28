@@ -114,9 +114,6 @@
 				<div class="my-3">
 					<button
 						class="btn btn-outline-dark d-inline-flex align-items-center d-block d-lg-none"
-						data-bs-toggle="offcanvas"
-						data-bs-target="#offcanvas"
-						role="button"
 						@click="visibleLeft = true"
 					>
 						Filter
@@ -128,19 +125,27 @@
 				</div>
 			</div>
 			<div class="row">
+				<!-- Sticky sidebar for large screens -->
 				<div class="col-lg-3 col-xl-2 d-none d-lg-block">
 					<SideMenuBar
+						class="sticky-top"
 						:brands="brands"
 						@gender-picked="updateGender"
 						@brands-picked="updateBrand"
 						@price-range-selected="updatePrice"
 					/>
 				</div>
+				<!--Toggle-able sidebar for smaller screen -->
 				<Sidebar
 					v-model:visible="visibleLeft"
 					class="d-block d-lg-none"
 				>
-					<SideMenuBar />
+					<SideMenuBar
+						:brands="brands"
+						@gender-picked="updateGender"
+						@brands-picked="updateBrand"
+						@price-range-selected="updatePrice"
+					/>
 				</Sidebar>
 				<div class="col-md-12 col-lg-9 col-xl-10">
 					<div class="row justify-content-center gap-2 gap-lg-3">
@@ -157,7 +162,15 @@
 </template>
 
 <style scoped>
+	body {
+		overflow: visible;
+	}
 	.btn-outline-dark:hover {
 		color: white;
+	}
+	.sticky-top {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 4em;
 	}
 </style>
