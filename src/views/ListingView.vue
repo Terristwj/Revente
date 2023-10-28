@@ -9,7 +9,7 @@
 			FBInstanceFirestore.getAllProducts()
 				.then((data) => {
 					for (const key in data) {
-						if (data[key].is_approved == true) {
+						if (data[key].is_approved == true && data[key].is_bought == false) {
 							this.approvedProducts.push(data[key]);
 							this.brands.push(data[key].brand);
 						}

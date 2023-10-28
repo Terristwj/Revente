@@ -193,7 +193,7 @@ export default {
 		FBInstanceFirestore.getAllProducts()
 			.then((data) => {
 				for (const key in data) {
-					if (data[key].category == this.popularCategory && data[key].is_approved == true) {
+					if (data[key].category == this.popularCategory && data[key].is_approved == true && data[key].is_bought == false) {
 						this.reccomendedProducts.push(data[key]);
 					}
 				}
