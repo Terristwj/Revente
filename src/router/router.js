@@ -156,6 +156,11 @@ export const routes = [
     component: () => import("../views/CheckoutView.vue"),
     icon: ["fas", "user"],
   },
+  {
+    path: "/success",
+    name: "Success",
+    component: () => import("../views/SuccessView.vue"),
+  }
   // Incomplete Views goes here END
 ];
 

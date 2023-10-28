@@ -35,7 +35,7 @@ export default {
 	methods: {
 		goToCheckout() {
 			console.log("checkout");
-			fetch("http://localhost:4242/create-checkout-session", {
+			fetch("https://revente-backend.vercel.app/create-checkout-session", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
