@@ -22,7 +22,7 @@ export default {
             auth: FBInstanceAuth.getAuth(),
 
             // For Navigation Bar
-            routesExcludedInBoth: ["Home", "Register", "NotFound"],
+            routesExcludedInBoth: ["Home", "Register", "NotFound", "MainItem", "TnC", "Admin", "FAQ", "Review View", "Checkout", "Order History", "Success", ],
             routesExcludedLoggedIn: ["Login", "Listing"],
             routesExcludedLoggedOut: ["Profile", "Settings"],
             navRoutes: null,
