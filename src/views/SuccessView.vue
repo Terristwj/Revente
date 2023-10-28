@@ -40,11 +40,28 @@
 
 
 export default {
+    data() {
+        return {
+            productIds: [],
+        }
+    },
     methods: {
         goToListing() {
             console.log("working");
-            this.$router.push({name: "Listing"});
+            this.$router.push({ name: "Listing" });
         },
+        getProductIds() {
+            let url = new URL(window.location);
+            let productIds = url.searchParams.get("product_ids");
+            return productIds.split(",");
+        },
+
+        // firebase method
+    },
+
+    created() {
+        this.productIds = this.getProductIds()
+        console.log(this.productIds);
     }
 }
 </script>
