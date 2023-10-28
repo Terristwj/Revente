@@ -3,6 +3,7 @@ import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { itemStore } from "../main.js";
 import { userStore } from "../main.js";
 import { shoppingCart } from "../main.js";
+import { wishList } from "../main.js";
 
 export default {
     data() {
@@ -119,17 +120,24 @@ export default {
             }
         },
         addCart() {
-        if(shoppingCart.getCart().includes(this.local_itemID)){
-            alert("Item already added to cart, please check your cart");
-        }
-        else{
-            shoppingCart.addCart(this.local_itemID);
-            console.log(shoppingCart.getCart());
-        }
-            
+            if (shoppingCart.getCart().includes(this.local_itemID)) {
+                alert("Item already added to cart, please check your cart");
+            }
+            else {
+                shoppingCart.addCart(this.local_itemID);
+                console.log(shoppingCart.getCart());
+            }
+
         },
         addWishList() {
-            console.log("addWishList");
+            if (wishList.getWishList().includes(this.local_itemID)) {
+                alert("Item already added to wishlist, please check your wishlist");
+            }
+            else {
+                wishList.addWish(this.local_itemID);
+                // console.log(wishList.getWishList());
+            }
+
         },
     },
     created() {

@@ -6,6 +6,8 @@ import { createPinia } from 'pinia';
 import { useCurrentUserStore } from './stores/currentUser.js';
 import { useCurrentItemID } from './stores/currentItem.js';
 import { useCurrentCart } from './stores/currentCart.js';
+import { useCurrentRecents } from './stores/recents.js';
+import { useCurrentWishList } from './stores/wishList.js';
 import App from './App.vue';
 import router from './router/router.js';
 
@@ -48,6 +50,8 @@ app.use(createPinia());
 export const userStore = useCurrentUserStore();
 export const itemStore = useCurrentItemID();
 export const shoppingCart = useCurrentCart();
+export const wishList = useCurrentWishList();
+export const recents = useCurrentRecents();
 app.use(router);
 
 // Refer to PrimeVue.js for the full list of components

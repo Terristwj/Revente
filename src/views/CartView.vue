@@ -4,6 +4,8 @@ import CheckoutBar from '../components/CheckoutBar.vue';
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { userStore } from "../main.js";
 import { shoppingCart } from "../main.js";
+import { recents } from "../main.js";
+import SmallCarousel from '../components/SmallCarousel.vue';
 
 export default {
 	data() {
@@ -11,6 +13,10 @@ export default {
 			cart: [],
 			userID: '',
 			generalSize: [],
+			recentProducts: [],
+			reccomendedProducts: [],
+			category: {},
+			popularCategory:'',
 		};
 	},
 	computed: {
@@ -98,6 +104,7 @@ export default {
 	components: {
 		CartItem,
 		CheckoutBar,
+		SmallCarousel
 	},
 	mounted() {
 		// When enter from About page - START
@@ -114,6 +121,46 @@ export default {
 			this.isLoading = false;
 			this.user_ID = userStore.getUserID();
 		}, 1000);
+		let recent = recents.getRecents();
+		for (let i = 0; i < recent.length; i++) {
+			FBInstanceFirestore.getProduct(recent[i])
+				.then((data) => {
+					this.recentProducts.push(data);
+					let ind_category = data.category;
+					if (this.category[ind_category] == undefined) {
+						this.category[ind_category] = 1;
+					} else {
+						this.category[ind_category] += 1;
+					}
+					console.log(this.category);
+					let max = 0;
+					for (const [key, value] of Object.entries(this.category)) {
+						if (value > max) {
+							max = value;
+							this.popularCategory = key;
+						}
+					}
+				})
+				.catch((error) => {
+					// Handle any errors that occur during the promise execution
+					console.error(error);
+				});
+		}
+
+		FBInstanceFirestore.getAllProducts()
+				.then((data) => {
+					for (const key in data) {
+						if (data[key].category == this.popularCategory) {
+							this.reccomendedProducts.push(data[key]);
+						}
+					}
+				
+				})
+				.catch((error) => {
+					// Handle any errors that occur during the promise execution
+					console.error(error);
+				});
+
 
 	},
 };
@@ -154,9 +201,11 @@ export default {
 		</div>
 		<div class="section">
 			<h3>Recently Viewed</h3>
+			<SmallCarousel :products="recentProducts" />
 		</div>
 		<div class="section">
 			<h3>Recommended For You</h3>
+			<SmallCarousel :products="reccomendedProducts" />
 		</div>
 	</div>
 </template>

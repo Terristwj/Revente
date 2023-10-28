@@ -9,9 +9,10 @@
             <p class="card-text">$ {{ product.modifiedPrice }}</p>
 
             <div class="d-flex">
-                <button type="button" class="btn btn-clear my-3 mr-0 m1-3" @click="visible = true">Quick View</button>
-                <button type="button" class="btn btn-clear-like" id="fav"><font-awesome-icon
-                        :icon="['far', 'heart']" /></button>
+                <button type="button" class="btn btn-clear my-3 mr-0 m1-3"
+                    @click="visible = true; recent(product.product_ID)">Quick View</button>
+                <button type="button" class="btn btn-clear-like" id="fav"
+                    @click="addWishList(product.product_ID)"><font-awesome-icon :icon="['far', 'heart']" /></button>
             </div>
         </div>
 
@@ -86,6 +87,9 @@
 import { ref } from "vue";
 import { itemStore } from "../main.js";
 import { shoppingCart } from "../main.js";
+import { recents } from "../main.js";
+import { wishList } from "../main.js";
+
 
 
 const visible = ref(false);
@@ -121,13 +125,26 @@ export default {
         },
 
         addCart(id) {
-            if(shoppingCart.getCart().includes(id)){
-            alert("Item already added to cart, please check your cart");
-        }
-        else{
-            shoppingCart.addCart(id);
-            console.log(shoppingCart.getCart());
-        }
+            if (shoppingCart.getCart().includes(id)) {
+                alert("Item already added to cart, please check your cart");
+            }
+            else {
+                shoppingCart.addCart(id);
+                console.log(shoppingCart.getCart());
+            }
+        },
+        recent(id) {
+            recents.addRecents(id);
+            // console.log(recents.getRecent());
+        },
+        addWishList(id) {
+            if (wishList.getWishList().includes(id)) {
+                alert("Item already added to wishlist, please check your wishlist");
+            }
+            else {
+                wishList.addWish(id);
+                // console.log(wishList.getWishList());
+            }
         },
     }
 }
