@@ -3,11 +3,14 @@ import CartItem from '../components/CartItem.vue';
 import CheckoutBar from '../components/CheckoutBar.vue';
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { userStore } from "../main.js";
+import { shoppingCart } from "../main.js";
+
 export default {
 	data() {
 		return {
 			cart: [],
 			userID: '',
+			generalSize: [],
 		};
 	},
 	computed: {
@@ -23,7 +26,7 @@ export default {
 			for (let i = 0; i < this.cart.length; i++) {
 				total += this.cart[i].modifiedPrice;
 			}
-			return total;
+			return total.toFixed(2);
 		},
 	},
 	methods: {
@@ -42,8 +45,10 @@ export default {
 		async getProductData() {
 			FBInstanceFirestore.getAllProducts()
 				.then((data) => {
+					this.generalSize = [];
 					for (let i = 0; i < data.length; i++) {
-						if (data[i].user_ID === this.user_ID && data[i].addToCart === true) {
+						if (shoppingCart.getCart().includes(data[i].product_ID)) {
+							let size = data[i].size;
 							let sellerName = FBInstanceFirestore.getUser(data[i].seller_ID);
 							sellerName
 								.then((name) => {
@@ -55,7 +60,31 @@ export default {
 								.catch((error) => {
 									// Handle any errors that might occur
 									console.error(error);
-								});						
+								});
+							const parts = size.split(' ');
+
+							// Initialize the length
+							let length = 0;
+
+							// Iterate through the parts to extract the length
+							for (let i = 0; i < parts.length; i++) {
+								const part = parts[i];
+								if (part === "Length:") {
+									length = parseFloat(parts[i + 1]);
+									break; // Exit the loop once length is found
+								}
+							}
+							if (length >= 120) {
+								this.generalSize.push("Large");
+							} else if (length >= 100) {
+								this.generalSize.push("Medium");
+							}
+							else if (length >= 80) {
+								this.generalSize.push("Small");
+							}
+							else {
+								this.generalSize.push("Extra Small");
+							}
 						}
 					}
 
@@ -115,8 +144,8 @@ export default {
 			<div class="row">
 				<div class="col-lg-8">
 					<CartItem v-for="(item, index) in cart" :key="index" :name="item.name" :price="item.modifiedPrice"
-						:size="item.size" :brand="item.brand" :seller="item.seller_name" :imgUrl="item.image_src"
-						:class="cartItemStyle(index)" :itemID="item.product_ID"/>
+						:size="generalSize[index]" :brand="item.brand" :seller="item.seller_name" :imgUrl="item.image_src"
+						:class="cartItemStyle(index)" :itemID="item.product_ID" />
 				</div>
 				<div class="col-lg-4">
 					<CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length" />

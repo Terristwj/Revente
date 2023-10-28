@@ -5,6 +5,7 @@ import { createPinia } from 'pinia';
 // Track userID
 import { useCurrentUserStore } from './stores/currentUser.js';
 import { useCurrentItemID } from './stores/currentItem.js';
+import { useCurrentCart } from './stores/currentCart.js';
 import App from './App.vue';
 import router from './router/router.js';
 
@@ -46,6 +47,7 @@ app.use(Vue3Geolocation);
 app.use(createPinia());
 export const userStore = useCurrentUserStore();
 export const itemStore = useCurrentItemID();
+export const shoppingCart = useCurrentCart();
 app.use(router);
 
 // Refer to PrimeVue.js for the full list of components

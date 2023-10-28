@@ -69,8 +69,6 @@
     border: 1px solid black;
 }
 
-.btn-clear-like {}
-
 .btn-clear:hover {
     background-color: black;
     color: white;
@@ -86,9 +84,8 @@
 
 <script setup>
 import { ref } from "vue";
-import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { itemStore } from "../main.js";
-import { userStore } from "../main.js";
+import { shoppingCart } from "../main.js";
 
 
 const visible = ref(false);
@@ -122,56 +119,15 @@ export default {
             itemStore.setItemID(id);
             this.$router.push({ name: "MainItem" });
         },
+
         addCart(id) {
-            this.user_ID = userStore.getUserID();
-            FBInstanceFirestore.getProduct(id)
-                .then((data) => {
-                    this.temp = data;
-                    // console.log(this.temp);
-                    if (this.temp.addToCart == true) {
-                        alert("Item already added to cart, please check your cart");
-                    }
-                    else {
-                        FBInstanceFirestore.addToCart(
-                            this.temp.seller_ID,
-                            this.temp.product_ID,
-                            this.temp.product_name,
-                            this.temp.brand,
-                            this.temp.description,
-                            this.temp.gender,
-                            this.temp.category,
-                            this.temp.condition,
-                            this.temp.condition_notes,
-                            this.temp.drop_off_location,
-                            this.temp.price,
-                            parseFloat(this.temp.modifiedPrice),
-                            true,
-                            false,
-                            this.temp.image_src,
-                            this.temp.size,
-                            this.user_ID,
-                            true
-                        );
-                        FBInstanceFirestore.getProduct(this.temp.product_ID)
-                            .then((data) => {
-                                this.temp = data;
-                                // console.log(data);
-                            })
-                            .catch((error) => {
-                                // Handle any errors that occur during the promise execution
-                                console.error(error);
-                            });
-
-                        if (this.temp.addToCart == true) {
-                            alert("Item added to cart, please check your cart");
-                        }
-                    }
-                })
-                .catch((error) => {
-                    // Handle any errors that occur during the promise execution
-                    console.error(error);
-                });
-
+            if(shoppingCart.getCart().includes(id)){
+            alert("Item already added to cart, please check your cart");
+        }
+        else{
+            shoppingCart.addCart(id);
+            console.log(shoppingCart.getCart());
+        }
         },
     }
 }
