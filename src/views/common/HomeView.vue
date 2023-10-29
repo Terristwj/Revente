@@ -30,7 +30,12 @@ export default {
     },
     data() {
         return {
-            approvedProducts: [],
+            // Caraousels
+            saleProducts: [],
+            newDropsProducts: [],
+            featuredProducts: [],
+
+            // Error Handlers
             isPageEnterLoading: true,
             FBQuotaReached: false,
         };
@@ -42,28 +47,27 @@ export default {
         toLogin() {
             router.push("/login");
         },
-        // Grabs all the data already AND SPLITS them into pending and approved
-        async getAllProducts() {
-            const productData = await FBInstanceFirestore.getAllProducts()
+        // Get data from database
+        async getHomepageProducts() {
+            await FBInstanceFirestore.getHomepageProducts()
                 .then((data) => {
-                    return data;
+                    this.saleProducts = data.sale;
+                    this.newDropsProducts = data.newDrops;
+                    this.featuredProducts = data.featured;
                 })
                 .catch((error) => {
                     // Handle any errors that occur during the promise execution
                     this.FBQuotaReached = true;
                     console.log(error);
                 });
-
-            for (const key in productData) {
-                if (productData[key].is_approved == true) {
-                    this.approvedProducts.push(productData[key]);
-                }
-            }
-            // console.log(this.approvedProducts);
         },
     },
     async created() {
-        await this.getAllProducts();
+        // Get data from database
+        await this.getHomepageProducts();
+
+        // For loading skeleton
+        // And database quota reached
         setTimeout(() => {
             if (this.FBQuotaReached) {
                 this.$toast.add({
@@ -223,7 +227,7 @@ export default {
                         <BigCarousel
                             v-else
                             class="mb-5"
-                            :products="approvedProducts"
+                            :products="saleProducts"
                             imgDesc="Sale"
                             carouId="SaleCarousel"
                             :interval="5000"
@@ -239,7 +243,7 @@ export default {
 
                         <BigCarousel
                             v-else
-                            :products="approvedProducts"
+                            :products="newDropsProducts"
                             imgDesc="New Drops"
                             carouId="DropCarousel"
                             :interval="7000"
@@ -254,7 +258,7 @@ export default {
                         height="400px"
                     ></Skeleton>
 
-                    <SmallCarousel v-else :products="approvedProducts" />
+                    <SmallCarousel v-else :products="featuredProducts" />
                 </div>
             </div>
         </div>

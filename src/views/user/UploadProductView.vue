@@ -218,7 +218,7 @@ export default {
                             // Document Key
                             productID,
 
-                            // Image URL (To be Added)
+                            // Image URL (Data to be Added)
                             url
                         );
                     // console.log(errorCode);

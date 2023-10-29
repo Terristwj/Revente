@@ -18,6 +18,7 @@ import {
     faShirt,
     faBookmark,
     faArrowRightFromBracket,
+    faFilter,
 } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
@@ -38,7 +39,8 @@ library.add(
     faMoneyBillTrendUp,
     faShirt,
     faBookmark,
-    faArrowRightFromBracket
+    faArrowRightFromBracket,
+    faFilter
 );
 
 export default FontAwesomeIcon;

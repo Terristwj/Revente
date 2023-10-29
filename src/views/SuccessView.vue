@@ -1,18 +1,33 @@
 <template>
     <div class="row justify-content-center align-items-center">
-        <div class="col-md-12 order-sm-last col-lg-6 p-3 text-center order-xs-last">
+        <div
+            class="col-md-12 order-sm-last col-lg-6 p-3 text-center order-xs-last"
+        >
             <Card>
                 <template #title> Successful Checkout! </template>
                 <template #content>
                     <p class="m-0">
-                        Thanks for making a purchase with us! We hope you enjoy your new item(s).
+                        Thanks for making a purchase with us! We hope you enjoy
+                        your new item(s).
                     </p>
-                    <button type="button" class="btn btn-dark mt-4" @click="goToListing()">Back To Listings</button>
+                    <button
+                        type="button"
+                        class="btn btn-dark mt-4"
+                        @click="goToListing()"
+                    >
+                        Back To Listings
+                    </button>
                 </template>
             </Card>
         </div>
-        <div class="col-md-12 col-lg-6 p-3 order-lg-last d-flex justify-content-center align-items-center ">
-            <img class='img-fluid' src="../assets/img/ecommerce/success.png" alt="">
+        <div
+            class="col-md-12 col-lg-6 p-3 order-lg-last d-flex justify-content-center align-items-center"
+        >
+            <img
+                class="img-fluid"
+                src="../assets/img/ecommerce/success.png"
+                alt=""
+            />
         </div>
     </div>
 </template>
@@ -43,7 +58,7 @@ export default {
     data() {
         return {
             productIds: [],
-        }
+        };
     },
     methods: {
         goToListing() {
@@ -64,7 +79,6 @@ export default {
                     data.is_bought = true;
                     console.log(data);
                     FBInstanceFirestore.updateProductStatus(
-
                         // Seller and Product
                         data.seller_ID,
                         data.product_ID,
@@ -86,22 +100,22 @@ export default {
                         data.drop_off_location,
                         data.price,
                         data.modifiedPrice,
-                        data.is_approved,
-                        data.is_bought,
-
-                        // Image Url (to be added)
                         data.image_src,
-                        data.size
+                        data.size,
+
+                        // Status
+                        data.is_approved,
+                        data.is_bought
                     );
                 });
             });
-        }
+        },
     },
 
     created() {
-        this.productIds = this.getProductIds()
+        this.productIds = this.getProductIds();
         console.log(this.productIds);
         this.updateDatabase(this.productIds);
-    }
-}
+    },
+};
 </script>
