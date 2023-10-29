@@ -13,18 +13,18 @@ export const routes = [
     {
         path: "/about",
         name: "About",
-        icon: ["fas", "info"],
+        icon: ["fas", "bookmark"],
         component: () => import("../views/common/AboutView.vue"),
+    },
+    {
+        path: "/tnc",
+        name: "Terms & Conditions",
+        component: () => import("../views/common/TnCView.vue"),
     },
     {
         path: "/faq",
         name: "FAQ",
         component: () => import("../views/common/FAQView.vue"),
-    },
-    {
-        path: "/tnc",
-        name: "TnC",
-        component: () => import("../views/common/TnCView.vue"),
     },
     // Common Pages END
 
@@ -33,16 +33,14 @@ export const routes = [
         path: "/admin",
         name: "Admin",
         component: () => import("../views/admin/AdminView.vue"),
-        meta: {
-            requiresAuth: true,
-        },
     },
     // Admin page END
 
     // Product Catalogue START
     {
         path: "/listings",
-        name: "Listing",
+        name: "Listings",
+        icon: ["fas", "shirt"],
         component: () => import("../views/listings/ListingView.vue"),
     },
     {
@@ -68,6 +66,7 @@ export const routes = [
     {
         path: "/profile",
         name: "Profile",
+        icon: ["fas", "user"],
         component: () => import("../views/user/ProfileView.vue"),
         meta: {
             requiresAuth: true,
@@ -84,7 +83,7 @@ export const routes = [
     // (Sellers) User upload listing
     {
         path: "/profile/upload",
-        name: "Upload",
+        name: "Upload Listing",
         component: () => import("../views/user/UploadProductView.vue"),
         meta: {
             requiresAuth: true,

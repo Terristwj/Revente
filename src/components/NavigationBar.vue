@@ -1,5 +1,5 @@
 <script>
-import { routes } from "../router/router.js";
+import router, { routes } from "../router/router.js";
 
 // For Firebase Signout
 import { onAuthStateChanged } from "firebase/auth";
@@ -14,21 +14,110 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 export default {
     data() {
         return {
+            // For Firebase Login
+            auth: FBInstanceAuth.getAuth(),
+
+            // For Account Handling
+            isLoggedIn: false,
+            isAdmin: false,
+
             // For Mobile Tab
             mobileTabVisible: false,
 
-            // For Firebase Login
-            isLoggedIn: false,
-            auth: FBInstanceAuth.getAuth(),
-
             // For Navigation Bar
-            routesExcludedInBoth: ["Home", "Register", "NotFound", "MainItem", "TnC", "Admin", "FAQ", "Review View", "Checkout", "Order History", "Success", ],
-            routesExcludedLoggedIn: ["Login", "Listing"],
-            routesExcludedLoggedOut: ["Profile", "Settings"],
+            routesExcludedInBoth: [
+                // Common
+                "Home",
+
+                // Admin
+                "Admin",
+
+                // User
+
+                // Listings
+                "MainItem",
+
+                // LoginRegister
+                "Register",
+
+                // Others
+                "NotFound",
+
+                // WIP
+                "Review View",
+                "Checkout",
+                "Success",
+                "Order History",
+            ],
+            routesExcludedLoggedIn: ["Login", "FAQ", "Terms & Conditions"],
+            routesExcludedLoggedOut: [
+                "Profile",
+                "Settings",
+                "Upload Listing",
+                "Cart",
+                "Wish List",
+            ],
             navRoutes: null,
+
+            // For Desktop Navigation Bar
+            activeProfile: false,
+            profileItems: [
+                {
+                    label: "Settings",
+                    icon: "pi pi-cog",
+                    command: () => {
+                        router.push("/profile/settings");
+                        this.activeProfile = false;
+                    },
+                },
+                {
+                    label: "Upload Listing",
+                    icon: "pi pi-upload",
+                    command: () => {
+                        router.push("/profile/upload");
+                        this.activeProfile = false;
+                    },
+                },
+                {
+                    label: "Wish List",
+                    icon: "pi pi-gift",
+                    command: () => {
+                        router.push("/profile/wishlist");
+                        this.activeProfile = false;
+                    },
+                },
+            ],
+            activeAbout: false,
+            aboutItems: [
+                {
+                    label: "Terms & Conditions",
+                    icon: "pi pi-book",
+                    command: () => {
+                        router.push("/tnc");
+                        this.activeAbout = false;
+                    },
+                },
+                {
+                    label: "FAQ",
+                    icon: "pi pi-question-circle",
+                    command: () => {
+                        router.push("/faq");
+                        this.activeAbout = false;
+                    },
+                },
+            ],
         };
     },
     methods: {
+        activeTab(tab) {
+            // Close all tabs first
+            this.activeAbout = false;
+            this.activeProfile = false;
+
+            // Open the specified tab
+            if (tab == "about") this.activeAbout = true;
+            if (tab == "profile") this.activeProfile = true;
+        },
         // When logout is clicked
         handleLogout() {
             FBInstanceAuth.logout(this.auth);
@@ -168,16 +257,113 @@ export default {
                         :key="route.name"
                         class="nav-item"
                     >
-                        <RouterLink class="nav-link" :to="route.path">
+                        <!-- About Routes START -->
+                        <div
+                            v-if="route.name == 'About'"
+                            @mouseover="activeTab('about')"
+                        >
+                            <RouterLink
+                                @click="activeAbout = false"
+                                class="nav-link"
+                                :to="route.path"
+                            >
+                                <font-awesome-icon
+                                    v-if="route.icon"
+                                    :icon="route.icon"
+                                />
+                                {{ route.name }}
+                            </RouterLink>
+                            <Menu
+                                v-if="activeAbout"
+                                @mouseleave="activeAbout = false"
+                                id="overlay_menu"
+                                class="position-absolute"
+                                style="margin-top: 5px"
+                                :model="aboutItems"
+                                :pt="{
+                                    menu: {
+                                        class: 'p-0',
+                                    },
+                                    label: {
+                                        class: 'ps-1',
+                                        style: 'font-size: 14px;',
+                                    },
+                                }"
+                            />
+                        </div>
+
+                        <div
+                            v-else-if="route.name == 'Terms & Conditions'"
+                        ></div>
+                        <div v-else-if="route.name == 'FAQ'"></div>
+                        <!-- Profile Routes END -->
+
+                        <!-- Profile Routes START -->
+                        <div
+                            v-else-if="route.name == 'Profile'"
+                            @mouseover="activeTab('profile')"
+                        >
+                            <RouterLink
+                                @click="activeProfile = false"
+                                class="nav-link"
+                                :to="route.path"
+                            >
+                                <font-awesome-icon
+                                    v-if="route.icon"
+                                    :icon="route.icon"
+                                />
+                                {{ route.name }}
+                            </RouterLink>
+                            <Menu
+                                v-if="activeProfile"
+                                @mouseleave="activeProfile = false"
+                                id="overlay_menu"
+                                class="position-absolute"
+                                style="margin-top: 5px"
+                                :model="profileItems"
+                                :pt="{
+                                    menu: {
+                                        class: 'p-0',
+                                    },
+                                    label: {
+                                        class: 'ps-1',
+                                        style: 'font-size: 14px;',
+                                    },
+                                }"
+                            />
+                        </div>
+
+                        <div v-else-if="route.name == 'Settings'"></div>
+                        <div v-else-if="route.name == 'Upload Listing'"></div>
+                        <div v-else-if="route.name == 'Wish List'"></div>
+                        <!-- Profile Routes END -->
+
+                        <!-- Default Routes START -->
+                        <RouterLink
+                            v-else
+                            @mouseover="activeTab('')"
+                            class="nav-link"
+                            :to="route.path"
+                        >
                             <font-awesome-icon
                                 v-if="route.icon"
                                 :icon="route.icon"
                             />
                             {{ route.name }}
                         </RouterLink>
+                        <!-- Default Routes END -->
                     </li>
-                    <li v-if="isLoggedIn" class="nav-item pointing">
-                        <a class="nav-link" @click="handleLogout"> Sign out </a>
+                    <li
+                        v-if="isLoggedIn"
+                        @mouseover="activeTab('')"
+                        class="nav-item pointing"
+                    >
+                        <a class="nav-link" @click="handleLogout">
+                            <font-awesome-icon
+                                icon="arrow-right-from-bracket"
+                            />
+                            <span> Sign out </span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -192,7 +378,7 @@ nav {
     background-color: white;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 2;
 }
 
 .nav-item {

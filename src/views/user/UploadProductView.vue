@@ -321,7 +321,7 @@ export default {
 
 <template>
     <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-    <header class="head fixed-top shadow border-top border-2">
+    <header class="head shadow border-top border-2">
         <div class="container-fluid">
             <div
                 class="d-flex justify-content-between align-items-center mx-4 mx-lg-5"
@@ -723,8 +723,11 @@ input[type="file"] {
 }
 
 .head {
+    position: fixed;
     top: 56px;
-    z-index: 999;
+    left: 0px;
+    right: 0px;
+    z-index: 1;
     background-color: rgb(248, 228, 213);
     opacity: 0.9;
 }

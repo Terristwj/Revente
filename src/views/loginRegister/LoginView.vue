@@ -222,12 +222,12 @@ video {
 /* Small devices (landscape phones, 576px and up) */
 .login-container {
     /* width: 80%; */
+    border-radius: 25px;
+    width: 100%;
     max-height: 90%;
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     max-width: 800px;
-    border-radius: 30px;
     overflow-y: scroll;
 }
 
