@@ -1,4 +1,5 @@
 <script>
+	import GlensAutoComplete from './GlensAutoComplete.vue';
 	export default {
 		name: 'SideMenuBar',
 		props: {
@@ -65,6 +66,10 @@
 					]);
 				}
 			},
+			searchBrand(e) {
+				console.log(this.brandsPicked);
+				this.$emit('brands-picked', e);
+			},
 			openGender() {
 				this.isGenderOpen = !this.isGenderOpen;
 				this.isBrandOpen = false;
@@ -80,6 +85,9 @@
 				this.isBrandOpen = false;
 				this.isPriceOpen = !this.isPriceOpen;
 			},
+		},
+		components: {
+			GlensAutoComplete,
 		},
 	};
 </script>
@@ -143,12 +151,9 @@
 				>
 					<li>
 						<div class="input-group mb-3">
-							<input
-								type="text"
-								class="form-control"
-								placeholder="Search Brands"
-								aria-label="Search Brands"
-								v-model="brandSearchInput"
+							<GlensAutoComplete
+								:brands="brands"
+								@brands-picked="searchBrand"
 							/>
 						</div>
 					</li>
