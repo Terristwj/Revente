@@ -18,16 +18,24 @@
 Before you get started, make sure you have the following tools and dependencies installed:
 
 -   Node.js
--   Firebase Authentication
--   Firebase Firestore
--   Firebase Storage
 -   npm (Node Package Manager)
+-   Firebase
+    -   Authentication
+    -   Firestore
+    -   Storage
+-   Secret Keys (APIs) (.env)
+    -   Firebase
+    -   Google Maps
+    -   OpenAI
+    -   PaLM
+    -   Backend URL (Deployed and Local)
 
 ### Installation
 
-1. Clone this repository.
-
-2. Install the necessary dependencies for the frontend by navigating to the project directory and running the following command:
+1. Clone the backend repository
+    - Follow the installation steps
+    - Run the backend
+2. Clone this repository and install the necessary dependencies:
 
     ```bash
     npm install
@@ -69,38 +77,79 @@ Before you get started, make sure you have the following tools and dependencies 
 
 ## Tech Stack
 
-### Frontend
+### Frontend (This Repository)
 
--   **Bootstrap**: For responsive and stylish user interface design.
--   **Axios**: A promise-based HTTP client for making API requests.
--   **Fonts/Icons**:
-    -   Font Awesome: A popular icon library.
-    -   Prime Icons: Icon library for PrimeVue.
--   **PrimeVue (BTL)**: A UI component library for Vue.js.
--   **Vue Router (BTL)**: For client-side routing.
--   **Pinia (Like Vuex) (BTL)**: A state management solution.
--   **Animations (BTL)**:
-    -   Anime.js: A flexible JavaScript animation library.
-    -   vue-responsive-video-background-player: For responsive video backgrounds.
+-   **UI/UX**
+
+    -   **Bootstrap**: For responsive and stylish user interface design.
+    -   **PrimeVue (BTL)**: A UI component library for Vue.js.
+    -   **Animations (BTL)**:
+        -   **Anime.js**: A flexible JavaScript animation library.
+        -   **vue-responsive-video-background-player**: For responsive video backgrounds.
+    -   **Fonts/Icons (BTL)**:
+        -   **Font Awesome**: A popular icon library.
+        -   **Prime Icons**: Icon library for PrimeVue.
+
+-   **Frontend Codes**
+
+    -   **Axios**: A promise-based HTTP client for making API requests.
+
+    -   **Vue Router (BTL)**: For client-side routing and navigation guards.
+
+    -   **Pinia (Like Vuex) (BTL)**: A state management solution.
+
 -   **JavaScript Game (BTL)**:
-    -   GSAP: For game UI animation.
-    -   Howler: For audio in your JavaScript game.
 
-### Backend
+    -   **GSAP**: For game UI animation.
+    -   **Howler**: For audio in your JavaScript game.
+
+-   **Others**:
+
+    -   **Chart.js (BTL)**: Creating insightful statistics for admin
+    -   **Google Maps**:
+        -   Geolocation
+        -   Google Address Autocomplete
+    -   **DialogFlow**: FAQ Chatbot
 
 -   **Firebase**:
-    -   Firebase Authentication: Secure user authentication.
-    -   Firestore Database: A NoSQL database for storing data.
-    -   Firebase Hosting: For deploying your web application.
 
-### Beyond The Lab (BTL)
+    -   **Authentication (BTL)**: Secure user authentication.
+    -   **Firestore Database**: A NoSQL database for storing data.
+    -   **Firebase Hosting (BTL)**: For deploying your web application.
 
--   **PrimeVue (Component Library)**: Extending PrimeVue for additional components.
--   **Vuetify 3 (Component Library) (WIP)**: A popular Vue component library (work in progress).
--   **Animations**: Additional animations for a rich user experience.
--   **Vue Router**: Extended use of Vue Router.
--   **Pinia**: State management using Pinia.
--   **JavaScript game with Canvas**: Incorporating Canvas for game development.
+-   **Backend Services (BTL)**:
+    -   **Stripe**: Payment service provider
+    -   **OpenAI**: Used to assist generating text
+    -   **PaLM**: Used as an alternative to OpenAI as backup
+
+### Backend (Backend Repository)
+
+-   **Stripe (BTL)**: Payment service provider
+-   **OpenAI**: Used to assist generating text
+-   **PaLM**: Used as an alternative to OpenAI as backup
+-   **Vercel**: Cloud Deployment
+
+### Beyond The Lab (BTL) Compilation List
+
+-   **Frontend**
+    -   PrimeVue & Prime Icons
+    -   Anime.js
+    -   Font Awesome
+    -   GSAP & Howler
+    -   Chart.js
+    -   DialogFlow
+    -   Vue Router
+    -   Pinia
+-   **Database**
+    -   Firebase Authentication
+    -   Firebase Storage
+-   **Backend**
+    -   Stripe
+    -   OpenAI
+    -   PaLM
+-   **Deployment**
+    -   Firebase Hosting
+    -   Vercel
 
 ## Screenshots
 
@@ -121,6 +170,7 @@ Special thanks to the following resources that helped us along the way:
 2. [JavaScript Game Tutorial](https://www.youtube.com/watch?v=yP5DKzriqXA)
 3. [How to deploy with Firebase Hosting](https://medium.com/@rachidsakara/how-to-deploy-vue-js-applications-with-firebase-hosting-40cfa7f724e4)
 4. [Cloud Firestore Database](https://firebase.google.com/docs/firestore)
+5. I forgot to keep track of the links - Terris
 
 Feel free to add more screenshots and shoutouts to your GitHub profiles, repositories, or any contributors who played a significant role in the project. Good luck with your portfolio piece!
 
