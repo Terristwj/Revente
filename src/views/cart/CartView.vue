@@ -71,7 +71,7 @@ export default {
 			})
 		},
 		toListing() {
-			router.push("/listing");
+			router.push("/listings");
 		},
 		cartItemStyle(index) {
 			let styling = '';
