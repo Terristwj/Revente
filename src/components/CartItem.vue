@@ -62,7 +62,7 @@ export default {
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3 ps-0">
-				<img :src="imgUrl" :alt="itemName" class="cart-img" />
+				<img :src="imgUrl" :alt="itemName" class="cart-img img-fluid" />
 			</div>
 			<div class="col-9">
 				<div class="row">

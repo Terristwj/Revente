@@ -38,6 +38,7 @@ export default {
 			promoMsg: '',
 			// todo: replace with database promo codes later
 			promoCodes: ['PROMO1', 'PROMO2', 'PROMO3'],
+			promoDetails: [],
 		};
 	},
 	methods: {
@@ -69,10 +70,7 @@ export default {
 			this.promoMsg = '';
 			if (this.promoCodes.includes(this.promoInput)) {
 				this.promoMsg = 'Promo code applied!';
-				setTimeout(() => {
-					this.promoMsg = '';
-				}, 4000);
-				this.promoInput = '';
+				
 			} else {
 				this.promoMsg = 'Invalid promo code!';
 				setTimeout(() => {
