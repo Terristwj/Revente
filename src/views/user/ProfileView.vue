@@ -1,16 +1,34 @@
 <script>
 // import ItemCard from '../components/ItemCard.vue';
 import Rating from "primevue/rating";
+import { userStore } from "../../main.js";
+import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
+
 export default {
     data() {
         return {
-            rating: 10,
+            rating: 8,
+            userID: userStore.getUserID(),
+            description: "",
+            image_src:  "",
+            username: "",
         };
     },
     components: {
         // ItemCard,
         Rating,
     },
+    created() {
+        // console.log(this.userID);
+        FBInstanceFirestore.getUser(this.userID).then((data) => {
+            console.log(data);
+            this.username = data.first_name + " " + data.last_name;
+            this.description = data.description;
+            this.image_src = data.image_src;
+        });
+        
+        
+    }
 };
 </script>
 
@@ -22,22 +40,18 @@ export default {
                 <div class="row">
                     <div class="col-xl-2 col-md-4 col-xs-6">
                         <img
-                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                            alt="Generic placeholder image"
+                            src= ""
+                            alt= "generic profile picture"
                             class="img-thumbnail mt-4 mb-2"
                             style="width: 200px; z-index: 1"
                         />
                     </div>
                     <div class="col-xl-10 col-md-8 col-xs-6">
-                        <h1 class="display-5 fw-bold py-2">Username</h1>
+                        <h1 class="display-5 fw-bold py-2">{{ username }}</h1>
                         Rating:
                         <Rating v-model="rating" :cancel="false" readonly />
                         <p class="col-md-12 fs-4 pt-2">
-                            Description: Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Aliquid eum fugit quis, laboriosam
-                            ad porro veniam! Dicta dolores id nesciunt
-                            distinctio necessitatibus. Saepe voluptas accusamus
-                            dicta cupiditate excepturi laboriosam corporis?
+                            Description: {{ description }}
                         </p>
                     </div>
                 </div>
