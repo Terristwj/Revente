@@ -316,6 +316,13 @@ export default {
             this.toggleLoadingUI();
         },
     },
+    mounted() {
+        setTimeout(() => {
+            if (!userStore.getUserID()) {
+                router.push("/login");
+            }
+        }, 500);
+    },
 };
 </script>
 
@@ -393,7 +400,6 @@ export default {
                                         height: 100%;
                                         width: 100%;
                                         aspect-ratio: 1 / 1;
-                                        object-fit: cover;
                                     "
                                     :src="imageSrc"
                                     alt="preview"
@@ -411,11 +417,14 @@ export default {
                                 >
                                     <!-- Zoomed Image Displayed -->
                                     <img
+                                        style="
+                                            height: 80vh;
+                                            width: 100%;
+                                            aspect-ratio: 1 / 1;
+                                        "
                                         id="Item-Image"
                                         :src="imageSrc"
                                         alt="preview"
-                                        width="500"
-                                        height="500"
                                     />
 
                                     <!-- Image Overlay -->

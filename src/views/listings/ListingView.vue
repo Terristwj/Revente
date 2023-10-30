@@ -33,6 +33,7 @@ export default {
 
             // Error Handlers
             FBQuotaReached: false,
+            isLoading: true,
         };
     },
     computed: {
@@ -156,36 +157,42 @@ export default {
 
         // Database
     },
-    async created() {
-        // Get total products
-        await FBInstanceFirestore.getAllProductListingsAndCount()
-            .then(({ products, count }) => {
-                // Data from Firebase
-                this.allProductListings = products;
-                this.totalProducts = count;
+    created() {
+        setTimeout(async () => {
+            // Get total products
+            await FBInstanceFirestore.getAllProductListingsAndCount()
+                .then(({ products, count }) => {
+                    // Data from Firebase
+                    this.allProductListings = products;
+                    this.totalProducts = count;
 
-                // Get all brands
-                for (const key in products) {
-                    const brand = products[key].brand;
-                    if (!this.brands.includes(brand)) this.brands.push(brand);
-                }
+                    // Get all brands
+                    for (const key in products) {
+                        const brand = products[key].brand;
+                        if (!this.brands.includes(brand))
+                            this.brands.push(brand);
+                    }
 
-                // Data to be displayed onLoad
-                this.productListings = this.allProductListings.slice(0, 12);
-            })
-            .catch((err) => {
-                console.log(err);
-                this.FBQuotaReached = true;
-            });
+                    // Data to be displayed onLoad
+                    this.productListings = this.allProductListings.slice(0, 12);
 
-        if (this.FBQuotaReached) {
-            this.$toast.add({
-                severity: "error",
-                summary: "Database Quota Reached",
-                detail: "Database Quota will reset at SGT 1pm.",
-                life: 15000,
-            });
-        }
+                    // Remove skeleton loader
+                    this.isLoading = false;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    this.FBQuotaReached = true;
+                });
+
+            if (this.FBQuotaReached) {
+                this.$toast.add({
+                    severity: "error",
+                    summary: "Database Quota Reached",
+                    detail: "Database Quota will reset at SGT 1pm.",
+                    life: 15000,
+                });
+            }
+        }, 2000);
     },
 };
 </script>
@@ -207,7 +214,7 @@ export default {
                     </button>
                 </div>
             </div>
-            <div class="row">
+            <div class="row shadow">
                 <!-- Sticky sidebar for large screens START -->
                 <div class="col-lg-3 col-xl-2 d-none d-lg-block">
                     <SideMenuBar
@@ -235,68 +242,146 @@ export default {
                 </Sidebar>
                 <!-- Toggle-able sidebar for smaller screen END -->
 
-                <div class="col-md-12 col-lg-9 col-xl-10">
-                    <div class="card">
-                        <Paginator
-                            id="Paginator-1"
-                            :template="{
-                                '640px':
-                                    'PrevPageLink CurrentPageReport NextPageLink',
-                                '960px':
-                                    'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-                                '1300px':
-                                    'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                                default:
-                                    'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink ',
-                            }"
-                            :rows="12"
-                            :totalRecords="totalProducts"
-                            v-on:page="onPageChange($event, 1)"
-                            :first="paginationIndex"
-                            :page="paginationPageNumber"
-                        >
-                        </Paginator>
-
-                        <div
-                            v-if="filteredProducts.length == 0"
-                            class="no-item-warning"
-                        >
-                            <h1>No Items Found</h1>
-                            <button
-                                @click="clearFilters"
-                                class="btn btn-outline-secondary mt-3"
+                <!-- Skeleton START -->
+                <div
+                    v-if="isLoading"
+                    class="card p-0 col-md-12 col-lg-9 col-xl-10"
+                >
+                    <skeleton
+                        style="
+                            border-radius: 1% 1% 0% 0%;
+                            width: 100%;
+                            height: 65px;
+                        "
+                    >
+                    </skeleton>
+                    <br />
+                    <div
+                        class="row p-3 flex-column justify-content-center align-items-center gap-2 gap-lg-3"
+                    >
+                        <div class="row gap-3">
+                            <skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
+                            ></skeleton
+                            ><skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
+                            ></skeleton>
+                            <skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
+                            ></skeleton>
+                        </div>
+                        <div class="row gap-3">
+                            <skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
                             >
-                                Reset Filter
-                            </button>
+                            </skeleton>
+                            <skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
+                            ></skeleton>
+                            <skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
+                            ></skeleton>
                         </div>
-                        <div class="row justify-content-center gap-2 gap-lg-3">
-                            <ItemCard
-                                v-for="(product, index) in filteredProducts"
-                                :key="index"
-                                :product="product"
-                            />
+                        <div class="row gap-3">
+                            <skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
+                            >
+                            </skeleton>
+                            <skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
+                            ></skeleton>
+                            <skeleton
+                                class="col"
+                                style="border-radius: 0%; height: 20vh"
+                            ></skeleton>
                         </div>
-
-                        <Paginator
-                            id="Paginator-2"
-                            :template="{
-                                '640px':
-                                    'PrevPageLink CurrentPageReport NextPageLink',
-                                '960px':
-                                    'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-                                '1300px':
-                                    'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                                default:
-                                    'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink ',
-                            }"
-                            :rows="12"
-                            :totalRecords="totalProducts"
-                            v-on:page="onPageChange($event, 2)"
-                            :first="paginationIndex"
-                            :page="paginationPageNumber"
-                        >
-                        </Paginator>
                     </div>
+
+                    <br />
+                    <skeleton
+                        style="
+                            border-radius: 0% 0% 1% 1%;
+                            width: 100%;
+                            height: 65px;
+                        "
+                    >
+                    </skeleton>
+                </div>
+                <!-- Skeleton END -->
+
+                <div
+                    v-if="!isLoading"
+                    class="card col-md-12 col-lg-9 col-xl-10"
+                >
+                    <Paginator
+                        id="Paginator-1"
+                        :template="{
+                            '640px':
+                                'PrevPageLink CurrentPageReport NextPageLink',
+                            '960px':
+                                'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
+                            '1300px':
+                                'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+                            default:
+                                'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink ',
+                        }"
+                        :rows="12"
+                        :totalRecords="totalProducts"
+                        v-on:page="onPageChange($event, 1)"
+                        :first="paginationIndex"
+                        :page="paginationPageNumber"
+                    >
+                    </Paginator>
+
+                    <div
+                        v-if="filteredProducts.length == 0"
+                        class="no-item-warning"
+                    >
+                        <h1>No Items Found</h1>
+                        <button
+                            @click="clearFilters"
+                            class="btn btn-outline-secondary mt-3"
+                        >
+                            Reset Filter
+                        </button>
+                    </div>
+                    <div
+                        class="row p-3 border-3 border-top border-bottom border-subtle justify-content-center gap-2 gap-lg-3"
+                    >
+                        <ItemCard
+                            v-for="(product, index) in filteredProducts"
+                            :key="index"
+                            :product="product"
+                        />
+                    </div>
+
+                    <Paginator
+                        id="Paginator-2"
+                        :template="{
+                            '640px':
+                                'PrevPageLink CurrentPageReport NextPageLink',
+                            '960px':
+                                'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
+                            '1300px':
+                                'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+                            default:
+                                'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink ',
+                        }"
+                        :rows="12"
+                        :totalRecords="totalProducts"
+                        v-on:page="onPageChange($event, 2)"
+                        :first="paginationIndex"
+                        :page="paginationPageNumber"
+                    >
+                    </Paginator>
                 </div>
             </div>
         </div>

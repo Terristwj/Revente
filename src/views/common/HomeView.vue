@@ -7,6 +7,7 @@ import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
 
 // Common code dependencies
 import router from "../../router/router.js";
+import { userStore } from "../../main.js";
 import { onIntersect } from "../../composables/onIntersect";
 
 // External dependencies
@@ -30,6 +31,9 @@ export default {
     },
     data() {
         return {
+            // Login/Register Button to display
+            userID: userStore.getUserID(),
+
             // Caraousels
             saleProducts: [],
             newDropsProducts: [],
@@ -46,6 +50,9 @@ export default {
         },
         toLogin() {
             router.push("/login");
+        },
+        toListings() {
+            router.push("/listings");
         },
         // Get data from database
         async getHomepageProducts() {
@@ -203,12 +210,17 @@ export default {
             <p style="font-style: italic">
                 REVENTÉ: where style meets sustainability.
             </p>
-            <div class="d-flex gap-4">
+            <div v-if="!userID" class="d-flex gap-4">
                 <button class="btn btn-dark px-5" @click="toLogin()">
                     Login
                 </button>
                 <button class="btn btn-dark px-5" @click="toRegistration()">
                     Register
+                </button>
+            </div>
+            <div v-else class="d-flex gap-4">
+                <button class="btn btn-dark px-5" @click="toListings()">
+                    View Listings
                 </button>
             </div>
         </div>

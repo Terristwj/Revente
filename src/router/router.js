@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { userStore } from "../main.js";
+// import { userStore } from "../main.js";
 import { getAuth } from "firebase/auth";
 
 // Add routes here
@@ -171,29 +171,29 @@ export const isAuthenticated = () => {
 // (2) - If user is authenticated AND enters a non-authenticated page,
 //       user is redirected to home page. E.g. 'Login' and 'Register'
 
-router.beforeEach((to, from, next) => {
-    setTimeout(function () {
-        // (1) Redirected to login page
-        if (to.meta.requiresAuth && !isAuthenticated()) {
-            // This if-block will never happen,
-            // But used for debugging
-            if (userStore.getUserID()) {
-                console.log(userStore.getUserID());
-            }
-            // (1) Redirected to login page
-            else {
-                router.push("/login");
-            }
-        }
+// router.beforeEach((to, from, next) => {
+//     setTimeout(function () {
+//         // (1) Redirected to login page
+//         if (to.meta.requiresAuth && !isAuthenticated()) {
+//             // This if-block will never happen,
+//             // But used for debugging
+//             if (userStore.getUserID()) {
+//                 console.log(userStore.getUserID());
+//             }
+//             // (1) Redirected to login page
+//             else {
+//                 router.push("/login");
+//             }
+//         }
 
-        // (2) Redirected to home page
-        //     Mainly for Login/Register page
-        else if (to.meta.requiresNoAuth && isAuthenticated()) {
-            router.push("/");
-        } else {
-            next();
-        }
-    }, 1000);
-});
+//         // (2) Redirected to home page
+//         //     Mainly for Login/Register page
+//         else if (to.meta.requiresNoAuth && isAuthenticated()) {
+//             router.push("/");
+//         } else {
+//             next();
+//         }
+//     }, 1000);
+// });
 
 export default router;

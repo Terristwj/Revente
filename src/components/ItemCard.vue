@@ -1,9 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { itemStore } from "../main.js";
-import { shoppingCart } from "../main.js";
-import { recents } from "../main.js";
-import { wishList } from "../main.js";
+import { shoppingCart, recents, wishList } from "../main.js";
 
 const visible = ref(false);
 </script>
@@ -16,21 +13,10 @@ export default {
             required: true,
         },
     },
-
-    data() {
-        return {
-            emptyHeart: `<font-awesome-icon
-                            :icon="['far', 'heart']" />`,
-            heart: `<font-awesome-icon :icon="['fas', 'heart']" style="color: #ff0000;" />`,
-            temp: [],
-            user_ID: "",
-        };
-    },
-
+    // data() {},
     methods: {
         linkToMoreDetails(id) {
-            itemStore.setItemID(id);
-            this.$router.push({ name: "MainItem" });
+            this.$router.push({ name: "MainItem", query: { id: id } });
         },
 
         addCart(id) {
@@ -60,16 +46,33 @@ export default {
 </script>
 
 <template>
-    <div class="card mb-2" style="width: 18rem">
+    <div
+        id="item-card"
+        class="card mb-3 shadow"
+        style="width: 18rem; height: 500px"
+    >
         <img
+            id="card_img"
+            class="card-img-top pointing border-2 border-bottom border-subtle"
             :src="product.image_src"
             alt="Product Image"
-            class="card-img-top"
-            id="card_img"
+            @click="
+                visible = true;
+                recent(product.product_ID);
+            "
         />
 
         <div class="card-body pb-0 pt-1">
-            <h5 class="card-title">{{ product.product_name }}</h5>
+            <h5
+                class="card-title"
+                style="
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                "
+            >
+                {{ product.product_name }}
+            </h5>
             <p class="card-text">{{ product.brand }}</p>
             <p class="card-text">{{ product.condition }}</p>
             <p class="card-text">$ {{ product.modifiedPrice }}</p>
@@ -77,7 +80,7 @@ export default {
             <div class="d-flex">
                 <button
                     type="button"
-                    class="btn btn-clear my-3 mr-0 m1-3"
+                    class="btn btn-outline-dark my-3 mr-0 m1-3"
                     @click="
                         visible = true;
                         recent(product.product_ID);
@@ -91,7 +94,10 @@ export default {
                     id="fav"
                     @click="addWishList(product.product_ID)"
                 >
-                    <font-awesome-icon :icon="['far', 'heart']" />
+                    <font-awesome-icon
+                        class="clear-like"
+                        :icon="['far', 'heart']"
+                    />
                 </button>
             </div>
         </div>
@@ -106,29 +112,52 @@ export default {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col">
-                        <img
-                            :src="product.image_src"
-                            alt="Product Image"
-                            id="dialog_img"
-                            class="card-img-top w-100 object-fit-cover"
-                        />
+                        <Image
+                            class="card-img-top object-fit-cover w-100 img-thumbnail p-2"
+                            alt="Image"
+                            preview
+                        >
+                            <template #indicatoricon>
+                                <i class="pi pi-search-plus"></i>
+                            </template>
+                            <template #image>
+                                <img
+                                    style="width: 100%; aspect-ratio: 1 / 1"
+                                    :src="product.image_src"
+                                    alt="image"
+                                />
+                            </template>
+                            <template #preview="slotProps">
+                                <img
+                                    style="
+                                        height: 80vh;
+                                        width: 100%;
+                                        aspect-ratio: 1 / 1;
+                                    "
+                                    :src="product.image_src"
+                                    alt="preview"
+                                    :style="slotProps.style"
+                                    @click="slotProps.onClick"
+                                />
+                            </template>
+                        </Image>
                     </div>
-                    <div class="col">
+                    <div class="row gap-1 flex-column col">
                         <p class="card-text">{{ product.brand }}</p>
                         <p class="card-text">{{ product.condition }}</p>
                         <p class="card-text">$ {{ product.modifiedPrice }}</p>
                         <p class="card-text">{{ product.description }}</p>
-                        <div class="container p-0">
+                        <div class="row gap-3 mt-2 justify-content-center">
                             <button
                                 type="button"
-                                class="btn btn-clear"
+                                class="btn btn-outline-dark col-lg-5"
                                 @click="addCart(product.product_ID)"
                             >
                                 Add to Cart
                             </button>
                             <button
                                 type="button"
-                                class="btn btn-dark m-3"
+                                class="btn btn-dark col-lg-5"
                                 @click="linkToMoreDetails(product.product_ID)"
                             >
                                 More Details
@@ -142,10 +171,18 @@ export default {
 </template>
 
 <style scoped>
+#item-card:hover {
+    filter: drop-shadow(0px 0px 0px #000000);
+}
+
 #card_img {
     width: 100%;
     height: 18rem;
     object-fit: fill;
+}
+
+#card_img:hover {
+    filter: brightness(80%);
 }
 
 #dialog_img {
@@ -166,18 +203,18 @@ export default {
     border-radius: 23px;
 }
 
-.btn-clear {
-    border: 1px solid black;
-}
-
-.btn-clear:hover {
-    background-color: black;
-    color: white;
-}
-
 .btn-dark:hover {
     background-color: transparent;
     border: 1px solid black;
     color: black;
+}
+
+.btn-clear-like {
+    border: none;
+}
+
+.clear-like:hover {
+    color: #ff4800;
+    font-size: larger;
 }
 </style>

@@ -1,5 +1,6 @@
 <script>
 import router from "../../router/router.js";
+import { userStore } from "../../main.js";
 
 // For Firebase Login
 import FBInstanceAuth from "../../services/Firebase/FirebaseAuthentication";
@@ -91,6 +92,13 @@ export default {
                 life: 3000,
             });
         },
+    },
+    mounted() {
+        setTimeout(() => {
+            if (userStore.getUserID()) {
+                router.push("/");
+            }
+        }, 500);
     },
 };
 </script>

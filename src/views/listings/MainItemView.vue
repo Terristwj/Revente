@@ -1,12 +1,11 @@
 <script>
 import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
-import { itemStore, userStore, shoppingCart, wishList } from "../../main.js";
+import { shoppingCart, wishList } from "../../main.js";
 
 export default {
     data() {
         return {
             temp: [],
-            user_ID: "",
             // Item Image
             imageSrc: "",
 
@@ -43,64 +42,77 @@ export default {
     },
     methods: {
         async getProductData() {
-            // //hardcode to get data from database
-            // const itemID = "ICUUp4n7RfnPzLjP6Hd8";
+            const urlParams = new URLSearchParams(window.location.search);
+            this.local_itemID = urlParams.get("id");
 
-            // For later implementation
-            //  console.log(itemStore.getItemID());
-            // itemStore.setItemID('jN2TrVSILV7eIMmzhJfV');
-            this.local_itemID = itemStore.getItemID();
+            if (this.local_itemID) {
+                FBInstanceFirestore.getProduct(this.local_itemID)
+                    .then((data) => {
+                        this.temp = data;
+                        // Handle the data once the promise is resolved
+                        // console.log(data);
+                        this.imageSrc = data.image_src;
+                        this.brand = data.brand;
 
-            FBInstanceFirestore.getProduct(this.local_itemID)
-                .then((data) => {
-                    this.temp = data;
-                    // Handle the data once the promise is resolved
-                    // console.log(data);
-                    this.imageSrc = data.image_src;
-                    this.brand = data.brand;
+                        this.gender = data.gender;
 
-                    this.gender = data.gender;
+                        this.category = data.category;
 
-                    this.category = data.category;
+                        this.condition = data.condition;
+                        this.conditionNotes = data.condition_notes;
 
-                    this.condition = data.condition;
-                    this.conditionNotes = data.condition_notes;
+                        this.itemName = data.product_name;
+                        this.itemBrand = data.brand;
+                        this.itemDescription = data.description;
 
-                    this.itemName = data.product_name;
-                    this.itemBrand = data.brand;
-                    this.itemDescription = data.description;
+                        this.dropOffLocation = data.drop_off_location;
+                        this.price = parseFloat(data.modifiedPrice);
+                        this.size = data.size;
 
-                    this.dropOffLocation = data.drop_off_location;
-                    this.price = parseFloat(data.modifiedPrice);
-                    this.size = data.size;
+                        const parts = this.size.split(" ");
 
-                    const parts = this.size.split(" ");
+                        // Initialize the length
+                        let length = 0;
 
-                    // Initialize the length
-                    let length = 0;
-
-                    // Iterate through the parts to extract the length
-                    for (let i = 0; i < parts.length; i++) {
-                        const part = parts[i];
-                        if (part === "Length:") {
-                            length = parseFloat(parts[i + 1]);
-                            break; // Exit the loop once length is found
+                        // Iterate through the parts to extract the length
+                        for (let i = 0; i < parts.length; i++) {
+                            const part = parts[i];
+                            if (part === "Length:") {
+                                length = parseFloat(parts[i + 1]);
+                                break; // Exit the loop once length is found
+                            }
                         }
-                    }
-                    if (length >= 120) {
-                        this.generalSize = "Large";
-                    } else if (length >= 100) {
-                        this.generalSize = "Medium";
-                    } else if (length >= 80) {
-                        this.generalSize = "Small";
-                    } else {
-                        this.generalSize = "Extra Small";
-                    }
-                })
-                .catch((error) => {
-                    // Handle any errors that occur during the promise execution
-                    console.error(error);
+                        if (length >= 120) {
+                            this.generalSize = "Large";
+                        } else if (length >= 100) {
+                            this.generalSize = "Medium";
+                        } else if (length >= 80) {
+                            this.generalSize = "Small";
+                        } else {
+                            this.generalSize = "Extra Small";
+                        }
+                    })
+                    .catch((error) => {
+                        // Handle any errors that occur during the promise execution
+                        console.log(error);
+
+                        // Invalid product_ID
+                        // Invalid query string
+                        this.$toast.add({
+                            severity: "error",
+                            summary: "Did you try to change the URL?",
+                            detail: "This product does not exist!",
+                            life: 15000,
+                        });
+                    });
+            } else {
+                this.$toast.add({
+                    severity: "error",
+                    summary: "Unable to display anything",
+                    detail: "You need to enter this page by the product listings!",
+                    life: 15000,
                 });
+            }
         },
 
         openTab(event, tabName) {
@@ -136,7 +148,6 @@ export default {
         setTimeout(() => {
             this.getProductData();
             this.isLoading = false;
-            this.user_ID = userStore.getUserID();
         }, 1000);
     },
 };
@@ -144,13 +155,54 @@ export default {
 
 <template>
     <div class="container">
-        <div class="row py-5 border-bottom-black">
-            <div class="col-md-1"></div>
-            <!--            display image-->
-            <div class="col-md-4 col-12">
-                <img :src="imageSrc" class="img-fluid img_style" />
+        <!-- Skeleton START -->
+        <div
+            v-if="isLoading"
+            class="row flex-column py-5 justify-content-center gap-4"
+        >
+            <div class="row col-12 justify-content-center">
+                <skeleton style="width: 80%; height: 50vh"> </skeleton>
             </div>
-            <!--            display product details-->
+            <skeleton class="col-12" style="height: 30vh"> </skeleton>
+        </div>
+        <!-- Skeleton END -->
+
+        <!-- Product Display START -->
+        <div
+            v-if="!isLoading"
+            class="row py-5 justify-content-center border-bottom-black"
+        >
+            <!-- Display image-->
+            <div class="col-md-4 col-12">
+                <Image class="card-img-top img-fluid" alt="Image" preview>
+                    <template #indicatoricon>
+                        <i class="pi pi-search-plus"></i>
+                    </template>
+                    <template #image>
+                        <img
+                            class="img-thumbnail"
+                            style="width: 100%; aspect-ratio: 1 / 1"
+                            :src="imageSrc"
+                            alt="image"
+                        />
+                    </template>
+                    <template #preview="slotProps">
+                        <img
+                            style="
+                                height: 80vh;
+                                width: 100%;
+                                aspect-ratio: 1 / 1;
+                            "
+                            :src="imageSrc"
+                            alt="preview"
+                            :style="slotProps.style"
+                            @click="slotProps.onClick"
+                        />
+                    </template>
+                </Image>
+            </div>
+
+            <!-- Display product details-->
             <div class="col-md-6 col-12 pt-3 pt-md-0">
                 <h4>{{ itemName }}</h4>
                 <h6 class="catgory font-italic">{{ category }}</h6>
@@ -180,25 +232,30 @@ export default {
                         </li>
                     </ul>
                 </div>
-                <div class="row w-75 wishcart">
+                <div
+                    class="row w-100 gap-2 gap-lg-3 mt-2 justify-content-center"
+                >
                     <button
                         type="button"
-                        class="btn btn-clear my-4"
+                        class="btn btn-outline-dark col-md-5 col-lg-5"
                         @click="addCart()"
                     >
                         Add to Cart
                     </button>
                     <button
-                        class="btn btn-outline-dark me-sm-2"
+                        class="btn btn-dark col-md-5 col-lg-5"
                         @click="addWishList()"
                     >
                         <font-awesome-icon :icon="['far', 'heart']" />
-                        Add to Wishlist
+                        Add Wishlist
                     </button>
                 </div>
             </div>
         </div>
-        <div class="row text-center">
+        <!-- Product Display END -->
+
+        <!-- Additional information START -->
+        <div v-if="!isLoading" class="row text-center">
             <div class="tab">
                 <button
                     class="tablinks w-50"
@@ -228,36 +285,22 @@ export default {
             </div>
         </div>
     </div>
+    <!-- Additional information END -->
 </template>
 
 <style scoped>
-.img_style {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-}
-
 .clicked {
     background-color: #ddd;
-}
-
-.category {
-    font-weight: 400;
-}
-
-.btn-clear:hover {
-    background-color: black;
-    color: white;
 }
 
 .btn {
     border-radius: 23px;
 }
-
-.btn-clear {
+.btn-dark:hover {
+    background-color: transparent;
     border: 1px solid black;
+    color: black;
 }
-
 .tablinks {
     border: 1px solid black;
     margin: 0;
@@ -298,22 +341,5 @@ export default {
     border: 1px solid #fffefe;
     border-top: none;
     margin-bottom: 5dvh;
-}
-
-@media (max-width: 768px) {
-    * {
-        font-size: 10px;
-    }
-
-    .tab button {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 425px) {
-    .wishcart {
-        margin-left: auto;
-        margin-right: auto;
-    }
 }
 </style>

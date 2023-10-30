@@ -1,8 +1,9 @@
 <script>
-// import ItemCard from '../components/ItemCard.vue';
-import Rating from "primevue/rating";
+import router from "../../router/router.js";
 import { userStore } from "../../main.js";
+// import ItemCard from '../components/ItemCard.vue';
 import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
+import Rating from "primevue/rating";
 
 export default {
     data() {
@@ -10,7 +11,7 @@ export default {
             rating: 8,
             userID: userStore.getUserID(),
             description: "",
-            image_src:  "",
+            image_src: "",
             username: "",
         };
     },
@@ -18,17 +19,21 @@ export default {
         // ItemCard,
         Rating,
     },
-    created() {
-        // console.log(this.userID);
-        FBInstanceFirestore.getUser(this.userID).then((data) => {
-            console.log(data);
-            this.username = data.first_name + " " + data.last_name;
-            this.description = data.description;
-            this.image_src = data.image_src;
-        });
-        
-        
-    }
+    mounted() {
+        setTimeout(() => {
+            if (!userStore.getUserID()) {
+                router.push("/login");
+            } else {
+                // console.log(this.userID);
+                FBInstanceFirestore.getUser(this.userID).then((data) => {
+                    console.log(data);
+                    this.username = data.first_name + " " + data.last_name;
+                    this.description = data.description;
+                    this.image_src = data.image_src;
+                });
+            }
+        }, 500);
+    },
 };
 </script>
 
@@ -40,8 +45,8 @@ export default {
                 <div class="row">
                     <div class="col-xl-2 col-md-4 col-xs-6">
                         <img
-                            :src= "image_src"
-                            alt= "generic profile picture"
+                            :src="image_src"
+                            alt="generic profile picture"
                             class="img-thumbnail mt-4 mb-2"
                             style="width: 200px; z-index: 1"
                         />

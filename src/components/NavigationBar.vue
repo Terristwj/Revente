@@ -24,7 +24,7 @@ export default {
             // For Mobile Tab
             mobileTabVisible: false,
 
-            // For Navigation Bar
+            // For Navigation Bar Mobile START
             routesExcludedInBoth: [
                 // Common
                 "Home",
@@ -45,21 +45,21 @@ export default {
 
                 // WIP
                 "Review View",
-                "Checkout",
                 "Success",
                 "Order History",
             ],
-            routesExcludedLoggedIn: ["Login", "FAQ", "Terms & Conditions"],
             routesExcludedLoggedOut: [
                 "Profile",
                 "Settings",
                 "Upload Listing",
-                "Cart",
                 "Wish List",
             ],
+            routesExcludedLoggedIn: ["Login"],
             navRoutes: null,
+            // For Navigation Bar Mobile END
 
-            // For Desktop Navigation Bar
+            // For Desktop Navigation Bar - Edit the HTML too
+            // For Desktop Navigation Bar START
             activeProfile: false,
             profileItems: [
                 {
@@ -106,6 +106,7 @@ export default {
                     },
                 },
             ],
+            // For Desktop Navigation Bar END
         };
     },
     methods: {

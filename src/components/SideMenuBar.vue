@@ -106,7 +106,7 @@ export default {
 </script>
 
 <template>
-    <div style="z-index: 25">
+    <div style="z-index: 0">
         <!-- Filter Reset Button START -->
         <button
             @click="clearFilters"

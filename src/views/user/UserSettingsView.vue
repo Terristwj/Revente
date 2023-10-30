@@ -199,21 +199,26 @@ export default {
         },
     },
     mounted() {
-        setTimeout(async () => {
-            await this.getAccountData();
-            if (this.FBQuotaReached) {
-                this.$toast.add({
-                    severity: "error",
-                    summary: "Database Quota Reached",
-                    detail: "Database Quota will reset at SGT 1pm.",
-                    life: 15000,
-                });
+        setTimeout(() => {
+            if (!userStore.getUserID()) {
+                router.push("/login");
             } else {
-                this.isLoading = false;
+                setTimeout(async () => {
+                    await this.getAccountData();
+                    if (this.FBQuotaReached) {
+                        this.$toast.add({
+                            severity: "error",
+                            summary: "Database Quota Reached",
+                            detail: "Database Quota will reset at SGT 1pm.",
+                            life: 15000,
+                        });
+                    } else {
+                        this.isLoading = false;
+                    }
+                }, 1000);
             }
-        }, 1000);
+        }, 500);
     },
-    beforeMount() {},
 };
 </script>
 
@@ -240,17 +245,18 @@ export default {
                         ></Skeleton>
                         <img
                             v-show="!isLoading"
-                            style="
-                                width: 100%;
-                                aspect-ratio: 1 / 1;
-                                object-fit: cover;
-                            "
+                            style="width: 100%; aspect-ratio: 1 / 1"
                             :src="imageSrc"
                             alt="image"
                         />
                     </template>
                     <template #preview="slotProps">
                         <img
+                            style="
+                                height: 80vh;
+                                width: 100%;
+                                aspect-ratio: 1 / 1;
+                            "
                             :src="imageSrc"
                             alt="preview"
                             :style="slotProps.style"
