@@ -40,7 +40,7 @@ export default {
                 <div class="row">
                     <div class="col-xl-2 col-md-4 col-xs-6">
                         <img
-                            src= ""
+                            :src= "image_src"
                             alt= "generic profile picture"
                             class="img-thumbnail mt-4 mb-2"
                             style="width: 200px; z-index: 1"
