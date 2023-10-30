@@ -138,12 +138,7 @@ export const routes = [
         name: "Review View",
         component: () => import("../views/ReviewView.vue"),
     },
-    {
-        path: "/checkout",
-        name: "Checkout",
-        component: () => import("../views/CheckoutView.vue"),
-        icon: ["fas", "user"],
-    },
+
     {
         path: "/success",
         name: "Success",
