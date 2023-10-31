@@ -113,6 +113,9 @@ export default {
     },
 
     created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        
         this.productIds = this.getProductIds();
         console.log(this.productIds);
         this.updateDatabase(this.productIds);

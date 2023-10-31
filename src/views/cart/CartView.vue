@@ -158,12 +158,16 @@ export default {
         SmallCarousel,
     },
     created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+
         setTimeout(() => {
             this.getProductData();
             this.getCartDetails();
             this.isLoading = false;
             this.user_ID = userStore.getUserID();
         }, 1000);
+
         let recent = recents.getRecents();
         for (let i = 0; i < recent.length; i++) {
             FBInstanceFirestore.getProduct(recent[i])

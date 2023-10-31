@@ -236,6 +236,9 @@ export default {
     },
     // In your Vue component
     async created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+
         // grabs all the data already AND SPLITS them into pending and approved
         await FBInstanceFirestore.getAllProducts()
             .then((data) => {

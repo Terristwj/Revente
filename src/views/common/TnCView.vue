@@ -163,6 +163,10 @@ const visible = ref(false);
 <script>
 export default {
     name: "TermsAndConditions",
+    created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    },
 };
 </script>
 

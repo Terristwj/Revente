@@ -16,6 +16,10 @@ export default {
             content5.scrollIntoView({ behavior: "smooth" });
         },
     },
+    created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    },
 };
 </script>
 

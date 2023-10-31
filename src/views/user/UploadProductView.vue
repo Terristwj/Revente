@@ -316,6 +316,10 @@ export default {
             this.toggleLoadingUI();
         },
     },
+    created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    },
     mounted() {
         setTimeout(() => {
             if (!userStore.getUserID()) {

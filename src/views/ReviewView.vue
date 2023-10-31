@@ -5,31 +5,30 @@ import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
 export default {
     components: {
-			ReviewItem,
-			vue3starRatings,
-	},
-    data() { 
-		return { 
-			//obtain data from Order History
-			//dataObject = {deliverydate,imgUrl,brand,size, seller, name, uuid}
-			item: JSON.parse(this.$route.query.data),
+        ReviewItem,
+        vue3starRatings,
+    },
+    data() {
+        return {
+            //obtain data from Order History
+            //dataObject = {deliverydate,imgUrl,brand,size, seller, name, uuid}
+            item: JSON.parse(this.$route.query.data),
 
-			//obtain data from review inputs
-			review: {
-				rating: 3.5,
-				textinput: "",
-			},
+            //obtain data from review inputs
+            review: {
+                rating: 3.5,
+                textinput: "",
+            },
 
-			//item image
-			imageSrc: null,
+            //item image
+            imageSrc: null,
 
-			// Firebase-Related Codes
-			isLoading: false,
+            // Firebase-Related Codes
+            isLoading: false,
             firstError: "",
             isSuccessful: false,
-
-			};
-	},
+        };
+    },
 
     methods: {
         onFileChange(event) {
@@ -37,10 +36,10 @@ export default {
                 this.imageFile = event.target.files[0];
                 this.imageSrc = URL.createObjectURL(this.imageFile);
             }
-		},
+        },
 
-		//Firebase-Related Codes
-		async submitForm() {
+        //Firebase-Related Codes
+        async submitForm() {
             // If there are no errors, submit the form
             await this.doSubmitForm();
         },
@@ -54,7 +53,7 @@ export default {
             }
         },
 
-		isEverythingValid() {
+        isEverythingValid() {
             // Validate form fields
             this.firstError = "";
 
@@ -64,7 +63,8 @@ export default {
             }
 
             if (!this.review.textinput) {
-                this.review.textinput = "Please tell us more about the condition.";
+                this.review.textinput =
+                    "Please tell us more about the condition.";
                 return false;
             }
 
@@ -76,24 +76,23 @@ export default {
             return true;
         },
 
-		async firebaseAddItem() {
+        async firebaseAddItem() {
             let hasError = false;
 
             // (1) Add doc into Firestore
-			//dataObject = {deliverydate,imgUrl,brand,size, seller, name, uuid}
-			let rating = this.review.rating;
-			let review = this.review.textinput;
+            //dataObject = {deliverydate,imgUrl,brand,size, seller, name, uuid}
+            let rating = this.review.rating;
+            let review = this.review.textinput;
 
             // (2) Retrieve the product_ID of add_doc
             const reviewID = await FBInstanceFirestore.createReview(
-                
-				// Seller and Product details
+                // Seller and Product details
                 userStore.getUserID(),
-				userStore.getOrderedProductID(),
+                userStore.getOrderedProductID(),
 
                 // Review Details
                 rating,
-                review,
+                review
             );
 
             // (3) Upload item_image_file into Storage using product_ID
@@ -186,73 +185,84 @@ export default {
             // Firebase-Related Codes
             this.isSuccessful = false;
         },
-
     },
-    };
+    created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    },
+};
 </script>
 
 <template>
-	<body>
-		<!--BELOW IS THE TITLE-->
-		<h2 class="m-5 mb-4">Leave a Review</h2>
+    <body>
+        <!--BELOW IS THE TITLE-->
+        <h2 class="m-5 mb-4">Leave a Review</h2>
 
-		<!--BELOW IS THE ITEM DETAIL-->
-		<div class="container-fluid itemContainer">
-			<ReviewItem
-			:deliverydate="item.deliverydate"
-			:imgUrl="item.imgUrl"
-			:brand="item.brand"
-			:size="item.size"
-			:seller="item.seller"
-			:name="item.name"
-			:uuid="item.uuid"
-			/>
-		</div>
+        <!--BELOW IS THE ITEM DETAIL-->
+        <div class="container-fluid itemContainer">
+            <ReviewItem
+                :deliverydate="item.deliverydate"
+                :imgUrl="item.imgUrl"
+                :brand="item.brand"
+                :size="item.size"
+                :seller="item.seller"
+                :name="item.name"
+                :uuid="item.uuid"
+            />
+        </div>
 
-		<!--BELOW IS THE REVIEWING PORTION-->
-		<div class="container ratingPortion">
-			<h4>Rating</h4>
-			<div>
-				<vue3starRatings
-				v-model="review.rating"
-				:starSize="'32'"
-				starColor="#ff9800"
-				inactiveColor="#333333"
-				:numberOfStars="5"
-				:disableClick="false" 
-			/>
-			</div>
-		</div>
+        <!--BELOW IS THE REVIEWING PORTION-->
+        <div class="container ratingPortion">
+            <h4>Rating</h4>
+            <div>
+                <vue3starRatings
+                    v-model="review.rating"
+                    :starSize="'32'"
+                    starColor="#ff9800"
+                    inactiveColor="#333333"
+                    :numberOfStars="5"
+                    :disableClick="false"
+                />
+            </div>
+        </div>
 
-		<div class="container reviewPortion">
-			<div class="row">
-				<h4>Review</h4>
-			</div>
+        <div class="container reviewPortion">
+            <div class="row">
+                <h4>Review</h4>
+            </div>
 
-			<div class="row reviewInput">
-				<textarea v-model="review.textinput" placeholder="add multiple lines"></textarea>
-			</div>
-		</div>
+            <div class="row reviewInput">
+                <textarea
+                    v-model="review.textinput"
+                    placeholder="add multiple lines"
+                ></textarea>
+            </div>
+        </div>
 
-		<div class="container uploadPhoto">
-			<h4>Upload Photo <span class="optional"> (Optional) </span></h4>
-			
-			<div>
-				<div class="photoPortion">
-					<img :src="imageSrc" class="uploading-image" id="file-upload"/>
-					<input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)">
-				</div>
-			</div>
-		</div>
+        <div class="container uploadPhoto">
+            <h4>Upload Photo <span class="optional"> (Optional) </span></h4>
 
-		<button class="submit" @click="submitForm()">
-			SUBMIT
-		</button>
+            <div>
+                <div class="photoPortion">
+                    <img
+                        :src="imageSrc"
+                        class="uploading-image"
+                        id="file-upload"
+                    />
+                    <input
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        @change="onFileChange($event)"
+                    />
+                </div>
+            </div>
+        </div>
 
-	</body>
+        <button class="submit" @click="submitForm()">SUBMIT</button>
+    </body>
 
-        <!-- Successful Followup -->
-        <Dialog
+    <!-- Successful Followup -->
+    <Dialog
         v-model:visible="isSuccessful"
         class="text-black"
         style="width: 80vw; max-width: 800px"
@@ -262,95 +272,91 @@ export default {
     >
         <template #header>
             <h5>
-                <span class="bg-black text-white py-1 px-2 fw-bold">Your Review for {{
-                    item.name
-                }}</span>
+                <span class="bg-black text-white py-1 px-2 fw-bold"
+                    >Your Review for {{ item.name }}</span
+                >
                 &nbsp;is successfully uploaded!
             </h5>
 
             <div>
                 <button @click="$router.push('/')">Back to Homepage</button>
             </div>
-
         </template>
     </Dialog>
-
 </template>
 
 <style scoped>
-
 h4 {
-	font-family: "inter-bold";
-	color: black;
+    font-family: "inter-bold";
+    color: black;
 }
 
 h2 {
-	font-family: "inter-bold";
-	color: black;
+    font-family: "inter-bold";
+    color: black;
 }
 
 .itemContainer {
-	border-bottom: 1px solid grey;
+    border-bottom: 1px solid grey;
 }
 
 .ratingPortion {
-	margin: 40px;
+    margin: 40px;
 }
 
 .reviewPortion {
-	margin: 40px;
+    margin: 40px;
 }
 
 .reviewInput {
-	white-space: pre-wrap;
+    white-space: pre-wrap;
 }
 
 textarea {
-	height: 200px;
-	max-width: 700px;
-	margin-left: 15px;
+    height: 200px;
+    max-width: 700px;
+    margin-left: 15px;
 }
 
 .optional {
-	font-style: italic;
+    font-style: italic;
 }
 
-.uploading-image{
-	display: flex;
-	max-height: 200px;
-	width: auto;
+.uploading-image {
+    display: flex;
+    max-height: 200px;
+    width: auto;
 }
 
 .photoPortion {
-	margin-top: 30px;
-	border: 0.5px solid grey;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 40px;
-	padding-right: 40px;
-	border-radius: 5px;
-	max-width: 700px;
-	display: flex;
+    margin-top: 30px;
+    border: 0.5px solid grey;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 5px;
+    max-width: 700px;
+    display: flex;
 }
 
 .submit {
     background-color: black;
     padding: 8px;
     padding-left: 20px;
-    padding-right: 20px; 
+    padding-right: 20px;
     border-radius: 5px;
-	width: 175px;
+    width: 175px;
     border: 0.5px solid black;
-    font-family: 'inter-light';
+    font-family: "inter-light";
     margin-right: 10px;
-	position: relative;
-	margin-left: 50px;
-	margin-bottom: 50px;
-	color: white;
+    position: relative;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    color: white;
 }
 
 .uploadPhoto {
-	margin: 40px;
+    margin: 40px;
 }
-
 </style>

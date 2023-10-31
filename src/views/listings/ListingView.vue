@@ -158,6 +158,9 @@ export default {
         // Database
     },
     created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        
         setTimeout(async () => {
             // Get total products
             await FBInstanceFirestore.getAllProductListingsAndCount()

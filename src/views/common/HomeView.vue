@@ -32,7 +32,7 @@ export default {
     data() {
         return {
             // Login/Register Button to display
-            userID: userStore.getUserID(),
+            userID: "",
 
             // Caraousels
             saleProducts: [],
@@ -70,6 +70,13 @@ export default {
         },
     },
     async created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+
+        setTimeout(() => {
+            this.userID = userStore.getUserID();
+        }, 500);
+
         // Get data from database
         await this.getHomepageProducts();
 
