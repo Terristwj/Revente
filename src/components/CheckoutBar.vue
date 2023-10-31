@@ -1,4 +1,6 @@
 <script>
+import { userStore } from "../main.js";
+
 export default {
 	props: {
 		totalOriginal: {
@@ -39,19 +41,21 @@ export default {
 			// todo: replace with database promo codes later
 			promoCodes: ['PROMO1', 'PROMO2', 'PROMO3'],
 			promoDetails: [],
+			userId: userStore.getUserID(),
 		};
 	},
 	methods: {
 		goToCheckout() {
-			console.log("checkout");
-			console.log(this.itemIds);
+			// console.log("checkout");
+			// console.log(this.itemIds);
+			console.log(this.userId);
 			fetch("https://revente-backend.vercel.app/create-checkout-session", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					success_url: "http://localhost:5173/success?product_ids=" + (this.itemIds).toString(),
+					success_url: "http://localhost:5173/success?product_ids=" + (this.itemIds).toString() + "&user_id=" + this.userId,
 					cancel_url: "http://localhost:5173/cart",
 					items: this.cartItems,
 				}),
@@ -70,7 +74,7 @@ export default {
 			this.promoMsg = '';
 			if (this.promoCodes.includes(this.promoInput)) {
 				this.promoMsg = 'Promo code applied!';
-				
+
 			} else {
 				this.promoMsg = 'Invalid promo code!';
 				setTimeout(() => {
