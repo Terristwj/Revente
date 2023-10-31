@@ -38,9 +38,9 @@ export default {
             isPriceRangeWrong: false,
 
             // Sidebar section, to determine which section is open
-            isGenderOpen: false,
-            isBrandOpen: false,
-            isPriceOpen: false,
+            isGenderOpen: true,
+            isBrandOpen: true,
+            isPriceOpen: true,
         };
     },
     watch: {
@@ -184,6 +184,23 @@ export default {
                                     :maxSelectedLabels="2"
                                     filter
                                     v-on:change="brandSelection"
+                                    :pt="{
+                                        label: {
+                                            class: 'p-1 ps-3',
+                                        },
+                                        header: {
+                                            class: 'p-2',
+                                        },
+                                        filterInput: {
+                                            class: 'p-1',
+                                        },
+                                        list: {
+                                            class: 'p-0',
+                                        },
+                                        item: {
+                                            class: 'p-2 ps-3',
+                                        },
+                                    }"
                                 />
                             </div>
                         </li>
