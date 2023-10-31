@@ -334,34 +334,21 @@ export default {
     <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
     <header class="head shadow border-top border-2">
         <div class="container-fluid">
-            <div
-                class="d-flex justify-content-between align-items-center mx-4 mx-lg-5"
-            >
+            <div class="d-flex justify-content-between align-items-center mx-4 mx-lg-5">
                 <h3 id="Welcome-Text" class="my-3">
                     What do you want to list today?
                 </h3>
 
-                <button
-                    type="button"
-                    id="List-Now-Btn"
-                    class="btn btn-dark my-3 px-4"
-                    @click="submitForm()"
-                >
-                    <ProgressSpinner
-                        v-if="isListing"
-                        style="width: 15px; height: 100%; padding-left: -20px"
-                        strokeWidth="8"
-                        animationDuration=".5s"
-                        aria-label="Custom ProgressSpinner"
-                        :pt="{
+                <button type="button" id="List-Now-Btn" class="btn btn-dark my-3 px-4" @click="submitForm()">
+                    <ProgressSpinner v-if="isListing" style="width: 15px; height: 100%; padding-left: -20px" strokeWidth="8"
+                        animationDuration=".5s" aria-label="Custom ProgressSpinner" :pt="{
                             circle: {
                                 style: {
                                     stroke: 'white',
                                     animation: 'none',
                                 },
                             },
-                        }"
-                    />
+                        }" />
                     List Now
                 </button>
             </div>
@@ -370,76 +357,47 @@ export default {
     <div class="container-fluid content">
         <div class="row p-1 justify-content-around mx-lg-1">
             <!-- Upload Box START -->
-            <div
-                id="upload_background"
-                class="col col-sm-11 col-md-6 col-xl-5 shadow mb-5 p-3 bg-white rounded d-flex justify-content-center align-items-center"
-            >
-                <label
-                    id="upload_box"
-                    class="w-100 h-100 d-flex justify-content-center align-items-center text-center"
-                    for="file-upload"
-                >
+            <div id="upload_background"
+                class="col col-sm-11 col-md-6 col-xl-5 shadow mb-5 p-3 bg-white rounded d-flex justify-content-center align-items-center">
+                <label id="upload_box" class="w-100 h-100 d-flex justify-content-center align-items-center text-center"
+                    for="file-upload">
                     <!-- When Image is PROVIDED START -->
                     <div v-if="imageSrc" class="w-100 h-100">
                         <Image class="w-100 h-100" alt="Image" preview>
                             <!-- Image Hover START -->
                             <template #indicatoricon>
                                 <div class="row d-flex gap-2">
-                                    <i
-                                        class="col pi pi-search-plus"
-                                        style="font-size: 2rem"
-                                    ></i>
-                                    <i
-                                        class="col pi pi-upload"
-                                        style="font-size: 2rem"
-                                    ></i>
+                                    <i class="col pi pi-search-plus" style="font-size: 2rem"></i>
+                                    <i class="col pi pi-upload" style="font-size: 2rem"></i>
                                 </div>
                             </template>
                             <!-- Image Hover END -->
 
                             <!-- Image START -->
                             <template #image>
-                                <img
-                                    style="
+                                <img style="
                                         height: 100%;
                                         width: 100%;
                                         aspect-ratio: 1 / 1;
-                                    "
-                                    :src="imageSrc"
-                                    alt="preview"
-                                />
+                                    " :src="imageSrc" alt="preview" />
                             </template>
                             <!-- Image END -->
 
                             <!-- Preview START -->
                             <template #preview="slotProps">
-                                <label
-                                    for="file-upload"
-                                    class="pointing position-relative"
-                                    :style="slotProps.style"
-                                    @click="slotProps.onClick"
-                                >
+                                <label for="file-upload" class="pointing position-relative" :style="slotProps.style"
+                                    @click="slotProps.onClick">
                                     <!-- Zoomed Image Displayed -->
-                                    <img
-                                        style="
+                                    <img style="
                                             height: 80vh;
                                             width: 100%;
                                             aspect-ratio: 1 / 1;
-                                        "
-                                        id="Item-Image"
-                                        :src="imageSrc"
-                                        alt="preview"
-                                    />
+                                        " id="Item-Image" :src="imageSrc" alt="preview" />
 
                                     <!-- Image Overlay -->
-                                    <div
-                                        id="Item-Image-Overlay"
-                                        class="w-100 h-100 position-absolute top-0 start-0 opacity bg-black d-flex justify-content-center align-items-center"
-                                    >
-                                        <i
-                                            class="pi pi-upload text-white mb-3"
-                                            style="font-size: 3rem"
-                                        ></i>
+                                    <div id="Item-Image-Overlay"
+                                        class="w-100 h-100 position-absolute top-0 start-0 opacity bg-black d-flex justify-content-center align-items-center">
+                                        <i class="pi pi-upload text-white mb-3" style="font-size: 3rem"></i>
                                     </div>
                                 </label>
                             </template>
@@ -450,21 +408,14 @@ export default {
 
                     <!-- Upload Icon START -->
                     <div v-else>
-                        <font-awesome-icon
-                            :icon="['fas', 'upload']"
-                            size="2xl"
-                        />
+                        <font-awesome-icon :icon="['fas', 'upload']" size="2xl" />
                         <p class="button">Upload a Photo</p>
                     </div>
                     <!-- Upload Icon END -->
 
                     <!-- Upload Control Start -->
-                    <input
-                        id="file-upload"
-                        type="file"
-                        accept="image/png, image/gif, image/jpeg"
-                        @change="onFileChange($event)"
-                    />
+                    <input id="file-upload" type="file" accept="image/png, image/gif, image/jpeg"
+                        @change="onFileChange($event)" />
                     <!-- Upload Control END -->
                 </label>
             </div>
@@ -477,28 +428,16 @@ export default {
                     <div class="col-12 shadow p-3 bg-white rounded categories">
                         <h5 class="bold">Gender & Category</h5>
                         <div>
-                            <SelectButton
-                                v-model="gender"
-                                :options="genderOptions"
-                                aria-labelledby="basic"
-                                :pt="{
-                                    button: ({ context }) => ({
-                                        class: context.active
-                                            ? 'bg-black'
-                                            : undefined,
-                                    }),
-                                }"
-                            />
+                            <SelectButton v-model="gender" :options="genderOptions" aria-labelledby="basic" :pt="{
+                                button: ({ context }) => ({
+                                    class: context.active
+                                        ? 'bg-black'
+                                        : undefined,
+                                }),
+                            }" />
                             <div class="card flex justify-content-center">
-                                <Dropdown
-                                    class="w-full md:w-14rem"
-                                    v-model="category"
-                                    :options="categories"
-                                    optionLabel="name"
-                                    placeholder="Select a Category"
-                                    editable
-                                    showClear
-                                />
+                                <Dropdown class="w-full md:w-14rem" v-model="category" :options="categories"
+                                    optionLabel="name" placeholder="Select a Category" editable showClear />
                             </div>
                         </div>
                     </div>
@@ -507,25 +446,12 @@ export default {
                     <div class="col-12 shadow p-3 bg-white rounded">
                         <h5 class="bold">Condition</h5>
                         <div class="card flex justify-content-center">
-                            <Dropdown
-                                class="w-full md:w-14rem"
-                                v-model="condition"
-                                :options="conditions"
-                                optionLabel="name"
-                                placeholder="Condition"
-                                editable
-                                showClear
-                            />
+                            <Dropdown class="w-full md:w-14rem" v-model="condition" :options="conditions" optionLabel="name"
+                                placeholder="Condition" editable showClear />
                         </div>
                         <h5 class="bold mt-3">Condition Note</h5>
-                        <Textarea
-                            class="form-control"
-                            v-model="conditionNotes"
-                            autoResize
-                            rows="5"
-                            cols="30"
-                            placeholder="Fresh and new with a fragrant scent."
-                        ></Textarea>
+                        <Textarea class="form-control" v-model="conditionNotes" autoResize rows="5" cols="30"
+                            placeholder="Fresh and new with a fragrant scent."></Textarea>
                     </div>
 
                     <!-- Item-details -->
@@ -533,50 +459,27 @@ export default {
                         <h5 class="bold">Item Information</h5>
                         <div class="pt-3">
                             <span class="p-float-label">
-                                <InputText
-                                    id="Item-Name"
-                                    class="form-control"
-                                    v-model="itemName"
-                                />
+                                <InputText id="Item-Name" class="form-control" v-model="itemName" />
                                 <label for="Item-Name">Item Name</label>
                             </span>
                         </div>
                         <div class="pt-4">
                             <span class="p-float-label">
-                                <InputText
-                                    id="Item-Brand"
-                                    class="form-control"
-                                    v-model="itemBrand"
-                                />
+                                <InputText id="Item-Brand" class="form-control" v-model="itemBrand" />
                                 <label for="Item-Brand">Brand (Optional)</label>
                             </span>
                         </div>
                         <div class="d-flex gap-3">
                             <h5 class="bold mt-3">Description</h5>
-                            <Button
-                                id="AI-Button"
-                                class="btn-danger my-2 py-0 rounded-2"
-                                severity="help"
-                                label="AI"
-                                icon="pi pi-bolt"
-                                icon-pos="right"
-                                size="small"
-                                :pt="{
+                            <Button id="AI-Button" class="btn-danger my-2 py-0 rounded-2" severity="help" label="AI"
+                                icon="pi pi-bolt" icon-pos="right" size="small" :pt="{
                                     icon: {
                                         class: 'm-0',
                                     },
-                                }"
-                                @click="generateDescription()"
-                            />
+                                }" @click="generateDescription()" />
                         </div>
-                        <Textarea
-                            class="form-control"
-                            v-model="itemDescription"
-                            autoResize
-                            rows="5"
-                            cols="30"
-                            placeholder="A fabulous product with wonderful perks."
-                        ></Textarea>
+                        <Textarea class="form-control" v-model="itemDescription" autoResize rows="5" cols="30"
+                            placeholder="A fabulous product with wonderful perks."></Textarea>
                     </div>
 
                     <!-- Drop-off Location -->
@@ -584,16 +487,9 @@ export default {
                         <h5 class="bold">Drop-off Location</h5>
                         <div class="pt-4">
                             <span class="p-float-label">
-                                <InputText
-                                    id="Drop-Off-Location"
-                                    class="form-control"
-                                    v-model="dropOffLocation"
-                                    readonly
-                                    disabled
-                                />
-                                <label for="Warehouse-Location"
-                                    >Select from the map</label
-                                >
+                                <InputText id="Drop-Off-Location" class="form-control" v-model="dropOffLocation" readonly
+                                    disabled />
+                                <label for="Warehouse-Location">Select from the map</label>
                             </span>
                         </div>
                         <div class="pt-3">
@@ -604,16 +500,8 @@ export default {
                     <!-- Price -->
                     <div class="col-12 shadow p-3 bg-white rounded">
                         <h5 class="bold">Price</h5>
-                        <InputNumber
-                            id="Price"
-                            class="w-100"
-                            v-model="price"
-                            mode="decimal"
-                            prefix="S$"
-                            :minFractionDigits="2"
-                            :maxFractionDigits="2"
-                            :min="0"
-                        />
+                        <InputNumber id="Price" class="w-100" v-model="price" mode="decimal" prefix="S$"
+                            :minFractionDigits="2" :maxFractionDigits="2" :min="0" />
                     </div>
                 </div>
             </div>
@@ -622,14 +510,8 @@ export default {
     <!-- Right Container END -->
 
     <!-- Successful Followup -->
-    <Dialog
-        v-model:visible="isSuccessful"
-        class="text-black"
-        style="width: 80vw; max-width: 800px"
-        :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
-        modal
-        :closable="false"
-    >
+    <Dialog v-model:visible="isSuccessful" class="text-black" style="width: 80vw; max-width: 800px"
+        :breakpoints="{ '960px': '75vw', '641px': '100vw' }" modal :closable="false">
         <template #header>
             <h5>
                 <span class="bg-black text-white py-1 px-2 fw-bold">{{
@@ -655,21 +537,11 @@ export default {
             <p>
                 Do remember to check by from time-to-time on your listed items.
             </p>
-            <div
-                class="row d-flex justify-content-center gap-2 mt-4 w-100 mx-auto"
-            >
-                <button
-                    class="col-12 col-sm btn btn-dark py-2"
-                    style="max-width: 400px"
-                    @click="clearPage()"
-                >
+            <div class="row d-flex justify-content-center gap-2 mt-4 w-100 mx-auto">
+                <button class="col-12 col-sm btn btn-dark py-2" style="max-width: 400px" @click="clearPage()">
                     Make New Listing
                 </button>
-                <button
-                    class="col-12 col-sm btn btn-dark py-2"
-                    style="max-width: 400px"
-                    @click="toCancel()"
-                >
+                <button class="col-12 col-sm btn btn-dark py-2" style="max-width: 400px" @click="toCancel()">
                     Back To Profile
                 </button>
             </div>
@@ -722,7 +594,7 @@ input[type="file"] {
 
 .button {
     border: 1px solid #000000;
-    padding: 0.5rem 1rem;
+    padding: 1rem 2rem;
     margin-top: 0.5rem;
     border-radius: 10px;
     color: white;
@@ -731,7 +603,7 @@ input[type="file"] {
 
 #upload_background {
     height: 50dvh;
-    background-image: url("../../assets/img/ecommerce/uploadimg1.png");
+    /* background-image: url("../../assets/img/ecommerce/uploadimg1.png"); */
     background-position: center;
 }
 
