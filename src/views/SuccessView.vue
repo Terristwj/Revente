@@ -1,8 +1,6 @@
 <template>
     <div class="row justify-content-center align-items-center">
-        <div
-            class="col-md-12 order-sm-last col-lg-6 p-3 text-center order-xs-last"
-        >
+        <div class="col-md-12 order-sm-last col-lg-6 p-3 text-center order-xs-last">
             <Card>
                 <template #title> Successful Checkout! </template>
                 <template #content>
@@ -10,24 +8,14 @@
                         Thanks for making a purchase with us! We hope you enjoy
                         your new item(s).
                     </p>
-                    <button
-                        type="button"
-                        class="btn btn-dark mt-4"
-                        @click="goToListing()"
-                    >
+                    <button type="button" class="btn btn-dark mt-4" @click="goToListing()">
                         Back To Listings
                     </button>
                 </template>
             </Card>
         </div>
-        <div
-            class="col-md-12 col-lg-6 p-3 order-lg-last d-flex justify-content-center align-items-center"
-        >
-            <img
-                class="img-fluid"
-                src="../assets/img/ecommerce/success.png"
-                alt=""
-            />
+        <div class="col-md-12 col-lg-6 p-3 order-lg-last d-flex justify-content-center align-items-center">
+            <img class="img-fluid" src="../assets/img/ecommerce/success.png" alt="" />
         </div>
     </div>
 </template>
@@ -58,6 +46,7 @@ export default {
     data() {
         return {
             productIds: [],
+            user_ID: "",
         };
     },
     methods: {
@@ -71,14 +60,20 @@ export default {
             return productIds.split(",");
         },
 
+        getUserId() {
+            let url = new URL(window.location);
+            let userID = url.searchParams.get("user_id");
+            return userID;
+        },
+
         // firebase method
-        updateDatabase(arr) {
+        updateDatabase(arr, userID) {
             arr.forEach((id) => {
                 FBInstanceFirestore.getProduct(id).then((data) => {
                     console.log(data);
                     data.is_bought = true;
                     console.log(data);
-                    FBInstanceFirestore.updateProductStatus(
+                    FBInstanceFirestore.updateProductStatusAndAddSellerID(
                         // Seller and Product
                         data.seller_ID,
                         data.product_ID,
@@ -100,12 +95,15 @@ export default {
                         data.drop_off_location,
                         data.price,
                         data.modifiedPrice,
-                        data.image_src,
                         data.size,
-
+                        data.image_src,
                         // Status
                         data.is_approved,
-                        data.is_bought
+                        data.is_bought,
+
+                        userID,
+                        "",
+                        "",
                     );
                 });
             });
@@ -115,10 +113,12 @@ export default {
     created() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-        
+
         this.productIds = this.getProductIds();
         console.log(this.productIds);
-        this.updateDatabase(this.productIds);
+        this.user_ID = this.getUserId();
+        console.log(this.user_ID);
+        this.updateDatabase(this.productIds, this.user_ID);
     },
 };
 </script>
