@@ -7,6 +7,7 @@ import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
 import CartItem from "../../components/CartItem.vue";
 import CheckoutBar from "../../components/CheckoutBar.vue";
 import SmallCarousel from "../../components/SmallCarousel.vue";
+import SmallCarouselRecents from "../../components/SmallCarouselRecents.vue";
 
 // Stores
 import { userStore, shoppingCart, recents } from "../../main.js";
@@ -49,6 +50,27 @@ export default {
             }
             return total.toFixed(2);
         },
+        noRecents() {
+            return this.recentProducts.length == 0
+        },
+        noRecomended() {
+            return this.recomendedProducts.length == 0
+        },
+        fourRecents() {
+            return this.recentProducts.length > 0 && this.recentProducts.length < 5
+        },
+        showCarousel() {
+            return this.recentProducts.length > 4
+        },
+        showReccoCarousel() {
+            return this.recomendedProducts.length > 4
+        }
+
+
+
+
+
+
     },
     methods: {
         getCartDetails() {
@@ -156,6 +178,7 @@ export default {
         CartItem,
         CheckoutBar,
         SmallCarousel,
+        SmallCarouselRecents
     },
     created() {
         document.body.scrollTop = 0;
@@ -167,8 +190,14 @@ export default {
             this.isLoading = false;
             this.user_ID = userStore.getUserID();
         }, 1000);
+        let tempRecent = recents.getRecents();
+        let recent = [];
+        for (let i = 0; i < tempRecent.length; i++) {
+            if (recent.includes(tempRecent[i]) == false) {
+                recent.push(tempRecent[i]);
+            }
+        }
 
-        let recent = recents.getRecents();
         for (let i = 0; i < recent.length; i++) {
             FBInstanceFirestore.getProduct(recent[i])
                 .then((data) => {
@@ -179,7 +208,7 @@ export default {
                     } else {
                         this.category[ind_category] += 1;
                     }
-                    console.log(this.category);
+                    // console.log(this.category);
                     let max = 0;
                     for (const [key, value] of Object.entries(this.category)) {
                         if (value > max) {
@@ -216,62 +245,76 @@ export default {
 
 <template>
     <div class="container">
-        <h1 class="my-4">
-            Shopping Cart <span v-if="cartContent">({{ cartContent }})</span>
-        </h1>
-        <p>
-            If you have removed an item; please go back one page and come back.
-            <strong>Do not refresh pls D:</strong>
-        </p>
-        <div v-if="!cartContent">
-            <h3>Your Shopping Cart is empty.</h3>
-            <p>
-                Browse through our categories for inspiration and add something
-                you like.
-            </p>
-            <br />
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button
-                    class="btn btn-outline-dark me-md-2 px-md-5"
-                    type="button"
-                    @click="toListing()"
-                >
-                    LISTINGS
-                </button>
+        <div class="">
+
+            <h1 class="my-4">
+                Shopping Cart <span v-if="cartContent">({{ cartContent }})</span>
+            </h1>
+            <div v-if="!cartContent">
+                <div class="row">
+
+
+                    <div class="col-lg-8">
+                        <h3>Your Shopping Cart is empty.</h3>
+                        <p>
+                            Browse through our categories for inspiration and add something
+                            you like.
+                        </p>
+                        <br />
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button class="btn btn-outline-dark me-md-2 px-md-5" type="button" @click="toListing()">
+                                LISTINGS
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-4">
+                        <CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length"
+                            :cartItems="this.changedCart" :itemIds="this.cartItems" />
+                    </div>
+
+
+
+                </div>
             </div>
         </div>
-        <div class="cart-section">
+        <div class="cart-section" v-if="cartContent">
             <div class="row">
                 <div class="col-lg-8">
-                    <CartItem
-                        v-for="(item, index) in cart"
-                        :key="index"
-                        :name="item.product_name"
-                        :price="item.modifiedPrice"
-                        :size="generalSize[index]"
-                        :brand="item.brand"
-                        :seller="item.seller_name"
-                        :imgUrl="item.image_src"
-                        :class="cartItemStyle(index)"
-                        :itemID="item.product_ID"
-                    />
+                    <CartItem v-for="(item, index) in cart" :key="index" :name="item.product_name"
+                        :price="item.modifiedPrice" :size="generalSize[index]" :brand="item.brand"
+                        :seller="item.seller_name" :imgUrl="item.image_src" :class="cartItemStyle(index)"
+                        :itemID="item.product_ID" />
                 </div>
                 <div class="col-lg-4">
-                    <CheckoutBar
-                        :totalOriginal="cartTotal"
-                        :total="cartTotal"
-                        :itemCount="cart.length"
-                        :cartItems="this.changedCart"
-                        :itemIds="this.cartItems"
-                    />
+                    <CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length"
+                        :cartItems="this.changedCart" :itemIds="this.cartItems" />
                 </div>
             </div>
         </div>
-        <div class="section">
+
+        <div class="section" v-if="noRecents">
+            <h3>Recently Viewed</h3>
+            <p>You have not viewed any products yet.</p>
+        </div>
+
+        <div class="section" v-if="fourRecents">
+            <h3>Recently Viewed</h3>
+            <SmallCarouselRecents :products="recentProducts" />
+        
+        </div>
+        <div class="section" v-if="showCarousel">
             <h3>Recently Viewed</h3>
             <SmallCarousel :products="recentProducts" />
         </div>
-        <div class="section">
+
+        <div class="section" v-if="noRecomended">
+            <h3>Recommended For You</h3>
+            <p>There are no recommendations for you yet.</p>
+        </div>
+
+        <div class="section" v-if="showReccoCarousel">
             <h3>Recommended For You</h3>
             <SmallCarousel :products="recomendedProducts" />
         </div>

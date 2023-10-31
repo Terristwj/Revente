@@ -186,7 +186,7 @@ class FirebaseFirestore {
         const is_approved = false;
         const is_bought = false;
         const size = "";
-
+        
         // (1) Add a new document with a generated id.
         const docRef = await addDoc(collection(FirestoreDatabase, "products"), {
             seller_ID,
