@@ -24,7 +24,7 @@ export default {
                 alert("Item already added to cart, please check your cart");
             } else {
                 shoppingCart.addCart(id);
-                console.log(shoppingCart.getCart());
+                // console.log(shoppingCart.getCart());
                 window.location.reload();
             }
         },
@@ -39,6 +39,7 @@ export default {
                 );
             } else {
                 wishList.addWish(id);
+                window.location.reload();
                 // console.log(wishList.getWishList());
             }
         },

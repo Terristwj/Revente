@@ -4,6 +4,7 @@ import { userStore, wishList } from "../../main.js";
 import { shoppingCart } from "../../main.js";
 import SmallCarousel from "../../components/SmallCarousel.vue";
 import router from "../../router/router.js";
+import SmallCarouselRecents from "../../components/SmallCarouselRecents.vue";
 
 export default {
     data() {
@@ -15,16 +16,30 @@ export default {
             userID: "",
             generalSize: [],
             recentProducts: [],
-            reccomendedProducts: [],
+            recomendedProducts: [],
             category: {},
             popularCategory: "",
         };
     },
-    created() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
+    computed: {
+        noRecents() {
+            return this.recentProducts.length == 0
+        },
+        noRecomended() {
+            return this.recomendedProducts.length == 0
+        },
+        fourRecents() {
+            return this.recentProducts.length > 0 && this.recentProducts.length < 5
+        },
+        showCarousel() {
+            return this.recentProducts.length > 4
+        },
+        showReccoCarousel() {
+            return this.recomendedProducts.length > 4
+        }
+
+
     },
-    computed: {},
     methods: {
         toListing() {
             router.push("/listings");
@@ -86,6 +101,7 @@ export default {
     },
     components: {
         SmallCarousel,
+        SmallCarouselRecents
     },
     mounted() {
         // When enter from About page - START
@@ -97,6 +113,8 @@ export default {
         // When enter from About page - END
     },
     async created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         setTimeout(async () => {
             await this.getProductData();
             this.isLoading = false;
@@ -139,7 +157,7 @@ export default {
                         data[key].category == this.popularCategory &&
                         data[key].is_approved == true
                     ) {
-                        this.reccomendedProducts.push(data[key]);
+                        this.recomendedProducts.push(data[key]);
                     }
                 }
             })
@@ -169,22 +187,36 @@ export default {
             like.
         </p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-            <button
-                class="btn btn-outline-dark me-md-2 px-md-5"
-                type="button"
-                @click="toListing()"
-            >
+            <button class="btn btn-outline-dark me-md-2 px-md-5" type="button" @click="toListing()">
                 LISTINGS
             </button>
         </div>
-        <div class="section">
+
+        <div class="section" v-if="noRecents">
+            <h3>Wish List</h3>
+            <p>Get shopping!</p>
+        </div>
+
+        <div class="section" v-if="fourRecents">
+            <h3>Wish List</h3>
+            <SmallCarouselRecents :products="recentProducts" />
+        </div>
+        <div class="section" v-if="showCarousel">
             <h3>Wish List</h3>
             <SmallCarousel :products="recentProducts" />
         </div>
-        <div class="section">
+        <div class="section" v-if="noRecomended">
             <h3>Recommended For You</h3>
-            <SmallCarousel :products="reccomendedProducts" />
+            <p>There are no recommendations for you yet.</p>
         </div>
+
+        <div class="section" v-if="showReccoCarousel">
+            <h3>Recommended For You</h3>
+            <SmallCarousel :products="recomendedProducts" />
+        </div>
+
+
+
     </div>
 </template>
 
