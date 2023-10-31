@@ -16,12 +16,12 @@ import transitions from "../../utilities/transitions";
 
 // Component dependencies
 import BigCarousel from "../../components/BigCarousel.vue";
-import SmallCarousel from "../../components/SmallCarousel.vue";
+import SmallCarouselMainPage from "../../components/SmallCarouselMainPage.vue";
 
 export default {
     components: {
         BigCarousel,
-        SmallCarousel,
+        SmallCarouselMainPage,
     },
     props: {
         transition: {
@@ -159,13 +159,7 @@ export default {
 
 <template>
     <header class="video-header">
-        <video
-            src="../../assets/videos/revente.mp4"
-            autoplay
-            loop
-            playsinline
-            muted
-        ></video>
+        <video src="../../assets/videos/revente.mp4" autoplay loop playsinline muted></video>
 
         <div class="header-text" ref="root">
             <h1>
@@ -176,16 +170,12 @@ export default {
         <div class="description">
             <p>
                 Propelling the Second-Hand Market:
-                <span class="large-view"
-                    >AI's Thrift Store. AI holds immense potential to enhance
+                <span class="large-view">AI's Thrift Store. AI holds immense potential to enhance
                     the second-hand clothing market in myriad ways. From
                     reliable pricing and personalized user experiences to expert
-                    styling services<span class="small-view"
-                        >, AI-driven advancements breathe new life into
+                    styling services<span class="small-view">, AI-driven advancements breathe new life into
                         pre-loved fashion. And let's not forget the boon of
-                        precise sizing</span
-                    >, </span
-                >eliminating guesswork and enabling customers to find their
+                        precise sizing</span>, </span>eliminating guesswork and enabling customers to find their
                 perfect match effortlessly.
             </p>
             <p class="credit">
@@ -229,48 +219,24 @@ export default {
                 <div class="row">
                     <div class="col-md-6">
                         <h1>Sale</h1>
-                        <Skeleton
-                            v-if="isPageEnterLoading"
-                            class="mb-5"
-                            width="100%"
-                            height="300px"
-                        ></Skeleton>
+                        <Skeleton v-if="isPageEnterLoading" class="mb-5" width="100%" height="300px"></Skeleton>
 
-                        <BigCarousel
-                            v-else
-                            class="mb-5"
-                            :products="saleProducts"
-                            imgDesc="Sale"
-                            carouId="SaleCarousel"
-                            :interval="5000"
-                        />
+                        <BigCarousel v-else class="mb-5" :products="saleProducts" imgDesc="Sale" carouId="SaleCarousel"
+                            :interval="5000" />
                     </div>
                     <div class="col-md-6">
                         <h1>New Drops</h1>
-                        <Skeleton
-                            v-if="isPageEnterLoading"
-                            width="100%"
-                            height="300px"
-                        ></Skeleton>
+                        <Skeleton v-if="isPageEnterLoading" width="100%" height="300px"></Skeleton>
 
-                        <BigCarousel
-                            v-else
-                            :products="newDropsProducts"
-                            imgDesc="New Drops"
-                            carouId="DropCarousel"
-                            :interval="7000"
-                        />
+                        <BigCarousel v-else :products="newDropsProducts" imgDesc="New Drops" carouId="DropCarousel"
+                            :interval="7000" />
                     </div>
                 </div>
                 <div class="row my-5">
                     <h1>Featured</h1>
-                    <Skeleton
-                        v-if="isPageEnterLoading"
-                        width="100%"
-                        height="400px"
-                    ></Skeleton>
+                    <Skeleton v-if="isPageEnterLoading" width="100%" height="400px"></Skeleton>
 
-                    <SmallCarousel v-else :products="featuredProducts" />
+                    <SmallCarouselMainPage v-else :products="featuredProducts" />
                 </div>
             </div>
         </div>
