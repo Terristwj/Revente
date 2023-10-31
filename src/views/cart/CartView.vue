@@ -219,10 +219,6 @@ export default {
         <h1 class="my-4">
             Shopping Cart <span v-if="cartContent">({{ cartContent }})</span>
         </h1>
-        <p>
-            If you have removed an item; please go back one page and come back.
-            <strong>Do not refresh pls D:</strong>
-        </p>
         <div v-if="!cartContent">
             <h3>Your Shopping Cart is empty.</h3>
             <p>

@@ -185,9 +185,9 @@ export default {
                     this.pendingProducts[idx].drop_off_location,
                     this.pendingProducts[idx].price,
                     parseFloat(this.pendingProducts[idx].modifiedPrice),
-                    this.pendingProducts[idx].image_src,
                     size,
-
+                    this.pendingProducts[idx].image_src,
+                   
                     // Status
                     true,
                     false
