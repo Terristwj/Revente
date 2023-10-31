@@ -1,25 +1,27 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { useLocalStorage } from "@vueuse/core";
 
 export const useCurrentCart = defineStore("currentCart", () => {
-    const shoppingCart = ref([]);
+  const shoppingCart = useLocalStorage("shoppingCart", []);
 
-    function addCart(uid) {
-        shoppingCart.value.push(uid);
-    }
-    function getCart() {
-        return shoppingCart.value;
-    }
-    function removeCart(uid) {
-        shoppingCart.value.splice(shoppingCart.value.indexOf(uid), 1);
-    }
+  function addCart(uid) {
+    shoppingCart.value.push(uid);
+  }
+  function getCart() {
+    return shoppingCart.value;
+  }
+  function removeCart(uid) {
+    shoppingCart.value.splice(shoppingCart.value.indexOf(uid), 1);
+    window.location.reload();
+  }
 
-    return {
-        shoppingCart,
-        addCart,
-        getCart,
-        removeCart,
-    };
+  return {
+    shoppingCart,
+    addCart,
+    getCart,
+    removeCart,
+  };
 });
 
 /**
