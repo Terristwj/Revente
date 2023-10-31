@@ -122,18 +122,18 @@ export default {
 		<!-- Cart Calculation Section -->
 		<div class="d-flex justify-content-between">
 			<p>Subtotal</p>
-			<p>{{ totalOriginal }}</p>
+			<p>${{ totalOriginal }}</p>
 		</div>
 		<div class="d-flex justify-content-between">
 			<p>Discounts</p>
-			<p>{{ discounts }}</p>
+			<p>${{ discounts }}</p>
 		</div>
 		<div class="d-flex justify-content-between">
 			<p>Shipping</p>
-			<p>{{ shipping }}</p>
+			<p>${{ shipping }}</p>
 		</div>
 		<div class="d-flex justify-content-between mt-2">
-			<b>Total ({{ itemCount }})</b><b>{{ total }}</b>
+			<b>Total ({{ itemCount }})</b><b>${{ total }}</b>
 		</div>
 		<hr class="my-5" />
 		<!-- Proceed to Checkout -->

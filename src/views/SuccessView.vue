@@ -71,6 +71,7 @@ export default {
             return productIds.split(",");
         },
 
+
         // firebase method
         updateDatabase(arr) {
             arr.forEach((id) => {
@@ -100,9 +101,8 @@ export default {
                         data.drop_off_location,
                         data.price,
                         data.modifiedPrice,
-                        data.image_src,
                         data.size,
-
+                        data.image_src,
                         // Status
                         data.is_approved,
                         data.is_bought
