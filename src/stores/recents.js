@@ -1,8 +1,9 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { useLocalStorage } from "@vueuse/core";
 
 export const useCurrentRecents = defineStore("currentRecents", () => {
-    const recentsView = ref([]);
+    const recentsView = useLocalStorage("recentsView", []);
 
     function addRecents(uid) {
         recentsView.value.push(uid);

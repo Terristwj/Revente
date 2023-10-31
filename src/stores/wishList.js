@@ -1,8 +1,10 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { useLocalStorage } from "@vueuse/core";
+
 
 export const useCurrentWishList = defineStore("currentWishList", () => {
-    const wishList = ref([]);
+    const wishList = useLocalStorage("wishList", []);
 
     function addWish(uid) {
         wishList.value.push(uid);

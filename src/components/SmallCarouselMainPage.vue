@@ -1,5 +1,5 @@
 <script>
-import ItemCardSmallCarousell from "./ItemCardSmallCarousell.vue";
+import ItemCard from "./ItemCard.vue";
 export default {
     props: {
         products: {
@@ -29,24 +29,17 @@ export default {
         };
     },
     components: {
-    ItemCardSmallCarousell
-},
+        ItemCard
+    },
 };
 </script>
 
 <template>
-    <Carousel
-        :value="products"
-        :numVisible="4"
-        :numScroll="1"
-        :responsiveOptions="responsiveOptions"
-        circular
-        :autoplayInterval="3000"
-        :showIndicators="false"
-    >
+    <Carousel :value="products" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions" circular
+        :autoplayInterval="3000" :showIndicators="false">
         <template #item="slotProps">
             <div class="centered-item">
-                <ItemCardSmallCarousell :product="slotProps.data" />
+                <ItemCard :product="slotProps.data" />
             </div>
         </template>
     </Carousel>
