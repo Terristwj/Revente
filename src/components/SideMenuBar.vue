@@ -67,19 +67,13 @@ export default {
         },
 
         // Open Tabs
-        openGender() {
+        toggleGender() {
             this.isGenderOpen = !this.isGenderOpen;
-            this.isBrandOpen = false;
-            this.isPriceOpen = false;
         },
-        openBrand() {
-            this.isGenderOpen = false;
+        toggleBrand() {
             this.isBrandOpen = !this.isBrandOpen;
-            this.isPriceOpen = false;
         },
-        openPrice() {
-            this.isGenderOpen = false;
-            this.isBrandOpen = false;
+        togglePrice() {
             this.isPriceOpen = !this.isPriceOpen;
         },
 
@@ -121,10 +115,10 @@ export default {
             <!-- Gender START -->
             <li class="mb-1">
                 <div class="row pointing">
-                    <div class="col-10" @click="openGender">Gender</div>
+                    <div class="col-10" @click="toggleGender">Gender</div>
                     <button
                         class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                        @click="openGender"
+                        @click="toggleGender"
                         :aria-expanded="[isGenderOpen ? true : false]"
                     ></button>
                 </div>
@@ -162,10 +156,10 @@ export default {
             <!-- Brand START -->
             <li class="mb-1">
                 <div class="row pointing">
-                    <div class="col-10" @click="openBrand">Brand</div>
+                    <div class="col-10" @click="toggleBrand">Brand</div>
                     <button
                         class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                        @click="openBrand"
+                        @click="toggleBrand"
                         :aria-expanded="[isBrandOpen ? true : false]"
                     ></button>
                 </div>
@@ -214,10 +208,10 @@ export default {
             <!-- Price START -->
             <li class="mb-1">
                 <div class="row pointing">
-                    <div class="col-10" @click="openPrice">Price</div>
+                    <div class="col-10" @click="togglePrice">Price</div>
                     <button
                         class="col-2 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                        @click="openPrice"
+                        @click="togglePrice"
                         :aria-expanded="[isPriceOpen ? true : false]"
                     ></button>
                 </div>
