@@ -58,13 +58,6 @@ export default {
         
     }, // methods;
     
-    watch: {
-
-    },
-
-    computed: {
-
-    }
     // component must be declared before app.mount(...)
 };
 </script>
