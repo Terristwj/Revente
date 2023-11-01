@@ -7,7 +7,7 @@ import {
   getDocs,
   query,
   where,
-  limit,
+  limit, 
 } from "firebase/firestore";
 import { FirestoreDatabase } from "./../../main.js";
 
