@@ -3,7 +3,6 @@ import router from "../../router/router.js";
 import { userStore } from "../../main.js";
 // import ItemCard from '../components/ItemCard.vue';
 import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
-import Rating from "primevue/rating";
 import SmallCarouselMainPage from "../../components/SmallCarouselMainPage.vue";
 import SmallCarouselRecents from "../../components/SmallCarouselRecents.vue";
 import vue3starRatings from "vue3-star-ratings";
@@ -12,7 +11,9 @@ import vue3starRatings from "vue3-star-ratings";
 export default {
     data() {
         return {
-            rating: 8,
+            // need to dynamically set this rating based on average of all reviews
+            total_rating: 0,
+            rating: 0,
             userID: userStore.getUserID(),
             description: "",
             image_src: "",
@@ -35,7 +36,6 @@ export default {
     },
     components: {
         // ItemCard,
-        Rating,
         SmallCarouselMainPage,
         SmallCarouselRecents,
         vue3starRatings,
@@ -69,13 +69,15 @@ export default {
                         obj["image_src"] = item.image_src;
                         obj["buyer_name"] = null;
                         obj["review_desc"] = item.review_desc;
+                        this.total_rating += item.rating;
                         obj["rating"] = item.rating;
                         FBInstanceFirestore.getUser(item.buyer_ID).then((data) => {
                             let buyerName = data.first_name + " " + data.last_name;
                             obj["buyer_name"] = buyerName;
                             this.reviews.push(obj);
-                            console.log(this.reviews);
+                            this.rating = this.total_rating / this.reviews.length;
                         });
+
                         
                     })
                 })
@@ -102,7 +104,7 @@ export default {
                     <div class="col-xl-10 col-md-8 col-xs-6">
                         <h1 class="display-5 fw-bold py-2">{{ username }}</h1>
                         Rating:
-                        <Rating v-model="rating" :cancel="false" readonly />
+                        <vue3starRatings v-model='this.rating' :starSize="'20'" starColor="#ff9800" inactiveColor="#333333" :numberOfStars="5" :disableClick="true"/>
                         <p class="col-md-12 fs-4 pt-2">
                             Description: {{ description }}
                         </p>
