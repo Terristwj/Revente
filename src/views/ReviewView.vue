@@ -16,7 +16,7 @@ export default {
 
             //obtain data from review inputs
             review: {
-                rating: 3.5,
+                rating: 0,
                 textinput: "",
             },
 
