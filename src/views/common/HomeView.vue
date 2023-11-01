@@ -61,6 +61,7 @@ export default {
                     this.saleProducts = data.sale;
                     this.newDropsProducts = data.newDrops;
                     this.featuredProducts = data.featured;
+                    // console.log(this.featuredProducts);
                 })
                 .catch((error) => {
                     // Handle any errors that occur during the promise execution
