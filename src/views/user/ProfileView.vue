@@ -6,6 +6,7 @@ import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
 import Rating from "primevue/rating";
 import SmallCarouselMainPage from "../../components/SmallCarouselMainPage.vue";
 import SmallCarouselRecents from "../../components/SmallCarouselRecents.vue";
+import vue3starRatings from "vue3-star-ratings";
 
 
 export default {
@@ -17,6 +18,7 @@ export default {
             image_src: "",
             username: "",
             items: [],
+            reviews: [],
         };
 
     },
@@ -35,7 +37,8 @@ export default {
         // ItemCard,
         Rating,
         SmallCarouselMainPage,
-        SmallCarouselRecents
+        SmallCarouselRecents,
+        vue3starRatings,
     },
     created() {
         document.body.scrollTop = 0;
@@ -57,9 +60,25 @@ export default {
                 FBInstanceFirestore.getAllListedProductByUser(this.userID).then(
                 (data) => {
                     this.items = data;
-                    // console.log(data);
-                }
-            )
+                });
+                FBInstanceFirestore.getAllBoughtProductByUser(this.userID).then((data) => {
+                    data.forEach((item) => {
+                        let obj = {};
+                        obj["product_name"] = item.product_name;
+                        obj["brand"] = item.brand;
+                        obj["image_src"] = item.image_src;
+                        obj["buyer_name"] = null;
+                        obj["review_desc"] = item.review_desc;
+                        obj["rating"] = item.rating;
+                        FBInstanceFirestore.getUser(item.buyer_ID).then((data) => {
+                            let buyerName = data.first_name + " " + data.last_name;
+                            obj["buyer_name"] = buyerName;
+                            this.reviews.push(obj);
+                            console.log(this.reviews);
+                        });
+                        
+                    })
+                })
             }
         }, 500);
        
@@ -117,14 +136,21 @@ export default {
                 <div class="container-fluid">
                     <div class="row reviews shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Reviews</h2>
-                        <div class="row shadow-sm p-3 mb-5 bg-white rounded">
-                            <p>Review</p>
-                        </div>
-                        <div class="row shadow-sm p-3 mb-5 bg-white rounded">
-                            <p>Review</p>
-                        </div>
-                        <div class="row shadow-sm p-3 mb-5 bg-white rounded">
-                            <p>Review</p>
+                        <!-- add in using v-for -->
+                        <div v-for="(item) in this.reviews" class='shadow-sm p-3 mb-5 bg-white rounded'>
+                            <div class="row">
+                                <div class="col">
+                                    <vue3starRatings v-model='item.rating' :starSize="'15'" starColor="#ff9800" inactiveColor="#333333" :numberOfStars="5" :disableClick="true"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                    <p class="lead">{{ item.product_name }}</p>
+                                    <p class="lead">{{ item.review_desc }}</p>
+                                    <p class="lead fw-bold">{{ item.buyer_name }}</p>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
