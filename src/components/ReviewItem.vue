@@ -35,9 +35,6 @@ export default {
     }, // data
     
     methods: {
-        methodName() {
-            
-        }
     }, // methods;
     
     watch: {

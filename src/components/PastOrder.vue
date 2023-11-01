@@ -1,4 +1,6 @@
 <script>
+import { useReviewStore } from '../main.js';
+
 export default {
     props: {
         deliverydate: {
@@ -35,10 +37,21 @@ export default {
     data() {
         return {
             // key: value
-            uuid: crypto.randomUUID()
         };
     }, // data
     
+    computed: {
+        // Access the reviewSubmitted state from the ReviewStore
+        reviewSubmitted() {
+            const reviewStore = useReviewStore();
+            return reviewStore.reviewSubmitted;
+        },
+        orderHistory() {
+            // Filter products based on user ID and return them as the order history
+            return this.items.filter(item => item.seller_name !== null);
+        }
+    },
+
     methods: {
         parseDataToReviewPage() {
             // validate inputs
@@ -55,15 +68,20 @@ export default {
             }
 
             this.$router.push({
-                path: `reviewview/${this.uuid}`,
+                path: `reviewview/${this.productID}`,
                 query: {data: JSON.stringify(dataObject)}
             })
-        }
+        },
+
+        isReviewSubmitted() {
+            // Update the reviewSubmitted state in the ReviewStore
+            const reviewStore = useReviewStore();
+            reviewStore.setReviewSubmitted(true);
+        },
             
         
     }, // methods;
-    
-    // component must be declared before app.mount(...)
+
 };
 </script>
 
@@ -88,6 +106,7 @@ export default {
             <!--this is for the router button-->
             <div class="buttonLoc">
                 <button 
+                v-if="!reviewSubmitted"
                 @click="parseDataToReviewPage()"                 
                 class="reviewButton"
                 >

@@ -8,6 +8,7 @@ import { useCurrentItemID } from "./stores/currentItem.js";
 import { useCurrentCart } from "./stores/currentCart.js";
 import { useCurrentRecents } from "./stores/recents.js";
 import { useCurrentWishList } from "./stores/wishList.js";
+import { useReviewStore } from "./stores/reviewSubmission.js";
 import App from "./App.vue";
 import router from "./router/router.js";
 
@@ -34,6 +35,7 @@ export const itemStore = useCurrentItemID();
 export const shoppingCart = useCurrentCart();
 export const wishList = useCurrentWishList();
 export const recents = useCurrentRecents();
+export const reviewStore = useReviewStore();
 app.use(router);
 
 // Refer to PrimeVue.js for the full list of components

@@ -3,6 +3,9 @@ import ReviewItem from "../components/ReviewItem.vue";
 import vue3starRatings from "vue3-star-ratings";
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
+import { userStore } from "../main.js";
+import { useReviewStore } from '../main.js';
+
 export default {
     components: {
         ReviewItem,
@@ -12,7 +15,8 @@ export default {
         return {
             //obtain data from Order History
             //dataObject = {deliverydate,imgUrl,brand,size, seller, name, uuid}
-            item: JSON.parse(this.$route.query.data),
+            productID: this.$route.params.productID,
+            productData: null,
 
             //obtain data from review inputs
             review: {
@@ -22,7 +26,6 @@ export default {
 
             //item image
             imageSrc: null,
-
             // Firebase-Related Codes
             isLoading: false,
             firstError: "",
@@ -30,7 +33,25 @@ export default {
         };
     },
 
+    created() {
+        // Fetch product data based on the product ID
+        this.fetchProductData();
+
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    },
+
     methods: {
+        // this takes the data from Firestore based on Product ID
+        async fetchProductData() {
+            try {
+                // Fetch product data from Firestore based on product ID
+                this.productData = await FBInstanceFirestore.getProduct(this.productID);
+            } catch (error) {
+                console.error("Error fetching product data:", error);
+            }
+        },
+        
         onFileChange(event) {
             if (event.target.files.length > 0) {
                 this.imageFile = event.target.files[0];
@@ -92,6 +113,13 @@ export default {
         async doSubmitForm() {
             if (this.isEverythingValid()) {
                 await this.firebaseAddItem();
+
+                // Update the reviewSubmitted property in the store
+                const reviewStore = useReviewStore();
+                reviewStore.setReviewSubmitted(true);
+
+                // Emit the 'review-submitted' event here
+                this.$emit('review-submitted');
             } else {
                 this.showToastError(this.firstError);
             }
@@ -108,7 +136,7 @@ export default {
             }
 
             if (!this.review.rating) {
-                this.firstError = "What is the item's name?";
+                this.firstError = "Give your ratings, where 5 stars indicate that the clothing you purchased is excellent.";
                 return false;
             }
 
@@ -143,87 +171,53 @@ export default {
             );
 
             if (hasError) {
-                this.firstError = "Please try again later.";
-            } else {
-                //
-                // (4) Retrieve item_image_src from Storage
-                //
-                const url = await FBInstanceStorage.getImageUrl(
-                    "reviews",
-                    reviewID
-                );
-
-                //
-                // (5) Set doc item_image_src into Firestore
-                //
-                // If there is no URL - Error
-                if (!url) {
-                    this.firstError = "Please try again later.";
-                } else {
-                    // Firebase Update User
-                    let errorCode =
-                        await FBInstanceFirestore.updateProductImageSrc(
-                            // Seller and Product details
-                            userStore.getUserID(),
-                            userStore.getOrderedProductID(),
-
-                            // Review Details
-                            rating,
-                            review,
-
-                            // Image URL (To be Added)
-                            url
-                        );
-                    // console.log(errorCode);
-                    switch (errorCode) {
-                        default:
-                            this.firstError = errorCode;
-                    }
-                }
-                // console.log(url);
+        this.firstError = "Please try again later.";
+        } else {
+        const url = await FBInstanceStorage.getImageUrl("reviews", reviewID);
+        if (!url) {
+            this.firstError = "Please try again later.";
+        } else {
+            let errorCode = await FBInstanceFirestore.updateProductImageSrc(
+                userStore.getUserID(),
+                userStore.getOrderedProductID(),
+                rating,
+                review,
+                url
+            );
+            switch (errorCode) {
+            default:
+                this.firstError = errorCode;
             }
-
-            // Debugging
-            // await FBInstanceStorage.listImages();
-
-            if (this.firstError) {
-                this.showToastError(this.firstError);
-            } else {
-                this.showToastSuccess();
-                this.isSuccessful = true;
-                // Re-render data
-                this.imageSrc = "";
-            }
-        },
-
-        showToastError(detail) {
-            this.$toast.add({
-                severity: "error",
-                summary: "ReviewFailed",
-                detail,
-                life: 3000,
-            });
-        },
-
-        showToastSuccess() {
-            this.$toast.add({
-                severity: "success",
-                summary: "Your Review was Successfully created!",
-                life: 3000,
-            });
-        },
-
-        clearPage() {
-            // Item Image
+        }
+        }
+        if (this.firstError) {
+            this.showToastError(this.firstError);
+        } else {
+            this.showToastSuccess();
+            this.isSuccessful = true;
             this.imageSrc = "";
-
-            //reviews
-            this.review.rating = 0;
-            this.review.textinput = 0;
-
-            // Firebase-Related Codes
-            this.isSuccessful = false;
-        },
+        }
+    },
+    showToastError(detail) {
+        this.$toast.add({
+            severity: "error",
+            summary: "ReviewFailed",
+            detail,
+            life: 3000,
+        });
+    },
+    showToastSuccess() {
+        this.$toast.add({
+            severity: "success",
+            summary: "Your Review was Successfully created!",
+            life: 3000,
+        });
+    },
+    clearPage() {
+        this.imageSrc = "";
+        this.review.rating = 0;
+        this.review.textinput = 0;
+        this.isSuccessful = false;
     },
     created() {
         document.body.scrollTop = 0;
@@ -264,7 +258,7 @@ export default {
         </div>
 
         <div class="container uploadPhoto">
-            <h4>Upload Photo <span class="optional"> (Optional) </span></h4>
+            <h4>Upload Photo</h4>
 
             <div>
                 <div class="photoPortion">
@@ -287,7 +281,7 @@ export default {
             </h5>
 
             <div>
-                <button @click="$router.push('/')">Back to Homepage</button>
+                <button @click="$router.push('/orderhistory')">Back to Order History</button>
             </div>
         </template>
     </Dialog>
@@ -324,10 +318,6 @@ textarea {
     height: 200px;
     max-width: 700px;
     margin-left: 15px;
-}
-
-.optional {
-    font-style: italic;
 }
 
 .uploading-image {
