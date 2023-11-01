@@ -4,6 +4,7 @@ import { userStore } from "../../main.js";
 // import ItemCard from '../components/ItemCard.vue';
 import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
 import Rating from "primevue/rating";
+import SmallCarouselMainPage from "../../components/SmallCarouselMainPage.vue";
 
 export default {
     data() {
@@ -13,15 +14,29 @@ export default {
             description: "",
             image_src: "",
             username: "",
+            items: [],
         };
+    },
+    methods: {
+        getItems(userid) {
+            FBInstanceFirestore.getAllListedProductByUser(userid).then(
+                (data) => {
+                    // this.items = data;
+                    console.log(data);
+                    this.items = data;
+                }
+            )
+        }
     },
     components: {
         // ItemCard,
         Rating,
+        SmallCarouselMainPage
     },
     created() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
+
     },
     mounted() {
         setTimeout(() => {
@@ -29,6 +44,7 @@ export default {
                 router.push("/login");
             } else {
                 // console.log(this.userID);
+                this.getItems(this.userID);
                 FBInstanceFirestore.getUser(this.userID).then((data) => {
                     console.log(data);
                     this.username = data.first_name + " " + data.last_name;
@@ -48,12 +64,8 @@ export default {
             <div class="container-fluid py-2">
                 <div class="row">
                     <div class="col-xl-2 col-md-4 col-xs-6">
-                        <img
-                            :src="image_src"
-                            alt="generic profile picture"
-                            class="img-thumbnail mt-4 mb-2"
-                            style="width: 200px; z-index: 1"
-                        />
+                        <img :src="image_src" alt="generic profile picture" class="img-thumbnail mt-4 mb-2"
+                            style="width: 200px; z-index: 1" />
                     </div>
                     <div class="col-xl-10 col-md-8 col-xs-6">
                         <h1 class="display-5 fw-bold py-2">{{ username }}</h1>
@@ -67,22 +79,19 @@ export default {
 
                 <!-- Listings -->
                 <div class="container-fluid">
-                    <div
-                        class="row listings shadow-sm p-3 mb-5 bg-white rounded"
-                    >
+                    <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Current Listings</h2>
                         <!-- add in using v-for -->
-                        <!-- <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
-                            <ItemCard />
-                        </div> -->
-                        
+
+                        <SmallCarouselMainPage :products="this.items" v-if="this.items.length > 0" />
+                        <p v-else class="lead text-center">No items listed</p>
+
+
                     </div>
                 </div>
                 <!-- Reviews -->
                 <div class="container-fluid">
-                    <div
-                        class="row reviews shadow-sm p-3 mb-5 bg-white rounded"
-                    >
+                    <div class="row reviews shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Reviews</h2>
                         <div class="row shadow-sm p-3 mb-5 bg-white rounded">
                             <p>Review</p>
