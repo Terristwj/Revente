@@ -200,29 +200,16 @@ export default {
 
         <!--BELOW IS THE ITEM DETAIL-->
         <div class="container-fluid itemContainer">
-            <ReviewItem
-                :deliverydate="item.deliverydate"
-                :imgUrl="item.imgUrl"
-                :brand="item.brand"
-                :size="item.size"
-                :seller="item.seller"
-                :name="item.name"
-                :uuid="item.uuid"
-            />
+            <ReviewItem :deliverydate="item.deliverydate" :imgUrl="item.imgUrl" :brand="item.brand" :size="item.size"
+                :seller="item.seller" :name="item.name" :uuid="item.uuid" />
         </div>
 
         <!--BELOW IS THE REVIEWING PORTION-->
         <div class="container ratingPortion">
             <h4>Rating</h4>
             <div>
-                <vue3starRatings
-                    v-model="review.rating"
-                    :starSize="'32'"
-                    starColor="#ff9800"
-                    inactiveColor="#333333"
-                    :numberOfStars="5"
-                    :disableClick="false"
-                />
+                <vue3starRatings v-model="review.rating" :starSize="'32'" starColor="#ff9800" inactiveColor="#333333"
+                    :numberOfStars="5" :disableClick="false" />
             </div>
         </div>
 
@@ -232,10 +219,7 @@ export default {
             </div>
 
             <div class="row reviewInput">
-                <textarea
-                    v-model="review.textinput"
-                    placeholder="add multiple lines"
-                ></textarea>
+                <textarea v-model="review.textinput" placeholder="add multiple lines"></textarea>
             </div>
         </div>
 
@@ -244,16 +228,8 @@ export default {
 
             <div>
                 <div class="photoPortion">
-                    <img
-                        :src="imageSrc"
-                        class="uploading-image"
-                        id="file-upload"
-                    />
-                    <input
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        @change="onFileChange($event)"
-                    />
+                    <img :src="imageSrc" class="uploading-image" id="file-upload" />
+                    <input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)" />
                 </div>
             </div>
         </div>
@@ -262,19 +238,11 @@ export default {
     </body>
 
     <!-- Successful Followup -->
-    <Dialog
-        v-model:visible="isSuccessful"
-        class="text-black"
-        style="width: 80vw; max-width: 800px"
-        :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
-        modal
-        :closable="false"
-    >
+    <Dialog v-model:visible="isSuccessful" class="text-black" style="width: 80vw; max-width: 800px"
+        :breakpoints="{ '960px': '75vw', '641px': '100vw' }" modal :closable="false">
         <template #header>
             <h5>
-                <span class="bg-black text-white py-1 px-2 fw-bold"
-                    >Your Review for {{ item.name }}</span
-                >
+                <span class="bg-black text-white py-1 px-2 fw-bold">Your Review for {{ item.name }}</span>
                 &nbsp;is successfully uploaded!
             </h5>
 

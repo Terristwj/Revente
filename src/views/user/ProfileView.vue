@@ -75,6 +75,7 @@ export default {
                         <!-- <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col pb-2 list-item">
                             <ItemCard />
                         </div> -->
+                        
                     </div>
                 </div>
                 <!-- Reviews -->

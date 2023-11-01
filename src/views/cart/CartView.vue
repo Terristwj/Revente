@@ -66,11 +66,6 @@ export default {
             return this.recomendedProducts.length > 4
         }
 
-
-
-
-
-
     },
     methods: {
         getCartDetails() {
