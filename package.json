@@ -31,6 +31,7 @@
     "primeicons": "^6.0.1",
     "primevue": "^3.37.0",
     "vue": "^3.3.4",
+    "vue-awesome-swiper": "^5.0.1",
     "vue-chartjs": "^5.2.0",
     "vue-preloader": "^1.1.2",
     "vue-responsive-video-background-player": "^2.3.1",

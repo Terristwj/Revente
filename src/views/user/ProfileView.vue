@@ -5,6 +5,8 @@ import { userStore } from "../../main.js";
 import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
 import Rating from "primevue/rating";
 import SmallCarouselMainPage from "../../components/SmallCarouselMainPage.vue";
+import SmallCarouselRecents from "../../components/SmallCarouselRecents.vue";
+
 
 export default {
     data() {
@@ -16,45 +18,56 @@ export default {
             username: "",
             items: [],
         };
+
     },
-    methods: {
-        getItems(userid) {
-            FBInstanceFirestore.getAllListedProductByUser(userid).then(
-                (data) => {
-                    // this.items = data;
-                    console.log(data);
-                    this.items = data;
-                }
-            )
-        }
+    computed: {
+        haveListing() {
+            return this.items.length > 4;
+        },
+        littleListing(){
+        return this.items.length < 5;
+        },
+        noListings() {
+            return this.items.length == 0;
+        },
     },
     components: {
         // ItemCard,
         Rating,
-        SmallCarouselMainPage
+        SmallCarouselMainPage,
+        SmallCarouselRecents
     },
     created() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-
     },
     mounted() {
         setTimeout(() => {
             if (!userStore.getUserID()) {
                 router.push("/login");
             } else {
-                // console.log(this.userID);
-                this.getItems(this.userID);
+                // this.getItems(this.userID);
                 FBInstanceFirestore.getUser(this.userID).then((data) => {
-                    console.log(data);
                     this.username = data.first_name + " " + data.last_name;
                     this.description = data.description;
                     this.image_src = data.image_src;
+
                 });
+                // console.log(this.userID);
+                FBInstanceFirestore.getAllListedProductByUser(this.userID).then(
+                (data) => {
+                    this.items = data;
+                    // console.log(data);
+                }
+            )
             }
         }, 500);
+       
+
+
     },
 };
+
 </script>
 
 <template>
@@ -78,15 +91,26 @@ export default {
                 </div>
 
                 <!-- Listings -->
-                <div class="container-fluid">
+                <div class="container-fluid" v-if="littleListing">
                     <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Current Listings</h2>
                         <!-- add in using v-for -->
+                        <SmallCarouselRecents :products="items" />
+                    </div>
+                </div>
+                <div class="container-fluid" v-if="haveListing">
+                    <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
+                        <h2 class="text-center">Current Listings</h2>
+                        <!-- add in using v-for -->
+                        <SmallCarouselMainPage :products="items" />
+                    </div>
+                </div>
 
-                        <SmallCarouselMainPage :products="this.items" v-if="this.items.length > 0" />
-                        <p v-else class="lead text-center">No items listed</p>
-
-
+                <div class="container-fluid" v-if="noListings">
+                    <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
+                        <h2 class="text-center">Current Listings</h2>
+                        <!-- add in using v-for -->
+                        <p class="lead text-center">No items listed</p>
                     </div>
                 </div>
                 <!-- Reviews -->
