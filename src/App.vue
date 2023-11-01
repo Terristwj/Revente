@@ -53,12 +53,14 @@ export default {
     height: 50px;
     font-size: 24px;
     cursor: pointer;
+z-index: 999;
 }
 
 .chatbot-container {
     position: fixed;
     bottom: 0;
     right: 0;
+    z-index: 2;
 }
 
 .chatbot {
@@ -69,5 +71,27 @@ export default {
     width: 25dvw;
     height: 50dvh;
 }
+
+@media(max-width: 425px) {
+    .chatbot {
+        width: 75vw;
+        height: 50dvh;
+    }
+}
+
+@media(min-width:768px) {
+    .chatbot {
+        width: 50vw;
+        height: 50dvh;
+    }
+}
+
+@media(min-width:1024px) {
+    .chatbot {
+        width: 25vw;
+        height: 50dvh;
+    }
+}
+
 
 </style>
