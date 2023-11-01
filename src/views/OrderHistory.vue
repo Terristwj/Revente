@@ -41,6 +41,7 @@ export default {
                     obj["name"] = item.product_name;
                     obj["size"] = item.size;
                     obj["seller_name"] = null;
+                    obj["product_id"] = item.product_ID;
                     // this.items.push(item)
                     FBInstanceFirestore.getUser(item.seller_ID).then((data) => {
                         let sellerName = data.first_name + " " + data.last_name;
@@ -63,7 +64,7 @@ export default {
         <!--BELOW ARE THE PAST ORDER ITEMS-->
         <div class="container-fluid">
             <PastOrders v-for="(item, index) in items" :key="index" :deliverydate="item.deliverydate" :imgUrl="item.imgUrl"
-                :brand="item.brand" :size="item.size" :seller="item.seller_name" :name="item.name" />
+                :brand="item.brand" :size="item.size" :seller="item.seller_name" :name="item.name" :product_id="item.product_id"/>
         </div>
     </body>
 </template>

@@ -38,11 +38,55 @@ export default {
             }
         },
 
+
+
         //Firebase-Related Codes
-        async submitForm() {
+        submitForm() {
             // If there are no errors, submit the form
-            await this.doSubmitForm();
+            if (this.isEverythingValid) {
+                console.log(this.review.rating);
+                console.log(this.review.textinput);
+                FBInstanceFirestore.getProduct(this.item.product_id).then((data) => {
+                    console.log(data);
+                    FBInstanceFirestore.updateReviewAndRating(
+                        // Seller and Product
+                        data.seller_ID,
+                        data.product_ID,
+
+                        // Product Details
+                        data.product_name,
+                        data.brand,
+                        data.description,
+
+                        // Category
+                        data.gender,
+                        data.category,
+
+                        // Condition
+                        data.condition,
+                        data.condition_notes,
+
+                        // Others
+                        data.drop_off_location,
+                        data.price,
+                        data.modifiedPrice,
+                        data.size,
+                        data.image_src,
+                        // Status
+                        data.is_approved,
+                        data.is_bought,
+
+                        // Review Details
+                        data.buyer_ID,
+                        this.review.textinput,
+                        this.review.rating
+                    )
+                });
+            }
+
         },
+
+
 
         //Firebase related methods
         async doSubmitForm() {
@@ -56,11 +100,6 @@ export default {
         isEverythingValid() {
             // Validate form fields
             this.firstError = "";
-
-            if (!this.imageSrc) {
-                this.firstError = "Please provide an item photo.";
-                return false;
-            }
 
             if (!this.review.textinput) {
                 this.review.textinput =
@@ -189,6 +228,7 @@ export default {
     created() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
+        // console.log(this.item);
     },
 };
 </script>
@@ -200,29 +240,16 @@ export default {
 
         <!--BELOW IS THE ITEM DETAIL-->
         <div class="container-fluid itemContainer">
-            <ReviewItem
-                :deliverydate="item.deliverydate"
-                :imgUrl="item.imgUrl"
-                :brand="item.brand"
-                :size="item.size"
-                :seller="item.seller"
-                :name="item.name"
-                :uuid="item.uuid"
-            />
+            <ReviewItem :deliverydate="item.deliverydate" :imgUrl="item.imgUrl" :brand="item.brand" :size="item.size"
+                :seller="item.seller" :name="item.name" :uuid="item.uuid" />
         </div>
 
         <!--BELOW IS THE REVIEWING PORTION-->
         <div class="container ratingPortion">
             <h4>Rating</h4>
             <div>
-                <vue3starRatings
-                    v-model="review.rating"
-                    :starSize="'32'"
-                    starColor="#ff9800"
-                    inactiveColor="#333333"
-                    :numberOfStars="5"
-                    :disableClick="false"
-                />
+                <vue3starRatings v-model="review.rating" :starSize="'32'" starColor="#ff9800" inactiveColor="#333333"
+                    :numberOfStars="5" :disableClick="false" />
             </div>
         </div>
 
@@ -232,10 +259,7 @@ export default {
             </div>
 
             <div class="row reviewInput">
-                <textarea
-                    v-model="review.textinput"
-                    placeholder="add multiple lines"
-                ></textarea>
+                <textarea v-model="review.textinput" placeholder="add multiple lines"></textarea>
             </div>
         </div>
 
@@ -244,16 +268,8 @@ export default {
 
             <div>
                 <div class="photoPortion">
-                    <img
-                        :src="imageSrc"
-                        class="uploading-image"
-                        id="file-upload"
-                    />
-                    <input
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        @change="onFileChange($event)"
-                    />
+                    <img :src="imageSrc" class="uploading-image" id="file-upload" />
+                    <input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)" />
                 </div>
             </div>
         </div>
@@ -262,19 +278,11 @@ export default {
     </body>
 
     <!-- Successful Followup -->
-    <Dialog
-        v-model:visible="isSuccessful"
-        class="text-black"
-        style="width: 80vw; max-width: 800px"
-        :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
-        modal
-        :closable="false"
-    >
+    <Dialog v-model:visible="isSuccessful" class="text-black" style="width: 80vw; max-width: 800px"
+        :breakpoints="{ '960px': '75vw', '641px': '100vw' }" modal :closable="false">
         <template #header>
             <h5>
-                <span class="bg-black text-white py-1 px-2 fw-bold"
-                    >Your Review for {{ item.name }}</span
-                >
+                <span class="bg-black text-white py-1 px-2 fw-bold">Your Review for {{ item.name }}</span>
                 &nbsp;is successfully uploaded!
             </h5>
 

@@ -25,6 +25,10 @@ export default {
             type: String,
             required: true,
         },
+        product_id: {
+            type: String,
+            required: true,
+        },
 
     },
     events: [],
@@ -46,7 +50,8 @@ export default {
                 size: this.size,
                 seller: this.seller,
                 name: this.name,
-                uuid: this.uuid
+                uuid: this.uuid,
+                product_id: this.product_id
             }
 
             this.$router.push({
