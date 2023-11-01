@@ -32,7 +32,7 @@ export default {
         getItems(userID) {
             console.log(userID);
             FBInstanceFirestore.getProductsBasedOnBuyerID(userID).then((data) => {
-                console.log(data);
+                // console.log(data);
                 data.forEach(item => {
                     var obj = {}
                     console.log(item.seller_ID);
