@@ -409,7 +409,26 @@ class FirebaseFirestore {
         collection(FirestoreDatabase, "products"),
         where("is_approved", "==", true),
         where("is_bought", "==", false),
-        where("seller_ID", "==", userID),
+        where("seller_ID", "==", userID)
+      )
+    );
+
+    let products = [];
+    querySnapshot.forEach((doc) => {
+      products.push(doc.data());
+    });
+
+    return products;
+  };
+
+  // (Profile View) Get items that sold by the user
+  getAllBoughtProductByUser = async function (userID) {
+    const querySnapshot = await getDocs(
+      query(
+        collection(FirestoreDatabase, "products"),
+        where("is_approved", "==", true),
+        where("is_bought", "==", true),
+        where("seller_ID", "==", userID)
       )
     );
 
@@ -494,6 +513,77 @@ class FirebaseFirestore {
   // -BuyerID: 'buyer_ID'
 
   updateProductStatusAndAddSellerID = async function (
+    // Seller & Product
+    seller_ID,
+    product_ID,
+
+    // Product Details
+    product_name,
+    brand,
+    description,
+
+    // Category
+    gender,
+    category,
+
+    // Condition
+    condition,
+    condition_notes,
+
+    // Others
+    drop_off_location,
+    price,
+    modifiedPrice,
+    size,
+    image_src,
+
+    // Status
+    is_approved,
+    is_bought,
+
+    // to be added
+    buyer_ID,
+    review_desc,
+    rating
+  ) {
+    await setDoc(doc(FirestoreDatabase, "products", product_ID), {
+      // Seller & Product
+      seller_ID,
+      product_ID,
+
+      // Product Details
+      product_name,
+      brand,
+      description,
+
+      // Category
+      gender,
+      category,
+
+      // Condition
+      condition,
+      condition_notes,
+
+      // Others
+      drop_off_location,
+      price,
+      modifiedPrice,
+      size,
+      image_src,
+
+      // Status
+      is_approved,
+      is_bought,
+
+      //   to be added
+      buyer_ID,
+      review_desc,
+      rating,
+    });
+  };
+
+  // Update Review and Ratings in (ReviewView)
+  updateRatingAndReview = async function (
     // Seller & Product
     seller_ID,
     product_ID,

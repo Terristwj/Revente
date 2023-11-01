@@ -134,7 +134,7 @@ export const routes = [
         component: () => import("../views/OrderHistory.vue"),
     },
     {
-        path: "/reviewView/:id",
+        path: "/reviewview/",
         name: "Review View",
         component: () => import("../views/ReviewView.vue"),
     },

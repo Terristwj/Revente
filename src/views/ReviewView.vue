@@ -3,6 +3,7 @@ import ReviewItem from "../components/ReviewItem.vue";
 import vue3starRatings from "vue3-star-ratings";
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
+import { faLastfmSquare } from "@fortawesome/free-brands-svg-icons";
 export default {
     components: {
         ReviewItem,
@@ -16,145 +17,85 @@ export default {
 
             //obtain data from review inputs
             review: {
-                rating: 3.5,
-                textinput: "",
+                rating: null,
+                textinput: null,
             },
 
+            // errors
+            noRating: true,
+            noReviewDescription: true,
+
             //item image
-            imageSrc: null,
+            // imageSrc: null,
 
             // Firebase-Related Codes
             isLoading: false,
-            firstError: "",
             isSuccessful: false,
         };
     },
 
     methods: {
-        onFileChange(event) {
-            if (event.target.files.length > 0) {
-                this.imageFile = event.target.files[0];
-                this.imageSrc = URL.createObjectURL(this.imageFile);
-            }
-        },
-
-        //Firebase-Related Codes
-        async submitForm() {
-            // If there are no errors, submit the form
-            await this.doSubmitForm();
-        },
-
-        //Firebase related methods
-        async doSubmitForm() {
-            if (this.isEverythingValid()) {
-                await this.firebaseAddItem();
-            } else {
-                this.showToastError(this.firstError);
-            }
-        },
+        // onFileChange(event) {
+        //     if (event.target.files.length > 0) {
+        //         this.imageFile = event.target.files[0];
+        //         this.imageSrc = URL.createObjectURL(this.imageFile);
+        //     }
+        // },
+        
 
         isEverythingValid() {
-            // Validate form fields
-            this.firstError = "";
-
-            if (!this.imageSrc) {
-                this.firstError = "Please provide an item photo.";
+            if (this.review.rating && this.review.textinput != "") {
+                return true;
+            } else {
                 return false;
             }
-
-            if (!this.review.textinput) {
-                this.review.textinput =
-                    "Please tell us more about the condition.";
-                return false;
-            }
-
-            if (!this.review.rating) {
-                this.firstError = "What is the item's name?";
-                return false;
-            }
-
-            return true;
         },
+        //Firebase-Related Codes
+        submitForm() {
+            // If there are no errors, submit the form
+            if (this.isEverythingValid) {
+                FBInstanceFirestore.getProduct(this.item.product_id).then((data) => {
+                    FBInstanceFirestore.updateRatingAndReview(
+                        // Seller and Product
+                        data.seller_ID,
+                        data.product_ID,
 
-        async firebaseAddItem() {
-            let hasError = false;
+                        // Product Details
+                        data.product_name,
+                        data.brand,
+                        data.description,
 
-            // (1) Add doc into Firestore
-            //dataObject = {deliverydate,imgUrl,brand,size, seller, name, uuid}
-            let rating = this.review.rating;
-            let review = this.review.textinput;
+                        // Category
+                        data.gender,
+                        data.category,
 
-            // (2) Retrieve the product_ID of add_doc
-            const reviewID = await FBInstanceFirestore.createReview(
-                // Seller and Product details
-                userStore.getUserID(),
-                userStore.getOrderedProductID(),
+                        // Condition
+                        data.condition,
+                        data.condition_notes,
 
-                // Review Details
-                rating,
-                review
-            );
+                        // Others
+                        data.drop_off_location,
+                        data.price,
+                        data.modifiedPrice,
+                        data.size,
+                        data.image_src,
+                        // Status
+                        data.is_approved,
+                        data.is_bought,
 
-            // (3) Upload item_image_file into Storage using product_ID
-            // Upload image
-            hasError = await FBInstanceStorage.uploadImage(
-                "reviews",
-                reviewID,
-                this.imageSrc
-            );
+                        // Review Details
+                        data.buyer_ID,
+                        this.review.textinput,
+                        this.review.rating
+                    ).then(data => {
+                        // console.log(data);
+                        this.showToastSuccess();
+                        this.isSuccessful = true;
+                    }) 
 
-            if (hasError) {
-                this.firstError = "Please try again later.";
-            } else {
-                //
-                // (4) Retrieve item_image_src from Storage
-                //
-                const url = await FBInstanceStorage.getImageUrl(
-                    "reviews",
-                    reviewID
-                );
-
-                //
-                // (5) Set doc item_image_src into Firestore
-                //
-                // If there is no URL - Error
-                if (!url) {
-                    this.firstError = "Please try again later.";
-                } else {
-                    // Firebase Update User
-                    let errorCode =
-                        await FBInstanceFirestore.updateProductImageSrc(
-                            // Seller and Product details
-                            userStore.getUserID(),
-                            userStore.getOrderedProductID(),
-
-                            // Review Details
-                            rating,
-                            review,
-
-                            // Image URL (To be Added)
-                            url
-                        );
-                    // console.log(errorCode);
-                    switch (errorCode) {
-                        default:
-                            this.firstError = errorCode;
-                    }
-                }
-                // console.log(url);
+                });
             }
 
-            // Debugging
-            // await FBInstanceStorage.listImages();
-
-            if (this.firstError) {
-                this.showToastError(this.firstError);
-            } else {
-                this.showToastSuccess();
-                this.isSuccessful = true;
-                // Re-render data
-                this.imageSrc = "";
-            }
         },
 
         showToastError(detail) {
@@ -179,8 +120,8 @@ export default {
             this.imageSrc = "";
 
             //reviews
-            this.review.rating = 0;
-            this.review.textinput = 0;
+            this.review.rating = null;
+            this.review.textinput = null;
 
             // Firebase-Related Codes
             this.isSuccessful = false;
@@ -189,6 +130,7 @@ export default {
     created() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
+        // console.log(this.item);
     },
 };
 </script>
@@ -200,7 +142,7 @@ export default {
 
         <!--BELOW IS THE ITEM DETAIL-->
         <div class="container-fluid itemContainer">
-            <ReviewItem :deliverydate="item.deliverydate" :imgUrl="item.imgUrl" :brand="item.brand" :size="item.size"
+            <ReviewItem :imgUrl="item.imgUrl" :brand="item.brand" :size="item.size"
                 :seller="item.seller" :name="item.name" :uuid="item.uuid" />
         </div>
 
@@ -209,8 +151,10 @@ export default {
             <h4>Rating</h4>
             <div>
                 <vue3starRatings v-model="review.rating" :starSize="'32'" starColor="#ff9800" inactiveColor="#333333"
-                    :numberOfStars="5" :disableClick="false" />
+                    :numberOfStars="5" :disableClick="false"/>
+                <p v-if="!review.rating" class="text-danger">Please give a rating!</p>
             </div>
+        
         </div>
 
         <div class="container reviewPortion">
@@ -220,9 +164,11 @@ export default {
 
             <div class="row reviewInput">
                 <textarea v-model="review.textinput" placeholder="add multiple lines"></textarea>
+                <p v-if="!review.textinput" class="text-danger">Please give a description!</p>
             </div>
         </div>
-
+        <!-- remove the image part cus its not rly working -->
+<!-- 
         <div class="container uploadPhoto">
             <h4>Upload Photo <span class="optional"> (Optional) </span></h4>
 
@@ -232,7 +178,7 @@ export default {
                     <input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)" />
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <button class="submit" @click="submitForm()">SUBMIT</button>
     </body>
