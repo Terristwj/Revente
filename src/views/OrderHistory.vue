@@ -29,29 +29,29 @@ export default {
         })
     },
     methods: {
-        getItems(userID) {
-            console.log(userID);
-            FBInstanceFirestore.getProductsBasedOnBuyerID(userID).then((data) => {
-                console.log(data);
-                data.forEach(item => {
-                    var obj = {}
-                    console.log(item.seller_ID);
-                    obj["brand"] = item.brand;
-                    obj["imgUrl"] = item.image_src;
-                    obj["name"] = item.product_name;
-                    obj["size"] = item.size;
-                    obj["seller_name"] = null;
-                    // this.items.push(item)
-                    FBInstanceFirestore.getUser(item.seller_ID).then((data) => {
-                        let sellerName = data.first_name + " " + data.last_name;
-                        console.log(sellerName);
-                        obj["seller_name"] = sellerName;
-                        this.items.push(obj);
-                    })
-                });
-            });
+    async getItems(userID) {
+        console.log(userID);
+        const items = await FBInstanceFirestore.getProductsBasedOnBuyerID(userID);
+
+        await Promise.all(
+        items.map(async (item) => {
+            var obj = {};
+            obj["brand"] = item.brand;
+            obj["imgUrl"] = item.image_src;
+            obj["name"] = item.product_name;
+            obj["size"] = item.size;
+            obj["productID"] = item.productID;
+            obj["seller_name"] = null;
+
+            const userData = await FBInstanceFirestore.getUser(item.seller_ID);
+            let sellerName = userData.first_name + " " + userData.last_name;
+            obj["seller_name"] = sellerName;
+
+            this.items.push(obj);
+            })
+            );
         },
-    }, // methods
+    },
 };
 </script>
 
@@ -61,9 +61,16 @@ export default {
         <h2 class="m-5 mb-4">Order History</h2>
 
         <!--BELOW ARE THE PAST ORDER ITEMS-->
-        <div class="container-fluid">
-            <PastOrders v-for="(item, index) in items" :key="index" :deliverydate="item.deliverydate" :imgUrl="item.imgUrl"
-                :brand="item.brand" :size="item.size" :seller="item.seller_name" :name="item.name" />
+        <div v-for="(order, index) in items" :key="index" class="container-fluid">
+            <PastOrders 
+            :deliverydate="order.deliverydate" 
+            :imgUrl="order.imgUrl"
+            :brand="order.brand" 
+            :size="order.size" 
+            :seller="order.seller_name" 
+            :name="order.name" 
+            :productID="order.productID"
+            />
         </div>
     </body>
 </template>

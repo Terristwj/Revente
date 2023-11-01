@@ -39,6 +39,23 @@ class FirebaseStorage {
         return url;
     };
 
+    // Upload an image for a review
+    uploadReviewImage = async function (reviewID, imageFile) {
+        let hasError = false;
+        // File path in Firebase Storage
+        let pathRef = ref(FirestoreStorage, `reviews/${reviewID}`);
+        try {
+            const snapshot = await uploadBytes(pathRef, imageFile);
+            // Get the download URL of the uploaded image
+            const downloadURL = await getDownloadURL(snapshot.ref);
+            return downloadURL;
+        } catch (error) {
+            console.error(error);
+            hasError = true;
+            return hasError;
+        }
+    };
+
     // For debugging
     listImages = async function () {
         // let pathRef = ref(FirestoreStorage);
