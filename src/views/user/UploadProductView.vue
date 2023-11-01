@@ -286,7 +286,7 @@ export default {
             this.isSuccessful = false;
         },
         toCancel() {
-            router.go(-1);
+            this.$router.push("/profile");
         },
         updateDropOff(loc) {
             this.dropOffLocation = loc;
