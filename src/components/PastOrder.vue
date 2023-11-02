@@ -27,7 +27,11 @@ export default {
         },
         review_desc: {
             type: String,
-            required: false,
+            required: true,
+        },
+        reviewed: {
+            type: Boolean,
+            required: true,
         },
     },
     data() {
@@ -54,17 +58,9 @@ export default {
                 query: { data: JSON.stringify(dataObject) }
             })
         },
-        checkIfReviewed() {
-            if (this.review_desc != null) {
-                document.getElementById("reviewButton").disabled = true;
-            }
-        }
 
 
     },// methods;
-    mounted() {
-        this.checkIfReviewed();
-    },
     // component must be declared before app.mount(...)
 };
 </script>
@@ -89,7 +85,7 @@ export default {
         <div class="col col-sm-4 col-md-3 col-lg-3 col-xxl-3 p-0 wrap">
             <!--this is for the router button-->
             <div class="buttonLoc">
-                <button id="reviewButton" @click="parseDataToReviewPage()" class="reviewButton">
+                <button id="reviewButton" @click="parseDataToReviewPage()" class="reviewButton" :disabled="this.reviewed">
                     Leave a Review
                 </button>
             </div>
