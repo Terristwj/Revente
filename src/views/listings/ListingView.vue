@@ -34,6 +34,7 @@
 				// Products to display
 				allProductListings: [],
 				productListings: [],
+				filteredProductListings: [],
 
 				// Pagination
 				totalProducts: 0,
@@ -85,14 +86,15 @@
 				) {
 					this.resetPagination(this.allProductListings.length);
 					this.productListings = this.allProductListings;
+					this.filteredProductListings = this.allProductListings;
 				}
-
 				// console.log(this.productListings);
 				// else return filtered products
 				for (const product of this.allProductListings) {
 					// gender filter
 					if (
-						product.gender != this.filter.gender &&
+						product.gender.toLowerCase() !=
+							this.filter.gender.toLowerCase() &&
 						this.filter.gender != ''
 					) {
 						continue;
@@ -124,12 +126,9 @@
 						continue;
 					}
 				}
-
 				this.resetPagination(filtered.length);
-				this.productListings = filtered.slice(
-					this.paginationIndex,
-					this.paginationIndex + 12
-				);
+				this.filteredProductListings = filtered;
+				this.productListings = filtered.slice(0, 12);
 			},
 
 			// Pagination
@@ -145,7 +144,7 @@
 				this.paginationPageNumber = e.page;
 
 				// Display the selected 'Pagination index' of products
-				this.productListings = this.allProductListings.slice(
+				this.productListings = this.filteredProductListings.slice(
 					e.first,
 					e.first + e.rows
 				);
@@ -162,7 +161,7 @@
 			resetPagination(count) {
 				// Update both 'Pagination Metadata'
 				this.totalProducts = count;
-				// this.paginationIndex = 0;
+				this.paginationIndex = 0;
 				this.paginationPageNumber = 0;
 			},
 
