@@ -153,24 +153,24 @@ export default {
                                         inactiveColor="#333333" :numberOfStars="5" :disableClick="true" />
                                 </div>
                                 <div class="row">
-                                    <div class="col-xl-3 col-md-4">
+                                    <div class="col-xl-2 col-md-4 p-0">
                                         <img :src="item.image_src" alt="generic profile picture"
                                             class="img-thumbnail mt-4 mb-2" style="width: 75%; z-index: 1" />
                                     </div>
-                                    <div class="col-xl-3 col-md-4 my-auto">
-                                        <p class="fs-4">
+                                    <div class="col-xl-3 col-md-5 my-auto">
+                                        <p class="fs-5">
                                             <strong>Product:</strong>
                                             {{ item.product_name }}
                                         </p>
-                                        <p class="fs-4">
+                                        <p class="fs-5">
                                             <strong>Review:</strong>
                                             {{ item.review_desc }}
                                         </p>
-                                        <p class="fs-4 fw-bold">
+                                        <p class="fs-5 fw-bold">
                                             {{ item.buyer_name }}
                                         </p>
                                     </div>
-                                    <div class="col-xl-6 col-md-4">
+                                    <div class="col-xl-6 col-md-3">
                                         
                                     </div>
                                 </div>
