@@ -345,4 +345,10 @@ export default {
     border-top: none;
     margin-bottom: 5dvh;
 }
+
+@media(max-width: 425px){
+.btn{
+    margin-left:25px;
+}
+}
 </style>
