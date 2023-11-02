@@ -15,6 +15,12 @@
 				required: true,
 			},
 		},
+		mounted() {
+			window.addEventListener('scroll', this.onScroll);
+		},
+		beforeUnmount() {
+			window.removeEventListener('scroll', this.onScroll);
+		},
 		data() {
 			return {
 				// Values to be passed to parent component
@@ -50,6 +56,11 @@
 			};
 		},
 		methods: {
+			// Close brand Multiselect on scroll
+			onScroll() {
+				this.$refs.brandMultiSelect.hide();
+				this.$refs.brandMultiSelect.$el.blur();
+			},
 			// Gender
 			updateGender() {
 				filters.setGender(this.genderPicked);
@@ -225,6 +236,7 @@
 						<li>
 							<div class="input-group mb-3">
 								<MultiSelect
+									ref="brandMultiSelect"
 									class="w-full md:w-20rem"
 									style="z-index: 26"
 									v-model="brandSearchInput"
