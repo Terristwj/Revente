@@ -1,22 +1,25 @@
-import { ref } from "vue";
-import { defineStore } from "pinia";
-import { useLocalStorage } from "@vueuse/core";
+import { defineStore } from 'pinia';
+import { useLocalStorage } from '@vueuse/core';
 
-export const useCurrentRecents = defineStore("currentRecents", () => {
-    const recentsView = useLocalStorage("recentsView", []);
+export const useCurrentRecents = defineStore('currentRecents', () => {
+	const recentsView = useLocalStorage('recentsView', {
+		genderPicked: '',
+		brandsPicked: [],
+		priceRangeSelected: '',
+	});
 
-    function addRecents(uid) {
-        recentsView.value.push(uid);
-    }
-    function getRecents() {
-        return recentsView.value;
-    }
+	function addRecents(uid) {
+		recentsView.value.push(uid);
+	}
+	function getRecents() {
+		return recentsView.value;
+	}
 
-    return {
-        recentsView,
-        addRecents,
-        getRecents,
-    };
+	return {
+		recentsView,
+		addRecents,
+		getRecents,
+	};
 });
 
 /**
