@@ -10,18 +10,23 @@
 				type: Boolean,
 				default: false,
 			},
+			filter: {
+				type: Object,
+				required: true,
+			},
 		},
 		data() {
 			return {
-				// myFilteredBrands: [],
-
 				// Values to be passed to parent component
-				genderPicked: '',
-				brandsPicked: [],
-				priceRangeSelected: '',
+				genderPicked: this.filter.gender,
+				brandsPicked: this.filter.brand,
+				priceRangeSelected: [
+					this.filter.minPrice,
+					this.filter.maxPrice,
+				],
 
 				// inputs
-				brandSearchInput: '',
+				brandSearchInput: this.filter.brand,
 				minPriceInput: '',
 				maxPriceInput: '',
 
@@ -44,46 +49,61 @@
 				isPriceOpen: true,
 			};
 		},
-		watch: {
-			genderPicked() {
+		methods: {
+			// Gender
+			updateGender() {
 				filters.setGender(this.genderPicked);
 				this.$emit('update-filter');
 			},
-			brandsPicked() {
-				filters.setBrands(this.brandsPicked);
-				this.$emit('update-filter');
-			},
-			priceRangeSelected() {
-				if (this.priceRangeSelected == '') {
-					filters.setPriceRange('', '');
-				} else {
-					filters.setPriceRange(
-						this.priceRangeSelected[0],
-						this.priceRangeSelected[1]
-					);
-				}
-				this.$emit('update-filter');
-			},
-		},
-		methods: {
 			clearGender() {
 				this.genderPicked = '';
-				this.$emit('update-filter');
+				this.updateGender();
 			},
-			clearPrice() {
-				this.priceRangeSelected = '';
+			// Brand
+			updateBrand() {
+				this.brandSearchInput = this.brandsPicked;
+				filters.setBrands(this.brandsPicked);
 				this.$emit('update-filter');
 			},
 			removeBrand(e) {
 				this.brandsPicked = this.brandsPicked.filter((b) => b !== e);
+				this.updateBrand();
+			},
+			brandSelection(e) {
+				this.brandsPicked = e.value;
+				this.updateBrand();
+			},
+			// Price
+			updatePrice() {
+				filters.setPriceRange(
+					this.priceRangeSelected[0],
+					this.priceRangeSelected[1]
+				);
 				this.$emit('update-filter');
-				this.brandSearchInput = this.brandsPicked;
+			},
+			clearPrice() {
+				this.priceRangeSelected = ['', ''];
+				this.updatePrice();
+			},
+			searchPrice() {
+				if (this.minPriceInput > this.maxPriceInput) {
+					this.isPriceRangeWrong = true;
+					setTimeout(() => {
+						this.isPriceRangeWrong = false;
+					}, 2000);
+				} else {
+					filters.setPriceRange(
+						this.minPriceInput,
+						this.maxPriceInput
+					);
+					this.$emit('update-filter');
+				}
 			},
 			// Reset
 			clearFilters() {
 				this.genderPicked = '';
 				this.brandsPicked = [];
-				this.priceRangeSelected = '';
+				this.priceRangeSelected = ['', ''];
 				this.brandSearchInput = '';
 				this.minPriceInput = '';
 				this.maxPriceInput = '';
@@ -99,25 +119,6 @@
 			},
 			togglePrice() {
 				this.isPriceOpen = !this.isPriceOpen;
-			},
-
-			// Filter Selections
-			brandSelection(e) {
-				this.brandsPicked = e.value;
-			},
-			searchPrice() {
-				if (this.minPriceInput > this.maxPriceInput) {
-					this.isPriceRangeWrong = true;
-					setTimeout(() => {
-						this.isPriceRangeWrong = false;
-					}, 2000);
-				} else {
-					filters.setPriceRange(
-						this.minPriceInput,
-						this.maxPriceInput
-					);
-					this.$emit('update-filter');
-				}
 			},
 		},
 	};
@@ -151,7 +152,12 @@
 					@click="removeBrand(tag)"
 				></i>
 			</div>
-			<div class="col rounded-pill border m-1" v-if="priceRangeSelected">
+			<div
+				class="col rounded-pill border m-1"
+				v-if="
+					priceRangeSelected[0] != '' || priceRangeSelected[1] != ''
+				"
+			>
 				${{ priceRangeSelected[0] }} - ${{ priceRangeSelected[1] }}
 				<i class="fa-regular fa-circle-xmark" @click="clearPrice"></i>
 			</div>
@@ -185,6 +191,7 @@
 									type="radio"
 									:value="gender"
 									:id="gender + isMobile"
+									@change="updateGender"
 								/>
 								<label
 									class="form-check-label caps"
@@ -278,6 +285,7 @@
 								type="radio"
 								:id="key + isMobile"
 								:value="priceRange"
+								@change="updatePrice"
 							/>
 							<label
 								class="form-check-label"

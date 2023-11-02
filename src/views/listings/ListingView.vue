@@ -10,9 +10,15 @@
 		},
 		mounted() {
 			this.updateFilter();
+			this.windowWidth = window.innerWidth;
+			window.addEventListener('resize', this.onResize);
+		},
+		beforeUnmount() {
+			window.removeEventListener('resize', this.onResize);
 		},
 		data() {
 			return {
+				windowWidth: 0,
 				// Left Filter Menu
 				visibleLeft: false,
 
@@ -40,6 +46,9 @@
 			};
 		},
 		computed: {
+			isLargeScreen() {
+				return this.windowWidth >= 992; // Bootstrap's large screen breakpoint
+			},
 			filteredProducts() {
 				var filtered = [];
 
@@ -99,6 +108,9 @@
 			},
 		},
 		methods: {
+			onResize() {
+				this.windowWidth = window.innerWidth;
+			},
 			updateFilter() {
 				this.filter = filters.getFilter();
 			},
@@ -215,9 +227,11 @@
 				<!-- Sticky sidebar for large screens START -->
 				<div class="col-lg-3 col-xl-2 d-none d-lg-block">
 					<SideMenuBar
+						v-if="isLargeScreen"
 						class="sticky-top"
 						:brands="brands"
 						:isMobile="true"
+						:filter="filter"
 						@update-filter="updateFilter"
 						@clear-filters="clearFilters"
 					/>
@@ -230,7 +244,9 @@
 					class="d-block d-lg-none"
 				>
 					<SideMenuBar
+						v-if="!isLargeScreen"
 						:brands="brands"
+						:filter="filter"
 						@update-filter="updateFilter"
 						@clear-filters="clearFilters"
 					/>
