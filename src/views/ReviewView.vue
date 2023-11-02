@@ -4,6 +4,7 @@ import vue3starRatings from "vue3-star-ratings";
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import FBInstanceStorage from "../services/Firebase/FirebaseStorage.js";
 import { faLastfmSquare } from "@fortawesome/free-brands-svg-icons";
+import router from "../router/router.js";
 export default {
     components: {
         ReviewItem,
@@ -41,8 +42,14 @@ export default {
         //         this.imageSrc = URL.createObjectURL(this.imageFile);
         //     }
         // },
-        
-
+        goToListing() {
+            // console.log("working");
+            router.push("/listings");
+        },
+        goToOrderHistory() {
+            // console.log("working");
+            router.push("/orderHistory");
+        },
         isEverythingValid() {
             if (this.review.rating && this.review.textinput != "") {
                 return true;
@@ -91,7 +98,7 @@ export default {
                         // console.log(data);
                         this.showToastSuccess();
                         this.isSuccessful = true;
-                    }) 
+                    })
 
                 });
             }
@@ -142,8 +149,8 @@ export default {
 
         <!--BELOW IS THE ITEM DETAIL-->
         <div class="container-fluid itemContainer">
-            <ReviewItem :imgUrl="item.imgUrl" :brand="item.brand" :size="item.size"
-                :seller="item.seller" :name="item.name" :uuid="item.uuid" />
+            <ReviewItem :imgUrl="item.imgUrl" :brand="item.brand" :size="item.size" :seller="item.seller" :name="item.name"
+                :uuid="item.uuid" />
         </div>
 
         <!--BELOW IS THE REVIEWING PORTION-->
@@ -151,10 +158,10 @@ export default {
             <h4>Rating</h4>
             <div>
                 <vue3starRatings v-model="review.rating" :starSize="'32'" starColor="#ff9800" inactiveColor="#333333"
-                    :numberOfStars="5" :disableClick="false"/>
+                    :numberOfStars="5" :disableClick="false" />
                 <p v-if="!review.rating" class="text-danger">Please give a rating!</p>
             </div>
-        
+
         </div>
 
         <div class="container reviewPortion">
@@ -168,7 +175,7 @@ export default {
             </div>
         </div>
         <!-- remove the image part cus its not rly working -->
-<!-- 
+        <!-- 
         <div class="container uploadPhoto">
             <h4>Upload Photo <span class="optional"> (Optional) </span></h4>
 
@@ -188,14 +195,28 @@ export default {
         :breakpoints="{ '960px': '75vw', '641px': '100vw' }" modal :closable="false">
         <template #header>
             <h5>
-                <span class="bg-black text-white py-1 px-2 fw-bold">Your Review for {{ item.name }}</span>
-                &nbsp;is successfully uploaded!
+                <span class="bg-black text-white py-1 px-2 fw-bold">Your Review for {{ item.name }} is Successful!</span>
             </h5>
-
-            <div>
-                <button @click="$router.push('/')">Back to Homepage</button>
+        </template>
+        <template #default>
+            <h4 class="text-black fw-bold">Thanks for your review</h4>
+            <p>
+                Thank you for sharing your valuable review with us! We appreciate your time and input.
+            </p>
+            <p>
+                View more listings or check your order history to see your review.
+            </p>
+            <div class="row d-flex justify-content-center gap-2 mt-4 w-100 mx-auto">
+                <button class="col-12 col-sm btn btn-dark py-2" style="max-width: 400px" @click="goToOrderHistory()">
+                    Back to Order History
+                </button>
+                <button class="col-12 col-sm btn btn-dark py-2" style="max-width: 400px" @click="goToListing()">
+                    Back to Listings
+                </button>
             </div>
         </template>
+
+
     </Dialog>
 </template>
 
