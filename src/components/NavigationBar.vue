@@ -86,6 +86,14 @@ export default {
                         this.activeProfile = false;
                     },
                 },
+                {
+                    label: "Order History",
+                    icon: "pi pi-shopping-cart",
+                    command: () => {
+                        router.push("/orderhistory");
+                        this.activeProfile = false;
+                    },
+                }
             ],
             activeAbout: false,
             aboutItems: [
