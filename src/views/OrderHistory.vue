@@ -43,7 +43,7 @@ export default {
                     obj["seller_name"] = null;
                     obj["product_id"] = item.product_ID;
                     obj["review_desc"] = item.review_desc;
-                    if (item.review_desc != null) {
+                    if (item.review_desc != '') {
                         obj["reviewed"] = true;
                     } else {
                         obj["reviewed"] = false;
