@@ -65,24 +65,26 @@ export default {
                     this.userID
                 ).then((data) => {
                     data.forEach((item) => {
-                        let obj = {};
-                        obj["product_name"] = item.product_name;
-                        obj["brand"] = item.brand;
-                        obj["image_src"] = item.image_src;
-                        obj["buyer_name"] = null;
-                        obj["review_desc"] = item.review_desc;
-                        this.total_rating += item.rating;
-                        obj["rating"] = item.rating;
-                        FBInstanceFirestore.getUser(item.buyer_ID).then(
-                            (data) => {
-                                let buyerName =
-                                    data.first_name + " " + data.last_name;
-                                obj["buyer_name"] = buyerName;
-                                this.reviews.push(obj);
-                                this.rating =
-                                    this.total_rating / this.reviews.length;
-                            }
-                        );
+                        if (item.review_desc != null) {
+                            let obj = {};
+                            obj["product_name"] = item.product_name;
+                            obj["brand"] = item.brand;
+                            obj["image_src"] = item.image_src;
+                            obj["buyer_name"] = null;
+                            obj["review_desc"] = item.review_desc;
+                            this.total_rating += item.rating;
+                            obj["rating"] = item.rating;
+                            FBInstanceFirestore.getUser(item.buyer_ID).then(
+                                (data) => {
+                                    let buyerName =
+                                        data.first_name + " " + data.last_name;
+                                    obj["buyer_name"] = buyerName;
+                                    this.reviews.push(obj);
+                                    this.rating =
+                                        this.total_rating / this.reviews.length;
+                                }
+                            );
+                        }
                     });
                 });
             }
@@ -98,24 +100,14 @@ export default {
             <div class="container-fluid py-2">
                 <div class="row">
                     <div class="col-xl-2 col-md-4 col-xs-6">
-                        <img
-                            :src="image_src"
-                            alt="generic profile picture"
-                            class="img-thumbnail mt-4 mb-2"
-                            style="width: 200px; z-index: 1"
-                        />
+                        <img :src="image_src" alt="generic profile picture" class="img-thumbnail mt-4 mb-2"
+                            style="width: 200px; z-index: 1" />
                     </div>
                     <div class="col-xl-10 col-md-8 col-xs-6">
                         <h1 class="display-5 fw-bold py-2">{{ username }}</h1>
                         Rating:
-                        <vue3starRatings
-                            v-model="this.rating"
-                            :starSize="'20'"
-                            starColor="#ff9800"
-                            inactiveColor="#333333"
-                            :numberOfStars="5"
-                            :disableClick="true"
-                        />
+                        <vue3starRatings v-model="this.rating" :starSize="'20'" starColor="#ff9800" inactiveColor="#333333"
+                            :numberOfStars="5" :disableClick="true" />
                         <p class="col-md-12 fs-4 pt-2">
                             Description: {{ description }}
                         </p>
@@ -124,18 +116,14 @@ export default {
 
                 <!-- Listings -->
                 <div class="container-fluid" v-if="littleListing">
-                    <div
-                        class="row listings shadow-sm p-3 mb-5 bg-white rounded"
-                    >
+                    <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Current Listings</h2>
                         <!-- add in using v-for -->
                         <SmallCarouselRecents :products="items" />
                     </div>
                 </div>
                 <div class="container-fluid" v-if="haveListing">
-                    <div
-                        class="row listings shadow-sm p-3 mb-5 bg-white rounded"
-                    >
+                    <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Current Listings</h2>
                         <!-- add in using v-for -->
                         <SmallCarouselMainPage :products="items" />
@@ -143,9 +131,7 @@ export default {
                 </div>
 
                 <div class="container-fluid" v-if="noListings">
-                    <div
-                        class="row listings shadow-sm p-3 mb-5 bg-white rounded"
-                    >
+                    <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Current Listings</h2>
                         <!-- add in using v-for -->
                         <p class="lead text-center">No items listed</p>
@@ -153,25 +139,14 @@ export default {
                 </div>
                 <!-- Reviews -->
                 <div class="container-fluid">
-                    <div
-                        class="row reviews shadow-sm p-3 mb-5 bg-white rounded"
-                    >
+                    <div class="row reviews shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Reviews</h2>
                         <!-- add in using v-for -->
-                        <div
-                            v-for="item in this.reviews"
-                            class="shadow-sm p-3 mb-5 bg-white rounded"
-                        >
+                        <div v-for="item in this.reviews" class="shadow-sm p-3 mb-5 bg-white rounded">
                             <div class="row">
                                 <div class="col">
-                                    <vue3starRatings
-                                        v-model="item.rating"
-                                        :starSize="'15'"
-                                        starColor="#ff9800"
-                                        inactiveColor="#333333"
-                                        :numberOfStars="5"
-                                        :disableClick="true"
-                                    />
+                                    <vue3starRatings v-model="item.rating" :starSize="'15'" starColor="#ff9800"
+                                        inactiveColor="#333333" :numberOfStars="5" :disableClick="true" />
                                 </div>
                                 <div class="row">
                                     <div class="col">
