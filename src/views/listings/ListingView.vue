@@ -166,7 +166,6 @@
 						continue;
 					}
 				}
-				console.log(filtered.length);
 				this.resetPagination(filtered.length);
 				this.filteredListings = filtered;
 				this.productListings = this.filteredListings.slice(0, 12);
