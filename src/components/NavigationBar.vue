@@ -46,7 +46,6 @@ export default {
                 // WIP
                 "Review View",
                 "Success",
-                "Order History",
             ],
             routesExcludedLoggedOut: [
                 "Profile",
