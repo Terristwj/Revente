@@ -1,10 +1,6 @@
 <script>
 export default {
     props: {
-        deliverydate: {
-            type: String,
-            required: true
-        },
         imgUrl: {
             type: String,
             required: true,
@@ -40,13 +36,6 @@ export default {
         }
     }, // methods;
     
-    watch: {
-
-    },
-
-    computed: {
-
-    }
     // component must be declared before app.mount(...)
 };
 </script>
@@ -60,7 +49,7 @@ export default {
                 <img :src="imgUrl" :alt="name" class="itemImg"/>
             </div>
             <div class="col col-auto justify-content-center px-4">
-                <p class="deliveryDate">DELIVERED ON {{deliverydate}}</p>
+                <p class="deliveryDate">DELIVERED</p>
                 <p class="itemName">{{name}}</p>
                 <p class="brandName">{{brand}}</p>
                 <p class="size">Size: {{size}}</p>

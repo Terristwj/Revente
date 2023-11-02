@@ -41,6 +41,7 @@
 
 <script>
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
+import router from "../router/router.js";
 
 export default {
     data() {
@@ -51,8 +52,8 @@ export default {
     },
     methods: {
         goToListing() {
-            console.log("working");
-            this.$router.push({ name: "Listing" });
+            // console.log("working");
+            router.push("/listings");
         },
         getProductIds() {
             let url = new URL(window.location);

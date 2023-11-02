@@ -1,10 +1,6 @@
 <script>
 export default {
     props: {
-        deliverydate: {
-            type: String,
-            required: true
-        },
         imgUrl: {
             type: String,
             required: true,
@@ -25,39 +21,46 @@ export default {
             type: String,
             required: true,
         },
-
+        product_id: {
+            type: String,
+            required: true,
+        },
+        review_desc: {
+            type: String,
+            required: true,
+        },
+        reviewed: {
+            type: Boolean,
+            required: true,
+        },
     },
-    events: [],
     data() {
         return {
             // key: value
-            uuid: crypto.randomUUID()
         };
     }, // data
-    
+
     methods: {
         parseDataToReviewPage() {
             // validate inputs
             // console.log(this.deliverydate)
             let dataObject = {
-                deliverydate: this.deliverydate,
                 imgUrl: this.imgUrl,
                 brand: this.brand,
                 size: this.size,
                 seller: this.seller,
                 name: this.name,
-                uuid: this.uuid
+                product_id: this.product_id,
             }
 
             this.$router.push({
-                path: `reviewview/${this.uuid}`,
-                query: {data: JSON.stringify(dataObject)}
+                path: `reviewview/`,
+                query: { data: JSON.stringify(dataObject) }
             })
-        }
-            
-        
-    }, // methods;
-    
+        },
+
+
+    },// methods;
     // component must be declared before app.mount(...)
 };
 </script>
@@ -68,25 +71,22 @@ export default {
 
         <div class="col col-sm-8 col-md-9 col-lg-9 col-xxl-9">
             <div class="col col-auto justify-content-center">
-                <img :src="imgUrl" :alt="name" class="itemImg"/>
+                <img :src="imgUrl" :alt="name" class="itemImg" />
             </div>
             <div class="col col-auto justify-content-center px-4">
-                <p class="deliveryDate">DELIVERED ON {{deliverydate}}</p>
-                <p class="itemName">{{name}}</p>
-                <p class="brandName">{{brand}}</p>
-                <p class="size">Size: {{size}}</p>
-                <p>Seller: <a href="#" class="sellerLink">{{seller}}</a></p>
+                <p class="deliveryDate">DELIVERED</p>
+                <p class="itemName">{{ name }}</p>
+                <p class="brandName">{{ brand }}</p>
+                <p class="size">Size: {{ size }}</p>
+                <p>Seller: <a href="#" class="sellerLink">{{ seller }}</a></p>
             </div>
         </div>
 
         <div class="col col-sm-4 col-md-3 col-lg-3 col-xxl-3 p-0 wrap">
             <!--this is for the router button-->
             <div class="buttonLoc">
-                <button 
-                @click="parseDataToReviewPage()"                 
-                class="reviewButton"
-                >
-                Leave a Review
+                <button id="reviewButton" @click="parseDataToReviewPage()" class="reviewButton" :disabled="this.reviewed">
+                    Leave a Review
                 </button>
             </div>
         </div>
@@ -144,11 +144,10 @@ p {
     background-color: white;
     padding: 8px;
     padding-left: 20px;
-    padding-right: 20px; 
+    padding-right: 20px;
     border-radius: 5px;
     border: 0.5px solid black;
     font-family: 'inter-light';
     margin-right: 10px;
 }
-
 </style>

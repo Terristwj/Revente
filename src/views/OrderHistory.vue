@@ -30,23 +30,29 @@ export default {
     },
     methods: {
         getItems(userID) {
-            console.log(userID);
+            // console.log(userID);
             FBInstanceFirestore.getProductsBasedOnBuyerID(userID).then((data) => {
-                console.log(data);
+                // console.log(data);
                 data.forEach(item => {
                     var obj = {}
-                    console.log(item.seller_ID);
+                    // console.log(item.seller_ID);
                     obj["brand"] = item.brand;
                     obj["imgUrl"] = item.image_src;
                     obj["name"] = item.product_name;
                     obj["size"] = item.size;
                     obj["seller_name"] = null;
-                    // this.items.push(item)
+                    obj["product_id"] = item.product_ID;
+                    obj["review_desc"] = item.review_desc;
+                    if (item.review_desc != null) {
+                        obj["reviewed"] = true;
+                    } else {
+                        obj["reviewed"] = false;
+                    }
                     FBInstanceFirestore.getUser(item.seller_ID).then((data) => {
                         let sellerName = data.first_name + " " + data.last_name;
-                        console.log(sellerName);
                         obj["seller_name"] = sellerName;
                         this.items.push(obj);
+                        console.log(this.items);
                     })
                 });
             });
@@ -62,8 +68,8 @@ export default {
 
         <!--BELOW ARE THE PAST ORDER ITEMS-->
         <div class="container-fluid">
-            <PastOrders v-for="(item, index) in items" :key="index" :deliverydate="item.deliverydate" :imgUrl="item.imgUrl"
-                :brand="item.brand" :size="item.size" :seller="item.seller_name" :name="item.name" />
+            <PastOrders v-for="(item, index) in items" :key="index" :imgUrl="item.imgUrl"
+                :brand="item.brand" :size="item.size" :seller="item.seller_name" :name="item.name" :product_id="item.product_id" :review_desc="item.review_desc" :reviewed="item.reviewed"/>
         </div>
     </body>
 </template>
