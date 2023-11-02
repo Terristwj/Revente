@@ -67,28 +67,28 @@ export default {
 
 
 <template>
-    <div class="row p-5">
-
-        <div class="col col-sm-8 col-md-9 col-lg-9 col-xxl-9">
-            <div class="col col-auto justify-content-center">
-                <img :src="imgUrl" :alt="name" class="itemImg" />
-            </div>
-            <div class="col col-auto justify-content-center px-4">
-                <p class="deliveryDate">DELIVERED</p>
-                <p class="itemName">{{ name }}</p>
-                <p class="brandName">{{ brand }}</p>
-                <p class="size">Size: {{ size }}</p>
-                <p>Seller: <a href="#" class="sellerLink">{{ seller }}</a></p>
-            </div>
+    <div class="row mb-5">
+        <div class="col-md-2 col-xl-3 ">
+            
         </div>
-
-        <div class="col col-sm-4 col-md-3 col-lg-3 col-xxl-3 p-0 wrap">
-            <!--this is for the router button-->
+        <div class="col-xl-3 col-md-4">
+            <img :src="imgUrl" alt="generic profile picture" class="img-thumbnail mt-4 mb-2"
+                style="width: 75%; z-index: 1" />
+        </div>
+        <div class="col-xl-3 col-md-4">
+            <p class="deliveryDate">DELIVERED</p>
+            <p class="itemName">{{ name }}</p>
+            <p class="brandName">{{ brand }}</p>
+            <p class="size">Size: {{ size }}</p>
+            <p>Seller: <a href="#" class="sellerLink">{{ seller }}</a></p>
             <div class="buttonLoc">
                 <button id="reviewButton" @click="parseDataToReviewPage()" class="reviewButton" :disabled="this.reviewed">
                     Leave a Review
                 </button>
             </div>
+        </div>
+        <div class="col-md-2 col-xl-3 ">
+            
         </div>
     </div>
 </template>
@@ -132,13 +132,13 @@ p {
     font-family: 'inter-regular';
 }
 
-.buttonLoc {
+/* .buttonLoc {
     display: flex;
     white-space: nowrap;
     align-items: start;
     width: 100%;
     height: 100%;
-}
+} */
 
 .reviewButton {
     background-color: white;

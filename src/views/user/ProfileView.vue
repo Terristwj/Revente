@@ -170,7 +170,7 @@ export default {
                                             {{ item.buyer_name }}
                                         </p>
                                     </div>
-                                    <div class="col-xl-7 col-md-4">
+                                    <div class="col-xl-6 col-md-4">
                                         
                                     </div>
                                 </div>
