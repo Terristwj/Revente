@@ -43,7 +43,7 @@ export default {
                     obj["seller_name"] = null;
                     obj["product_id"] = item.product_ID;
                     obj["review_desc"] = item.review_desc;
-                    if (item.review_desc != null) {
+                    if (item.review_desc != '') {
                         obj["reviewed"] = true;
                     } else {
                         obj["reviewed"] = false;
@@ -62,16 +62,16 @@ export default {
 </script>
 
 <template>
-    <body>
+
         <!--BELOW IS THE HEADER-->
-        <h2 class="m-5 mb-4">Order History</h2>
+        <h2 class="m-5 text-center">Order History</h2>
 
         <!--BELOW ARE THE PAST ORDER ITEMS-->
         <div class="container-fluid">
             <PastOrders v-for="(item, index) in items" :key="index" :imgUrl="item.imgUrl"
                 :brand="item.brand" :size="item.size" :seller="item.seller_name" :name="item.name" :product_id="item.product_id" :review_desc="item.review_desc" :reviewed="item.reviewed"/>
         </div>
-    </body>
+
 </template>
 
 <style scoped>
@@ -83,4 +83,5 @@ h2 {
     font-family: "inter-bold";
     color: black;
 }
+
 </style>

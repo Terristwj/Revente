@@ -8,8 +8,11 @@
                         Thanks for making a purchase with us! We hope you enjoy
                         your new item(s).
                     </p>
-                    <button type="button" class="btn btn-dark mt-4" @click="goToListing()">
+                    <button type="button" class="btn btn-dark mt-4 mx-4" @click="goToListing()">
                         Back To Listings
+                    </button>
+                    <button type="button" class="btn btn-dark mt-4 mx-4" @click="goToOrderHistory()">
+                        Leave a Review!
                     </button>
                 </template>
             </Card>
@@ -41,6 +44,7 @@
 
 <script>
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
+import router from "../router/router.js";
 
 export default {
     data() {
@@ -51,8 +55,12 @@ export default {
     },
     methods: {
         goToListing() {
-            console.log("working");
-            this.$router.push({ name: "Listing" });
+            // console.log("working");
+            router.push("/listings");
+        },
+        goToOrderHistory() {
+            // console.log("working");
+            router.push("/orderHistory");
         },
         getProductIds() {
             let url = new URL(window.location);

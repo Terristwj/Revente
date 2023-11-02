@@ -19,6 +19,7 @@ export default {
             username: "",
             items: [],
             reviews: [],
+            profilerating: 0,
         };
     },
     computed: {
@@ -31,6 +32,7 @@ export default {
         noListings() {
             return this.items.length == 0;
         },
+
     },
     components: {
         // ItemCard,
@@ -82,8 +84,10 @@ export default {
                                     this.reviews.push(obj);
                                     this.rating =
                                         this.total_rating / this.reviews.length;
+
                                 }
                             );
+
                         }
                     });
                 });
@@ -142,23 +146,32 @@ export default {
                     <div class="row reviews shadow-sm p-3 mb-5 bg-white rounded">
                         <h2 class="text-center">Reviews</h2>
                         <!-- add in using v-for -->
-                        <div v-for="item in this.reviews" class="shadow-sm p-3 mb-5 bg-white rounded">
+                        <div v-for="item in this.reviews" :key="item" class="shadow-sm p-3 mb-5 bg-white rounded">
                             <div class="row">
                                 <div class="col">
-                                    <vue3starRatings v-model="item.rating" :starSize="'15'" starColor="#ff9800"
+                                    <vue3starRatings v-model="item.rating" :starSize="'30'" starColor="#ff9800"
                                         inactiveColor="#333333" :numberOfStars="5" :disableClick="true" />
                                 </div>
                                 <div class="row">
-                                    <div class="col">
-                                        <p class="lead">
+                                    <div class="col-xl-3 col-md-4">
+                                        <img :src="item.image_src" alt="generic profile picture"
+                                            class="img-thumbnail mt-4 mb-2" style="width: 75%; z-index: 1" />
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 my-auto">
+                                        <p class="fs-4">
+                                            <strong>Product:</strong>
                                             {{ item.product_name }}
                                         </p>
-                                        <p class="lead">
+                                        <p class="fs-4">
+                                            <strong>Review:</strong>
                                             {{ item.review_desc }}
                                         </p>
-                                        <p class="lead fw-bold">
+                                        <p class="fs-4 fw-bold">
                                             {{ item.buyer_name }}
                                         </p>
+                                    </div>
+                                    <div class="col-xl-6 col-md-4">
+                                        
                                     </div>
                                 </div>
                             </div>
