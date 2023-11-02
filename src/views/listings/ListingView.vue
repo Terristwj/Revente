@@ -8,8 +8,53 @@
 			SideMenuBar,
 			ItemCard,
 		},
+		created() {
+			document.body.scrollTop = 0;
+			document.documentElement.scrollTop = 0;
+			// Database
+			setTimeout(async () => {
+				// Get total products
+				await FBInstanceFirestore.getAllProductListingsAndCount()
+					.then(({ products, count }) => {
+						// Data from Firebase
+						this.allProductListings = products;
+						this.totalProducts = count;
+
+						// Get all brands
+						for (const key in products) {
+							const brand = products[key].brand;
+							if (!this.brands.includes(brand))
+								this.brands.push(brand);
+						}
+
+						// Data to be displayed onLoad
+						this.productListings = this.allProductListings.slice(
+							0,
+							12
+						);
+
+						// Remove skeleton loader
+						this.isLoading = false;
+						// Update filter
+						this.updateFilter();
+					})
+					.catch((err) => {
+						console.log(err);
+						this.FBQuotaReached = true;
+					});
+
+				if (this.FBQuotaReached) {
+					this.$toast.add({
+						severity: 'error',
+						summary: 'Database Quota Reached',
+						detail: 'Database Quota will reset at SGT 1pm.',
+						life: 15000,
+					});
+				}
+			}, 2000);
+		},
 		mounted() {
-			this.updateFilter();
+			this.filter = filters.getFilter();
 			this.windowWidth = window.innerWidth;
 			window.addEventListener('resize', this.onResize);
 		},
@@ -34,7 +79,7 @@
 				// Products to display
 				allProductListings: [],
 				productListings: [],
-				filteredProductListings: [],
+				filteredListings: [],
 
 				// Pagination
 				totalProducts: 0,
@@ -86,10 +131,8 @@
 				) {
 					this.resetPagination(this.allProductListings.length);
 					this.productListings = this.allProductListings;
-					this.filteredProductListings = this.allProductListings;
+					this.filteredListings = this.allProductListings;
 				}
-				// console.log(this.productListings);
-				// else return filtered products
 				for (const product of this.allProductListings) {
 					// gender filter
 					if (
@@ -111,24 +154,22 @@
 						this.filter.minPrice == '' &&
 						this.filter.maxPrice == ''
 					) {
-						// console.log(1, product);
 						filtered.push(product);
 						continue;
 					} else if (
 						product.modifiedPrice >= this.filter.minPrice &&
 						product.modifiedPrice <= this.filter.maxPrice
 					) {
-						// console.log(21, product);
 						filtered.push(product);
 						continue;
 					} else {
-						// console.log(31, product);
 						continue;
 					}
 				}
+				console.log(filtered.length);
 				this.resetPagination(filtered.length);
-				this.filteredProductListings = filtered;
-				this.productListings = filtered.slice(0, 12);
+				this.filteredListings = filtered;
+				this.productListings = this.filteredListings.slice(0, 12);
 			},
 
 			// Pagination
@@ -144,18 +185,10 @@
 				this.paginationPageNumber = e.page;
 
 				// Display the selected 'Pagination index' of products
-				this.productListings = this.filteredProductListings.slice(
+				this.productListings = this.filteredListings.slice(
 					e.first,
 					e.first + e.rows
 				);
-
-				// // Debugging Codes
-				// console.log(e);
-				// console.log(index);
-				// console.log(this.allProductListings);
-				// console.log(
-				// 	this.allProductListings.slice(e.first, e.first + e.rows)
-				// );
 			},
 
 			resetPagination(count) {
@@ -164,51 +197,6 @@
 				this.paginationIndex = 0;
 				this.paginationPageNumber = 0;
 			},
-
-			// Database
-		},
-		created() {
-			document.body.scrollTop = 0;
-			document.documentElement.scrollTop = 0;
-
-			setTimeout(async () => {
-				// Get total products
-				await FBInstanceFirestore.getAllProductListingsAndCount()
-					.then(({ products, count }) => {
-						// Data from Firebase
-						this.allProductListings = products;
-						this.totalProducts = count;
-
-						// Get all brands
-						for (const key in products) {
-							const brand = products[key].brand;
-							if (!this.brands.includes(brand))
-								this.brands.push(brand);
-						}
-
-						// Data to be displayed onLoad
-						this.productListings = this.allProductListings.slice(
-							0,
-							12
-						);
-
-						// Remove skeleton loader
-						this.isLoading = false;
-					})
-					.catch((err) => {
-						console.log(err);
-						this.FBQuotaReached = true;
-					});
-
-				if (this.FBQuotaReached) {
-					this.$toast.add({
-						severity: 'error',
-						summary: 'Database Quota Reached',
-						detail: 'Database Quota will reset at SGT 1pm.',
-						life: 15000,
-					});
-				}
-			}, 2000);
 		},
 	};
 </script>
