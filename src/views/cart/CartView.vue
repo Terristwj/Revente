@@ -70,8 +70,6 @@ export default {
     methods: {
         getCartDetails() {
             FBInstanceFirestore.getAllProducts().then((data) => {
-                // console.log(data);
-                console.log(shoppingCart.getCart());
                 data.forEach((item) => {
                     if (
                         shoppingCart.getCart().includes(item.product_ID) &&
@@ -81,19 +79,15 @@ export default {
                         for (var prop in item) {
                             if (prop == "product_name") {
                                 obj["name"] = item[prop];
-                                console.log(obj["name"]);
                             }
                             if (prop == "modifiedPrice") {
                                 obj["priceInCents"] = item[prop] * 100;
-                                console.log(obj["priceInCents"]);
                             }
                         }
                         this.changedCart.push(obj);
                         this.cartItems.push(item.product_ID);
                     }
                 });
-                console.log(this.changedCart);
-                console.log(this.cartItems);
             });
         },
         toListing() {
@@ -115,7 +109,6 @@ export default {
             FBInstanceFirestore.getAllProducts()
                 .then((data) => {
                     this.generalSize = [];
-                    console.log(data);
                     for (let i = 0; i < data.length; i++) {
                         if (
                             shoppingCart
@@ -132,7 +125,6 @@ export default {
                                     // Use the data here
                                     data[i].seller_name = name.first_name;
                                     this.cart.push(data[i]);
-                                    console.log(this.cart);
                                 })
                                 .catch((error) => {
                                     // Handle any errors that might occur
@@ -203,7 +195,6 @@ export default {
                     } else {
                         this.category[ind_category] += 1;
                     }
-                    // console.log(this.category);
                     let max = 0;
                     for (const [key, value] of Object.entries(this.category)) {
                         if (value > max) {
