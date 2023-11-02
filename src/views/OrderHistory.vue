@@ -30,12 +30,9 @@ export default {
     },
     methods: {
         getItems(userID) {
-            // console.log(userID);
             FBInstanceFirestore.getProductsBasedOnBuyerID(userID).then((data) => {
-                // console.log(data);
                 data.forEach(item => {
                     var obj = {}
-                    // console.log(item.seller_ID);
                     obj["brand"] = item.brand;
                     obj["imgUrl"] = item.image_src;
                     obj["name"] = item.product_name;
@@ -52,7 +49,6 @@ export default {
                         let sellerName = data.first_name + " " + data.last_name;
                         obj["seller_name"] = sellerName;
                         this.items.push(obj);
-                        console.log(this.items);
                     })
                 });
             });
