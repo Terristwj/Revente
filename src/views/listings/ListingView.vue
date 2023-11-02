@@ -49,7 +49,31 @@
 			isLargeScreen() {
 				return this.windowWidth >= 992; // Bootstrap's large screen breakpoint
 			},
-			filteredProducts() {
+		},
+		methods: {
+			onResize() {
+				this.windowWidth = window.innerWidth;
+			},
+			// Filter
+			updateFilter() {
+				this.filter = filters.getFilter();
+				this.filterProducts();
+			},
+			clearFilters() {
+				this.filter = {
+					gender: '',
+					brand: '',
+					minPrice: '',
+					maxPrice: '',
+				};
+				filters.resetFilters();
+				this.filterProducts();
+			},
+			clearFilterFromListingPage() {
+				this.$refs.sideMenuBarRef.clearFilters();
+				this.clearFilters();
+			},
+			filterProducts() {
 				var filtered = [];
 
 				// Reset Button clicked
@@ -60,7 +84,7 @@
 					this.filter.maxPrice == ''
 				) {
 					this.resetPagination(this.allProductListings.length);
-					return this.productListings;
+					this.productListings = this.allProductListings;
 				}
 
 				// console.log(this.productListings);
@@ -102,26 +126,10 @@
 				}
 
 				this.resetPagination(filtered.length);
-
-				// console.log(filtered);
-				return filtered;
-			},
-		},
-		methods: {
-			onResize() {
-				this.windowWidth = window.innerWidth;
-			},
-			updateFilter() {
-				this.filter = filters.getFilter();
-			},
-			clearFilters() {
-				this.filter = {
-					gender: '',
-					brand: '',
-					minPrice: '',
-					maxPrice: '',
-				};
-				filters.resetFilters();
+				this.productListings = filtered.slice(
+					this.paginationIndex,
+					this.paginationIndex + 12
+				);
 			},
 
 			// Pagination
@@ -142,12 +150,12 @@
 					e.first + e.rows
 				);
 
-				// Debugging Codes
+				// // Debugging Codes
 				// console.log(e);
 				// console.log(index);
 				// console.log(this.allProductListings);
 				// console.log(
-				//     this.allProductListings.slice(e.first, e.first + e.rows)
+				// 	this.allProductListings.slice(e.first, e.first + e.rows)
 				// );
 			},
 
@@ -234,6 +242,7 @@
 						:filter="filter"
 						@update-filter="updateFilter"
 						@clear-filters="clearFilters"
+						ref="sideMenuBarRef"
 					/>
 				</div>
 				<!-- Sticky sidebar for large screens END -->
@@ -249,6 +258,7 @@
 						:filter="filter"
 						@update-filter="updateFilter"
 						@clear-filters="clearFilters"
+						ref="sideMenuBarRef"
 					/>
 				</Sidebar>
 				<!-- Toggle-able sidebar for smaller screen END -->
@@ -353,12 +363,12 @@
 					</Paginator>
 
 					<div
-						v-if="filteredProducts.length == 0"
+						v-if="productListings.length == 0"
 						class="no-item-warning"
 					>
 						<h1>No Items Found</h1>
 						<button
-							@click="clearFilters"
+							@click="clearFilterFromListingPage"
 							class="btn btn-outline-secondary mt-3"
 						>
 							Reset Filter
@@ -368,7 +378,7 @@
 						class="row p-3 border-3 border-top border-bottom border-subtle justify-content-center gap-2 gap-lg-3"
 					>
 						<ItemCard
-							v-for="(product, index) in filteredProducts"
+							v-for="(product, index) in productListings"
 							:key="index"
 							:product="product"
 						/>
