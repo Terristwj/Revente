@@ -4,6 +4,13 @@
 
 [Reventé](https://smu-wad2.web.app) is an online platform that takes inspiration from popular marketplaces like Carousell. We are on a mission to redefine the way people buy and sell used clothing, offering a unique selling proposition that centers around high-quality pre-loved garments. Every item listed on our platform goes through a thorough refurbishment and quality check process conducted by our expert team, ensuring that only exceptional and excellent-condition clothing finds its way to our marketplace.
 
+#### Reventé Deployment Links:
+
+| Frontend Website (Vue/Vite)                         | Backend Server (NodeJS)                                       |
+| --------------------------------------------------- | ------------------------------------------------------------- |
+| [Reventé](https://smu-wad2.web.app)                 | [Stripe & APIs](https://vercel.com/terristwj/revente-backend) |
+| [GitHub Repo](https://github.com/Terristwj/Revente) | [GitHub Repo](https://github.com/Terristwj/Revente-Backend)   |
+
 ## Table of Contents
 
 -   [Getting Started](#getting-started)
