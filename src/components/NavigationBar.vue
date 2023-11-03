@@ -52,6 +52,7 @@ export default {
                 "Settings",
                 "Upload Listing",
                 "Wish List",
+                "Order History",
             ],
             routesExcludedLoggedIn: ["Login"],
             navRoutes: null,

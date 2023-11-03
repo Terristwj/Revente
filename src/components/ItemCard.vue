@@ -13,15 +13,6 @@ export default {
             required: true,
         },
     },
-    created() {
-        // Check if the product is in the wishlist during component creation
-        this.isProductInWishlist = this.checkWishList(this.product.product_ID);
-    },
-    data () {
-        return {
-            isProductInWishlist: false,
-        }
-    },
     // data() {},
     methods: {
         linkToMoreDetails(id) {
@@ -50,10 +41,6 @@ export default {
                 // console.log(wishList.getWishList());
             }
         },
-
-        checkWishList(id) {
-            return wishList.getWishList().includes(id);
-        }
     },
 };
 </script>
@@ -109,7 +96,7 @@ export default {
                 >
                     <font-awesome-icon
                         class="clear-like"
-                        :icon="checkWishList(product.product_ID) ? ['fas', 'heart'] : ['far', 'heart']"
+                        :icon="['far', 'heart']"
                     />
                 </button>
             </div>
