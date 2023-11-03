@@ -61,15 +61,15 @@ export default {
 <template>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-3 ps-0">
+			<div class="col-lg-3 col-sm-4 ps-0">
 				<img :src="imgUrl" :alt="itemName" class="cart-img img-fluid" />
 			</div>
-			<div class="col-9">
+			<div class="col-lg-9 col-sm-8 ">
 				<div class="row">
-					<div class="col-auto">
+					<div class="col-lg-auto">
 						<h6>{{ name }}</h6>
 					</div>
-					<div class="col-3">
+					<div class="col-lg-3">
 						<h6>${{ price }}</h6>
 					</div>
 				</div>
@@ -110,4 +110,13 @@ p {
 .seller-link {
 	color: var(--bs-dark);
 }
+
+@media (max-width: 425px) {
+	.cart-img {
+		width: 300px;
+		height: auto;
+		margin-bottom: 20px;
+	}
+}
+
 </style>

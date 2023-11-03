@@ -46,10 +46,10 @@
                     <form>
                         <h5>We even send weekly updates!</h5>
                         <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                            <label for="newsletter1" class="visually-hidden">Email address</label>
+                            <label for="newsletter1" class="visually-hidden" >Email address</label>
                             <div class="d-flex flex-column w-100">
-                                <input id="newsletter1" type="text" class="form-control mb-2" placeholder="Email address" v-model="email">
-                                <button class="btn btn-dark" type="button" @click="subscribe">SUBSCRIBE</button>
+                                <input id="newsletter1" type="text" class="form-control mb-2 small-label" placeholder="Email address" v-model="email">
+                                <button class="btn btn-dark" type="button" @click="subscribe" id="subscribe">SUBSCRIBE</button>
                                 <Dialog v-model:visible="visible" modal header="Subscription Status" :style="{ width: '50vw' }"  :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
                                     <p>
                                       Thanks for subscribing! Do check your email for a confirmation email and future promotions!
@@ -74,7 +74,7 @@
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary" @click="visible3=true ">Contact Us</a></li>
                         <Dialog v-model:visible="visible3" modal header="Contact Us" :style="{ width: '50vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }" >
                                     <p>
-                                      For any enuiries, you may contact our help desk at revente.admin@gmail.com for more assistance! Our mobile help desk is 24/7 and in any case of emergencies feel free to call +65 9471 9372! 
+                                      For any enquiries, you may contact our help desk at revente.admin@gmail.com for more assistance! Our mobile help desk is 24/7 and in any case of emergencies feel free to call +65 9471 9372! 
                                     </p>
                                 </Dialog>
                         <li class="nav-item mb-2"><router-link to="/faq" class="nav-link p-0 text-body-secondary">FAQ</router-link></li>
@@ -130,5 +130,16 @@ function subscribe() {
 .form-control:focus {
     border-color: #000000;
     box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 375px) {
+   #subscribe {
+       font-size: smaller;
+   }
+
+   .small-label {
+       font-size: 0.65rem;
+   }
+    
 }
 </style>
