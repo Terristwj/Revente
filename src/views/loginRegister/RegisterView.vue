@@ -168,9 +168,12 @@ export default {
 </script>
 
 <template>
-    <video playsinline autoplay muted loop>
-        <source src="../../assets/videos/login.webm" type="video/webm" />
-    </video>
+    <div id="video-bg">
+        <video playsinline autoplay muted loop>
+            <source src="../../assets/videos/login.webm" type="video/webm" />
+        </video>
+    </div>
+
     <div class="background-container">
         <div class="register-container mx-auto">
             <h1 class="text-center login-text fs-1" style="font-size: 30px">
@@ -324,11 +327,13 @@ export default {
     }
 }
 
-video {
+#video-bg {
     position: absolute;
     top: 0;
-    height: 100vh;
+    width: 100%;
     z-index: -1;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* X-Large devices (large desktops, 1200px and up) */
