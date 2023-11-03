@@ -3,6 +3,7 @@ import PastOrders from "../components/PastOrder.vue";
 import FBInstanceFirestore from "../services/Firebase/FirestoreDatabase.js";
 import { userStore } from "../main.js";
 import { watchEffect } from "vue";
+import router from "../router/router.js";
 
 export default {
     // <div id='app'></div>
@@ -29,6 +30,10 @@ export default {
         })
     },
     methods: {
+        goToListing() {
+            // console.log("working");
+            router.push("/listings");
+        },
         getItems(userID) {
             FBInstanceFirestore.getProductsBasedOnBuyerID(userID).then((data) => {
                 data.forEach(item => {
@@ -60,12 +65,31 @@ export default {
 <template>
 
         <!--BELOW IS THE HEADER-->
-        <h2 class="m-5 text-center">Order History</h2>
+        <div class="container">
+            <h1 class="m-5 text-start">Order History</h1>
+        </div>
 
         <!--BELOW ARE THE PAST ORDER ITEMS-->
         <div class="container-fluid">
             <PastOrders v-for="(item, index) in items" :key="index" :imgUrl="item.imgUrl"
                 :brand="item.brand" :size="item.size" :seller="item.seller_name" :name="item.name" :product_id="item.product_id" :review_desc="item.review_desc" :reviewed="item.reviewed"/>
+        </div>
+
+        <!--BELOW ARE THE PAST ORDER ITEMS-->
+        <div v-if="!items.length" class="container noOrders">
+
+                <div class="textPortion m-5 text-start">
+                    <h3>You have not made any orders.</h3>
+                    <p>
+                        Browse through our categories for inspiration and add something
+                        you like.
+                    </p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start my-5">
+                        <button class="btn btn-outline-dark me-md-2 px-md-5 listingButton" type="button" @click="goToListing()">
+                            LISTINGS
+                        </button>
+                    </div>
+                </div>
         </div>
 
 </template>
@@ -77,7 +101,15 @@ p {
 
 h2 {
     font-family: "inter-bold";
-    color: black;
+}
+
+h4 {
+    font-family: "inter-regular";
+    color: rgb(69, 69, 69);
+}
+
+.listingButton {
+    max-width: 400px;
 }
 
 </style>
