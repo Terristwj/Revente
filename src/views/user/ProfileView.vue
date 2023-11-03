@@ -121,14 +121,14 @@ export default {
                 <!-- Listings -->
                 <div class="container-fluid" v-if="littleListing">
                     <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
-                        <h2 class="text-center">Current Listings</h2>
+                        <h2 class="text-center listingHeader">Current Listings</h2>
                         <!-- add in using v-for -->
                         <SmallCarouselRecents :products="items" />
                     </div>
                 </div>
                 <div class="container-fluid" v-if="haveListing">
                     <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
-                        <h2 class="text-center">Current Listings</h2>
+                        <h2 class="text-center listingHeader">Current Listings</h2>
                         <!-- add in using v-for -->
                         <SmallCarouselMainPage :products="items" />
                     </div>
@@ -136,7 +136,7 @@ export default {
 
                 <div class="container-fluid" v-if="noListings">
                     <div class="row listings shadow-sm p-3 mb-5 bg-white rounded">
-                        <h2 class="text-center">Current Listings</h2>
+                        <h2 class="text-center listingHeader">Current Listings</h2>
                         <!-- add in using v-for -->
                         <p class="lead text-center">No items listed</p>
                     </div>
@@ -144,7 +144,7 @@ export default {
                 <!-- Reviews -->
                 <div class="container-fluid">
                     <div class="row reviews shadow-sm p-3 mb-5 bg-white rounded">
-                        <h2 class="text-center">Reviews</h2>
+                        <h2 class="text-center listingHeader">Reviews</h2>
                         <!-- add in using v-for -->
                         <div v-for="item in this.reviews" :key="item" class="shadow-sm p-3 mb-5 bg-white rounded">
                             <div class="row">
@@ -194,4 +194,10 @@ export default {
     align-self: start;
     justify-content: center;
 }
+
+.listingHeader {
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
 </style>
