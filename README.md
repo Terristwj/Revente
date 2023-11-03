@@ -7,15 +7,36 @@
 ## Table of Contents
 
 -   [Getting Started](#getting-started)
+    -   [Prerequisites](#prerequisites)
+        -   [Frontend Repository](#frontend-repository)
+        -   [Backend Repository](#backend-repository)
+        -   [Installation](#installation)
+    -   [What's Next? (User Journeys)](#what-next)
+        -   [First Time Users](#first-time-users)
+        -   [User Buyers](#user-buyers)
+        -   [Buyers Followup](#buyers-followup)
+        -   [User Sellers](#user-sellers)
+        -   [Sellers Followup](#sellers-followup)
+        -   [Admin Account](#admin-account)
 -   [Tech Stack](#tech-stack)
+    -   [Frontend](#frontend-this-repository)
+    -   [Backend (BTL)](#backend-backend-repository-btl)
+    -   [BTL Compilation](#beyond-the-lab-btl-compilation-list)
 -   [Screenshots](#screenshots)
 -   [Acknowledgments](#acknowledgments)
+    -   [References](#references)
+    -   [Team Members](#team-members)
 
 ## Getting Started
 
 ### Prerequisites
 
-Before you get started, make sure you have the following tools and dependencies installed:
+Before you get started, make sure you have everything setup for both frontend and backend.
+
+#### Frontend Repository
+
+The [repository link](https://github.com/Terristwj/Revente) is currently private. Please ask [Terristwj](https://github.com/Terristwj) to allow collaboration.
+Ensure you have the following tools and dependencies installed:
 
 -   Node.js
 -   npm (Node Package Manager)
@@ -30,18 +51,33 @@ Before you get started, make sure you have the following tools and dependencies 
     -   PaLM
     -   Backend URL (Deployed and Local)
 
-### Installation
+#### Backend Repository
+
+The [repository link](https://github.com/Terristwj/Revente-Backend) is currently private. Please ask [Terristwj](https://github.com/Terristwj) to allow collaboration.
+Ensure you have the following tools and dependencies installed:
+
+-   Node.js
+-   npm (Node Package Manager)
+-   Secret Keys (APIs) (.env)
+    -   Stripe
+    -   OpenAI
+    -   PaLM
+
+#### Installation
 
 1. Clone the backend repository
     - Follow the installation steps
     - Run the backend
-2. Clone this repository and install the necessary dependencies:
+2. Clone this frontend repository and install the necessary dependencies:
 
     ```bash
     npm install
     ```
 
-3. Ensure you have your Firebase configuration files (`.env` and `.firebaserc`) added to your project.
+3. In both frontend and backend, ensure you have the `.env` files added into each of the project's root directory.
+
+    - Frontend - `.env`
+    - Backend - `.env`
 
 4. To run the project locally, use the following command:
 
@@ -75,6 +111,36 @@ Before you get started, make sure you have the following tools and dependencies 
     firebase deploy
     ```
 
+### What Next?
+
+After installation and running both frontend and backend projects, you will start in the Homepage. [Our website is also deployed](https://smu-wad2.web.app/). The following are the various user journeys:
+
+#### First time users:
+
+Wanting to learn more about Reventé, users will want to learn more about 'Who we are' by visiting the [About](https://smu-wad2.web.app/about), [Terms & Conditions](https://smu-wad2.web.app/tnc), and [FAQ](https://smu-wad2.web.app/faq).
+
+#### User Buyers:
+
+At Reventé, we sell various recycled clothings. Our buyers do not need to login to make a purchase. Instead, our buyers can directly visit our [Product Listings](https://smu-wad2.web.app/listings), browsing through our extensive product catalogue and filtering any specific tags.
+
+Once buyers have found an item, they can proceed to 'Add to Cart'. From here, they may proceed to [checkout](https://smu-wad2.web.app/cart) and complete the purchasing procedure through making payment with Stripe.
+
+#### Buyers Followup:
+
+Whilst shopping logged in, buyers will be able to view, modify, and gain access to various user-related features. They will be able to view/modify their profile, check their wishlist and purchase history. And make reviews on their purchases.
+
+#### User Sellers:
+
+At Reventé, we buy clothings from our users. [Sellers will have to first login](https://smu-wad2.web.app/login), and proceed on to upload their clothing product for listing. Upon completion, their items will not be immediately listed but instead, they will have to visit our physical warehouse where we will further negotiate the price and buy their item on the day of visit.
+
+#### Sellers Followup:
+
+After making their first business transaction with Reventé, sellers can continue viewing their profile to see what has happened to their sold item. Most importantly, when we have finally sold their item, sellers can view the reviews from other buyers about their items.
+
+#### Admin Account:
+
+To access the admin page, [staff will have to access a secret link](https://smu-wad2.web.app/admin). This page will serve the warehouse team and marketing team. The warehouse team will Approve/Reject items from sellers on the day of their visit. The marketing team will make use of the admin dashboard, to effectively create meaningful monthly reports.
+
 ## Tech Stack
 
 ### Frontend (This Repository)
@@ -86,6 +152,7 @@ Before you get started, make sure you have the following tools and dependencies 
     -   **Animations (BTL)**:
         -   **Anime.js**: A flexible JavaScript animation library.
         -   **vue-responsive-video-background-player**: For responsive video backgrounds.
+        -   **canvas-confetti**: Confetti effect on successful actions.
     -   **Fonts/Icons (BTL)**:
         -   **Font Awesome**: A popular icon library.
         -   **Prime Icons**: Icon library for PrimeVue.
@@ -109,7 +176,7 @@ Before you get started, make sure you have the following tools and dependencies 
     -   **Google Maps**:
         -   Geolocation
         -   Google Address Autocomplete
-    -   **DialogFlow**: FAQ Chatbot
+    -   **DialogFlow (BTL)**: FAQ Chatbot
 
 -   **Firebase**:
 
@@ -122,9 +189,9 @@ Before you get started, make sure you have the following tools and dependencies 
     -   **OpenAI**: Used to assist generating text
     -   **PaLM**: Used as an alternative to OpenAI as backup
 
-### Backend (Backend Repository)
+### Backend (Backend Repository) (BTL)
 
--   **Stripe (BTL)**: Payment service provider
+-   **Stripe**: Payment service provider
 -   **OpenAI**: Used to assist generating text
 -   **PaLM**: Used as an alternative to OpenAI as backup
 -   **Vercel**: Cloud Deployment
@@ -134,6 +201,7 @@ Before you get started, make sure you have the following tools and dependencies 
 -   **Frontend**
     -   PrimeVue & Prime Icons
     -   Anime.js
+    -   Canvas Confetti
     -   Font Awesome
     -   GSAP & Howler
     -   Chart.js
@@ -164,6 +232,8 @@ _FAQ page powered by AI._
 
 ## Acknowledgments
 
+### References
+
 Special thanks to the following resources that helped us along the way:
 
 1. [Vue 3 + Firebase Authentication](https://www.youtube.com/watch?v=xceR7mrrXsA&t=21s)
@@ -174,10 +244,8 @@ Special thanks to the following resources that helped us along the way:
 
 Feel free to add more screenshots and shoutouts to your GitHub profiles, repositories, or any contributors who played a significant role in the project. Good luck with your portfolio piece!
 
--   Our Team:
+### Team Members
 
-    -   [Terristwj](https://github.com/Terristwj)
-    -   [adriank0h](https://github.com/adriank0h)
-    -   [owengohh](https://github.com/owengohh)
-    -   [viqeey](https://github.com/viqeey)
-    -   [0gw0](https://github.com/0gw0)
+| Terris                                    | Owen                                    | Adrian                                    | Viciky                              | Glen                            |
+| ----------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------- | ------------------------------- |
+| [Terristwj](https://github.com/Terristwj) | [owengohh](https://github.com/owengohh) | [adriank0h](https://github.com/adriank0h) | [viqeey](https://github.com/viqeey) | [0gw0](https://github.com/0gw0) |

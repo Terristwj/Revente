@@ -6,7 +6,7 @@ import FBInstanceStorage from "../../services/Firebase/FirebaseStorage.js";
 import BackendOpenAI from "../../services/Backend/OpenAI.js";
 import GoogleMap from "../../components/GoogleMap.vue";
 
-import confetti from "https://esm.run/canvas-confetti@1";
+import confetti from "canvas-confetti";
 
 export default {
     components: {
