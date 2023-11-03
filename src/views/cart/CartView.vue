@@ -188,7 +188,9 @@ export default {
         for (let i = 0; i < recent.length; i++) {
             FBInstanceFirestore.getProduct(recent[i])
                 .then((data) => {
-                    this.recentProducts.push(data);
+                    if(data.is_bought == false){
+                        this.recentProducts.push(data);
+                    }
                     let ind_category = data.category;
                     if (this.category[ind_category] == undefined) {
                         this.category[ind_category] = 1;
