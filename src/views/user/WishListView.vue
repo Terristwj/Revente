@@ -5,6 +5,7 @@ import { shoppingCart } from "../../main.js";
 import SmallCarouselWishList from "../../components/SmallCarouselWishList.vue";
 import router from "../../router/router.js";
 import SmallCarouselRecentsWishList from "../../components/SmallCarouselRecentsWishList.vue";
+import SmallCarousel from "../../components/SmallCarousel.vue";
 
 export default {
     data() {
@@ -100,7 +101,8 @@ export default {
     },
     components: {
         SmallCarouselWishList,
-        SmallCarouselRecentsWishList
+        SmallCarouselRecentsWishList,
+        SmallCarousel
     },
     mounted() {
         // When enter from About page - START
@@ -211,7 +213,7 @@ export default {
 
         <div class="section" v-if="showReccoCarousel">
             <h3>Recommended For You</h3>
-            <SmallCarouselWishList :products="recomendedProducts" />
+            <SmallCarousel :products="recomendedProducts" />
         </div>
 
 
