@@ -42,9 +42,8 @@ export default {
         },
         addWishList(id) {
             if (wishList.getWishList().includes(id)) {
-                alert(
-                    "Item already added to wishlist, please check your wishlist"
-                );
+                wishList.removeWish(id);
+                this.isProductInWishlist = false;
             } else {
                 wishList.addWish(id);
                 // console.log(wishList.getWishList());
