@@ -1,17 +1,21 @@
 <template>
     <div class="container-fluid footer">
         <footer class="py-4">
-
             <!-- Logo -->
             <div class="row mb-3">
                 <div class="col-lg-5 col-md-4 col-sm-3 col-12">
-                    <hr>
+                    <hr />
                 </div>
                 <div class="col-lg-2 text-center col-md-4 col-sm-6 col-12">
-                    <img alt="Reventé logo" src="@/assets/logo.svg" width="125" height="35">
+                    <img
+                        alt="Reventé logo"
+                        src="@/assets/logo.svg"
+                        width="125"
+                        height="35"
+                    />
                 </div>
                 <div class="col-lg-5 col-md-4 col-sm-3 col-12">
-                    <hr>
+                    <hr />
                 </div>
             </div>
 
@@ -37,7 +41,10 @@
 
             <!-- Content -->
             <div class="row justify-content-around">
-                <div class="col-4 col-md-2 mb-3 text-center">
+                <!-- Content 1 -->
+                <div
+                    class="col-12 col-sm-4 col-md-2 mb-3 text-center order-2 order-sm-1"
+                >
                     <h5>About Us</h5>
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><router-link to="/about" class="nav-link p-0 text-body-secondary">Our
@@ -49,7 +56,11 @@
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Reviews</a></li>
                     </ul>
                 </div>
-                <div class="col-md-5 mb-3 col-4 text-center">
+
+                <!-- Content 2 -->
+                <div
+                    class="col-12 col-sm-4 col-md-5 mb-3 text-center order-1 order-sm-2"
+                >
                     <form>
                         <h5>We even send weekly updates!</h5>
                         <div class="d-flex flex-column flex-sm-row w-100 gap-2">
@@ -79,7 +90,10 @@
                     </form>
                 </div>
 
-                <div class="col-4 col-md-2 mb-3 text-center">
+                <!-- Content 3 -->
+                <div
+                    class="col-12 col-sm-4 col-md-2 mb-3 text-center order-3 order-sm-3"
+                >
                     <h5>Customer Care</h5>
                     <ul class="nav flex-column">
 
@@ -104,9 +118,12 @@
             </div>
 
             <!-- Bottom -->
-            <div class="d-flex flex-column flex-sm-row justify-content-between py-2 border-top">
-                <p class="lead mx-auto mb-0">© 2023 Reventé, Inc. All rights reserved.</p>
-
+            <div
+                class="d-flex flex-column flex-sm-row justify-content-between py-2 border-top"
+            >
+                <p class="lead mx-auto mb-0">
+                    © 2023 Reventé, Inc. All rights reserved.
+                </p>
             </div>
         </footer>
     </div>
@@ -114,12 +131,12 @@
 
 <script setup>
 import { ref } from "vue";
-import Dialog from 'primevue/dialog';
+import Dialog from "primevue/dialog";
 
 const visible = ref(false);
 const visible1 = ref(false);
 const visible3 = ref(false);
-const email = ref('');
+const email = ref("");
 
 function isValidEmail(email) {
     // Regular expression for email validation
