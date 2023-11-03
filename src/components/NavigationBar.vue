@@ -92,7 +92,7 @@ export default {
                         router.push("/orderhistory");
                         this.activeProfile = false;
                     },
-                }
+                },
             ],
             activeAbout: false,
             aboutItems: [
@@ -344,6 +344,7 @@ export default {
                         <div v-else-if="route.name == 'Settings'"></div>
                         <div v-else-if="route.name == 'Upload Listing'"></div>
                         <div v-else-if="route.name == 'Wish List'"></div>
+                        <div v-else-if="route.name == 'Order History'"></div>
                         <!-- Profile Routes END -->
 
                         <!-- Default Routes START -->
