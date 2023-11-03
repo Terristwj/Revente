@@ -1,12 +1,18 @@
 <script>
 
-import { wishList,shoppingCart } from "../main.js";
+import { wishList, shoppingCart } from "../main.js";
+
 export default {
 	data() {
 		return {
 			temp: [],
+			isProductInWishlist: false,
 		};
 	},
+	created() {
+        // Check if the product is in the wishlist during component creation
+        this.isProductInWishlist = this.checkWishList(this.itemID);
+    },
 	props: {
 		imgUrl: {
 			type: String,
@@ -42,6 +48,7 @@ export default {
 		remove(id) {
 			shoppingCart.removeCart(id);	
 		},
+
 		addWishList(id) {
             if (wishList.getWishList().includes(id)) {
                 alert("Item already added to wishlist, please check your wishlist");
@@ -51,6 +58,15 @@ export default {
                 // console.log(wishList.getWishList());
             }
 
+        },
+
+		removeWishList(id) {
+			wishList.removeWish(id);
+			this.isProductInWishlist = false; // Update the icon status
+		},
+
+		checkWishList(id) {
+            return wishList.getWishList().includes(id);
         },
 
 	},
@@ -79,11 +95,21 @@ export default {
 					Seller: <a href="#" class="seller-link">{{ seller }}</a>
 				</p>
 				<div class="mt-4">
-					<button class="btn btn-outline-dark me-sm-2" @click="addWishList(itemID)">
-						<font-awesome-icon :icon="['far', 'heart']" />
-						Add to Wishlist
-					</button>
-					<button class="btn btn-outline-dark ms-sm-2" @click="remove(itemID)">
+						<button 
+							:class="checkWishList(itemID) ? 'btn btn-dark me-sm-2' : 'btn btn-outline-dark me-sm-2'" 
+							@click="checkWishList(itemID) ? removeWishList(itemID) : addWishList(itemID)"
+						>
+							<font-awesome-icon 
+								:icon="checkWishList(itemID) ? ['fas', 'heart'] : ['far', 'heart']" 
+							/>
+							<span v-show="checkWishList(itemID)">
+								Remove from Wishlist
+							</span>
+							<span v-show="!checkWishList(itemID)">
+								Add to Wishlist
+							</span>
+						</button>
+					<button class="btn btn-outline-dark ms-sm-2" @click="remove(id)">
 						<font-awesome-icon :icon="['far', 'trash-can']" />
 						Remove
 					</button>

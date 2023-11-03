@@ -50,7 +50,6 @@ export default {
                 // console.log(wishList.getWishList());
             }
         },
-
         checkWishList(id) {
             return wishList.getWishList().includes(id);
         }
