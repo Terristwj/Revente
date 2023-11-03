@@ -13,10 +13,16 @@ export const useCurrentWishList = defineStore("currentWishList", () => {
         return wishList.value;
     }
 
+    function removeWish(uid) {
+        console.log("remove");
+        wishList.value.splice(wishList.value.indexOf(uid), 1);
+        window.location.reload();
+    }
     return {
         wishList,
         addWish,
         getWishList,
+        removeWish
     };
 });
 

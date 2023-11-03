@@ -20,6 +20,7 @@ import {
     faArrowRightFromBracket,
     faFilter,
     faCommentAlt,
+    faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
@@ -42,7 +43,8 @@ library.add(
     faBookmark,
     faArrowRightFromBracket,
     faFilter,
-    faCommentAlt
+    faCommentAlt,
+    faXmark,
 );
 
 export default FontAwesomeIcon;

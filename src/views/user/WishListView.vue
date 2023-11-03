@@ -2,9 +2,9 @@
 import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
 import { userStore, wishList } from "../../main.js";
 import { shoppingCart } from "../../main.js";
-import SmallCarousel from "../../components/SmallCarousel.vue";
+import SmallCarouselWishList from "../../components/SmallCarouselWishList.vue";
 import router from "../../router/router.js";
-import SmallCarouselRecents from "../../components/SmallCarouselRecents.vue";
+import SmallCarouselRecentsWishList from "../../components/SmallCarouselRecentsWishList.vue";
 
 export default {
     data() {
@@ -61,7 +61,6 @@ export default {
                                     // Use the data here
                                     data[i].seller_name = name.first_name;
                                     this.cart.push(data[i]);
-                                    console.log(data[i].seller_name);
                                 })
                                 .catch((error) => {
                                     // Handle any errors that might occur
@@ -100,8 +99,8 @@ export default {
         },
     },
     components: {
-        SmallCarousel,
-        SmallCarouselRecents
+        SmallCarouselWishList,
+        SmallCarouselRecentsWishList
     },
     mounted() {
         // When enter from About page - START
@@ -199,11 +198,11 @@ export default {
 
         <div class="section" v-if="fourRecents">
             <h3>Wish List</h3>
-            <SmallCarouselRecents :products="recentProducts" />
+            <SmallCarouselRecentsWishList :products="recentProducts" />
         </div>
         <div class="section" v-if="showCarousel">
             <h3>Wish List</h3>
-            <SmallCarousel :products="recentProducts" />
+            <SmallCarouselWishList :products="recentProducts" />
         </div>
         <div class="section" v-if="noRecomended">
             <h3>Recommended For You</h3>
@@ -212,7 +211,7 @@ export default {
 
         <div class="section" v-if="showReccoCarousel">
             <h3>Recommended For You</h3>
-            <SmallCarousel :products="recomendedProducts" />
+            <SmallCarouselWishList :products="recomendedProducts" />
         </div>
 
 
