@@ -222,7 +222,7 @@ export default {
                 </button>
             </div>
         </div>
-        <div class="p-4 p-xl-5 my-5">
+        <div class="p-sm-4 p-xl-5 my-5">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
@@ -344,20 +344,28 @@ video {
 
 @media (max-width: 576px) {
     .header-text h1 {
-        font-weight: 400;
         font-size: 1.12rem;
-        text-transform: uppercase;
-        line-height: 1;
     }
 
     .header-text span {
-        display: block;
-        font-weight: 900;
         font-size: 3.85rem;
     }
 
     .large-view {
         display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-text h1 {
+        font-size: 0.9rem;
+    }
+
+    .header-text span {
+        font-size: 3.2rem;
+    }
+    .description p {
+        line-height: 95%;
     }
 }
 </style>
