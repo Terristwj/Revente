@@ -40,8 +40,8 @@ export default {
             router.push("/listings");
         },
         getItems(userID) {
-            FBInstanceFirestore.getProductsBasedOnBuyerID(userID).then(
-                (data) => {
+            FBInstanceFirestore.getProductsBasedOnBuyerID(userID)
+                .then((data) => {
                     data.forEach((item) => {
                         var obj = {};
                         obj["brand"] = item.brand;
@@ -65,8 +65,17 @@ export default {
                             }
                         );
                     });
-                }
-            );
+                })
+                .catch((error) => {
+                    console.log(error);
+
+                    this.$toast.add({
+                        severity: "error",
+                        summary: "Database Quota Reached",
+                        detail: "Database Quota will reset at SGT 1pm.",
+                        life: 15000,
+                    });
+                });
         },
     }, // methods
 };
