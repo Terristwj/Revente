@@ -6,10 +6,12 @@
 
 #### Reventé Deployment Links:
 
-| Frontend Website (Vue/Vite)                         | Backend Server (NodeJS)                                       |
-| --------------------------------------------------- | ------------------------------------------------------------- |
-| [Reventé](https://smu-wad2.web.app)                 | [Stripe & APIs](https://vercel.com/terristwj/revente-backend) |
-| [GitHub Repo](https://github.com/Terristwj/Revente) | [GitHub Repo](https://github.com/Terristwj/Revente-Backend)   |
+| Frontend Website (Vue/Vite)                                   | Backend Server (NodeJS)                                               |
+| ------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [Reventé](https://smu-wad2.web.app)                           | [Stripe & APIs](https://vercel.com/terristwj/revente-backend)         |
+| [GitHub Repo (Private)](https://github.com/Terristwj/Revente) | [GitHub Repo (Private)](https://github.com/Terristwj/Revente-Backend) |
+
+Please ask [Terristwj](https://github.com/Terristwj) to allow collaboration.
 
 ## Table of Contents
 
