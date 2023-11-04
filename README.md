@@ -137,6 +137,10 @@ A compilation of developer portals to check API limits, payments, deployments, d
     1. [Backend Vercel](https://vercel.com/terristwj/revente-backend)
     2. [OpenAI Billing](https://platform.openai.com/account/billing/overview)
     3. [PaLM API Keys](https://makersuite.google.com/app/apikey)
+    4. [Replicate Billing](https://replicate.com/account/billing#limits)
+    5. Replicate Models Used
+        - [daanelson/minigpt-4](https://replicate.com/daanelson/minigpt-4/versions/b96a2f33cc8e4b0aa23eacfce731b9c41a7d9466d9ed4e167375587b54db9423?prediction=ls3oaabbq5br3dfcgs4sfi5sbu)
+        - [andreasjansson/blip-2](https://replicate.com/andreasjansson/blip-2/versions/9109553e37d266369f2750e407ab95649c63eb8e13f13b1f3983ff0feb2f9ef7?prediction=aa7anpbbatll7263nvclm32qk4)
 
 ### What Next?
 
@@ -216,12 +220,18 @@ To access the admin page, [staff will have to access a secret link](https://smu-
     -   **Stripe**: Payment service provider
     -   **OpenAI**: Used to assist generating text
     -   **PaLM**: Used as an alternative to OpenAI as backup
+    -   **Replicate**: A collection of pre-trained AI models
+        -   Models used:
+            -   [daanelson/minigpt-4](https://replicate.com/daanelson/minigpt-4)
+            -   [andreasjansson/blip-2](https://replicate.com/andreasjansson/blip-2)
+        -   Used to generate product information from an image
 
 ### Backend (Backend Repository) (BTL)
 
 -   **Stripe**: Payment service provider
 -   **OpenAI**: Used to assist generating text
 -   **PaLM**: Used as an alternative to OpenAI as backup
+-   **Replicate**: Used to generate product information from an image
 -   **Vercel**: Cloud Deployment
 
 ### Beyond The Lab (BTL) Compilation List
@@ -243,6 +253,7 @@ To access the admin page, [staff will have to access a secret link](https://smu-
     -   Stripe
     -   OpenAI
     -   PaLM
+    -   Replicate
 -   **Deployment**
     -   Firebase Hosting
     -   Vercel
@@ -291,6 +302,7 @@ Special thanks to the following resources that helped us along the way:
 
     1.  [ExpressJS Deploy w/ Vercel](https://masteringbackend.com/posts/how-to-deploy-your-node-js-backend-project-to-vercel-a-step-by-step-guide)
     2.  [ExpressJS CORS](https://stackoverflow.com/questions/26988071/allow-multiple-cors-domain-in-express-js)
+    3.  [CORS configuration (Not recommended)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)
 
 6.  Backend APIs
 
@@ -298,6 +310,8 @@ Special thanks to the following resources that helped us along the way:
     2.  [PaLM Documentation](https://developers.generativeai.google/tutorials/setup)
     3.  [Stripe Documentation](https://stripe.com/docs)
     4.  [Stripe & NodeJS Video](https://www.youtube.com/watch?v=WG4ehXSEpz4&feature=youtu.be)
+    5.  [Replicate Model 1 Example Usage](https://replicate.com/daanelson/minigpt-4/api?tab=node)
+    6.  [Replicate Model 2 Example Usage](https://replicate.com/andreasjansson/blip-2/api?tab=node)
 
 7.  I forgot to keep track of all the links - Terris
 
