@@ -174,19 +174,6 @@ export default {
                 <p v-if="!review.textinput" class="text-danger">Please give a description!</p>
             </div>
         </div>
-        <!-- remove the image part cus its not rly working -->
-        <!-- 
-        <div class="container uploadPhoto">
-            <h4>Upload Photo <span class="optional"> (Optional) </span></h4>
-
-            <div>
-                <div class="photoPortion">
-                    <img :src="imageSrc" class="uploading-image" id="file-upload" />
-                    <input type="file" accept="image/png, image/jpeg" @change="onFileChange($event)" />
-                </div>
-            </div>
-        </div> -->
-
         <button class="submit" @click="submitForm()">SUBMIT</button>
     </body>
 
