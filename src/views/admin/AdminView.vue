@@ -2,6 +2,9 @@
 import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
 import confetti from "canvas-confetti";
 
+import BackendOpenAI from "../../services/Backend/OpenAI.js";
+import { Chat } from "@chat-ui/vue3";
+
 import {
     Chart as ChartJS,
     ArcElement,
@@ -29,6 +32,7 @@ export default {
     components: {
         Doughnut,
         Bar,
+        Chat,
     },
     data() {
         return {
@@ -49,6 +53,10 @@ export default {
                 responsive: true,
                 maintainAspectRatio: true,
             },
+
+            // AI Assist
+            isAIAssistOpen: false,
+            AIAssistChatLog: [],
         };
     },
     computed: {
@@ -187,7 +195,7 @@ export default {
                     parseFloat(this.pendingProducts[idx].modifiedPrice),
                     size,
                     this.pendingProducts[idx].image_src,
-                   
+
                     // Status
                     true,
                     false
@@ -195,9 +203,9 @@ export default {
 
                 this.pendingProducts[idx].price = newprice;
                 let id = this.pendingProducts[idx].product_ID;
-                console.log(id);
+                // console.log(id);
                 this.approvedProducts.push(product);
-                console.log(this.approvedProducts);
+                // console.log(this.approvedProducts);
                 for (const key in this.approvedProducts) {
                     if (this.approvedProducts[key].product_ID == id) {
                         this.approvedProducts[key].size = size;
@@ -233,6 +241,89 @@ export default {
                 "text-danger": price > modifiedPrice,
             };
         },
+
+        // Feature 4 - AI START
+        async askAIAssist(promptQuery) {
+            let productPrompt = "";
+            this.pendingProducts.forEach((product) => {
+                productPrompt += `START`;
+                productPrompt += `Product_Name:${product.product_name},`;
+                productPrompt += `Gender:${product.gender},`;
+                productPrompt += `Category:${product.category},`;
+                productPrompt += `Brand:${product.brand},`;
+                productPrompt += `Condition:${product.condition},`;
+                productPrompt += `Size:${product.size},`;
+                productPrompt += `DropOffLocation:${product.drop_off_location},`;
+                productPrompt += `BeforePrice:${product.price},`;
+                productPrompt += `isApproved:false`;
+                productPrompt += `END`;
+            });
+
+            this.approvedProducts.forEach((product) => {
+                productPrompt += `START`;
+                productPrompt += `Product_Name:${product.product_name},`;
+                productPrompt += `Gender:${product.gender},`;
+                productPrompt += `Category:${product.category},`;
+                productPrompt += `Brand:${product.brand},`;
+                productPrompt += `Condition:${product.condition},`;
+                productPrompt += `Size:${product.size},`;
+                productPrompt += `DropOffLocation:${product.drop_off_location},`;
+                productPrompt += `FinalPrice:${product.price},`;
+                productPrompt += `isApproved:true`;
+                productPrompt += `isBought:false`;
+                productPrompt += `END`;
+            });
+
+            // Hardcode testing START
+            productPrompt =
+                "\n                    START\n                    Product Name: Black V-Cut Mini Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Well Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 25,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Fila Shirt,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: Fila,\n                    Condition: Brand New,\n                    Size: undefined,\n                    DropOff Location: Warehouse East,\n                    Before Price: 30,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Stewie Griffin christmas shorts,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: Family Guy,\n                    Condition: Brand New,\n                    Size: Length: 45cm\nWaist: 27cm,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 29.12,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Black Mini Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 30,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Pink Patterned Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Well Used,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 18,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Black Maxi Skirt,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: unbranded,\n                    Condition: Well Used,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 24,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Black Flower Print Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: Desigual,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 28,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: 2018 Moschino pants,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: Moschino,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 340,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Yellow Checkered Skirt,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: Desigual,\n                    Condition: Well Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 20,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Denim Skirt,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: PULL&BEAR,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 25,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Off-Shoulder Black Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: PULL&BEAR,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 20,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: North Face T-shirt,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: TNF,\n                    Condition: Brand New,\n                    Size: undefined,\n                    DropOff Location: Warehouse East,\n                    Before Price: 20,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Navy Painter Sweat Shorts,\n                    Gender: Male,\n                    Category: Bottom,\n                    Brand: Mahagrid,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 26,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Navy Vest,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: Nike,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 17,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Vintage Beige Jacket,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: unbranded,\n                    Condition: Well Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 30,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Green Cargo Shorts,\n                    Gender: Male,\n                    Category: Bottom,\n                    Brand: Mahagrid,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 22,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Checkered Sweater,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: unbranded,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 32,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Nike Jordan T-shirt,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: Jordan,\n                    Condition: Lightly Used,\n                    Size: undefined,\n                    DropOff Location: Warehouse East,\n                    Before Price: 50,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Black Bear Print Sweater,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: unbranded,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 19,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Beige Long-Sleeve Button Shirt,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: unbranded,\n                    Condition: Well Used,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 22,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Flower Print Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: Yves Saint Laurent,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse North,\n                    Before Price: 38,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Green Floral Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: ESPRIT,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse North,\n                    Before Price: 25,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Floral Satin Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 18,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Frilled Black Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 28,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Suspender Denim Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse North,\n                    Before Price: 28,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Strapless Mini Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: GUESS,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 40,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Red Bomber Jacket,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: unbranded,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 15,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Kitten Shirt,\n                    Gender: Female,\n                    Category: Top,\n                    Brand: unbranded,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse North,\n                    Before Price: 20,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Black Sweat Shorts,\n                    Gender: Male,\n                    Category: Bottom,\n                    Brand: Mahagrid,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 20,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Pink Fleece Hoodie,\n                    Gender: Female,\n                    Category: Top,\n                    Brand: unbranded,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse East,\n                    Before Price: 25,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: adidas by Stella McCartney Hoodie,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: Adidas,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 140,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Purple Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: ESPRIT,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 25,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Mini Floral Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: GUESS,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 35,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Patterned Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Brand New,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 26,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: White Sweat Shorts,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: Mahagrid,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 20,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Yellow Cotton Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: Moschino,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 22,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Family guy limited edition boxers,\n                    Gender: Male,\n                    Category: Bottom,\n                    Brand: Family guy,\n                    Condition: Lightly Used,\n                    Size: Length: 40cm\nWaist: 23cm,\n                    DropOff Location: Warehouse North,\n                    Before Price: 30,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Black Midi Skirt,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: H&M,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 20,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Nylon Olive Cargo Shorts,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: unbranded,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 23,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Vintage Checkered Shirt,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: Green Club,\n                    Condition: Well Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 30,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Purple Green Sweater,\n                    Gender: Male,\n                    Category: Top,\n                    Brand: Nike,\n                    Condition: Heavily Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 15,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Strapless Black Mini Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse North,\n                    Before Price: 24,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Dallas Blue Shirt,\n                    Gender: Female,\n                    Category: Top,\n                    Brand: Nike,\n                    Condition: Well Used,\n                    Size: ,\n                    DropOff Location: Warehouse North,\n                    Before Price: 12,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Tie Dye Dress,\n                    Gender: Female,\n                    Category: Dress,\n                    Brand: H&M,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse Central,\n                    Before Price: 22,\n                    isApproved: false\n                    END\n                    \n                    START\n                    Product Name: Sprayed Pink Sweat Shorts,\n                    Gender: Female,\n                    Category: Bottom,\n                    Brand: Mahagrid,\n                    Condition: Lightly Used,\n                    Size: ,\n                    DropOff Location: Warehouse South,\n                    Before Price: 30,\n                    isApproved: false\n                    END\n";
+            // Hardcode testing END
+
+            productPrompt += "Based on the above data, answer the following:";
+            productPrompt += promptQuery;
+
+            // Usage Example START
+            // exampleProductPrompt +=
+            //     "Which product has the lowest price? Give me it's details";
+            // Usage Example END
+
+            let AIAssistResponse = await BackendOpenAI.generateDataAnalysis(
+                productPrompt
+            ).then((res) => {
+                // console.log(res.data);
+                return res.data.response;
+            });
+            return AIAssistResponse;
+        },
+        async handleMessage(input) {
+            if (input == "") return;
+            const messagePerson = {
+                type: "person",
+                timestamp: this.formatAMPM(new Date()),
+                message: input,
+            };
+            this.AIAssistChatLog.push(messagePerson);
+
+            await this.askAIAssist(input).then((res) => {
+                const messageChatbot = {
+                    type: "chatbot",
+                    timestamp: this.formatAMPM(new Date()),
+                    message: res,
+                };
+                this.AIAssistChatLog.push(messageChatbot);
+            });
+        },
+        formatAMPM(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? "PM" : "AM";
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            var strTime = hours + ":" + minutes + " " + ampm;
+            return strTime;
+        },
+        // Feature 4 - AI END
     },
     // In your Vue component
     async created() {
@@ -258,7 +349,6 @@ export default {
                 this.pendingProducts.forEach((product) => {
                     product.modifiedPrice = this.modifyPrice(product.price);
                 });
-                console.log(this.pendingProducts); // Do something with the data
             })
             .catch((error) => {
                 // Handle any errors that occur during the promise execution
@@ -425,7 +515,7 @@ export default {
         </div>
 
         <!-- approved content -->
-        <div v-if="approvedShow" class="tabcontent">
+        <div v-if="approvedShow" class="tabcontent py-5">
             <h2 class="mb-5 heading">Approved</h2>
             <div class="">
                 <div class="table-responsive">
@@ -474,7 +564,7 @@ export default {
         </div>
 
         <!-- stats content -->
-        <div v-if="statsShow" class="tabcontent">
+        <div v-if="statsShow" class="tabcontent py-4">
             <div class="container-fluid">
                 <h1 class="mb-5 py-3 heading" style="font-weight: bold">
                     ADMIN DASHBOARD
@@ -654,6 +744,12 @@ export default {
             </div>
         </div>
     </div>
+    <Chat
+        :chat="AIAssistChatLog"
+        :onSend="handleMessage"
+        height="80vh"
+        inputPlaceholder="Ask AI Analyst"
+    />
 </template>
 
 <style scoped>

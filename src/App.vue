@@ -6,6 +6,7 @@ export default {
     data() {
         return {
             isChatOpen: false,
+            isAdmin: false,
         };
     },
     components: {
@@ -44,6 +45,22 @@ export default {
             }
         },
     },
+    watch: {
+        // Watch for route changes to Admin page
+        $route(to, from) {
+            if (to.path == "/admin") {
+                this.isAdmin = true;
+            } else {
+                this.isAdmin = false;
+            }
+        },
+    },
+    mounted() {
+        // For when Admin page is the first loaded page
+        if (window.location.pathnam == "/admin") {
+            this.isAdmin = true;
+        }
+    },
 };
 </script>
 
@@ -52,16 +69,19 @@ export default {
     <div id="content">
         <RouterView />
     </div>
-    <div id="chatbot-container" v-show="isChatOpen">
-        <iframe
-            allow="microphone;"
-            src="https://console.dialogflow.com/api-client/demo/embedded/ae2dede1-2cfa-4ba7-8458-062aaf47c01b"
-            id="chatbot"
-        ></iframe>
+
+    <div v-if="!isAdmin">
+        <div id="chatbot-container" v-show="isChatOpen">
+            <iframe
+                allow="microphone;"
+                src="https://console.dialogflow.com/api-client/demo/embedded/ae2dede1-2cfa-4ba7-8458-062aaf47c01b"
+                id="chatbot"
+            ></iframe>
+        </div>
+        <button id="chatbot-button" @click="toggleChatbot">
+            <i class="fas fa-comment-alt"></i>
+        </button>
     </div>
-    <button id="chatbot-button" @click="toggleChatbot">
-        <i class="fas fa-comment-alt"></i>
-    </button>
 
     <FooterComponent />
 </template>

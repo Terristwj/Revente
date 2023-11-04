@@ -323,10 +323,12 @@ export default {
             if (this.itemBrand)
                 prompt += `It's brand is from ${this.itemBrand}`;
 
-            await BackendOpenAI.generatePrompt(prompt).then((res) => {
-                // console.log(res.data);
-                this.itemDescription = res.data.response;
-            });
+            await BackendOpenAI.generateMarketingDescription(prompt).then(
+                (res) => {
+                    // console.log(res.data);
+                    this.itemDescription = res.data.response;
+                }
+            );
 
             this.toggleLoadingUI();
             this.isAIGenerating = false;

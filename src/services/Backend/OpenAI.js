@@ -12,9 +12,27 @@ const URL = DEPLOYED_BACKEND_URL;
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_APIKEY;
 
 class BackendOpenAI {
-    generatePrompt = async function (prompt) {
+    generateMarketingDescription = async function (prompt) {
         const result = await axios
             .post(`${URL}/openai/generate_description`, {
+                prompt: prompt,
+                api_key: OPENAI_API_KEY,
+            })
+            .then((res) => {
+                // console.log(res);
+                return res;
+            })
+            .catch((error) => {
+                console.log(error);
+                return error;
+            });
+
+        return result;
+    };
+
+    generateDataAnalysis = async function (prompt) {
+        const result = await axios
+            .post(`${URL}/openai/analyze_data`, {
                 prompt: prompt,
                 api_key: OPENAI_API_KEY,
             })

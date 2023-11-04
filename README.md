@@ -20,6 +20,7 @@ Please ask [Terristwj](https://github.com/Terristwj) to allow collaboration.
         -   [Frontend Repository](#frontend-repository)
         -   [Backend Repository](#backend-repository)
         -   [Installation](#installation)
+    -   [Developer Shortcuts](#developer-shortcuts)
     -   [What's Next? (User Journeys)](#what-next)
         -   [First Time Users](#first-time-users)
         -   [User Buyers](#user-buyers)
@@ -120,6 +121,23 @@ Ensure you have the following tools and dependencies installed:
     firebase deploy
     ```
 
+### Developer Shortcuts
+
+A compilation of developer portals to check API limits, payments, deployments, database, and etc. Specific shortcuts require access as collaborator.
+
+1. Firebase
+    1. [Project's Firebase Overview](https://console.firebase.google.com/u/0/project/smu-wad2/overview)
+    2. [Firebase Authentication](https://console.firebase.google.com/u/0/project/smu-wad2/authentication/users)
+    3. [Firestore Database](https://console.firebase.google.com/u/0/project/smu-wad2/firestore/data/~2Fusers~2FBOeeIFP1AsVor9SPn7BSzpmlBnH2)
+    4. [Firebase Hosting](https://console.firebase.google.com/u/0/project/smu-wad2/hosting/sites/smu-wad2)
+    5. [Firebase Quotas](https://console.cloud.google.com/appengine/quotadetails?authuser=0&project=smu-wad2&hl=en)
+2. Others
+    1. [DialogFlow Controls](https://dialogflow.cloud.google.com/)
+3. Backend
+    1. [Backend Vercel](https://vercel.com/terristwj/revente-backend)
+    2. [OpenAI Billing](https://platform.openai.com/account/billing/overview)
+    3. [PaLM API Keys](https://makersuite.google.com/app/apikey)
+
 ### What Next?
 
 After installation and running both frontend and backend projects, you will start in the Homepage. [Our website is also deployed](https://smu-wad2.web.app/). The following are the various user journeys:
@@ -186,6 +204,7 @@ To access the admin page, [staff will have to access a secret link](https://smu-
         -   Geolocation
         -   Google Address Autocomplete
     -   **DialogFlow (BTL)**: FAQ Chatbot
+    -   **@chat-ui/vue3**: Messaging UI component
 
 -   **Firebase**:
 
@@ -245,11 +264,42 @@ _FAQ page powered by AI._
 
 Special thanks to the following resources that helped us along the way:
 
-1. [Vue 3 + Firebase Authentication](https://www.youtube.com/watch?v=xceR7mrrXsA&t=21s)
-2. [JavaScript Game Tutorial](https://www.youtube.com/watch?v=yP5DKzriqXA)
-3. [How to deploy with Firebase Hosting](https://medium.com/@rachidsakara/how-to-deploy-vue-js-applications-with-firebase-hosting-40cfa7f724e4)
-4. [Cloud Firestore Database](https://firebase.google.com/docs/firestore)
-5. I forgot to keep track of the links - Terris
+1.  Firebase
+
+    1.  [Vue 3 + Firebase Authentication](https://www.youtube.com/watch?v=xceR7mrrXsA&t=21s)
+    2.  [Cloud Firestore Database](https://firebase.google.com/docs/firestore)
+    3.  [Advance Firestore Queries](https://firebase.google.com/docs/firestore/query-data/query-cursors)
+    4.  [Firebase Storage Queries](https://firebase.google.com/docs/storage/web/start)
+    5.  [How to deploy with Firebase Hosting](https://medium.com/@rachidsakara/how-to-deploy-vue-js-applications-with-firebase-hosting-40cfa7f724e4)
+
+2.  UI/UX
+
+    1.  [PrimeVue Documentation](https://primevue.org/installation/)
+    2.  [Chat UI](https://vuejsexamples.com/fully-customizable-chat-ui-for-different-frameworks/)
+
+3.  Vue Learnings
+
+    1. [Vue Lifecycle](https://vuejs.org/guide/essentials/lifecycle.html)
+
+4.  Others
+
+    1.  [JavaScript Game Tutorial](https://www.youtube.com/watch?v=yP5DKzriqXA)
+    2.  [Format AM/PM](http://www.java2s.com/ref/javascript/javascript-date-formatampm-date.html)
+    3.  [DialogFlow Documentation](https://cloud.google.com/dialogflow/docs)
+
+5.  Express JS
+
+    1.  [ExpressJS Deploy w/ Vercel](https://masteringbackend.com/posts/how-to-deploy-your-node-js-backend-project-to-vercel-a-step-by-step-guide)
+    2.  [ExpressJS CORS](https://stackoverflow.com/questions/26988071/allow-multiple-cors-domain-in-express-js)
+
+6.  Backend APIs
+
+    1.  [OpenAI Documentation](https://platform.openai.com/docs/api-reference)
+    2.  [PaLM Documentation](https://developers.generativeai.google/tutorials/setup)
+    3.  [Stripe Documentation](https://stripe.com/docs)
+    4.  [Stripe & NodeJS Video](https://www.youtube.com/watch?v=WG4ehXSEpz4&feature=youtu.be)
+
+7.  I forgot to keep track of all the links - Terris
 
 Feel free to add more screenshots and shoutouts to your GitHub profiles, repositories, or any contributors who played a significant role in the project. Good luck with your portfolio piece!
 
