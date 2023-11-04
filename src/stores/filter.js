@@ -7,26 +7,35 @@ export const useCurrentFilter = defineStore('filter', () => {
 		brand: [],
 		minPrice: '',
 		maxPrice: '',
+		category: [],
 	});
 
+	// Gender
 	function setGender(gender) {
 		filterSettings.value.gender = gender;
 	}
+	// Category
 
-	function setBrands(brands) {
-		filterSettings.value.brand = brands;
+	function setCategory(category) {
+		filterSettings.value.category = category;
+	}
+	function removeCategory(category) {
+		filterSettings.value.category = filterSettings.value.category.filter(
+			(c) => c !== category
+		);
+		return filterSettings.value.category;
 	}
 
-	function addBrand(brand) {
-		if (!filterSettings.value.brand.includes(brand)) {
-			filterSettings.value.brand.push(brand);
-		}
+	// Brand
+	function setBrands(brands) {
+		filterSettings.value.brand = brands;
 	}
 
 	function removeBrand(brand) {
 		filterSettings.value.brand = filterSettings.value.brand.filter(
 			(b) => b !== brand
 		);
+		return filterSettings.value.brand;
 	}
 
 	function setPriceRange(min, max) {
@@ -44,6 +53,7 @@ export const useCurrentFilter = defineStore('filter', () => {
 			brand: [],
 			minPrice: '',
 			maxPrice: '',
+			category: [],
 		};
 	}
 
@@ -51,9 +61,10 @@ export const useCurrentFilter = defineStore('filter', () => {
 		filterSettings,
 		setGender,
 		setBrands,
-		addBrand,
 		removeBrand,
 		setPriceRange,
+		setCategory,
+		removeCategory,
 		getFilter,
 		resetFilters,
 	};

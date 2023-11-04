@@ -70,9 +70,10 @@
 				// Filter Settings
 				filter: {
 					gender: '',
-					brand: '',
+					brand: [],
 					minPrice: '',
 					maxPrice: '',
+					category: [],
 				},
 				brands: [],
 
@@ -108,9 +109,10 @@
 			clearFilters() {
 				this.filter = {
 					gender: '',
-					brand: '',
+					brand: [],
 					minPrice: '',
 					maxPrice: '',
+					category: [],
 				};
 				filters.resetFilters();
 				this.filterProducts();
@@ -121,13 +123,13 @@
 			},
 			filterProducts() {
 				var filtered = [];
-
 				// Reset Button clicked
 				if (
 					this.filter.gender == '' &&
-					this.filter.brand == '' &&
+					this.filter.brand == [] &&
 					this.filter.minPrice == '' &&
-					this.filter.maxPrice == ''
+					this.filter.maxPrice == '' &&
+					this.filter.category == []
 				) {
 					this.resetPagination(this.allProductListings.length);
 					this.productListings = this.allProductListings;
@@ -146,6 +148,13 @@
 					if (
 						!this.filter.brand.includes(product.brand) &&
 						this.filter.brand != ''
+					) {
+						continue;
+					}
+					// category filter
+					if (
+						!this.filter.category.includes(product.category) &&
+						this.filter.category != ''
 					) {
 						continue;
 					}
