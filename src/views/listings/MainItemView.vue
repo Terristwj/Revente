@@ -38,7 +38,13 @@ export default {
             isLoading: true,
             descriptionShow: true,
             sizeShow: false,
+           
         };
+    },
+    computed:{
+        sizeGender(){
+            return this.gender == 'Male';
+        }
     },
     methods: {
         async getProductData() {
@@ -49,13 +55,10 @@ export default {
                 FBInstanceFirestore.getProduct(this.local_itemID)
                     .then((data) => {
                         this.temp = data;
-                        // Handle the data once the promise is resolved
-                        // console.log(data);
                         this.imageSrc = data.image_src;
                         this.brand = data.brand;
 
                         this.gender = data.gender;
-
                         this.category = data.category;
 
                         this.condition = data.condition;
@@ -281,10 +284,12 @@ export default {
             </div>
             <div v-if="sizeShow" class="tabcontent">
                 <h2>Detailed Size</h2>
-                <h3>
-                    {{ generalSize }}
-                </h3>
-                <p>{{ size }}</p>
+                <p>
+                   General Sizing: {{ generalSize }}
+                </p>
+                <p>Detailed Sizing: {{ size }}</p>
+                <img v-if="sizeGender" src="../../assets/size/menwebcom.jpg" class="img-fluid sizeImg h-50 border border-3">
+                <img v-else src="../../assets/size/womenwebcom.jpg" class="img-fluid sizeImg h-50 border border-3">
             </div>
         </div>
     </div>
@@ -349,6 +354,10 @@ export default {
 @media(max-width: 425px){
 .btn{
     margin-left:25px;
+}
+.sizeImg{
+height: auto !important;
+width: 100% !important;
 }
 }
 </style>
