@@ -126,6 +126,7 @@
 			// Reset
 			clearFilters() {
 				this.genderPicked = '';
+				this.categoryPicked = [];
 				this.brandsPicked = [];
 				this.priceRangeSelected = ['', ''];
 				this.brandSearchInput = '';
