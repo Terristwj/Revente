@@ -88,7 +88,7 @@ export default {
                 this.$toast.add({
                     severity: "error",
                     summary: "Database Quota Reached",
-                    detail: "Database Quota will reset at SGT 1pm.",
+                    detail: "Database Quota will reset at SGT 3pm.",
                     life: 15000,
                 });
             } else {

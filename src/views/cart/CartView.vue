@@ -258,7 +258,7 @@ export default {
 
 
                     <div class="col-lg-4">
-                        <CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length"
+                        <CheckoutBar :totalOriginal="parseFloat(cartTotal)" :total="parseFloat(cartTotal)" :itemCount="cart.length"
                             :cartItems="this.changedCart" :itemIds="this.cartItems" />
                     </div>
 
@@ -270,13 +270,19 @@ export default {
         <div class="cart-section" v-if="cartContent">
             <div class="row">
                 <div class="col-lg-8">
-                    <CartItem v-for="(item, index) in cart" :key="index" :name="item.product_name"
-                        :price="item.modifiedPrice" :size="generalSize[index]" :brand="item.brand"
-                        :seller="item.seller_name" :imgUrl="item.image_src" :class="cartItemStyle(index)"
+                    <CartItem v-for="(item, index) in cart" 
+                        :key="index" 
+                        :name="item.product_name"
+                        :price="item.modifiedPrice" 
+                        :size="generalSize[index]" 
+                        :brand="item.brand"
+                        :seller="item.seller_name" 
+                        :imgUrl="item.image_src" 
+                        :class="cartItemStyle(index)"
                         :itemID="item.product_ID" />
                 </div>
                 <div class="col-lg-4">
-                    <CheckoutBar :totalOriginal="cartTotal" :total="cartTotal" :itemCount="cart.length"
+                    <CheckoutBar :totalOriginal="parseFloat(cartTotal)" :total="parseFloat(cartTotal)" :itemCount="cart.length"
                         :cartItems="this.changedCart" :itemIds="this.cartItems" />
                 </div>
             </div>

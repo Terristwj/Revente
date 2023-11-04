@@ -3,10 +3,11 @@ import router from "../../router/router.js";
 import { userStore } from "../../main.js";
 import FBInstanceFirestore from "../../services/Firebase/FirestoreDatabase.js";
 import FBInstanceStorage from "../../services/Firebase/FirebaseStorage.js";
-import BackendOpenAI from "../../services/Backend/OpenAI.js";
+import BEInstanceOpenAI from "../../services/Backend/OpenAI.js";
+import BEInstanceReplicate from "../../services/Backend/Replicate.js";
 import GoogleMap from "../../components/GoogleMap.vue";
 
-import confetti from "https://esm.run/canvas-confetti@1";
+import confetti from "canvas-confetti";
 
 export default {
     components: {
@@ -49,10 +50,13 @@ export default {
             dropOffLocation: "",
             price: 0.0,
 
-            // Code-related
+            // Code-related Buttons
             isLoading: false,
+            isAutoFilling: false,
             isAIGenerating: false,
             isListing: false,
+
+            // Code-related Errors
             firstError: "",
             isSuccessful: false,
         };
@@ -76,16 +80,19 @@ export default {
         },
         // Disable 'List Now' and 'AI' when isLoading
         toggleLoadingUI() {
-            let listNowBtn = document.getElementById("List-Now-Btn");
+            let autoFillBtn = document.getElementById("Auto-Fill-Btn");
             let AIBtn = document.getElementById("AI-Button");
+            let listNowBtn = document.getElementById("List-Now-Btn");
 
             this.isLoading = !this.isLoading;
             if (this.isLoading) {
-                listNowBtn.disabled = true;
+                autoFillBtn.disabled = true;
                 AIBtn.disabled = true;
+                listNowBtn.disabled = true;
             } else {
-                listNowBtn.disabled = false;
+                autoFillBtn.disabled = false;
                 AIBtn.disabled = false;
+                listNowBtn.disabled = false;
             }
         },
         async doSubmitForm() {
@@ -306,6 +313,149 @@ export default {
             this.dropOffLocation = loc;
             // console.log(loc);
         },
+
+        // Replicate and OpenAI START
+        async generateInformation() {
+            this.toggleLoadingUI();
+            this.isAutoFilling = true;
+
+            let hasError = false;
+            //
+            // 1) Create a temp URL
+            // Upload image
+            hasError = await FBInstanceStorage.uploadImage(
+                "uploadTemp",
+                "uploadTemp",
+                this.imageFile
+            );
+
+            if (hasError) {
+                this.firstError = "Please try again later.";
+            } else {
+                //
+                // 2) Retrieve temp URL
+                //
+                const fileURL = await FBInstanceStorage.getImageUrl(
+                    "uploadTemp",
+                    "uploadTemp"
+                );
+
+                // console.log(fileURL);
+
+                // 3) Pass temp URL to Replicate for description
+                await BEInstanceReplicate.identifyProduct(fileURL)
+                    .then(async (res) => {
+                        // console.log(res);
+                        // console.log(res.data);
+                        // console.log(res.data.response);
+                        const itemDescription = res.data.response;
+
+                        // 4) Pass description to OpenAI to generate item information
+                        await BEInstanceOpenAI.generateItemInformation(
+                            itemDescription
+                        ).then((res) => {
+                            // console.log(res.data);
+
+                            // E.g. Output:
+                            // "1) 'Unisex'
+                            //  2) 'Dress'
+                            //  3) 'Well Used'
+                            //  4) The item appears to have some minor wear and tear, but is still in good condition.
+                            //  5) 'Denim Dress'
+                            //  6) 'Levi's'
+                            //  7) This is a denim dress from the brand Levi's. It is a classic, versatile piece that can be worn for both casual and formal occasions. The dress has a button-up front and a straight cut, making it easy to pair with a variety of shoes and accessories. The denim material is durable and comfortable to wear, making it a great addition to any wardrobe.
+                            //  8) '49.99'"
+
+                            const responseData = res.data.response.split("\n");
+                            // console.log(responseData);
+
+                            // 1) Gender
+                            this.genderOptions.forEach((gender) => {
+                                if (responseData[0].includes(gender)) {
+                                    this.gender = gender;
+                                }
+                                return;
+                            });
+
+                            // 2) Category
+                            // console.log(responseData[1]);
+                            this.categories.forEach((category) => {
+                                // console.log(category);
+                                if (responseData[1].includes(category.name)) {
+                                    this.category = category;
+                                }
+                                return;
+                            });
+
+                            // 3) Condition
+                            this.conditions.forEach((condition) => {
+                                if (responseData[2].includes(condition.name)) {
+                                    this.condition = condition;
+                                }
+                                return;
+                            });
+
+                            // 4) Condition Note
+                            this.conditionNotes = responseData[3].slice(3);
+
+                            // 5) Item Name
+                            this.itemName = responseData[4]
+                                .slice(3)
+                                .trim()
+                                .replaceAll("'", "");
+
+                            // 6) Item Brand
+                            this.itemBrand = responseData[5]
+                                .slice(3)
+                                .trim()
+                                .replaceAll("'", "");
+
+                            // 7) Item Description
+                            this.itemDescription = responseData[6]
+                                .slice(3)
+                                .trim()
+                                .replaceAll("'", "");
+
+                            // 8) Price
+                            // console.log(
+                            //     responseData[7]
+                            //         .slice(3)
+                            //         .trim()
+                            //         .replaceAll("'", "")
+                            //         .replaceAll("$", "")
+                            // );
+                            // console.log(
+                            //     parseFloat(
+                            //         responseData[7]
+                            //             .slice(3)
+                            //             .trim()
+                            //             .replaceAll("'", "")
+                            //             .replaceAll("$", "")
+                            //     )
+                            // );
+                            this.price = parseFloat(
+                                responseData[7]
+                                    .slice(3)
+                                    .trim()
+                                    .replaceAll("'", "")
+                                    .replaceAll("Price", "")
+                                    .replaceAll(":", "")
+                                    .replaceAll("$", "")
+                            );
+                        });
+                    })
+                    .catch((err) => {
+                        console.log("Error");
+                        console.log(err);
+                    });
+            }
+
+            this.toggleLoadingUI();
+            this.isAutoFilling = false;
+        },
+        // Replicate and OpenAI END
+
+        // OpenAI START
         async generateDescription() {
             this.toggleLoadingUI();
             this.isAIGenerating = true;
@@ -323,14 +473,17 @@ export default {
             if (this.itemBrand)
                 prompt += `It's brand is from ${this.itemBrand}`;
 
-            await BackendOpenAI.generatePrompt(prompt).then((res) => {
-                // console.log(res.data);
-                this.itemDescription = res.data.response;
-            });
+            await BEInstanceOpenAI.generateMarketingDescription(prompt).then(
+                (res) => {
+                    // console.log(res.data);
+                    this.itemDescription = res.data.response;
+                }
+            );
 
             this.toggleLoadingUI();
             this.isAIGenerating = false;
         },
+        // OpenAI END
     },
     created() {
         document.body.scrollTop = 0;
@@ -460,7 +613,51 @@ export default {
                 <div
                     class="col-12 shadow px-3 pt-3 pb-4 bg-white rounded categories"
                 >
-                    <h5 class="bold">Gender & Category</h5>
+                    <div class="d-flex gap-2">
+                        <h5 class="bold">Gender & Category</h5>
+                        <div class="tooltip2">
+                            <span v-show="imageSrc == ''" class="tooltiptext2"
+                                >Upload a photo first</span
+                            >
+                            <Button
+                                id="Auto-Fill-Btn"
+                                class="btn-danger py-1 px-2 rounded-2"
+                                style="margin-top: -10px; margin-bottom: 9px"
+                                severity="help"
+                                icon-pos="right"
+                                size="small"
+                                :pt="{
+                                    icon: {
+                                        class: 'm-0',
+                                    },
+                                }"
+                                :disabled="imageSrc == ''"
+                                @click="generateInformation()"
+                            >
+                                <span class="fw-bold" style="font-size: 14px"
+                                    >Autofill</span
+                                >
+
+                                <div class="pt-1" v-if="isAutoFilling">
+                                    &nbsp;
+                                    <ProgressSpinner
+                                        style="width: 15px; height: 100%"
+                                        strokeWidth="8"
+                                        animationDuration=".5s"
+                                        aria-label="Custom ProgressSpinner"
+                                        :pt="{
+                                            circle: {
+                                                style: {
+                                                    stroke: 'white',
+                                                    animation: 'none',
+                                                },
+                                            },
+                                        }"
+                                    />
+                                </div>
+                            </Button>
+                        </div>
+                    </div>
                     <div>
                         <SelectButton
                             v-model="gender"
@@ -768,5 +965,33 @@ input[type="file"] {
     border-radius: 10px;
     color: white;
     background-color: black;
+}
+
+.tooltip2 {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip2 .tooltiptext2 {
+    visibility: hidden;
+    font-size: 14px;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+    z-index: 1;
+}
+
+.tooltip2:hover .tooltiptext2 {
+    visibility: visible;
 }
 </style>
