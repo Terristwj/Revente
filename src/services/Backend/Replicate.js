@@ -9,14 +9,14 @@ const DEPLOYED_BACKEND_URL = import.meta.env.VITE_DEPLOYED_BACKEND_URL;
 const URL = DEPLOYED_BACKEND_URL;
 
 // OpenAI API Key
-const PALM_API_KEY = import.meta.env.VITE_PALM_APIKEY;
+const REPLICATE_API_KEY = import.meta.env.VITE_REPLICATE_APIKEY;
 
-class BackendPaLM {
-    generatePrompt = async function (prompt) {
+class BackendReplicate {
+    identifyProduct = async function (fileURL) {
         const result = await axios
-            .post(`${URL}/palm/generate_description`, {
-                prompt: prompt,
-                api_key: PALM_API_KEY,
+            .post(`${URL}/replicate/generate_information_v2`, {
+                file: fileURL,
+                api_key: REPLICATE_API_KEY,
             })
             .then((res) => {
                 // console.log(res);
@@ -31,5 +31,5 @@ class BackendPaLM {
     };
 }
 
-const BEInstancePaLM = new BackendPaLM();
-export default BEInstancePaLM;
+const BEInstanceReplicate = new BackendReplicate();
+export default BEInstanceReplicate;
