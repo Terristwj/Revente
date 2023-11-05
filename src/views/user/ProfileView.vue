@@ -250,9 +250,9 @@ export default {
                             <div
                                 v-for="item in this.reviews"
                                 :key="item"
-                                class="shadow-sm p-3 mb-5 bg-white rounded"
+                                class="shadow p-4 px-5 mb-5 bg-white rounded-3"
                             >
-                                <div class="row">
+                                <div class="row p-2">
                                     <div class="col">
                                         <vue3starRatings
                                             v-model="item.rating"
@@ -282,7 +282,7 @@ export default {
                                                 {{ item.review_desc }}
                                             </p>
                                             <p class="fs-5 fw-bold">
-                                                {{ item.buyer_name }}
+                                                Buyer: {{ item.buyer_name }}
                                             </p>
                                         </div>
                                         <div class="col-xl-6 col-md-3"></div>
