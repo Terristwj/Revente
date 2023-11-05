@@ -1,3 +1,19 @@
+<script setup>
+import { ref } from "vue";
+import Dialog from "primevue/dialog";
+const visible = ref(false);
+</script>
+
+<script>
+export default {
+    name: "TermsAndConditions",
+    created() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    },
+};
+</script>
+
 <template>
     <div class="terms-and-conditions">
         <h1 class="page-title">Terms and Conditions</h1>
@@ -153,22 +169,6 @@
         </p>
     </div>
 </template>
-
-<script setup>
-import { ref } from "vue";
-import Dialog from "primevue/dialog";
-const visible = ref(false);
-</script>
-
-<script>
-export default {
-    name: "TermsAndConditions",
-    created() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    },
-};
-</script>
 
 <style scoped>
 button {

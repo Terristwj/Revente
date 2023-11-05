@@ -1,19 +1,3 @@
-<template>
-    <div>
-        <!-- call the auto complete -->
-        <GoogleAddressAutocomplete
-            id="auto-complete"
-            :apiKey="apiKey"
-            @callback="getAddressData"
-            class="form-control"
-            placeholder="Your Address"
-        />
-        <div class="pt-1"></div>
-        <!-- map -->
-        <div id="map" style="width: 100%; height: 500px"></div>
-    </div>
-</template>
-
 <script>
 import GoogleAddressAutocomplete from "vue3-google-address-autocomplete";
 import { Loader } from "@googlemaps/js-api-loader";
@@ -249,6 +233,22 @@ export default {
     },
 };
 </script>
+
+<template>
+    <div>
+        <!-- call the auto complete -->
+        <GoogleAddressAutocomplete
+            id="auto-complete"
+            :apiKey="apiKey"
+            @callback="getAddressData"
+            class="form-control"
+            placeholder="Your Address"
+        />
+        <div class="pt-1"></div>
+        <!-- map -->
+        <div id="map" style="width: 100%; height: 500px"></div>
+    </div>
+</template>
 
 <style scoped>
 #map {

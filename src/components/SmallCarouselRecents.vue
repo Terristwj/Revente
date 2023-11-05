@@ -13,7 +13,7 @@ export default {
                 {
                     breakpoint: "1300px",
                     numVisible: 1,
-                  
+
                 },
                 {
                     breakpoint: "991px",
@@ -23,7 +23,7 @@ export default {
                 {
                     breakpoint: "767px",
                     numVisible: 1,
-              
+
                 },
             ],
         };

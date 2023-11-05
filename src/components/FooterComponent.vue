@@ -1,3 +1,32 @@
+<script setup>
+import { ref } from "vue";
+import Dialog from "primevue/dialog";
+
+const visible = ref(false);
+const visible1 = ref(false);
+const visible3 = ref(false);
+const email = ref("");
+
+function isValidEmail(email) {
+    // Regular expression for email validation
+    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    return emailRegex.test(email);
+}
+
+function subscribe() {
+    if (isValidEmail(email.value)) {
+        visible.value = true;
+        email.value = ''; // Clear the input
+
+    } else {
+        // Handle invalid email (e.g., show an error message)
+        visible1.value = true;
+        email.value = ''; // Clear the input
+
+    }
+}
+</script>
+
 <template>
     <div class="container-fluid footer">
         <footer class="py-4">
@@ -128,35 +157,6 @@
         </footer>
     </div>
 </template>
-
-<script setup>
-import { ref } from "vue";
-import Dialog from "primevue/dialog";
-
-const visible = ref(false);
-const visible1 = ref(false);
-const visible3 = ref(false);
-const email = ref("");
-
-function isValidEmail(email) {
-    // Regular expression for email validation
-    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
-    return emailRegex.test(email);
-}
-
-function subscribe() {
-    if (isValidEmail(email.value)) {
-        visible.value = true;
-        email.value = ''; // Clear the input
-
-    } else {
-        // Handle invalid email (e.g., show an error message)
-        visible1.value = true;
-        email.value = ''; // Clear the input
-
-    }
-}
-</script>
 
 <style scoped>
 .container-fluid {

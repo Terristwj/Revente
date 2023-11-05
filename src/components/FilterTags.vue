@@ -1,17 +1,17 @@
 <script>
-	export default {
-		props: {},
-		data() {
-			return {
-				filter: {
-					gender: '',
-					brand: '',
-					minPrice: '',
-					maxPrice: '',
-				},
-			};
-		},
-	};
+export default {
+	props: {},
+	data() {
+		return {
+			filter: {
+				gender: '',
+				brand: '',
+				minPrice: '',
+				maxPrice: '',
+			},
+		};
+	},
+};
 </script>
 
 <template>

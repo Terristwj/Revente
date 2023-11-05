@@ -1,24 +1,3 @@
-<template>
-	<StripeElements
-		v-slot="{ elements }"
-		:stripe-key="stripeKey"
-		:instance-options="instanceOptions"
-		:elements-options="elementsOptions"
-	>
-		<StripeElement
-			type="cardNumber"
-			:elements="elements"
-			:options="cardNumberOptions"
-		/>
-		<StripeElement
-			type="postalCode"
-			:elements="elements"
-			:options="postalCodeOptions"
-		/>
-	</StripeElements>
-	<button type="button" @click="pay">Pay</button>
-</template>
-
 <script lang="ts">
 	import { StripeElements, StripeElement } from 'vue-stripe-js';
 	import { loadStripe } from '@stripe/stripe-js';
@@ -87,3 +66,25 @@
 		},
 	});
 </script>
+
+<template>
+	<StripeElements
+		v-slot="{ elements }"
+		:stripe-key="stripeKey"
+		:instance-options="instanceOptions"
+		:elements-options="elementsOptions"
+	>
+		<StripeElement
+			type="cardNumber"
+			:elements="elements"
+			:options="cardNumberOptions"
+		/>
+		<StripeElement
+			type="postalCode"
+			:elements="elements"
+			:options="postalCodeOptions"
+		/>
+	</StripeElements>
+	<button type="button" @click="pay">Pay</button>
+</template>
+

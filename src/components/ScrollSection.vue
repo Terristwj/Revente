@@ -1,11 +1,3 @@
-<template>
-    <section class="scrollSection">
-        <div ref="root" class="card">
-            <slot></slot>
-        </div>
-    </section>
-</template>
-  
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
 import anime from "animejs";
@@ -87,7 +79,15 @@ export default {
     },
 };
 </script>
-  
+
+<template>
+    <section class="scrollSection">
+        <div ref="root" class="card">
+            <slot></slot>
+        </div>
+    </section>
+</template>
+
 <style>
 /* .scrollSection {
     display: grid;
