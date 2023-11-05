@@ -252,42 +252,56 @@ export default {
             // totalDresses
             let productPrompt = "";
 
-            productPrompt += "pending:";
+            productPrompt += "The following are pending:";
             this.pendingProducts.forEach((product) => {
-                productPrompt += `${product.product_name},`;
-                productPrompt += `${product.gender},`;
-                productPrompt += `${product.brand},`;
-                productPrompt += `${product.condition},`;
-                productPrompt += `${product.drop_off_location},`;
-                productPrompt += `beforePrice:${product.price},`;
-                productPrompt += `END`;
+                // Max 4097 Tokens
+                // 1 token = 4 chars
+                if (productPrompt.length <= 8000) {
+                    productPrompt += `${product.product_name},`;
+
+                    let temp = `${product.gender},`;
+                    temp += `${product.brand},`;
+                    temp += `${product.condition},`;
+                    temp += `${product.drop_off_location},`;
+                    temp += `pendingPrice:${product.price},`;
+                    temp += `END`;
+
+                    productPrompt += temp
+                        .replaceAll(" ", "")
+                        .replaceAll("Warehouse", "");
+                }
             });
 
-            productPrompt += "approved:";
+            productPrompt += "The following are approved:";
             this.approvedProducts.forEach((product) => {
-                productPrompt += `${product.product_name},`;
-                productPrompt += `${product.gender},`;
-                productPrompt += `${product.brand},`;
-                productPrompt += `${product.condition},`;
-                productPrompt += `${product.drop_off_location},`;
-                productPrompt += `finalPrice:${product.modifiedPrice},`;
-                productPrompt += `END`;
+                // Max 4097 Tokens
+                // 1 token = 4 chars
+                if (productPrompt.length <= 16000) {
+                    productPrompt += `${product.product_name},`;
+
+                    let temp = `${product.gender},`;
+                    temp += `${product.brand},`;
+                    temp += `${product.condition},`;
+                    temp += `${product.drop_off_location},`;
+                    temp += `approvedPrice:${product.modifiedPrice},`;
+                    temp += `END`;
+
+                    productPrompt += temp
+                        .replaceAll(" ", "")
+                        .replaceAll("Warehouse", "");
+                }
             });
 
-            productPrompt = productPrompt
-                .replaceAll(" ", "")
-                .replaceAll("Warehouse", "");
-
-            productPrompt += `notApprov:${this.notApprovedCount},`;
-            productPrompt += `Approv:${this.approvedCount},`;
+            productPrompt += `Pending:${this.notApprovedCount},`;
+            productPrompt += `Approved:${this.approvedCount},`;
             productPrompt += `Tops:${this.totalTops},`;
             productPrompt += `Bottoms:${this.totalBottoms},`;
             productPrompt += `Dresses:${this.totalDresses},`;
             productPrompt += `TRevenue:${this.totalRevenue},`;
             productPrompt += `TUser:${this.userIDs.length},`;
 
-            // console.log(productPrompt);
-            // console.log(productPrompt.length);
+            console.log(productPrompt);
+            console.log(productPrompt.length);
 
             // Hardcode testing START
             // productPrompt =
@@ -369,7 +383,7 @@ export default {
                         }
                     }
                 }
-                console.log(this.approvedProducts);
+                // console.log(this.approvedProducts);
 
                 this.pendingProducts.forEach((product) => {
                     product.modifiedPrice = this.modifyPrice(product.price);

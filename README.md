@@ -260,14 +260,26 @@ To access the admin page, [staff will have to access a secret link](https://smu-
 
 ## Screenshots
 
-![Screenshot 1](/src//assets/screenshots/screenshot1.png)
+![Screenshot 1](/src/assets/screenshots/screenshot1.png)
 _Homepage._
 
-![Screenshot 2](/src//assets/screenshots/screenshot2.png)
+![Screenshot 2](/src/assets/screenshots/screenshot2.png)
 _Sustainability game where users learn more about why sustainability in fashion matters._
 
-![Screenshot 3](/src//assets/screenshots/screenshot3.png)
+![Screenshot 3](/src/assets/screenshots/screenshot3.png)
 _FAQ page powered by AI._
+
+![Screenshot 4](/src/assets/screenshots/listingsView.png)
+_Listings and filters._
+
+![Screenshot 5](/src/assets/screenshots/wishlistView.png)
+_Wishlist._
+
+![Screenshot 6](/src/assets/screenshots/uploadView.png)
+_Uploading Items._
+
+![Screenshot 7](/src/assets/screenshots/adminView.png)
+_Admin dashboard and AI assistant._
 
 ## Acknowledgments
 
@@ -307,11 +319,12 @@ Special thanks to the following resources that helped us along the way:
 6.  Backend APIs
 
     1.  [OpenAI Documentation](https://platform.openai.com/docs/api-reference)
-    2.  [PaLM Documentation](https://developers.generativeai.google/tutorials/setup)
-    3.  [Stripe Documentation](https://stripe.com/docs)
-    4.  [Stripe & NodeJS Video](https://www.youtube.com/watch?v=WG4ehXSEpz4&feature=youtu.be)
-    5.  [Replicate Model 1 Example Usage](https://replicate.com/daanelson/minigpt-4/api?tab=node)
-    6.  [Replicate Model 2 Example Usage](https://replicate.com/andreasjansson/blip-2/api?tab=node)
+    2.  [OpenAI Tokens](https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them)
+    3.  [PaLM Documentation](https://developers.generativeai.google/tutorials/setup)
+    4.  [Stripe Documentation](https://stripe.com/docs)
+    5.  [Stripe & NodeJS Video](https://www.youtube.com/watch?v=WG4ehXSEpz4&feature=youtu.be)
+    6.  [Replicate Model 1 Example Usage](https://replicate.com/daanelson/minigpt-4/api?tab=node)
+    7.  [Replicate Model 2 Example Usage](https://replicate.com/andreasjansson/blip-2/api?tab=node)
 
 7.  I forgot to keep track of all the links - Terris
 
