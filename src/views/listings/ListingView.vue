@@ -23,7 +23,7 @@ export default {
 					// Get all brands
 					for (const key in products) {
 						const brand = products[key].brand;
-						if (!this.brands.includes(brand))
+						if (!this.brands?.includes(brand))
 							this.brands.push(brand);
 					}
 
@@ -146,14 +146,14 @@ export default {
 				}
 				// brand filter
 				if (
-					!this.filter.brand.includes(product.brand) &&
+					!this.filter.brand?.includes(product.brand) &&
 					this.filter.brand != ''
 				) {
 					continue;
 				}
 				// category filter
 				if (
-					!this.filter.category.includes(product.category) &&
+					!this.filter.category?.includes(product.category) &&
 					this.filter.category != ''
 				) {
 					continue;
