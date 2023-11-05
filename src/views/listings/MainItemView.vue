@@ -133,7 +133,7 @@ export default {
                 alert("Item already added to cart, please check your cart");
             } else {
                 shoppingCart.addCart(this.local_itemID);
-                console.log(shoppingCart.getCart());
+                // console.log(shoppingCart.getCart());
             }
         },
         addWishList() {

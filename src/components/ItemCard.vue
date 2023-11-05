@@ -24,7 +24,7 @@ export default {
                 alert("Item already added to cart, please check your cart");
             } else {
                 shoppingCart.addCart(id);
-                console.log(shoppingCart.getCart());
+                // console.log(shoppingCart.getCart());
             }
         },
         recent(id) {

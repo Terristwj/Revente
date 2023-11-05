@@ -78,9 +78,9 @@ export default {
         updateDatabase(arr, userID) {
             arr.forEach((id) => {
                 FBInstanceFirestore.getProduct(id).then((data) => {
-                    console.log(data);
+                    // console.log(data);
                     data.is_bought = true;
-                    console.log(data);
+                    // console.log(data);
                     FBInstanceFirestore.updateProductStatusAndAddSellerID(
                         // Seller and Product
                         data.seller_ID,
@@ -123,9 +123,9 @@ export default {
         document.documentElement.scrollTop = 0;
 
         this.productIds = this.getProductIds();
-        console.log(this.productIds);
+        // console.log(this.productIds);
         this.user_ID = this.getUserId();
-        console.log(this.user_ID);
+        // console.log(this.user_ID);
         this.updateDatabase(this.productIds, this.user_ID);
     },
 };

@@ -300,8 +300,8 @@ export default {
             productPrompt += `TRevenue:${this.totalRevenue},`;
             productPrompt += `TUser:${this.userIDs.length},`;
 
-            console.log(productPrompt);
-            console.log(productPrompt.length);
+            // console.log(productPrompt);
+            // console.log(productPrompt.length);
 
             // Hardcode testing START
             // productPrompt =
