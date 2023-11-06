@@ -447,6 +447,12 @@ export default {
                     .catch((err) => {
                         console.log("Error");
                         console.log(err);
+                        this.$toast.add({
+                            severity: "error",
+                            summary: "Problem with Autofill",
+                            detail: "The image provided is not clear enough. Please try another image.",
+                            life: 3000,
+                        });
                     });
             }
 

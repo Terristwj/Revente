@@ -285,7 +285,7 @@ export default {
             this.pendingProducts.forEach((product) => {
                 // Max 4097 Tokens
                 // 1 token = 4 chars
-                if (productPrompt.length <= 7000) {
+                if (productPrompt.length <= 7500) {
                     productPrompt += `${product.product_name},`;
 
                     let temp = `${product.gender},`;

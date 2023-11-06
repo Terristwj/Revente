@@ -142,6 +142,7 @@ A compilation of developer portals to check API limits, payments, deployments, d
     5. Replicate Models Used
         - [daanelson/minigpt-4](https://replicate.com/daanelson/minigpt-4/versions/b96a2f33cc8e4b0aa23eacfce731b9c41a7d9466d9ed4e167375587b54db9423?prediction=ls3oaabbq5br3dfcgs4sfi5sbu)
         - [andreasjansson/blip-2](https://replicate.com/andreasjansson/blip-2/versions/9109553e37d266369f2750e407ab95649c63eb8e13f13b1f3983ff0feb2f9ef7?prediction=aa7anpbbatll7263nvclm32qk4)
+4. [Google Drive Files](https://drive.google.com/drive/u/1/folders/1JODZqTAZR9kKDGO3jthjYt2Su_tsmUQh)
 
 ### What Next?
 
