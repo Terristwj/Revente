@@ -102,8 +102,8 @@ export default {
             </div>
         </div>
 
-        <div class="row mb-3">
-            <ScrollSection transition="fade" class="content-4 card-bg1">
+        <div class="row mb-3 card-bg1">
+            <ScrollSection id="About-Team" transition="fade" class="content-4">
                 <h1>Our Team</h1>
                 <br />
                 <p style="text-align: center">
@@ -159,6 +159,35 @@ export default {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
+#About-Team {
+    animation: About-Team-Leave 2s;
+    animation-fill-mode: forwards;
+}
+
+#About-Team:hover {
+    animation: About-Team-Enter 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes About-Team-Enter {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes About-Team-Leave {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .game-instructions {
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
