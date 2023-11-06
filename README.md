@@ -133,6 +133,7 @@ A compilation of developer portals to check API limits, payments, deployments, d
     5. [Firebase Quotas](https://console.cloud.google.com/appengine/quotadetails?authuser=0&project=smu-wad2&hl=en)
 2. Others
     1. [DialogFlow Controls](https://dialogflow.cloud.google.com/)
+    2. [DialogFlow Agent](https://dialogflow.cloud.google.com/#/agent/adrian-ljon/intents)
 3. Backend
     1. [Backend Vercel](https://vercel.com/terristwj/revente-backend)
     2. [OpenAI Billing](https://platform.openai.com/account/billing/overview)
