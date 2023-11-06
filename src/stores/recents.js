@@ -1,25 +1,21 @@
 import { defineStore } from 'pinia';
 import { useLocalStorage } from '@vueuse/core';
 
-export const useCurrentRecents = defineStore('currentRecents', () => {
-	const recentsView = useLocalStorage('recentsView', {
-		genderPicked: '',
-		brandsPicked: [],
-		priceRangeSelected: '',
-	});
+export const useCurrentRecents = defineStore("currentRecents", () => {
+    const recentsView = useLocalStorage("recentsView", []);
 
-	function addRecents(uid) {
-		recentsView.value.push(uid);
-	}
-	function getRecents() {
-		return recentsView.value;
-	}
+    function addRecents(uid) {
+        recentsView.value.push(uid);
+    }
+    function getRecents() {
+        return recentsView.value;
+    }
 
-	return {
+    return {
 		recentsView,
 		addRecents,
 		getRecents,
-	};
+    };
 });
 
 /**
