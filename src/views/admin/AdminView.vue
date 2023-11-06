@@ -228,6 +228,35 @@ export default {
             ) {
                 alert("Are you sure you want to reject this product?");
             } else {
+                FBInstanceFirestore.updateProductStatus(
+                    // Seller and Product
+                    this.pendingProducts[idx].seller_ID,
+                    this.pendingProducts[idx].product_ID,
+
+                    // Product Details
+                    this.pendingProducts[idx].product_name,
+                    this.pendingProducts[idx].brand,
+                    this.pendingProducts[idx].description,
+
+                    // Category
+                    this.pendingProducts[idx].gender,
+                    this.pendingProducts[idx].category,
+
+                    // Condition
+                    this.pendingProducts[idx].condition,
+                    this.pendingProducts[idx].condition_notes,
+
+                    // Others
+                    this.pendingProducts[idx].drop_off_location,
+                    this.pendingProducts[idx].price,
+                    0,
+                    '',
+                    this.pendingProducts[idx].image_src,
+
+                    // Status
+                    'rejected',
+                    false
+                );
                 this.pendingProducts.splice(idx, 1);
             }
         },
@@ -256,7 +285,7 @@ export default {
             this.pendingProducts.forEach((product) => {
                 // Max 4097 Tokens
                 // 1 token = 4 chars
-                if (productPrompt.length <= 8000) {
+                if (productPrompt.length <= 7000) {
                     productPrompt += `${product.product_name},`;
 
                     let temp = `${product.gender},`;
@@ -276,7 +305,7 @@ export default {
             this.approvedProducts.forEach((product) => {
                 // Max 4097 Tokens
                 // 1 token = 4 chars
-                if (productPrompt.length <= 16000) {
+                if (productPrompt.length <= 15000) {
                     productPrompt += `${product.product_name},`;
 
                     let temp = `${product.gender},`;
@@ -374,7 +403,7 @@ export default {
                 for (const key in data) {
                     if (data[key].is_approved == false) {
                         this.pendingProducts.push(data[key]);
-                    } else {
+                    } else if (data[key].is_approved == true) {
                         //if dh the same product, push to approvedProducts
                         if (
                             this.approvedProducts.includes(data[key]) == false
@@ -423,29 +452,17 @@ export default {
     <div class="row text-center mb-4">
         <div class="tab d-flex">
             <div class="col">
-                <button
-                    class="tablinks w-100"
-                    :class="{ clicked: pendingShow }"
-                    @click="openTab('pending')"
-                >
+                <button class="tablinks w-100" :class="{ clicked: pendingShow }" @click="openTab('pending')">
                     Pending
                 </button>
             </div>
             <div class="col">
-                <button
-                    class="tablinks w-100"
-                    :class="{ clicked: approvedShow }"
-                    @click="openTab('approved')"
-                >
+                <button class="tablinks w-100" :class="{ clicked: approvedShow }" @click="openTab('approved')">
                     Approved
                 </button>
             </div>
             <div class="col">
-                <button
-                    class="tablinks w-100"
-                    :class="{ clicked: statsShow }"
-                    @click="openTab('stats')"
-                >
+                <button class="tablinks w-100" :class="{ clicked: statsShow }" @click="openTab('stats')">
                     Stats
                 </button>
             </div>
@@ -466,14 +483,8 @@ export default {
             <div class="" v-if="!noPending">
                 <div class="table-responsive">
                     <table class="table table-striped">
-                        <thead
-                            class="thead-light"
-                            style="position: sticky; top: 0"
-                        >
-                            <tr
-                                class="table-danger"
-                                style="border: 1px solid black"
-                            >
+                        <thead class="thead-light" style="position: sticky; top: 0">
+                            <tr class="table-danger" style="border: 1px solid black">
                                 <th scope="col">ID</th>
                                 <th scope="col">Product</th>
                                 <th scope="col">Product Name</th>
@@ -486,65 +497,44 @@ export default {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                v-for="(product, idx) in pendingProducts"
-                                :key="product.product_ID"
-                            >
+                            <tr v-for="(product, idx) in pendingProducts" :key="product.product_ID">
                                 <td>{{ product.product_ID }}</td>
                                 <td>
-                                    <img
-                                        :src="product.image_src"
-                                        alt="Product Image"
-                                        :style="{
-                                            width: '100px',
-                                            height: '100px',
-                                        }"
-                                    />
+                                    <img :src="product.image_src" alt="Product Image" :style="{
+                                        width: '100px',
+                                        height: '100px',
+                                    }" />
                                 </td>
                                 <td>{{ product.product_name }}</td>
-                                <td
-                                    :class="
-                                        getPriceClass(
-                                            product.price,
-                                            product.modifiedPrice
-                                        )
-                                    "
-                                >
+                                <td :class="getPriceClass(
+                                    product.price,
+                                    product.modifiedPrice
+                                )
+                                    ">
                                     {{ product.price }}
                                 </td>
                                 <td>{{ product.modifiedPrice }}</td>
                                 <td>{{ product.category }}</td>
                                 <td>
-                                    <button
-                                        class="btn btn-success mx-2"
-                                        @click="
-                                            approveProduct(
-                                                product,
-                                                idx,
-                                                product.modifiedPrice
-                                            )
-                                        "
-                                    >
+                                    <button class="btn btn-success mx-2" @click="
+                                        approveProduct(
+                                            product,
+                                            idx,
+                                            product.modifiedPrice
+                                        )
+                                        ">
                                         Approve
                                     </button>
                                 </td>
                                 <td>
-                                    <button
-                                        class="btn btn-danger mx-0"
-                                        @click="removeProduct(idx)"
-                                    >
+                                    <button class="btn btn-danger mx-0" @click="removeProduct(idx)">
                                         Reject
                                     </button>
                                 </td>
                                 <td>
-                                    <textarea
-                                        name="detailedSizing"
-                                        :id="'detailedSizing-' + idx"
-                                        v-model="productSize[idx]"
-                                        cols="20"
-                                        rows="5"
-                                        placeholder="Chest Width: cm, Shoulder Width: cm, Sleeve Length: cm, Length: cm"
-                                    ></textarea>
+                                    <textarea name="detailedSizing" :id="'detailedSizing-' + idx" v-model="productSize[idx]"
+                                        cols="20" rows="5"
+                                        placeholder="Chest Width: cm, Shoulder Width: cm, Sleeve Length: cm, Length: cm"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -559,14 +549,8 @@ export default {
             <div class="">
                 <div class="table-responsive">
                     <table class="table table-striped custom-table">
-                        <thead
-                            class="thead-light"
-                            style="position: sticky; top: 0"
-                        >
-                            <tr
-                                class="table-success"
-                                style="border: 1px solid black"
-                            >
+                        <thead class="thead-light" style="position: sticky; top: 0">
+                            <tr class="table-success" style="border: 1px solid black">
                                 <th scope="col">ID</th>
                                 <th scope="col">Product</th>
                                 <th scope="col">Product Name</th>
@@ -576,20 +560,13 @@ export default {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                v-for="product in approvedProducts"
-                                :key="product.id"
-                            >
+                            <tr v-for="product in approvedProducts" :key="product.id">
                                 <td>{{ product.product_ID }}</td>
                                 <td>
-                                    <img
-                                        :src="product.image_src"
-                                        alt="Product Image"
-                                        :style="{
-                                            width: '100px',
-                                            height: '100px',
-                                        }"
-                                    />
+                                    <img :src="product.image_src" alt="Product Image" :style="{
+                                        width: '100px',
+                                        height: '100px',
+                                    }" />
                                 </td>
                                 <td>{{ product.product_name }}</td>
                                 <td>{{ product.modifiedPrice }}</td>
@@ -613,22 +590,15 @@ export default {
                         <div class="card card-stats">
                             <div class="card-body">
                                 <div class="row">
-                                    <div
-                                        class="col-5 d-flex"
-                                        style="
+                                    <div class="col-5 d-flex" style="
                                             justify-content: center;
                                             align-item: center;
-                                        "
-                                    >
+                                        ">
                                         <div class="my-auto">
-                                            <font-awesome-icon
-                                                :icon="[
-                                                    'fas',
-                                                    'hourglass-half',
-                                                ]"
-                                                bounce
-                                                size="2xl"
-                                            />
+                                            <font-awesome-icon :icon="[
+                                                'fas',
+                                                'hourglass-half',
+                                            ]" bounce size="2xl" />
                                         </div>
                                     </div>
                                     <div class="col-7">
@@ -655,19 +625,12 @@ export default {
                         <div class="card card-stats">
                             <div class="card-body">
                                 <div class="row">
-                                    <div
-                                        class="col-5 d-flex"
-                                        style="
+                                    <div class="col-5 d-flex" style="
                                             justify-content: center;
                                             align-item: center;
-                                        "
-                                    >
+                                        ">
                                         <div class="my-auto">
-                                            <font-awesome-icon
-                                                :icon="['fas', 'circle-check']"
-                                                bounce
-                                                size="2xl"
-                                            />
+                                            <font-awesome-icon :icon="['fas', 'circle-check']" bounce size="2xl" />
                                         </div>
                                     </div>
                                     <div class="col-7">
@@ -694,23 +657,15 @@ export default {
                         <div class="card card-stats">
                             <div class="card-body">
                                 <div class="row">
-                                    <div
-                                        class="col-5 d-flex"
-                                        style="
+                                    <div class="col-5 d-flex" style="
                                             justify-content: center;
                                             align-item: center;
-                                        "
-                                    >
+                                        ">
                                         <div class="my-auto">
-                                            <font-awesome-icon
-                                                :icon="[
-                                                    'fas',
-                                                    'money-bill-trend-up',
-                                                ]"
-                                                spin
-                                                spin-reverse
-                                                size="2xl"
-                                            />
+                                            <font-awesome-icon :icon="[
+                                                        'fas',
+                                                        'money-bill-trend-up',
+                                                    ]" spin spin-reverse size="2xl" />
                                         </div>
                                     </div>
                                     <div class="col-7">
@@ -736,18 +691,12 @@ export default {
                             <!---->
                             <div class="card-body">
                                 <div class="row">
-                                    <div
-                                        class="col-5 d-flex"
-                                        style="
+                                    <div class="col-5 d-flex" style="
                                             justify-content: center;
                                             align-item: center;
-                                        "
-                                    >
+                                        ">
                                         <div class="my-auto">
-                                            <font-awesome-icon
-                                                :icon="['fas', 'user']"
-                                                size="2xl"
-                                            />
+                                            <font-awesome-icon :icon="['fas', 'user']" size="2xl" />
                                         </div>
                                     </div>
                                     <div class="col-7">
@@ -783,12 +732,7 @@ export default {
             </div>
         </div>
     </div>
-    <Chat
-        :chat="AIAssistChatLog"
-        :onSend="handleMessage"
-        height="80vh"
-        inputPlaceholder="Ask AI Analyst"
-    />
+    <Chat :chat="AIAssistChatLog" :onSend="handleMessage" height="80vh" inputPlaceholder="Ask AI Analyst" />
 </template>
 
 <style scoped>
@@ -829,11 +773,9 @@ button {
 
 .btn-12 span {
     background: rgb(0, 172, 238);
-    background: linear-gradient(
-        0deg,
-        rgba(0, 172, 238, 1) 0%,
-        rgba(2, 126, 251, 1) 100%
-    );
+    background: linear-gradient(0deg,
+            rgba(0, 172, 238, 1) 0%,
+            rgba(2, 126, 251, 1) 100%);
     display: block;
     position: absolute;
     width: 130px;
