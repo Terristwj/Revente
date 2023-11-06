@@ -103,7 +103,7 @@ export default {
         </div>
 
         <div class="row mb-3">
-            <ScrollSection transition="fade" class="content-4 card-bg">
+            <ScrollSection transition="fade" class="content-4 card-bg1">
                 <h1>Our Team</h1>
                 <br />
                 <p style="text-align: center">
@@ -201,7 +201,6 @@ export default {
 
 .game-bg {
     background-image: url("../../assets/img/ecommerce/pixelbg2.jpeg");
-    /* background-size:contain; */
 }
 
 .scrollSection {
@@ -213,6 +212,11 @@ export default {
 
 .card-bg {
     background-image: url("../../assets/img/ecommerce/about1.png");
+    background-size: cover;
+}
+
+.card-bg1 {
+    background-image: url("../../assets/img/ecommerce/about2.png");
     background-size: cover;
 }
 
@@ -242,7 +246,6 @@ export default {
         to(#d3d3d3),
         color-stop(0.8, #d0d0d0)
     );
-    /* background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.8, #fff)) no-repeat; */
     background-size: 110px 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -279,12 +282,10 @@ export default {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    /* transform: translateY(-10rem); */
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    /* -webkit-text-stroke: 1px rgb(27, 27, 27); */
     height: 60dvh;
 }
 
