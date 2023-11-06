@@ -334,6 +334,6 @@ Feel free to add more screenshots and shoutouts to your GitHub profiles, reposit
 
 ### Team Members
 
-| Terris                                    | Owen                                    | Adrian                                    | Viciky                              | Glen                            |
+| Terris                                    | Owen                                    | Adrian                                    | Victoria                            | Glen                            |
 | ----------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------- | ------------------------------- |
 | [Terristwj](https://github.com/Terristwj) | [owengohh](https://github.com/owengohh) | [adriank0h](https://github.com/adriank0h) | [viqeey](https://github.com/viqeey) | [0gw0](https://github.com/0gw0) |
