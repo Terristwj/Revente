@@ -1,6 +1,5 @@
 <script>
 import { Howl } from "howler";
-import gsap from "gsap";
 
 let script2 = document.createElement("script");
 script2.setAttribute(
@@ -25,168 +24,12 @@ export default {
                     html5: true,
                     volume: 0.1,
                 }),
-                initBattle: new Howl({
-                    src: "./audio/initBattle.wav",
-                    html5: true,
-                    volume: 0.1,
-                }),
-                battle: new Howl({
-                    src: "./audio/battle.mp3",
-                    html5: true,
-                    volume: 0.1,
-                }),
-                tackleHit: new Howl({
-                    src: "./audio/tackleHit.wav",
-                    html5: true,
-                    volume: 0.1,
-                }),
-                fireballHit: new Howl({
-                    src: "./audio/fireballHit.wav",
-                    html5: true,
-                    volume: 0.1,
-                }),
-                initFireball: new Howl({
-                    src: "./audio/initFireball.wav",
-                    html5: true,
-                    volume: 0.1,
-                }),
-                victory: new Howl({
-                    src: "./audio/victory.wav",
-                    html5: true,
-                    volume: 0.1,
-                }),
             },
         };
     },
     mounted() {
         let movementSpeed = this.movementSpeed;
         const audio = this.audio;
-
-        const battleZonesData = [
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 1025, 1025, 1025, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 1025, 1025, 1025, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 1025, 1025, 1025, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1025, 1025, 1025, 1025, 1025,
-            1025, 1025, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1025,
-            1025, 1025, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 1025, 1025, 1025, 1025, 1025, 1025, 1025, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        ];
 
         const collisions = [
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -322,57 +165,6 @@ export default {
             0, 0, 0, 0, 0, 0,
         ];
 
-        const attacks = {
-            Tackle: {
-                name: "Tackle",
-                damage: 10,
-                type: "Normal",
-                color: "black",
-            },
-            Fireball: {
-                name: "Fireball",
-                damage: 25,
-                type: "Fire",
-                color: "red",
-            },
-        };
-
-        const monsters = {
-            Emby: {
-                position: {
-                    x: 280,
-                    y: 325,
-                },
-                image: {
-                    src: "./img/2d_game/embySprite.png",
-                },
-                frames: {
-                    max: 4,
-                    hold: 30,
-                },
-                animate: true,
-                name: "Emby",
-                attacks: [attacks.Tackle, attacks.Fireball],
-            },
-            Draggle: {
-                position: {
-                    x: 800,
-                    y: 100,
-                },
-                image: {
-                    src: "./img/2d_game/draggleSprite.png",
-                },
-                frames: {
-                    max: 4,
-                    hold: 30,
-                },
-                animate: true,
-                isEnemy: true,
-                name: "Draggle",
-                attacks: [attacks.Tackle, attacks.Fireball],
-            },
-        };
-
         const charactersMapData = [
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -414,15 +206,11 @@ export default {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 1026, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            1992, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1031, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 2048, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -495,7 +283,11 @@ export default {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ];
 
         function rectangularCollision({ rectangle1, rectangle2 }) {
@@ -625,162 +417,6 @@ export default {
             }
         }
 
-        class Monster extends Sprite {
-            constructor({
-                position,
-                velocity,
-                image,
-                frames = { max: 1, hold: 10 },
-                sprites,
-                animate = false,
-                rotation = 0,
-                isEnemy = false,
-                name,
-                attacks,
-            }) {
-                super({
-                    position,
-                    velocity,
-                    image,
-                    frames,
-                    sprites,
-                    animate,
-                    rotation,
-                });
-                this.health = 100;
-                this.isEnemy = isEnemy;
-                this.name = name;
-                this.attacks = attacks;
-            }
-
-            faint() {
-                let queryBox = document.querySelector("#dialogueBox");
-                // console.log(this.name);
-                // console.log(this.name == "Draggle");
-                if (this.name == "Draggle") {
-                    queryBox.innerHTML =
-                        this.name + " fainted! You won! But nothing happens...";
-                } else {
-                    queryBox.innerHTML =
-                        this.name +
-                        " fainted! You lost... But the adventure continues!";
-                }
-                gsap.to(this.position, {
-                    y: this.position.y + 20,
-                });
-                gsap.to(this, {
-                    opacity: 0,
-                });
-                audio.battle.stop();
-                audio.victory.play();
-            }
-
-            attack({ attack, recipient, renderedSprites }) {
-                document.querySelector("#dialogueBox").style.display = "block";
-                document.querySelector("#dialogueBox").innerHTML =
-                    this.name + " used " + attack.name;
-
-                let healthBar = "#enemyHealthBar";
-                if (this.isEnemy) healthBar = "#playerHealthBar";
-
-                let rotation = 1;
-                if (this.isEnemy) rotation = -2.2;
-
-                recipient.health -= attack.damage;
-
-                switch (attack.name) {
-                    case "Fireball": {
-                        audio.initFireball.play();
-                        const fireballImage = new Image();
-                        fireballImage.src = "./img/2d_game/fireball.png";
-                        const fireball = new Sprite({
-                            position: {
-                                x: this.position.x,
-                                y: this.position.y,
-                            },
-                            image: fireballImage,
-                            frames: {
-                                max: 4,
-                                hold: 10,
-                            },
-                            animate: true,
-                            rotation,
-                        });
-                        renderedSprites.splice(1, 0, fireball);
-
-                        gsap.to(fireball.position, {
-                            x: recipient.position.x,
-                            y: recipient.position.y,
-                            onComplete: () => {
-                                // Enemy actually gets hit
-                                audio.fireballHit.play();
-                                gsap.to(healthBar, {
-                                    width: recipient.health + "%",
-                                });
-
-                                gsap.to(recipient.position, {
-                                    x: recipient.position.x + 10,
-                                    yoyo: true,
-                                    repeat: 5,
-                                    duration: 0.08,
-                                });
-
-                                gsap.to(recipient, {
-                                    opacity: 0,
-                                    repeat: 5,
-                                    yoyo: true,
-                                    duration: 0.08,
-                                });
-                                renderedSprites.splice(1, 1);
-                            },
-                        });
-
-                        break;
-                    }
-                    case "Tackle": {
-                        // console.log(2);
-                        const tl = gsap.timeline();
-
-                        let movementDistance = 20;
-                        if (this.isEnemy) movementDistance = -20;
-
-                        tl.to(this.position, {
-                            x: this.position.x - movementDistance,
-                        })
-                            .to(this.position, {
-                                x: this.position.x + movementDistance * 2,
-                                duration: 0.1,
-                                onComplete: () => {
-                                    // Enemy actually gets hit
-                                    audio.tackleHit.play();
-                                    gsap.to(healthBar, {
-                                        width: recipient.health + "%",
-                                    });
-
-                                    gsap.to(recipient.position, {
-                                        x: recipient.position.x + 10,
-                                        yoyo: true,
-                                        repeat: 5,
-                                        duration: 0.08,
-                                    });
-
-                                    gsap.to(recipient, {
-                                        opacity: 0,
-                                        repeat: 5,
-                                        yoyo: true,
-                                        duration: 0.08,
-                                    });
-                                },
-                            })
-                            .to(this.position, {
-                                x: this.position.x,
-                            });
-                        break;
-                    }
-                }
-            }
-        }
-
         class Boundary {
             static width = 48;
             static height = 48;
@@ -840,11 +476,6 @@ export default {
             collisionsMap.push(collisions.slice(i, 70 + i));
         }
 
-        const battleZonesMap = [];
-        for (let i = 0; i < battleZonesData.length; i += 70) {
-            battleZonesMap.push(battleZonesData.slice(i, 70 + i));
-        }
-
         const charactersMap = [];
         for (let i = 0; i < charactersMapData.length; i += 70) {
             charactersMap.push(charactersMapData.slice(i, 70 + i));
@@ -861,22 +492,6 @@ export default {
             row.forEach((symbol, j) => {
                 if (symbol === 1025)
                     boundaries.push(
-                        new Boundary({
-                            position: {
-                                x: j * Boundary.width + offset.x,
-                                y: i * Boundary.height + offset.y,
-                            },
-                        })
-                    );
-            });
-        });
-
-        const battleZones = [];
-
-        battleZonesMap.forEach((row, i) => {
-            row.forEach((symbol, j) => {
-                if (symbol === 1025)
-                    battleZones.push(
                         new Boundary({
                             position: {
                                 x: j * Boundary.width + offset.x,
@@ -1081,97 +696,24 @@ export default {
             background,
             ...boundaries,
             foreground,
-            ...battleZones,
             ...characters,
         ];
         const renderables = [
             background,
             ...boundaries,
-            ...battleZones,
             ...characters,
             player,
             foreground,
         ];
 
-        const battle = {
-            initiated: false,
-        };
-
         function animate() {
-            const animationId = window.requestAnimationFrame(animate);
+            window.requestAnimationFrame(animate);
             renderables.forEach((renderable) => {
                 renderable.draw();
             });
 
             let moving = true;
             player.animate = false;
-
-            if (battle.initiated) return;
-
-            // activate a battle
-            if (
-                keys.w.pressed ||
-                keys.a.pressed ||
-                keys.s.pressed ||
-                keys.d.pressed
-            ) {
-                for (let i = 0; i < battleZones.length; i++) {
-                    const battleZone = battleZones[i];
-                    const overlappingArea =
-                        (Math.min(
-                            player.position.x + player.width,
-                            battleZone.position.x + battleZone.width
-                        ) -
-                            Math.max(
-                                player.position.x,
-                                battleZone.position.x
-                            )) *
-                        (Math.min(
-                            player.position.y + player.height,
-                            battleZone.position.y + battleZone.height
-                        ) -
-                            Math.max(player.position.y, battleZone.position.y));
-                    if (
-                        rectangularCollision({
-                            rectangle1: player,
-                            rectangle2: battleZone,
-                        }) &&
-                        overlappingArea > (player.width * player.height) / 2 &&
-                        Math.random() < 0.01
-                    ) {
-                        // deactivate current animation loop
-                        window.cancelAnimationFrame(animationId);
-
-                        audio.Map.stop();
-                        audio.initBattle.play();
-                        audio.battle.play();
-
-                        battle.initiated = true;
-                        gsap.to("#overlappingDiv", {
-                            opacity: 1,
-                            repeat: 3,
-                            yoyo: true,
-                            duration: 0.4,
-                            onComplete() {
-                                gsap.to("#overlappingDiv", {
-                                    opacity: 1,
-                                    duration: 0.4,
-                                    onComplete() {
-                                        // activate a new animation loop
-                                        initBattle();
-                                        animateBattle();
-                                        gsap.to("#overlappingDiv", {
-                                            opacity: 0,
-                                            duration: 0.4,
-                                        });
-                                    },
-                                });
-                            },
-                        });
-                        break;
-                    }
-                }
-            }
 
             if (keys.w.pressed && lastKey === "w") {
                 player.animate = true;
@@ -1402,153 +944,7 @@ export default {
                 clicked = true;
             }
         });
-
-        const battleBackgroundImage = new Image();
-        battleBackgroundImage.src = "./img/2d_game/battleBackground.png";
-        const battleBackground = new Sprite({
-            position: {
-                x: 0,
-                y: 0,
-            },
-            image: battleBackgroundImage,
-        });
-
-        let draggle;
-        let emby;
-        let renderedSprites;
-        let battleAnimationId;
-        let queue;
-
-        function initBattle() {
-            document.querySelector("#userInterface").style.display = "block";
-            document.querySelector("#dialogueBox").style.display = "none";
-            document.querySelector("#enemyHealthBar").style.width = "100%";
-            document.querySelector("#playerHealthBar").style.width = "100%";
-            document.querySelector("#attacksBox").replaceChildren();
-
-            draggle = new Monster(monsters.Draggle);
-            emby = new Monster(monsters.Emby);
-            renderedSprites = [draggle, emby];
-            queue = [];
-
-            emby.attacks.forEach((attack) => {
-                const button = document.createElement("button");
-                button.innerHTML = attack.name;
-                document.querySelector("#attacksBox").append(button);
-            });
-
-            // our event listeners for our buttons (attack)
-            document.querySelectorAll("button").forEach((button) => {
-                button.addEventListener("click", (e) => {
-                    const selectedAttack = attacks[e.currentTarget.innerHTML];
-                    // console.log(selectedAttack);
-                    emby.attack({
-                        attack: selectedAttack,
-                        recipient: draggle,
-                        renderedSprites,
-                    });
-
-                    if (draggle.health <= 0) {
-                        queue.push(() => {
-                            draggle.faint();
-                        });
-                        queue.push(() => {
-                            // fade back to black
-                            gsap.to("#overlappingDiv", {
-                                opacity: 1,
-                                onComplete: () => {
-                                    cancelAnimationFrame(battleAnimationId);
-                                    animate();
-                                    document.querySelector(
-                                        "#userInterface"
-                                    ).style.display = "none";
-
-                                    gsap.to("#overlappingDiv", {
-                                        opacity: 0,
-                                    });
-
-                                    battle.initiated = false;
-                                    audio.Map.play();
-                                },
-                            });
-                        });
-                    }
-
-                    // draggle or enemy attacks right here
-                    const randomAttack =
-                        draggle.attacks[
-                            Math.floor(Math.random() * draggle.attacks.length)
-                        ];
-
-                    queue.push(() => {
-                        draggle.attack({
-                            attack: randomAttack,
-                            recipient: emby,
-                            renderedSprites,
-                        });
-
-                        if (emby.health <= 0) {
-                            queue.push(() => {
-                                emby.faint();
-                            });
-
-                            queue.push(() => {
-                                // fade back to black
-                                gsap.to("#overlappingDiv", {
-                                    opacity: 1,
-                                    onComplete: () => {
-                                        cancelAnimationFrame(battleAnimationId);
-                                        animate();
-                                        document.querySelector(
-                                            "#userInterface"
-                                        ).style.display = "none";
-
-                                        gsap.to("#overlappingDiv", {
-                                            opacity: 0,
-                                        });
-
-                                        battle.initiated = false;
-                                        audio.Map.play();
-                                    },
-                                });
-                            });
-                        }
-                    });
-                });
-
-                button.addEventListener("mouseenter", (e) => {
-                    const selectedAttack = attacks[e.currentTarget.innerHTML];
-                    document.querySelector("#attackType").innerHTML =
-                        selectedAttack.type;
-                    document.querySelector("#attackType").style.color =
-                        selectedAttack.color;
-                });
-            });
-        }
-
-        function animateBattle() {
-            battleAnimationId = window.requestAnimationFrame(animateBattle);
-            battleBackground.draw();
-
-            // console.log(battleAnimationId);
-
-            renderedSprites.forEach((sprite) => {
-                sprite.draw();
-            });
-        }
-
         animate();
-        // initBattle()
-        // animateBattle()
-
-        document
-            .querySelector("#dialogueBox")
-            .addEventListener("click", (e) => {
-                if (queue.length > 0) {
-                    queue[0]();
-                    queue.shift();
-                } else e.currentTarget.style.display = "none";
-            });
     },
     methods: {},
 };
