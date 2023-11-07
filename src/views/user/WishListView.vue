@@ -24,22 +24,22 @@ export default {
     },
     computed: {
         noRecents() {
-            return this.recentProducts.length == 0
+            return this.recentProducts.length == 0;
         },
         noRecomended() {
-            return this.recomendedProducts.length == 0
+            return this.recomendedProducts.length == 0;
         },
         fourRecents() {
-            return this.recentProducts.length > 0 && this.recentProducts.length < 5
+            return (
+                this.recentProducts.length > 0 && this.recentProducts.length < 5
+            );
         },
         showCarousel() {
-            return this.recentProducts.length > 4
+            return this.recentProducts.length > 4;
         },
         showReccoCarousel() {
-            return this.recomendedProducts.length > 4
-        }
-
-
+            return this.recomendedProducts.length > 4;
+        },
     },
     methods: {
         toListing() {
@@ -102,7 +102,7 @@ export default {
     components: {
         SmallCarouselWishList,
         SmallCarouselRecentsWishList,
-        SmallCarousel
+        SmallCarousel,
     },
     mounted() {
         // When enter from About page - START
@@ -156,7 +156,8 @@ export default {
                 for (const key in data) {
                     if (
                         data[key].category == this.popularCategory &&
-                        data[key].is_approved == true
+                        data[key].is_approved == true &&
+                        data[key].is_bought == false
                     ) {
                         this.recomendedProducts.push(data[key]);
                     }
@@ -188,7 +189,11 @@ export default {
             like.
         </p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-            <button class="btn btn-outline-dark me-md-2 px-md-5" type="button" @click="toListing()">
+            <button
+                class="btn btn-outline-dark me-md-2 px-md-5"
+                type="button"
+                @click="toListing()"
+            >
                 LISTINGS
             </button>
         </div>
@@ -215,9 +220,6 @@ export default {
             <h3>Recommended For You</h3>
             <SmallCarousel :products="recomendedProducts" />
         </div>
-
-
-
     </div>
 </template>
 

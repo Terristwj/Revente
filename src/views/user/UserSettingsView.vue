@@ -124,11 +124,15 @@ export default {
         async firebaseUpdate() {
             // Upload image
             let hasError = false;
-            hasError = await FBInstanceStorage.uploadImage(
-                "users",
-                this.userID,
-                this.imageFile
-            );
+
+            // If no change in image -> do nothing DUH
+            if (this.imageFile) {
+                hasError = await FBInstanceStorage.uploadImage(
+                    "users",
+                    this.userID,
+                    this.imageFile
+                );
+            }
 
             if (hasError) {
                 this.firebaseErrorMsg = "Please try again later.";
