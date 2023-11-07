@@ -280,6 +280,9 @@ _Wishlist._
 ![Screenshot 6](/src/assets/screenshots/uploadView.png)
 _Uploading Items._
 
+![Screenshot 1](/src/assets/screenshots/autofill_accuracy.gif)
+_Autofill Accuracy._
+
 ![Screenshot 7](/src/assets/screenshots/adminView.png)
 _Admin dashboard and AI assistant._
 
