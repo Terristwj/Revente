@@ -914,9 +914,16 @@ export default {
                             scale: 3,
                             animate: true,
                             dialogue: [
-                                "HEY YOU! YES YOOOOOOOOOOOOU!",
-                                ".HACK IS GONNA DO GAME DEV??!?!?!?",
-                                "LETTSSSSSSSG GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+                                // "HEY YOU! YES YOOOOOOOOOOOOU!",
+                                // ".HACK IS GONNA DO GAME DEV??!?!?!?",
+                                // "LETTSSSSSSSG GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+                                "Hello there! Are you lost? Well here are some fun facts about sustainability anyway!",
+                                "I am a Researcher Greenie.",
+                                "Did you know that it can take more than 700 gallons of water to make a single t-shirt",
+                                "Thats a mad amount right! Jeez",
+                                "Did you know almost all clothes are 100% recyclable but.. our landfills are still filled with 60% textile waste",
+                                "Luckily we have revente where you can sell and buy old clothes.. one man's trash is another man treasure am i right :D",
+                                "Find the other researchers to learn more!",
                             ],
                         })
                     );
